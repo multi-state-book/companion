@@ -1,4 +1,4 @@
-# Intuition for models for intensities
+# Intuition for intensity models
 
 ```{r, echo=FALSE, cache=TRUE}
 source("_common.R")
