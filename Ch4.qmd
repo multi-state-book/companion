@@ -1,0 +1,2 @@
+# Intuition for models for marginal parameters
+

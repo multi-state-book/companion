@@ -1,0 +1,68 @@
+# Intuition for models for intensities
+
+```{r, echo=FALSE, cache=TRUE}
+source("_common.R")
+library(survival)
+```
+
+$$\alpha(t)=\alpha_0(t)\exp(\beta Z)$$
+
+<!-- ## Hazard models for homogeneous groups {#homogeneous-groups} -->
+
+## Figure 2.2 {#fig2-2 .unnumbered}
+
+```{r}
+pbc3<-readRDS("data/pbc3.rds")
+nafit <- survfit(Surv(followup, status != 0) ~ tment, data = pbc3)
+nadata <- data.frame(cumhaz = nafit$cumhaz, 
+                     cumhaz_se = nafit$std.err, 
+                     time = nafit$time, 
+                     tment = c(rep(names(nafit$strata)[1], nafit$strata[1]), 
+                               rep(names(nafit$strata)[2], nafit$strata[2])))
+
+# Create Figure 2.2
+ggplot(aes(x = time, y = cumhaz, linetype = tment), data = nadata) + 
+          geom_step(size = 1) + 
+          scale_linetype_discrete("Treatment", labels = c("Placebo", "CyA")) + 
+          xlab("Time since randomization (years)") + 
+          ylab("Cumulative hazard") + 
+          scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), ) + 
+          scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
+          theme_general
+
+```
+
+<!-- ### Piece-wise constant hazards -->
+
+## Figure 2.3 {#fig2-3 .unnumbered}
+
+```{r, file = "R/2/pcwplot.r"}
+```
+
+## Cox model {#cox-models .unnumbered}
+
+```{r sas-datastep, eval=FALSE, echo=TRUE}
+libname h "data";
+data pbc3;
+  set h.pbc3;
+  event=status ne 0; * Binary variable for events for later use;
+run;
+proc phreg data=pbc3;
+  class tment(ref="0") / param=ref;
+  model years*status(0)=tment;
+run;
+```
+
+```{sas, engine.path=saspath, echo=FALSE, cache=TRUE}
+libname h "data";
+data pbc3;
+  set h.pbc3;
+  event=status ne 0; * Binary variable for events for later use;
+run;
+proc phreg data=pbc3;
+  class tment(ref="0") / param=ref;
+  model years*status(0)=tment;
+run;
+```
+
+## Exercises

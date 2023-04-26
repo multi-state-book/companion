@@ -1,0 +1,61 @@
+# Introduction with data sets
+
+In the book, a series of examples of event history data are used to illustrate different methods, models and approaches. Here most of the data sets are available for download together with a description of the variables.
+
+You can download **all** available data sets in one zip file or the individual data sets from following sections.
+
+```{r alldata, echo=FALSE}
+library(downloadthis)
+download_dir(
+  path = "data",
+  output_name = "All data sets",
+  button_label = "Download all",
+  button_type = "success",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+## The PBC3 trial in liver cirrhosis
+
+PBC3 was a multi-center randomized clinical trial conducted in six European hospitals (Lombard et al., 1993). Between January 1983 and January 1989, 349 patients with the liver disease primary biliary cirrhosis (PBC) were randomized to treatment with either Cyclosporin A (CyA, 176 patients) or placebo (173 patients).
+
+## The Guinea-Bissau childhood vaccination study
+
+A longitudinal study of children was initiated in 1990 in five regions of Guinea-Bissau, West Africa.
+
+| Variable name | Description and labels                                |
+|---------------|-------------------------------------------------------|
+| `id`          | id variable for the child                             |
+| `fuptime`     | follow-up time in days                                |
+| `dead`        | status at fuptime (0 alive, 1 dead)                   |
+| `bcg`         | bcg vaccination status at initial visit (1=yes, 2=no) |
+| `dtp`         | dtp vaccination status at initial visit (1=yes, 2=no) |
+| `age`         | age in days at initial visit                          |
+| `cluster`     | cluster id                                            |
+
+```{r, echo=FALSE}
+path_files <- list.files(path = "data", pattern="bissau.", full.names = TRUE)
+download_file(
+  path = path_files,
+  output_name = "Bissau data",
+  button_label = "Bissau files",
+  button_type = "danger",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+## Testis cancer incidence and maternal parity
+
+## PROVA trial in liver cirrhosis
+
+## Recurrent episodes in affective disorders
+
+## LEADER trial in Type 2 Diabetes
+
+## Bone marrow transplantation in acute leukemia
+
+## The Copenhagen Holter study

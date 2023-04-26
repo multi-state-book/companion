@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values",
+    "section": "",
+    "text": "This is the companion website to this book published by Chapman & Hall (link).\nR and SAS code for all the analyses presented in the book is available, except for analyses on the LEADER data. The plots in the book are created using R and available as presented in the book.\nVI DROPPEDE SAS TEGNINGER, IKK?\nSolutions to the book exercises are available at the end of the chapters."
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nJulie and Eva"
+  },
+  {
+    "objectID": "Ch1.html#the-pbc3-trial-in-liver-cirrhosis",
+    "href": "Ch1.html#the-pbc3-trial-in-liver-cirrhosis",
+    "title": "1  Introduction with data sets",
+    "section": "1.1 The PBC3 trial in liver cirrhosis",
+    "text": "1.1 The PBC3 trial in liver cirrhosis\nPBC3 was a multi-center randomized clinical trial conducted in six European hospitals (Lombard et al., 1993). Between January 1983 and January 1989, 349 patients with the liver disease primary biliary cirrhosis (PBC) were randomized to treatment with either Cyclosporin A (CyA, 176 patients) or placebo (173 patients)."
+  },
+  {
+    "objectID": "Ch1.html#the-guinea-bissau-childhood-vaccination-study",
+    "href": "Ch1.html#the-guinea-bissau-childhood-vaccination-study",
+    "title": "1  Introduction with data sets",
+    "section": "1.2 The Guinea-Bissau childhood vaccination study",
+    "text": "1.2 The Guinea-Bissau childhood vaccination study\nA longitudinal study of children was initiated in 1990 in five regions of Guinea-Bissau, West Africa.\n\n\n\n\n\n\n\nVariable name\nDescription and labels\n\n\n\n\nid\nid variable for the child\n\n\nfuptime\nfollow-up time in days\n\n\ndead\nstatus at fuptime (0 alive, 1 dead)\n\n\nbcg\nbcg vaccination status at initial visit (1=yes, 2=no)\n\n\ndtp\ndtp vaccination status at initial visit (1=yes, 2=no)\n\n\nage\nage in days at initial visit\n\n\ncluster\ncluster id\n\n\n\n\n\n\n Bissau files"
+  },
+  {
+    "objectID": "Ch1.html#testis-cancer-incidence-and-maternal-parity",
+    "href": "Ch1.html#testis-cancer-incidence-and-maternal-parity",
+    "title": "1  Introduction with data sets",
+    "section": "1.3 Testis cancer incidence and maternal parity",
+    "text": "1.3 Testis cancer incidence and maternal parity"
+  },
+  {
+    "objectID": "Ch1.html#prova-trial-in-liver-cirrhosis",
+    "href": "Ch1.html#prova-trial-in-liver-cirrhosis",
+    "title": "1  Introduction with data sets",
+    "section": "1.4 PROVA trial in liver cirrhosis",
+    "text": "1.4 PROVA trial in liver cirrhosis"
+  },
+  {
+    "objectID": "Ch1.html#recurrent-episodes-in-affective-disorders",
+    "href": "Ch1.html#recurrent-episodes-in-affective-disorders",
+    "title": "1  Introduction with data sets",
+    "section": "1.5 Recurrent episodes in affective disorders",
+    "text": "1.5 Recurrent episodes in affective disorders"
+  },
+  {
+    "objectID": "Ch1.html#leader-trial-in-type-2-diabetes",
+    "href": "Ch1.html#leader-trial-in-type-2-diabetes",
+    "title": "1  Introduction with data sets",
+    "section": "1.6 LEADER trial in Type 2 Diabetes",
+    "text": "1.6 LEADER trial in Type 2 Diabetes"
+  },
+  {
+    "objectID": "Ch1.html#bone-marrow-transplantation-in-acute-leukemia",
+    "href": "Ch1.html#bone-marrow-transplantation-in-acute-leukemia",
+    "title": "1  Introduction with data sets",
+    "section": "1.7 Bone marrow transplantation in acute leukemia",
+    "text": "1.7 Bone marrow transplantation in acute leukemia"
+  },
+  {
+    "objectID": "Ch1.html#the-copenhagen-holter-study",
+    "href": "Ch1.html#the-copenhagen-holter-study",
+    "title": "1  Introduction with data sets",
+    "section": "1.8 The Copenhagen Holter study",
+    "text": "1.8 The Copenhagen Holter study"
+  },
+  {
+    "objectID": "Ch2.html#fig2-2",
+    "href": "Ch2.html#fig2-2",
+    "title": "2  Intuition for models for intensities",
+    "section": "Figure 2.2",
+    "text": "Figure 2.2\n\npbc3<-readRDS(\"data/pbc3.rds\")\nnafit <- survfit(Surv(followup, status != 0) ~ tment, data = pbc3)\nnadata <- data.frame(cumhaz = nafit$cumhaz, \n                     cumhaz_se = nafit$std.err, \n                     time = nafit$time, \n                     tment = c(rep(names(nafit$strata)[1], nafit$strata[1]), \n                               rep(names(nafit$strata)[2], nafit$strata[2])))\n\n# Create Figure 2.2\nggplot(aes(x = time, y = cumhaz, linetype = tment), data = nadata) + \n          geom_step(size = 1) + \n          scale_linetype_discrete(\"Treatment\", labels = c(\"Placebo\", \"CyA\")) + \n          xlab(\"Time since randomization (years)\") + \n          ylab(\"Cumulative hazard\") + \n          scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), ) + \n          scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +\n          theme_general\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2\n3.4.0.\nℹ Please use `linewidth` instead."
+  },
+  {
+    "objectID": "Ch2.html#fig2-3",
+    "href": "Ch2.html#fig2-3",
+    "title": "2  Intuition for models for intensities",
+    "section": "Figure 2.3",
+    "text": "Figure 2.3\n\nrateCyA <- c(8.1,13.1,9.6)\nratePbo <- c(9.4,12.5,8.5)\npcwtime <- c(0,2,4,5)\n\n# Collect data\nplotdata <- data.frame(rates = c(rateCyA, ratePbo),\n                       tment = c(rep(\"CyA\", length(rateCyA)), rep(\"Placebo\", length(ratePbo))),\n                       times_s = rep(pcwtime[-4], 2),\n                       times = rep(pcwtime[-1], 2))\n\n# Create Figure 2.3\nggplot(aes(x = time, y = rates, linetype = tment),\n                data = plotdata) +\n  geom_segment(aes(x = times_s, y = rates, xend = times, yend = rates), size = 1) +\n  scale_linetype_discrete(\"Treatment\", labels = c(\"Placebo\", \"CyA\"))  +\n  xlab(\"Time since randomization (years)\") +\n  ylab(\"Estimated hazard function (per 100 years)\") +\n  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05))) +\n  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), \n                     limits = c(0,14), breaks = seq(0, 14, 2)) +\n  theme_general"
+  },
+  {
+    "objectID": "Ch2.html#cox-models",
+    "href": "Ch2.html#cox-models",
+    "title": "2  Intuition for models for intensities",
+    "section": "Cox model",
+    "text": "Cox model\n\nlibname h \"data\";\ndata pbc3;\n  set h.pbc3;\n  event=status ne 0; * Binary variable for events for later use;\nrun;\nproc phreg data=pbc3;\n  class tment(ref=\"0\") / param=ref;\n  model years*status(0)=tment;\nrun;\n\n\n\n                                      The PHREG Procedure\n\n                                       Model Information\n\n                               Data Set                 WORK.PBC3\n                               Dependent Variable       years    \n                               Censoring Variable       status   \n                               Censoring Value(s)       0        \n                               Ties Handling            BRESLOW  \n\n                            Number of Observations Read         349\n                            Number of Observations Used         349\n\n                                    Class Level Information\n \n                                                       Design\n                                 Class     Value     Variables\n\n                                 tment     0                 0\n                                           1                 1\n\n                       Summary of the Number of Event and Censored Values\n \n                                                               Percent\n                             Total       Event    Censored    Censored\n\n                               349          90         259       74.21\n\n                                       Convergence Status\n\n                         Convergence criterion (GCONV=1E-8) satisfied.          \n\n                                     Model Fit Statistics\n \n                                             Without           With\n                            Criterion     Covariates     Covariates\n\n                            -2 LOG L         948.259        948.182\n                            AIC              948.259        950.182\n                            SBC              948.259        952.682\n\n                            Testing Global Null Hypothesis: BETA=0\n \n                    Test                 Chi-Square       DF     Pr > ChiSq\n\n                    Likelihood Ratio         0.0771        1         0.7813\n                    Score                    0.0771        1         0.7813\n                    Wald                     0.0770        1         0.7814\n\n                                          Type 3 Tests\n \n                                                   Wald\n                           Effect      DF    Chi-Square    Pr > ChiSq\n\n                           tment        1        0.0770        0.7814\n\n                            Analysis of Maximum Likelihood Estimates\n \n                      Parameter      Standard                                  Hazard\nParameter      DF      Estimate         Error    Chi-Square    Pr > ChiSq       Ratio    Label\n\ntment     1     1      -0.05853       0.21092        0.0770        0.7814       0.943    tment 1"
+  },
+  {
+    "objectID": "Ch2.html#exercises",
+    "href": "Ch2.html#exercises",
+    "title": "2  Intuition for models for intensities",
+    "section": "2.1 Exercises",
+    "text": "2.1 Exercises"
+  }
+]
