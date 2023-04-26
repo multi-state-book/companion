@@ -1,1 +1,1 @@
-# Models for marginal parameters
+# Marginal models

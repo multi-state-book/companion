@@ -1,2 +1,2 @@
-# Intuition for models for marginal parameters
+# Intuition for marginal models
 

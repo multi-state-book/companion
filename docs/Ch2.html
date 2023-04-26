@@ -182,22 +182,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models for intensities</span></a>
+  <a href="./Ch3.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intensity models</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intuition for models for marginal parameters</span></a>
+  <a href="./Ch4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intuition for marginal models</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Ch5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Models for marginal parameters</span></a>
+  <a href="./Ch5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Marginal models</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Ch6.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pseudo-values</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Ch7.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></a>
   </div>
 </li>
     </ul>
@@ -369,72 +374,17 @@ The following object is masked from 'package:dplyr':
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  model years<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>tment;</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-engine.path="C:\Program Files\SASHome\SASFoundation\9.4\sas.exe" data-hash="Ch2_cache/html/unnamed-chunk-4_d8e29c88f2bc466b7d219833e31ba40f">
-<div class="cell-output cell-output-stdout">
-<pre><code>                                      The PHREG Procedure
-
-                                       Model Information
-
-                               Data Set                 WORK.PBC3
-                               Dependent Variable       years    
-                               Censoring Variable       status   
-                               Censoring Value(s)       0        
-                               Ties Handling            BRESLOW  
-
-                            Number of Observations Read         349
-                            Number of Observations Used         349
-
-                                    Class Level Information
- 
-                                                       Design
-                                 Class     Value     Variables
-
-                                 tment     0                 0
-                                           1                 1
-
-                       Summary of the Number of Event and Censored Values
- 
-                                                               Percent
-                             Total       Event    Censored    Censored
-
-                               349          90         259       74.21
-
-                                       Convergence Status
-
-                         Convergence criterion (GCONV=1E-8) satisfied.          
-
-                                     Model Fit Statistics
- 
-                                             Without           With
-                            Criterion     Covariates     Covariates
-
-                            -2 LOG L         948.259        948.182
-                            AIC              948.259        950.182
-                            SBC              948.259        952.682
-
-                            Testing Global Null Hypothesis: BETA=0
- 
-                    Test                 Chi-Square       DF     Pr &gt; ChiSq
-
-                    Likelihood Ratio         0.0771        1         0.7813
-                    Score                    0.0771        1         0.7813
-                    Wald                     0.0770        1         0.7814
-
-                                          Type 3 Tests
- 
-                                                   Wald
-                           Effect      DF    Chi-Square    Pr &gt; ChiSq
-
-                           tment        1        0.0770        0.7814
-
-                            Analysis of Maximum Likelihood Estimates
- 
-                      Parameter      Standard                                  Hazard
-Parameter      DF      Estimate         Error    Chi-Square    Pr &gt; ChiSq       Ratio    Label
-
-tment     1     1      -0.05853       0.21092        0.0770        0.7814       0.943    tment 1</code></pre>
-</div>
-</div>
+<!-- ```{sas, engine.path=saspath, echo=FALSE, cache=TRUE} -->
+<!-- libname h "data"; -->
+<!-- data pbc3; -->
+<!--   set h.pbc3; -->
+<!--   event=status ne 0; * Binary variable for events for later use; -->
+<!-- run; -->
+<!-- proc phreg data=pbc3; -->
+<!--   class tment(ref="0") / param=ref; -->
+<!--   model years*status(0)=tment; -->
+<!-- run; -->
+<!-- ``` -->
 </section>
 <section id="exercises" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="exercises"><span class="header-section-number">2.1</span> Exercises</h2>
@@ -584,7 +534,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./Ch3.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Models for intensities</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intensity models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

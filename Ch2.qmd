@@ -55,16 +55,16 @@ proc phreg data=pbc3;
 run;
 ```
 
-```{sas, engine.path=saspath, echo=FALSE, cache=TRUE}
-libname h "data";
-data pbc3;
-  set h.pbc3;
-  event=status ne 0; * Binary variable for events for later use;
-run;
-proc phreg data=pbc3;
-  class tment(ref="0") / param=ref;
-  model years*status(0)=tment;
-run;
-```
+<!-- ```{sas, engine.path=saspath, echo=FALSE, cache=TRUE} -->
+<!-- libname h "data"; -->
+<!-- data pbc3; -->
+<!--   set h.pbc3; -->
+<!--   event=status ne 0; * Binary variable for events for later use; -->
+<!-- run; -->
+<!-- proc phreg data=pbc3; -->
+<!--   class tment(ref="0") / param=ref; -->
+<!--   model years*status(0)=tment; -->
+<!-- run; -->
+<!-- ``` -->
 
 ## Exercises

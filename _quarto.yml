@@ -21,6 +21,7 @@ book:
     - Ch4.qmd
     - Ch5.qmd
     - Ch6.qmd
+    - Ch7.qmd
 
 format:
   html:

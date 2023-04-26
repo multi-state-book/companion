@@ -1,1 +1,1 @@
-# Models for intensities
+# Intensity models
