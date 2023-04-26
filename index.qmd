@@ -10,4 +10,4 @@ Solutions to the book exercises are available at the end of the chapters.
 
 ## Acknowledgements {.unnumbered}
 
-Julie and Eva
+Julie Kjærulff Furberg and Eva
