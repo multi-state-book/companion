@@ -48,6 +48,12 @@ download_file(
 )
 ```
 
+```{r, echo=FALSE, file = "_common.r"}
+```
+
+```{r, file = "R/2/pcwplot.r"}
+```
+
 ## Testis cancer incidence and maternal parity
 
 ## PROVA trial in liver cirrhosis

@@ -5,7 +5,7 @@ source("_common.R")
 library(survival)
 ```
 
-$$\alpha(t)=\alpha_0(t)\exp(\beta Z)$$
+Argue (intuitively) how the martingale property $E(M(t)\mid  {\cal H}_{s})=M(s)$ follows from $E(dM(t)\mid {\cal H}_{t-})=0$
 
 <!-- ## Hazard models for homogeneous groups {#homogeneous-groups} -->
 
@@ -55,16 +55,9 @@ proc phreg data=pbc3;
 run;
 ```
 
-<!-- ```{sas, engine.path=saspath, echo=FALSE, cache=TRUE} -->
-<!-- libname h "data"; -->
-<!-- data pbc3; -->
-<!--   set h.pbc3; -->
-<!--   event=status ne 0; * Binary variable for events for later use; -->
-<!-- run; -->
-<!-- proc phreg data=pbc3; -->
-<!--   class tment(ref="0") / param=ref; -->
-<!--   model years*status(0)=tment; -->
-<!-- run; -->
-<!-- ``` -->
+
+```{r chapter2_pbc3, file = "R/2/chapter2_pbc3.R"}
+```
+
 
 ## Exercises
