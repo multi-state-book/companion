@@ -13,6 +13,8 @@ $$\alpha(t)=\alpha_0(t)\exp(\beta Z)$$
 
 ```{r}
 pbc3<-readRDS("data/pbc3.rds")
+library(survival)
+require(tidyverse)
 nafit <- survfit(Surv(followup, status != 0) ~ tment, data = pbc3)
 nadata <- data.frame(cumhaz = nafit$cumhaz, 
                      cumhaz_se = nafit$std.err, 
