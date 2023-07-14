@@ -1,15 +1,13 @@
-# Introduction with data sets
+# Introduction and data sets
 
-In the book, a series of examples of event history data are used to illustrate different methods, models and approaches. Here most of the data sets are available for download together with a description of the variables.
-
-You can download **all** available data sets in one zip file or the individual data sets from following sections.
+In the book, examples of event history data are used to illustrate different methods, models and approaches. All the data sets, except the LEADER data, are available for download as CSV files and description of the variables is given below.
 
 ```{r alldata, echo=FALSE}
 library(downloadthis)
 download_dir(
   path = "data",
-  output_name = "All data sets",
-  button_label = "Download all",
+  output_name = "DataFromMSB",
+  button_label = "Download data sets",
   button_type = "success",
   has_icon = TRUE,
   icon = "fa fa-save",
@@ -17,51 +15,227 @@ download_dir(
 )
 ```
 
-## The PBC3 trial in liver cirrhosis
+## PBC3 trial in liver cirrhosis (`pbc3.csv`)
 
-PBC3 was a multi-center randomized clinical trial conducted in six European hospitals (Lombard et al., 1993). Between January 1983 and January 1989, 349 patients with the liver disease primary biliary cirrhosis (PBC) were randomized to treatment with either Cyclosporin A (CyA, 176 patients) or placebo (173 patients).
+| Variable name | Description                                                           |
+|-------------------------|----------------------------------------------|
+| `id`          | patient id                                                            |
+| `unit`        | hospital                                                              |
+| `days`        | follow-up time in days                                                |
+| `status`      | 0 = censoring, 1 = transplantation, 2 = death without transplantation |
+| `tment`       | 0 = placebo, 1 = CyA                                                  |
+| `sex`         | 0 = female, 1 = male                                                  |
+| `age`         | age (years)                                                           |
+| `bili`        | bilirubin (micromoles/L)                                              |
+| `alb`         | albumin (g/L)                                                         |
+| `stage`       | disease stage: 2 = I-II, 3 = III, 4 = IV                              |
 
-## The Guinea-Bissau childhood vaccination study
+## Guinea-Bissau childhood vaccination study (`bissau.csv`)
 
-A longitudinal study of children was initiated in 1990 in five regions of Guinea-Bissau, West Africa.
+| Variable name | Description                                              |
+|---------------|----------------------------------------------------------|
+| `id`          | child id                                                 |
+| `cluster`     | cluster id                                               |
+| `fuptime`     | follow-up time (days)                                    |
+| `dead`        | 0 = alive, 1 = dead                                      |
+| `bcg`         | bcg vaccination status at initial visit: 1 = yes, 2 = no |
+| `dtp`         | dtp vaccination status at initial visit: 1 = yes, 2 = no |
+| `sex`         | 0 = female, 1 = male                                     |
+| `age`         | age in days at initial visit                             |
 
-| Variable name | Description and labels                                |
-|---------------|-------------------------------------------------------|
-| `id`          | id variable for the child                             |
-| `fuptime`     | follow-up time in days                                |
-| `dead`        | status at fuptime (0 alive, 1 dead)                   |
-| `bcg`         | bcg vaccination status at initial visit (1=yes, 2=no) |
-| `dtp`         | dtp vaccination status at initial visit (1=yes, 2=no) |
-| `age`         | age in days at initial visit                          |
-| `cluster`     | cluster id                                            |
+## Testis cancer incidence and maternal parity (`testis.csv`)
 
-```{r, echo=FALSE}
-path_files <- list.files(path = "data", pattern="bissau.", full.names = TRUE)
-download_file(
-  path = path_files,
-  output_name = "Bissau data",
-  button_label = "Bissau files",
-  button_type = "danger",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
+| Variable name | Description |
+|---------------|-------------|
+| `age`         |             |
+| `pyrs`        |             |
+| `cases`       |             |
+| `semi`        |             |
+| `nonsemi`     |             |
+| `parity`      |             |
+| `cohort`      |             |
+| `motherage`   |             |
+
+## PROVA trial in liver cirrhosis (`prova.csv`)
+
+| Variable name | Description          |
+|---------------|----------------------|
+| `id`          | patient id           |
+| `timedeath`   |                      |
+| `death`       |                      |
+| `timebleed`   |                      |
+| `bleed`       |                      |
+| `beta`        |                      |
+| `scle`        |                      |
+| `sex`         | 0 = female, 1 = male |
+| `age`         |                      |
+| `bili`        |                      |
+| `coag`        |                      |
+| `varsize`     |                      |
+| `beh`         |                      |
+
+## Recurrent episodes in affective disorders (`affective.csv`)
+
+| Variable name | Description |
+|---------------|-------------|
+| `id`          | patient id  |
+| `episode`     |             |
+| `state`       |             |
+| `start`       |             |
+| `stop`        |             |
+| `status`      |             |
+| `bip`         |             |
+| `sex`         | 0 = female, 1 = male             |
+| `age`         |             |
+| `year`        |             |
+| `wait`        |             |
+
+## LEADER cardiovascular trial in type 2 Diabetes
+
+Data not available.
+
+## Bone marrow transplantation in acute leukemia (`bmt.csv`)
+
+| Variable name | Description |
+|---------------|-------------|
+| `id`          | patient id  |
+| `team`        |             |
+| `timedeath`   |             |
+| `death`       |             |
+| `timerel`     |             |
+| `rel`         |             |
+| `timegvhd`    |             |
+| `gvhd`        |             |
+| `timeanc500`  |             |
+| `anc500`      |             |
+| `sex`         | 0 = female, 1 = male             |
+| `age`         |             |
+| `all`         |             |
+| `bmonly`      |             |
+
+## The Copenhagen Holter study (`cphholter.csv`)
+
+| Variable name | Description |
+|---------------|-------------|
+| `id`          | patient id  |
+| `timedeath`   |             |
+| `death`       |             |
+| `timeafib`    |             |
+| `afib`        |             |
+| `timestroke`  |             |
+| `stroke`      |             |
+| `sex`         | 0 = female, 1 = male             |
+| `age`         |             |
+| `smkoer`      |             |
+| `esvea`       |             |
+| `chol`        |             |
+| `diabet`      |             |
+| `bmi`         |             |
+| `aspirin`     |             |
+| `probnp`      |             |
+| `sbp`         |             |
+
+## Small set of survival data
+
+Data from Table 1.6.
+
+```{r simpledata, file = "R/chapter1_simpledata.r",message=FALSE,warning=FALSE,cache=TRUE, fig.height = 8.27, fig.width = 8.27, out.width = "70%"}
 ```
 
-```{r, echo=FALSE, file = "_common.r"}
+## Exercises {.unnumbered}
+
+### Exercise 1.1 {.unnumbered}
+
+#### *Consider the small data set in Table 1.6 and argue why both the average of all (12) observation times and the average of the (7) uncensored times will likely underestimate the true mean survival time from entry into the study*. {.unnumbered}
+
+The average of all 12 observation times: $$\frac{5+6+7+8+9+12+13+15+16+20+22+23}{12} = \frac{156}{12} = 13.00$$ will under-estimate the mean survival time because 5 of the terms in the sum, i.e., those corresponding to right-censored observations, are known to be smaller than the true survival times.
+
+The average of the 7 uncensored observations: $$\frac{5+7+8+13+15+16+23}{7}=\frac{87}{7} = 12.43$$ is also likely to under-estimate the mean because right-censoring will typically cause the longer survival times in the population to be incompletely observed. E.g., survival times longer than the time elapsed from the beginning of the study to its end will always be right-censored.
+
+### Exercise 1.2 {.unnumbered}
+
+#### 1. *Consider the following records mimicking the Copenhagen Holter study (Example 1.1.8) in wide format and transform them into long format, i.e., create one data set for each of the possible six transitions in Figure 1.7.* {.unnumbered}
+
+Data can be converted to long format using the **msprep** function from the **mstate** package. However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. Furthermore, we have to fill in **timeafib**, **timestroke** and **timedeath** for all subjects, such that they correspond to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.
+
+```{r packages, warning = FALSE, message=FALSE}
+chs_data <- read.csv("data/cphholter.csv")
+library(tidyverse)
+library(survival)
+library(mstate)
 ```
 
-```{r, file = "R/2/pcwplot.r"}
+```{r}
+# The table from the exercise
+id <- factor(1:8)
+timeafib <- c(NA, 10, NA, 15, NA, 30, NA, 25)
+timestroke <- c(NA, NA, 20, 30, NA, NA, 35, 50)
+timedeath <- c(NA, NA, NA, NA, 70, 75, 95, 65)
+lastobs <- c(100, 90, 80, 85, 70, 75, 95, 65)
+cbind(id, timeafib, timestroke, timedeath, lastobs)
+
+# Creating status indicators
+afib <- ifelse(is.na(timeafib), 0, 1)
+stroke <- ifelse(is.na(timestroke), 0, 1)
+death <- ifelse(is.na(timedeath), 0, 1)
+
+# Last time point at risk for a transition to each state
+timedeath <- lastobs
+timestroke <- ifelse(is.na(timestroke), timedeath, timestroke)
+timeafib <- ifelse(is.na(timeafib), timestroke, timeafib)
+wide_data <- as.data.frame(cbind(id, timeafib, timestroke, 
+                                 timedeath, afib, stroke, death))
+
+# Creating the transition matrix
+tmat <- matrix(NA,4,4)
+tmat[1, 2:4] <- 1:3
+tmat[2, 3:4] <- 4:5
+tmat[3, 4] <- 6
+dimnames(tmat) <- list(from = c("No event", "AF", "Stroke", "Death"), 
+                       to = c("No event", "AF", "Stroke", "Death"))
+tmat
+
+# Using msprep to create data in long format
+long_data <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
+                    status = c(NA, "afib", "stroke", "death"),
+                    trans = tmat, data = wide_data) 
+long_data
 ```
 
-## Testis cancer incidence and maternal parity
+#### 2. *Do the same for the entire data set*. {.unnumbered}
 
-## PROVA trial in liver cirrhosis
+We can then repeat the procedure for the Copenhagen Holter Study data set.
 
-## Recurrent episodes in affective disorders
+```{r}
+chs_data$timestroke <- ifelse(is.na(chs_data$timestroke),
+                              chs_data$timedeath, chs_data$timestroke)
+chs_data$timeafib <- ifelse(is.na(chs_data$timeafib),
+                            chs_data$timestroke, chs_data$timeafib)
 
-## LEADER trial in Type 2 Diabetes
+chs_long <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
+                   status = c(NA, "afib", "stroke", "death"),
+                   trans = tmat, data = chs_data)
+```
 
-## Bone marrow transplantation in acute leukemia
+NB: We get a warning because 5 subjects have two events on the same day. This will be handled if necessary for further analyses.
 
-## The Copenhagen Holter study
+### Exercise 1.3 {.unnumbered}
+
+#### 1. *Derive Equations (1.2) and (1.3) for, respectively, the survival function in the two-state model (Figure 1.1) and the cumulative incidence function in the competing risks model (Figure 1.2).* {.unnumbered}
+
+The hazard function $$\alpha(t)=\lim_{dt\rightarrow 0}P(T\leq t+dt\mid T>t)/dt$$ equals $$\alpha(t)=\frac{f(t)}{S(t)}=\frac{-(d/dt) S(t)}{S(t)}=-(d/dt)\log S(t)$$ where $f(t)$ is the density function for $T$ and, thereby, $S(t)=\int_0^t\alpha(u)du$.
+
+The cause $h$ cumulative incidence is the probability of failing from cause $h$ during $[0,t]$. This is the integral of the infinitesimal probabilities of failing in $(u,u+du)$ for $0\leq u\leq t$. The probability of failing in $(u,u+du)$ is, by definition of the cause-$h$-specific hazard, equal to $S(u)\alpha_h(u)du$ and the desired result $$Q_h(t)=\int_0^tS(u)\alpha_h(u)du$$ follows.
+
+#### 2. *Show, for the Markov illness-death model (Figure 1.3), that the state occupation probability for state 1 at time* $t$*,* $Q_1(t)$*, is* $$\int_0^t\exp\left(-\int_0^u(\alpha_{01}(x)+\alpha_{02}(x))dx\right)\alpha_{01}(u)\exp\left(-\int_u^t\alpha_{12}(x)dx\right)du.$$ {.unnumbered}
+
+The probability $P_{11}(u,t)$ of staying in state 1 from time $u$ to time $t$ is given by $\exp(-\int_u^t\alpha_{12}(x)dx)$ and combining this with the argument from the previous question, i.e., that the (infinitesimal) probability $\exp(-\int_0^u(\alpha_{01}(x)+\alpha_{02}(x))dx)\alpha_{01}(u)du$, of moving from state 0 to state 1 during $(u, u+du)$, the desired result is obtained by integration over $u$ from 0 to $t$.
+
+### Exercise 1.4 (\*) {.unnumbered}
+
+#### *Argue (intuitively) how the martingale property* $E(M(t)\mid {\cal H}_{s})=M(s)$ *follows from* $E(dM(t)\mid {\cal H}_{t-})=0$ *(Section 1.4.3).* {.unnumbered}
+
+
+Because $M(s)$ is adapted to the history ${\cal H}_s$ we get
+$$E(M(t)\mid {\cal F}_s)-M(s)=E(M(t)-M(s)\mid {\cal H}_s).$$
+We write the difference $M(t)-M(s)$ as the sum of increments $$=E(\int_{(s,t]}dM(u)\mid {\cal H}_s)$$ and change the order of integration and expectation $$=\int_{(s,t]}E(dM(u)\mid {\cal H}_s).$$ We finally use the \`principle of repeated conditioning' to obtain the desired result of 0 $$=\int_{(s,t]}E(E(dM(u)\mid {\cal H}_{u-})\mid {\cal H}_s)=0.$$
