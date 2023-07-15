@@ -1,0 +1,100 @@
+# illustration of PH in Cox and stratified Cox
+library(ggplot2)
+library(tidyverse)
+theme_hr <- theme_bw() +
+  theme(legend.position = "bottom", 
+        text = element_text(size = 20), 
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank(),
+  ) 
+t<-seq(0,20,0.01)
+h10<-tibble(t=t,hazard=600-0.6*t^2+0.3*t^3,   Z=1,strata=1)
+h11<-tibble(t=t,hazard=h10$hazard*.6,Z=0,strata=1)
+h20<-tibble(t=t,hazard=300-0.5*t^2,   Z=1,strata=2)
+h21<-tibble(t=t,hazard=h20$hazard*.6,Z=0,strata=2)
+h<-rbind(h10,h11,h20,h21)
+h$Z<-as.factor(h$Z)
+h$strata<-as.factor(h$strata)
+
+figrate<-ggplot(data=subset(h,strata==1),
+       aes(x=t,y=hazard,linetype=Z)) +
+  geom_line()+
+  scale_linetype_manual(values=c("dashed", "solid")) +
+  annotate(geom="text",x=15, y=800,hjust=0,
+           label=expression(alpha[0](t)),size=8) +
+  annotate(geom="text",x=10, y=1500,hjust=0,
+           label=expression(paste(alpha[0](t),"exp",(beta))),size=8) +
+  theme_hr
+
+figrate
+
+hfigrate<-figrate+theme(legend.title=element_text(size=20), legend.text = element_text(size = 20), legend.key.size = unit(2,"line"))
+hfigrate
+ggsave("figures/h_ph_rate.pdf", plot = hfigrate, 
+       width = 21, height = 21, units = "cm")
+
+figlrate<-ggplot(data=subset(h,strata==1),
+       aes(x=t,y=log(hazard),linetype=Z)) +
+  geom_line()+
+  scale_linetype_manual(values=c("dashed", "solid")) +
+  annotate(geom="text",x=14, y=6.5,hjust=0,
+           label=expression(paste("log(",alpha[0](t),")")),size=8) +
+  annotate(geom="text",x=6, y=7,hjust=0,
+           label=expression(paste("log(",alpha[0](t),") + ",beta)),size=8) +
+  theme_hr
+
+figlrate
+hfiglrate<-figlrate+theme(legend.title=element_text(size=20), legend.text = element_text(size = 20), legend.key.size = unit(2,"line"))
+hfiglrate
+
+ggsave("figures/h_ph_lrate.pdf", plot = hfiglrate, 
+       width = 21, height = 21, units = "cm")
+
+
+
+fig2<-ggplot(data=h,aes(x=t,y=hazard,linetype=Z,
+                  group=interaction(strata,Z))) +
+  geom_line() +
+  scale_linetype_manual(values=c("dashed", "solid")) +
+  annotate(geom="text",x=0, y=exp(6.15),hjust=0,
+           label="Stratum 0",size=7) +
+  annotate(geom="text",x=0, y=exp(5.48),hjust=0,
+           label="Stratum 1",size=7) +
+  annotate(geom="text",x=17, y=exp(6.9),hjust=0,
+           label=expression(alpha["00"](t)),size=8) +
+  annotate(geom="text",x=9, y=exp(7.3),hjust=0,
+           label=expression(paste(alpha["00"](t),"exp",(beta))),size=8) +
+  annotate(geom="text",x=7, y=exp(4),hjust=0,
+           label=expression(alpha["10"](t)),size=8) +
+  annotate(geom="text",x=13, y=exp(5.8),hjust=0,
+           label=expression(paste(alpha["10"](t),"exp",(beta))),size=8) +
+  theme_hr
+fig2<-fig2+theme(legend.title=element_text(size=20), legend.text = element_text(size = 20), legend.key.size = unit(2,"line"))
+fig2
+ggsave("figures/h_ph_strata_rate.pdf", plot = fig2, 
+       width = 21, height = 21, units = "cm")
+
+
+fig2l<-ggplot(data=h,aes(x=t,y=log(hazard),linetype=Z,
+                        group=interaction(strata,Z))) +
+  geom_line() +
+  scale_linetype_manual(values=c("dashed", "solid")) +
+  annotate(geom="text",x=0, y=6.15,hjust=0,
+           label="Stratum 0",size=7) +
+  annotate(geom="text",x=0, y=5.45,hjust=0,
+           label="Stratum 1",size=7) +
+  annotate(geom="text",x=14, y=6.5,hjust=0,
+           label=expression(paste("log(",alpha["00"],(t),")")),size=8) +
+  annotate(geom="text",x=6, y=7.1,hjust=0,
+           label=expression(paste("log(",alpha["00"](t),") + ",beta)),size=8) +
+  annotate(geom="text",x=6, y=4.8,hjust=0,
+           label=expression(paste("log(",alpha["10"](t),")")),size=8) +
+  annotate(geom="text",x=14, y=5.5,hjust=0,
+           label=expression(paste("log(",alpha["10"](t),") + ",beta)),size=8) +
+  theme_hr
+fig2l<-fig2l+theme(legend.title=element_text(size=20), legend.text = element_text(size = 20), legend.key.size = unit(2,"line"))
+fig2l
+ggsave("figures/h_ph_strata_lrate.pdf", plot = fig2l, 
+       width = 21, height = 21, units = "cm")

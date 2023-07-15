@@ -28,6 +28,6 @@ format:
     theme:
       - cosmo
       - msb.scss
-      
+
 editor: source
 

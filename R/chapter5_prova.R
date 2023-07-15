@@ -1,0 +1,874 @@
+#------------------------------------------------------------------#
+#------- Chapter 5, R code, PROVA data ----------------------------#
+#------------------------------------------------------------------#
+
+# Load required packages (should be installed if not already)
+require(survival)
+require(ggplot2)
+require(timereg)
+require(gridExtra)
+require(dplyr)
+
+prova <- read.csv("data/prova.csv", na.strings = c("."))
+head(prova)
+
+prova <- data.frame(prova)
+prova <- prova %>% mutate(timebleed = ifelse(bleed == 1, timebleed, timedeath),
+                          outof0 = ifelse(bleed ==1, 1, death),
+                          wait = ifelse(bleed ==1, timedeath - timebleed, NA))
+
+# Faster processing
+require(data.table)
+prova <- setDT(prova)
+
+# Setting start times, s = 1 year and s = 2 years
+s1 = 365.25
+s2 = 2*365.25
+
+#Censoring times
+cens_outof0 <- 1509
+cens_wait <- 1363
+
+#------------------------------------------------------------------#
+# -------- General plotting style ---------------------------------#
+#------------------------------------------------------------------#
+
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 20),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20))
+
+
+#------------------------------------------------------------------#
+#---------------- Table 5.4 ---------------------------------------#
+#------------------------------------------------------------------#
+#------------------------------------------------------------------#
+#---------------- Figure 5.5-5.9-----------------------------------#
+#------------------------------------------------------------------#
+
+
+#### EVA'S CODE ####
+
+###################################### PACKAGES ##################################################################################
+library(survival) #Cox models, Kaplan-Meier, ect. 
+library(tidyverse) #Plots
+library(data.table) #Faster aggregation of data
+library(Epi) #Lexis
+library(gridExtra) #Combine multiple plots 
+library(ggpubr) #Multiple plots, ggarrange
+library(mstate)
+library(xtable)
+
+
+
+############################################## AALEN-JOHANSEN ESTIMATOR ################################################################
+
+# Transition matrix for irreversible illness-death model
+tmat <- trans.illdeath(names = c("Non-bleeding", "Bleeding", "Dead"))
+
+# Converting data to long format
+long_format <- msprep(time = c(NA, "timebleed", "timedeath"), status = c(NA, "bleed", "death"), data = as.data.frame(prova), trans = tmat)
+
+# Cox model
+cox <- coxph(Surv(Tstart,Tstop,status) ~ strata(trans), data =long_format, method = "breslow")
+
+# Cumulative transition hazards 
+msfit <- msfit(cox, trans = tmat)
+
+#Expected length of stay in state 1, \epsilon_1(\tau) = \int_0^{\tau} P_01(0,t)dt
+AaJ_ELOS_function <- function(t){
+  mat <- ELOS(pt =probtrans(msfit, predt = 0), t)
+  return(mat[1,2])}
+
+######################################### MICROSIMULATION WITHOUT COVARIATES #######################################################################
+
+#Setting up data with Epi packages
+#One time  scale: tsr (time since randomization), two states: No bleeding - dead
+Lexis2state <-  Lexis(exit = list(tsr = timedeath),exit.status = factor(death, labels = c("NoBleeding", "Dead")) , data = prova)
+#Adding bleeding state and new time scale: tsb (time since bleeding).
+LexisProva <- cutLexis(Lexis2state, cut = Lexis2state$timebleed, precursor.states = "NoBleeding", new.state = "Bleeding", new.scale = "tsb")
+#Splitting state 2 into 0->2 and 1->2
+LexisProva <- cutLexis(Lexis2state, cut = Lexis2state$timebleed, precursor.states = "NoBleeding", new.state = "Bleeding", new.scale = "tsb", split.states = TRUE)
+
+
+# 0 -> 1 (time since randomization as time scale)
+nk_bleed <- 17 #Number of intervals, corresponds to 2-3 events in each interval
+intervals01 <- with( subset(LexisProva,lex.Xst=="Bleeding" & lex.Cst =="NoBleeding"),
+                     c(0,quantile(tsr +lex.dur, probs=(1:(nk_bleed-1))/nk_bleed ) )) 
+SplitLexis01 <- splitLexis(lex = LexisProva, time.scale = "tsr", breaks = intervals01)
+#Adding intervals as columns to data
+SplitLexis01$tsr.cat <- timeBand(SplitLexis01, "tsr", type = "factor")
+#Adding status of 0->1 transitions
+SplitLexis01$case.bleed <- status(SplitLexis01) == "Bleeding"
+#Person years at risk
+SplitLexis01$pyar <- dur(SplitLexis01) 
+#Poisson model for alpha01
+poisson01 <- glm(case.bleed ~ tsr.cat -1 + offset(log(pyar)) , family = poisson(), data = subset(SplitLexis01, lex.Cst == "NoBleeding"))
+
+
+# 0 -> 2 (time since randomization as time scale)
+nk_dead0 <- 16 #Number of intervals, corresponds to 2-3 events in each interval
+intervals02 <- with( subset(LexisProva,lex.Xst=="Dead"),
+                     c(0,quantile(tsr +lex.dur, probs=(1:(nk_dead0-1))/nk_dead0 ) )) 
+SplitLexis02 <- splitLexis(lex = LexisProva, time.scale = "tsr", breaks = intervals02)
+#Adding intervals as columns to data
+SplitLexis02$tsr.cat <- timeBand(SplitLexis02, "tsr", type = "factor")
+#Adding status of 0->2 transitions
+SplitLexis02$case.dead <- status(SplitLexis02) == "Dead"
+#Person years at risk
+SplitLexis02$pyar <- dur(SplitLexis02) 
+#Poisson model for alpha02
+poisson02 <- glm(case.dead ~ tsr.cat -1 + offset(log(pyar)) , family = poisson(), data = subset(SplitLexis02, lex.Cst == "NoBleeding"))
+
+
+# 1 -> 2 (duration in state 1 as time scale)
+nk_deadb <- 10 #Number of intervals, corresponds to 2-3 events in each interval
+intervals12 <- with(subset(LexisProva,lex.Xst=="Dead(Bleeding)"),
+                    c(0,quantile(tsb + lex.dur, probs=(1:(nk_deadb-1))/nk_deadb ) )) 
+SplitLexis12 <- splitLexis(lex = subset(LexisProva, lex.Cst == "Bleeding"), time.scale = "tsb", breaks = intervals12)
+#Adding intervals as columns to data
+SplitLexis12$tsb.cat <- timeBand(SplitLexis12, "tsb", type = "factor")
+# Adding status of 1->2 transitions
+SplitLexis12$case.deadb <- status(SplitLexis12) == "Dead(Bleeding)"
+#Person years at risk
+SplitLexis12$pyar <- dur(SplitLexis12) 
+#Poisson model for alpha12
+poisson12 <- glm(case.deadb ~ tsb.cat -1 + offset(log(pyar)) , family = poisson(), data = subset(SplitLexis12, lex.Cst == "Bleeding"))
+
+
+#Cumulative hazard function, A01(t) = \int_0^t alpha01(u)du based on Poisson model, model01
+#Time since randomization as time axis
+cumhaz01 <- function(model01,t){
+  times <- intervals01[intervals01 < t] #time intervals up to time t where A01 is constant
+  n <- length(times)
+  if (n <= 1){ #If 0 or 1 interval
+    chz <- exp(model01[1])*t}
+  else{ #If 2 or more intervals
+    length_int <- diff(times) #length of intervals
+    chz <- sum(length_int*exp(model01[1:(n-1)])) + exp(model01[n])*(t - sum(length_int))} #sum(alpha01*len_int)
+  return(as.numeric(chz))}
+
+
+#Cumulative hazard function, A02(t) = \int_0^t alpha02(u)du based on Poisson model, model02
+#Time since randomization as time axis
+cumhaz02 <- function(model02, t){
+  times <- intervals02[intervals02 < t] #time intervals up to time t where A02 is constant
+  n <- length(times)
+  if (n <= 1){ #If 0 or 1 interval
+    chz <- exp(model02[1])*t}
+  else{ #If 2 or more intervals
+    length_int <- diff(times) #Length of intervals
+    chz <- sum(length_int*exp(model02[1:(n-1)])) + exp(model02[n])*(t - sum(length_int))}  #sum(alpha02*len_int)
+  return(as.numeric(chz))}
+
+
+#Cumulative hazard function, A12(t) = \int_0^t alpha12(u)du based on Poisson model, model12,
+#Duration in state 1 as time axis
+cumhaz12 <- function(model12, t){
+  times <- intervals12[intervals12 < t] #time intervals up to time t where A12 is constant
+  n <- length(times)
+  if (n <= 1){ #If 0 or 1 interval
+    chz <- exp(model12[1])*t}
+  else{ #If 2 or more intervals
+    length_int <- diff(times) #Length of intervals
+    chz <- sum(length_int*exp(model12[1:(n-1)])) + exp(model12[n])*(t - sum(length_int))} #sum(alpha12*len_int)
+  return(as.numeric(chz))}
+
+
+#Estimates and covariance matrix for alpha01 
+beta01 <- summary(poisson01)$coefficients[,1]
+sigma01 <- vcov(poisson01)
+
+#Estimates and covariance matrix for alpha02 
+beta02 <- summary(poisson02)$coefficients[,1]
+sigma02 <- vcov(poisson02)
+
+#Estimates and covariance matrix for alpha12 
+beta12 <- summary(poisson12)$coefficients[,1]
+sigma12 <- vcov(poisson12)
+
+
+#Time intervals for 0->1 and 0->2 transitions (censoring at 1509 days)
+time0h_int <- unique(c(intervals01, intervals02, cens_outof0))
+#Time intervals for 1->2 transitions (censoring duration in state 1 after 1363)
+time12_int <- unique(c(intervals12, cens_wait))
+
+
+#Microsimulation function. 'N' is number of subjects to simulate, 'seed' is random seed and 
+#if 'sample = TRUE' new parameters for the Poisson models are drawn from 
+# multivariate normal distributions
+microsim_fct <- function(N, seed, sample = FALSE){
+  set.seed(seed) #Setting the random seed 
+  glm01 <- beta01 #Original alpha01 hazard
+  glm02 <- beta02 #Original alpha02 hazard
+  glm12 <- beta12 #Original alpha12 hazard
+  #Drawing new parameter values
+  if (sample == TRUE){
+    glm01 <- as.numeric(MASS::mvrnorm(1, mu = beta01, Sigma = sigma01))
+    glm02 <- as.numeric(MASS::mvrnorm(1, mu = beta02, Sigma = sigma02))
+    glm12 <- as.numeric(MASS::mvrnorm(1, mu = beta12, Sigma = sigma12))}
+  #Setting up the hazard functions
+  ch01 <- sapply(time0h_int, cumhaz01, model01 = glm01) #A01 for Poisson model with parameter values glm01
+  ch02 <- sapply(time0h_int, cumhaz02, model02 = glm02) #A02 for Poisson model with parameter values glm02
+  cum0h_inv <- approxfun(time0h_int ~ (ch01 + ch02)) #Inverse function of A01 + A02
+  ch12 <- sapply(time12_int, cumhaz12, model12 = glm12) #A12(t) for model with parameter values glm12
+  cum12_inv <- approxfun(time12_int ~ ch12) #Inverse function of A12
+  alpha01 <- function(t){as.numeric(exp(glm01[length(intervals01[intervals01 < t])]))} #alpha01 for Poisson model with parameter values glm01 
+  alpha02 <- function(t){as.numeric(exp(glm02[length(intervals02[intervals02 < t])]))} #alpha02 for Poisson model with parameter values glm02
+  #Initializing the data frame 
+  sim_prova <-  prova[1,1:14]
+  sim_prova[1,1:14] <- NA
+  sim_prova <- dplyr::select(sim_prova, id, bleed,death, outof0, timebleed, timedeath, wait)
+  sim_prova <- do.call("rbind", replicate(N, sim_prova, simplify = FALSE))
+  sim_prova$id <- 1:N
+  colnames(sim_prova) <- c("id","bleed","death", "cens", "time0h", "time12", "dur1")
+  #The actual simulation
+  for (i in 1:N){
+    u <- -log(runif(n = 1,min = 0, max =1)) #-log(S(t))
+    sim_prova$time0h[i] <- cum0h_inv(u) #t, time of transition out of state 0 for subject i
+    if (is.na(sim_prova$time0h[i])){ #In case time0h > 4.13 (censoring time)
+      sim_prova$time0h[i] <- cens_outof0
+      sim_prova$cens[i] <- 1}
+    else{
+      hazard01 <- alpha01(cum0h_inv(u)) #alpha01(t)
+      hazard02 <- alpha02(cum0h_inv(u)) #alpha02(t)
+      if (hazard02/(hazard01 + hazard02) >= runif(1, min = 0, max = 1)) #Choosing 0->2 with probability alpha_02(t)/(alpha_01(t) + alpha_02(t))
+      {sim_prova$death[i] <- 1}
+      else{
+        sim_prova$bleed[i] <- 1
+        u2 <- -log(runif(n =1, min = 0, max = 1)) #-log(S(t))
+        sim_prova$dur1[i] <- cum12_inv(u2) #t2, length of stay in state 1 for subject i.
+        sim_prova$time12[i] <- sim_prova$dur1[i] +sim_prova$time0h[i] #time of 1->2 (since randomization)
+        if (is.na(sim_prova$dur1[i])){ #If duration in state 1 > 3.73 (censoring time)
+          sim_prova$dur1[i] <- cens_wait
+          sim_prova$time12[i] <- min((sim_prova$time0h[i] + cens_wait), cens_outof0) #If time12 > 4.13, time12 = 4.13 (censoring)
+          sim_prova$cens[i] <- 1}
+        else{ 
+          if (sim_prova$time12[i] > cens_outof0){
+            sim_prova$time12[i] <- cens_outof0 #Censoring if time12 > 4.13
+            sim_prova$cens[i] <- 1}
+          else{
+            sim_prova$death[i] <- 1}}}}}
+  return(sim_prova)}
+
+
+# Double generation procedure for variance estimate of Q1(t) (described in section 5.4).
+Q1_sd <- function(N,B,t, sd = FALSE){ #Default is to return variance, not SD estimate
+  Q1b <- matrix(NA,nrow =B, ncol = length(t))
+  SD1b <- matrix(NA,nrow =B, ncol = length(t))
+  res <- matrix(ncol = 2, nrow = length(t))
+  rownames(res) <- t
+  for (i in 1:B){
+    sim <- microsim_fct(N,i, sample = TRUE)
+    for (j in 1:length(t)){
+      Y1 <-  nrow(subset(subset(subset(sim, bleed ==1), time0h < t[j]), time12>t[j]))
+      Q1b[i,j] <- Y1/N
+      SD1b[i,j] <- (1/(N*(N-1)))*(Y1*(1-Q1b[i,j])^2 + (N-Y1)*Q1b[i,j]^2)}}
+  for (j in 1:length(t)){
+    Q1hat <- mean(Q1b[,j])
+    SD1 <- (1/(B*(B-1)))*sum((Q1b[,j] - Q1hat)^2)
+    var_Q1hat <- SD1 + (1/B)*sum(SD1b[,j])
+    res[j,] <- c(Q1hat, var_Q1hat)
+    colnames(res) <- c("Qhat", "Var")
+    if (sd == TRUE){
+      res[j,] <- c(Q1hat, sqrt(var_Q1hat))
+      colnames(res) <- c("Qhat", "SD")}}
+  return(res)}
+
+#Function returning list of B estimates of Q1(2) each based on simulation of N subjects 
+Q1_hist2 <- function(N,B){
+  Q1b <- rep(0, length(B))
+  for (i in 1:B){
+    sim <- microsim_fct(N,i, sample = TRUE)
+    Y1 <-  nrow(subset(subset(subset(sim, bleed ==1), time0h < s2), time12> s2))
+    Q1b[i] <- Y1/N}
+  return(Q1b)}
+
+
+#Expected length of stay in state 1, epsilon1(tau)
+sim_prova <- microsim_fct(N = 10000, seed = 1)
+
+MS_ELOS <- function(tau,N, seed){
+  bleed_sub <- subset(subset(sim_prova, bleed ==1), time0h < tau)
+  t12 <- pmin(tau, bleed_sub$time12) #returns minimum of tau and time12 for each simulated subject
+  t01 <- bleed_sub$time0h
+  return((1/nrow(sim_prova))*sum(t12 - t01))}
+
+######################### MICROSIMULATION INCLUDING SCLEROTHERAPY AS COVARIATE #########################################################################
+
+#Poisson model for alpha01
+poisson01_scle <- glm(case.bleed ~ tsr.cat + offset(log(pyar)) +  factor(scle) -1 , family = poisson(), data = subset(SplitLexis01, lex.Cst == "NoBleeding"))
+
+#Poisson model for alpha02
+poisson02_scle <- glm(case.dead ~ tsr.cat -1 + offset(log(pyar)) + factor(scle) , family = poisson(), data = subset(SplitLexis02, lex.Cst == "NoBleeding"))
+
+#Poisson model for alpha12
+poisson12_scle <- glm(case.deadb ~ tsb.cat -1 + offset(log(pyar)) + factor(scle), family = poisson(), data = subset(SplitLexis12, lex.Cst == "Bleeding"))
+
+#Cumulative hazard function, A01(t) = \int_0^t alpha01(u)du for Poisson model of 0->1 
+#transition, model01, with  covariate scle \in {0,1}.
+# Time since randomization as time axis
+cumhaz01_scle <- function(model01 ,t, scle){
+  times <- intervals01[intervals01 < t] #time intervals up to time t where A01 is constant
+  n <- length(times)
+  if (n <= 1){ #If 0 or 1 interval
+    if (scle == 0){
+      chz <- exp(model01[1])*t}
+    else {chz <- exp(model01[1])*t*exp(model01[18])}}
+  else{ #If two or more intervals
+    length_int <- diff(times) #length of intervals
+    if (scle == 0){
+      chz <- sum(length_int*exp(model01[1:(n-1)])) + exp(model01[n])*(t - sum(length_int))} #sum(alpha01*len_int), scle = 0 
+    else{chz <- sum(length_int*exp(model01[1:(n-1)])*exp(model01[18])) + exp(model01[n])*exp(model01[18])*(t - sum(length_int))}} #sum(alpha01*len_int), scle =1
+  return(as.numeric(chz))}
+
+#Cumulative hazard function, A02(t) = \int_0^t alpha02(u)du for Poisson model of 0->2 
+#transition, model02, with  covariate scle \in {0,1}. 
+# Time since randomization as time axis
+cumhaz02_scle <- function(model02, t, scle){
+  times <- intervals02[intervals02 < t] #time intervals up to time t where A02 is constant
+  n <- length(times)
+  if (n <= 1){ #If 0 or 1 interval
+    if (scle == 0){
+      chz <- exp(model02[1])*t}
+    else {chz <- exp(model02[1])*t*exp(model02[17])}}
+  else{ #If two or more intervals
+    length_int <- diff(times) #length of intervals
+    if (scle == 0){
+      chz <- sum(length_int*exp(model02[1:(n-1)])) + exp(model02[n])*(t - sum(length_int))} #sum(alpha02*len_int), scle = 0
+    else{chz <- sum(length_int*exp(model02[1:(n-1)])*exp(model02[17])) + exp(model02[n])*exp(model02[17])*(t - sum(length_int))}} #sum(alpha02*len_int), scle = 1
+  return(as.numeric(chz))}
+
+#Cumulative hazard function, A12(t) = \int_0^t alpha12(u)du for Poisson model of 1->2 
+#transition, model12, with  covariate scle \in {0,1}
+# Duration in state 1 as time axis
+cumhaz12_scle <- function(model12, t, scle){
+  times <- intervals12[intervals12 < t] #time intervals up to time t where A12 is constant
+  n <- length(times)
+  if (n <= 1){
+    if (scle == 0){ #If 0 or 1 interval
+      chz <- exp(model12[1])*t}
+    else {chz <- exp(model12[1])*t*exp(model12[11])}}
+  else{ #If two or more intervals
+    length_int <- diff(times) #length of intervals
+    if (scle == 0){
+      chz <- sum(length_int*exp(model12[1:(n-1)])) + exp(model12[n])*(t - sum(length_int))} #sum(alpha12*len_int), scle = 0
+    else{chz <- sum(length_int*exp(model12[1:(n-1)])*exp(model12[11])) + exp(model12[n])*exp(model12[11])*(t - sum(length_int))}} #sum(alpha12*len_int), scle = 1
+  return(as.numeric(chz))}
+
+#Estimates and covariance matrix for alpha01 
+beta01_scle <- summary(poisson01_scle)$coefficients[,1]
+sigma01_scle <- vcov(poisson01_scle)
+
+#Estimates and covariance matrix for alpha02 
+beta02_scle <- summary(poisson02_scle)$coefficients[,1]
+sigma02_scle <- vcov(poisson02_scle)
+
+#Estimates and covariance matrix for alpha12 
+beta12_scle <- summary(poisson12_scle)$coefficients[,1]
+sigma12_scle <- vcov(poisson12_scle)
+
+#Microsimulation function. 'N' is number of subjects to simulate, 'seed' is random seed and 
+#if 'sample = TRUE' new parameters for the Poisson models are drawn from 
+# multivariate normal distributions. 'scle' is binary covariate indicating treatment with (1)
+# or without (0) sclerotherapy
+microsim_fct_scle <- function(N, seed, scle,sample = FALSE){
+  set.seed(seed) #Setting the random seed
+  glm01 <- beta01_scle #Original alpha01 hazard
+  glm02 <- beta02_scle #Original alpha02 hazard
+  glm12 <- beta12_scle #Original alpha12 hazard
+  #Drawing new parameter values
+  if (sample == TRUE){
+    glm01 <- as.numeric(MASS::mvrnorm(1, mu = beta01_scle, Sigma = sigma01_scle)) 
+    glm02 <- as.numeric(MASS::mvrnorm(1, mu = beta02_scle, Sigma = sigma02_scle))
+    glm12 <- as.numeric(MASS::mvrnorm(1, mu = beta12_scle, Sigma = sigma12_scle))}
+  #Setting up the hazard functions
+  ch01 <- sapply(time0h_int, cumhaz01_scle, model01 = glm01, scle = scle) #A01 for Poisson model with parameter values glm01
+  ch02 <- sapply(time0h_int, cumhaz02_scle, model02 = glm02, scle = scle) #A02 for Poisson model with parameter values glm02
+  cum0h_inv <- approxfun(time0h_int ~ (ch01 + ch02)) #Inverse function of A01 + A02
+  ch12 <- sapply(time12_int, cumhaz12_scle, model12 = glm12, scle = scle) #A12 for Poisson model with parameter values glm12
+  cum12_inv <- approxfun(time12_int ~ ch12) #Inverse function of A12
+  if (scle == 0){ #Subjects not given sclerotherapy 
+    alpha01 <- function(t){as.numeric(exp(glm01[length(intervals01[intervals01 < t])]))} #alpha01 for Poisson model with parameter values glm01 
+    alpha02 <- function(t){as.numeric(exp(glm02[length(intervals02[intervals02 < t])]))}} #alpha02 for Poisson model with parameter values glm02
+  else { #Subjects given sclerotherapy
+    alpha01 <- function(t){as.numeric(exp(glm01[length(intervals01[intervals01 < t])])*exp(glm01[18]))} #alpha01 for Poisson model with parameter values glm01 
+    alpha02 <- function(t){as.numeric(exp(glm02[length(intervals02[intervals02 < t])])*exp(glm02[17]))}} #alpha02 for Poisson model with parameter values glm02 
+  #Making the data frame
+  sim_prova <-  prova[1,1:14]
+  sim_prova[1,1:14] <- NA
+  sim_prova <- dplyr::select(sim_prova, id, bleed, death, outof0, timebleed, timedeath, wait)
+  sim_prova <- do.call("rbind", replicate(N, sim_prova, simplify = FALSE))
+  sim_prova$id <- 1:N
+  colnames(sim_prova) <- c("id","bleed","death", "cens", "time0h", "time12", "dur1")
+  #The actual simulation
+  for (i in 1:N){
+    u <- -log(runif(n = 1,min = 0, max =1)) #-log(S(t))
+    sim_prova$time0h[i] <- cum0h_inv(u) #t, time of transition out of state 0
+    if (is.na(sim_prova$time0h[i])){ #In case time0h > 4.13 (censoring time)
+      sim_prova$time0h[i] <- cens_outof0
+      sim_prova$cens[i] <- 1}
+    else{
+      hazard01 <- alpha01(cum0h_inv(u)) #alpha01(t)
+      hazard02 <- alpha02(cum0h_inv(u)) #alpha02(t)
+      if (hazard02/(hazard01 + hazard02) >= runif(1, min = 0, max = 1)) #Choosing 0->2 with probability alpha_02(t)/(alpha_01(t) + alpha_02(t))
+      {sim_prova$death[i] <- 1}
+      else{
+        sim_prova$bleed[i] <- 1
+        u2 <- -log(runif(n =1, min = 0, max = 1)) #-log(S(t))
+        sim_prova$dur1[i] <- cum12_inv(u2) #t2, length of stay in state 1 for subject i.
+        sim_prova$time12[i] <- sim_prova$dur1[i] +sim_prova$time0h[i] #time of 1->2 (since randomization)
+        if (is.na(sim_prova$dur1[i])){
+          sim_prova$dur1[i] <- cens_wait #If duration in state 1 > 3.73 (censoring time)
+          sim_prova$time12[i] <- min((sim_prova$time0h[i] + cens_wait), cens_outof0)  #If time12 > 4.13, time12 = 4.13 (censoring)
+          sim_prova$cens[i] <- 1}
+        else{ 
+          if (sim_prova$time12[i] > cens_outof0){
+            sim_prova$time12[i] <- cens_outof0 #Censoring if time12 > 4.13
+            sim_prova$cens[i] <- 1}
+          else{
+            sim_prova$death[i] <- 1}}}}}
+  return(sim_prova)}
+
+#Function calculation the value of Q1(t) for B micro-simulation data sets each 
+#containing N path, and the covariate value of scle \in {0,1}.
+Q1_hist2_scle <- function(N,B, scle){
+  Q1b <- rep(0, length(B))
+  for (i in 1:B){
+    sim <- microsim_fct_scle(N,i, sample = TRUE, scle = scle)
+    Y1 <-  nrow(subset(subset(subset(sim, bleed ==1), time0h < s2), time12>s2))
+    Q1b[i] <- Y1/N}
+  return(Q1b)}
+
+################################ P01(1,t) LANDMARK PEPE ################################################################################################
+
+#S_01, Kaplan-Meier for being in state 0 or 1 among patients in state 0 at time 1 year
+S01_s1 <- survfit(Surv(timedeath, death) ~1, data = prova[timebleed > s1]) 
+S01_s1_table <- as.data.table(cbind(S01_s1$time, S01_s1$surv))
+#S_0, Kaplen-Meier for being in state 0 among patients in state 0 at time 1 year
+S0_s1 <- survfit(Surv(timebleed, outof0)~1, data = prova[timebleed > s1]) 
+S0_s1_table <- as.data.table(cbind(S0_s1$time, S0_s1$surv))
+
+#S_01(t) - S_0(t) among subjects in state 0 at time 1 year
+pepe01_s1 <- function(t){ 
+  S01t <- S01_s1_table$V2[nrow(S01_s1_table[V1 <= t])]
+  S0t <- S0_s1_table$V2[nrow(S0_s1_table[V1 <= t])]
+  if (length(S01t) == 0){S01t <- 1}
+  if (length(S0t) == 0){S0t <-1}
+  Pepe_est <- S01t - S0t
+  return(Pepe_est)}
+
+################################## P01(1,t) LANDMARK TITMAN ##############################################################################################
+
+#P(X(t) =1 | Z_s(1) = 0, X(1) = 0)
+little_p_hat_s1 <- function(t){
+  numerator <- prova[bleed ==1 & timebleed > s1 & timebleed < t & timedeath > t] #patients in state 1 at time t among patients in state 0 at time 1
+  denominator <- prova[timebleed > s1 & timedeath > t] #patients under observation in state 0 or 1 at time t among patients at state 0 at time 1
+  frac <- nrow(numerator)/nrow(denominator)
+  return(frac)}
+
+#Titman P_01(1,t)
+titman01_s1 <- function(end){
+  S01t <- S01_s1_table$V2[nrow(S01_s1_table[V1 <= end])]
+  if (length(S01t) == 0){S01t <- 1}
+  titman <- S01t*little_p_hat_s1(end)
+  return(titman)}
+
+############################### P_00(1,u -)*alpha_01(u) #########################################################################################
+
+# Y0, patients in state 0 at time t-
+patients_in_0 <- function(t){
+  return(nrow(prova[timebleed > (t - 0.0000001)]))}
+
+#P_00(s,u-) = S0(u-)/S0(s), where S0(x) is Kaplan-Meier estimator for being in state 0 at time x
+p00 <- function(start, end){
+  exits <- prova[outof0 ==1 & timebleed > start & timebleed <=(end - 0.000001)]$timebleed #Event times where patients leave state 0
+  if (length(exits) == 0){prob <- 1}
+  else{
+    exits_unique <- data.table(table(exits)) #Table with unique event times and number of patients leaving
+    Y0 <- sapply(as.numeric(as.character(exits_unique$exits)), patients_in_0)
+    frac <- (1 - exits_unique$N/Y0)
+    prob <- prod(frac)}
+  return(prob)}
+
+# alpha01(u) = dN01(u)/Y0(u)
+alpha01 <- function(u){ 
+  dN01 <- nrow(prova[timebleed == u & bleed == 1])
+  Y0 <- patients_in_0(u)
+  return(dN01/Y0)}
+
+# Time of 0 -> 1 transitions after 1 year
+time01 <- sort(unique(prova[timebleed > s1 & bleed == 1]$timebleed))
+
+# Matrix where 1st column is times for 0 -> 1 transition, u,
+# and 4th column is P00(1,u -)*alpha01(u)
+p00alpha01 <- matrix(NA, nrow = length(time01), ncol = 4)
+p00alpha01[, 1] <- time01 #u, times of 0->1 transitions after 1 year
+p00alpha01[, 2] <- sapply(p00alpha01[,1], p00, start = s1) #P00(1,u -)
+p00alpha01[, 3] <- sapply(p00alpha01[,1], alpha01) #alpha01(u)
+p00alpha01[, 4] <- p00alpha01[,2]*p00alpha01[,3] #P00(1,u -)*alpha01(u)
+
+
+################################# P01(1,t) SEMI-MARKOV ESTIMATOR #######################################################################################
+
+# Y*1(d), patients with duration in state 1 longer than d-
+patients_in_1_dur <- function(d){
+  return(nrow(prova[bleed ==1 & wait > d - 0.000001]))}
+
+# P_11(u,t) under semi-Markov assumption, i.e. Kaplan-Meier estimator with duration
+# in state 1 as time
+p11_semi <- function(d){ #d represents duration in state 1
+  exits <- prova[bleed ==1 & death == 1 & wait <=d]$wait #d | dN_12(d) > 0
+  if (length(exits) == 0) {prob <- 1}
+  else{
+    exits_unique <- data.table(table(exits)) #table with d and dN_12(d) > 0
+    Y1 <- sapply(as.numeric(as.character(exits_unique$exits)), patients_in_1_dur) #Y*1(d-)
+    frac <- (1 - exits_unique$N/Y1)
+    prob <- prod(frac)}
+  return(prob)}
+
+#P_01(1,t) under semi-Markov assumption
+semi01 <- function(end){
+  u <- p00alpha01[, 1][p00alpha01[, 1] <= end] #Times in (1,t] where alpha01 > 0
+  if (length(u) == 0){prob01 <- 0} #In case no one bleeds in interval (1,end]
+  else{
+    p01 <- p00alpha01[, 4][p00alpha01[, 1] <= end] #Vector with P_00(1,u-)alpha(u)
+    duration <- (end - u) #Vector with duration in state 1
+    p11 <- sapply(duration, p11_semi) #Vector with P_11(u,t)
+    prob01 <- sum(p01*p11)} # P_00(1,u-)alpha(u)*P_11(u,t)
+  return(prob01)}
+
+
+############# P01(1,t) WITH A PIECEWISE CONSTANT EFFECT OF WAIT (0-5 days, 5-10 days, +10 days) ######################################################################
+
+# Creating new data for estimation with piecewise constant effect of duration in state 1
+# Splitting data set at wait < 5 days, wait \in [5,10) days and wait <=10 days
+data_pcw <- survSplit(Surv(wait, death) ~ ., data = prova[bleed ==1], episode = "time_interval", cut = c((5-0.00001),(10-0.00001)))
+# Making +10days reference
+data_pcw$time_interval[data_pcw$time_interval == 3] <- 0
+# Resetting start and end points of interval
+data_pcw$bleed_time <- data_pcw$tstart + data_pcw$timebleed
+data_pcw$death_time <- data_pcw$wait + data_pcw$timebleed
+
+# Cox model
+cox_pcw <- coxph(Surv(bleed_time, death_time, death) ~ factor(time_interval), data= data_pcw, ties = "breslow") 
+
+# Estimated betas
+beta_before5 <- summary(cox_pcw)$coefficients[1] # <5 days
+beta_5to10 <- summary(cox_pcw)$coefficients[2] # [5,10) days
+
+# Baseline cumulative hazard, i.e. for +10 days
+cumhaz_pcw_table <- rbind(c(0,0),basehaz(cox_pcw, centered = FALSE)) 
+cumhaz_pcw <- function(t){
+  x <- tail(cumhaz_pcw_table[which(cumhaz_pcw_table$time <= t), ]$hazard, n = 1)
+  return(x)}
+
+# P_11(s,t) for Cox model with piecewise constant effect of wait
+prob11_pcw <- function(start,end){
+  if (end - start < 5){ #duration in state 1 for (0,5) days
+    haz <- exp(beta_before5)*(cumhaz_pcw(end) - cumhaz_pcw(start))}
+  else if ((end - start >= 5) & (end - start  < 10)){ #duration in state 1 for [5,10) days
+    haz_to5 <- exp(beta_before5)*(cumhaz_pcw(start + 5 - 0.000001) - cumhaz_pcw(start))
+    haz_5to_end <- exp(beta_5to10)*(cumhaz_pcw(end) - cumhaz_pcw(start + 5))
+    haz <- haz_to5 + haz_5to_end}
+  else { #duration in state 1 longer than 10 days
+    haz_to5 <- exp(beta_before5)*(cumhaz_pcw(start + 5 - 0.000001) - cumhaz_pcw(start))
+    haz_5to10 <- exp(beta_5to10)*(cumhaz_pcw(start + 10 - 0.000001) - cumhaz_pcw(start + 5))
+    haz_plus10 <- (cumhaz_pcw(end) - cumhaz_pcw(start + 10))
+    haz <- haz_to5 + haz_5to10 + haz_plus10}
+  return(exp(-haz))}
+
+#P_01(1,t) with t as baseline and piece-wise constant effect of wait
+pcw01 <- function(end){
+  u <- p00alpha01[, 1][p00alpha01[, 1] <= end] #Times in (1,t] where alpha01 > 0
+  if (length(u) == 0){prob01 <- 0} #In case no one bleeds in interval (start,end]
+  else {
+    p01 <- p00alpha01[, 4][p00alpha01[, 1] <= end] # P_00(s,u-)alpha01(u)
+    p11 <- sapply(u, prob11_pcw, end = end) #P_11(u,t)
+    prob01 <- sum(p01*p11)} # P_00(s,u-)alpha01(u)*P_11(u,t)
+  return(prob01)}
+
+
+
+################################ P01(1,t) LINEAR EFFECT OF WAIT ######################################################################################
+
+# Cox model with linear effect of duration in state 1 as time-dependent covariat
+cox_lwe <- coxph(Surv(timebleed, timedeath, death) ~ tt(timebleed), tt = function(x,t, ...) t - x, data = prova[bleed ==1], ties = "breslow")
+
+#Estimated value of beta
+beta_lwe <- coefficients(cox_lwe)[1]
+
+#Breslow estimator
+deaths_after_bleeding <- prova[bleed ==1 & death ==1] # Subset of data only containing subjects with 1->2 transition
+times12 <- sort(unique(deaths_after_bleeding$timedeath)) # Time of 1->2 transition
+haz_lw <- rep(0,length(times12)) # Initializing vector for elements dN12(u)/sum(Y_i1(u)*exp(beta_hat*(u - T_01i)))
+for (i in 1:length(times12)){
+  dN12 <- nrow(subset(deaths_after_bleeding, timedeath == times12[i]))
+  at_risk <- prova[bleed ==1 & timebleed < times12[i] & timedeath > (times12[i] - 0.000001)]
+  weighted_risk <- sum(exp(beta_lwe*(times12[i] - at_risk$timebleed)))
+  haz_lw[i] <- dN12/weighted_risk}
+breslow_table_lwe <- as.data.table(cbind(times12, haz_lw))
+
+#P_11(u,t|u) with linear effect of wait
+prob11_lwe <- function(start,end){
+  alphas <- breslow_table_lwe[which(breslow_table_lwe$times12 > start & breslow_table_lwe$times12 <= end), ] #alpha12(x) > 0 for x in (start,end]
+  covariates <- exp(beta_lwe*(alphas$times12 - start)) #exp(beta_hat*(x - start))
+  p11 <- exp(-(sum(alphas$haz_lw*covariates)))
+  return(p11)}
+
+#P_01(1,t) with linear effect of wait
+lw01 <- function(end){
+  u <- p00alpha01[, 1][p00alpha01[, 1] <= end] #Times in (1,t] where alpha01 > 0
+  if (length(u) == 0){prob01 <- 0} # In case no one bleeds in interval (start,end]
+  else {
+    p01 <- p00alpha01[, 4][p00alpha01[, 1] <= end] # P_00(s,u-)alpha01(u)
+    p11 <- sapply(u, prob11_lwe, end = end) # P_11(u,t)
+    prob01 <- sum(p01*p11)} # P_00(s,u-)alpha01(u)*P_11(u,t)
+  return(prob01)}
+
+########################## P01(1,t) DETAILED EFFECT OF WAIT ####################################################################################################################
+
+# Cox model with detailed effect of duration in state 1 (d) as covariate (d + d^2 + d^3 + log(d))
+cox_dwe <- coxph(Surv(timebleed, timedeath, death) ~ tt(timebleed), tt = function(x,t, ...){
+  dur <- t - x
+  cbind(dur = dur, dur2 = dur^2, dur3 = dur^3, logdur = log(dur))}, data = prova[bleed ==1], ties = "breslow")
+
+# Estimated values of beta
+beta_wait <- as.numeric(coefficients(cox_dwe)[1])
+beta_wait2 <- as.numeric(coefficients(cox_dwe)[2])
+beta_wait3 <- as.numeric(coefficients(cox_dwe)[3])
+beta_logwait <- as.numeric(coefficients(cox_dwe)[4])
+
+#Breslow estimator, table
+haz_dw <- rep(0,length(times12)) #initializing vector for elements dN12(u)/sum(Y_i1(u)*exp(beta_wait*(u - T_01i) + beta_wait2*(u - T_01i)^2 + beta_wait3*(u - T_01i)^3 + beta_logwait*log(u-T_01i)))
+for (i in 1:length(times12)){
+  dN12 <- nrow(subset(deaths_after_bleeding, timedeath == times12[i])) #number of 1->2 at times12[i]
+  at_risk <- prova[bleed ==1 & timebleed < times12[i] & timedeath > (times12[i] - 0.00001)] #patients at risk of dying in state 1 at times12[i]-
+  weighted_risk <- sum(exp(beta_wait*(times12[i] - at_risk$timebleed) + beta_wait2*(times12[i] - at_risk$timebleed)^2 + beta_wait3*(times12[i] - at_risk$timebleed)^3 + beta_logwait*log(times12[i] - at_risk$timebleed)))
+  haz_dw[i] <- dN12/weighted_risk}
+breslow_table_dwe <- as.data.table(cbind(times12, haz_dw))
+
+#P_11(s,t|s) with wait effect for person bleeding at time s
+prob11_dwe <- function(start,end){
+  alphas <- breslow_table_dwe[which(breslow_table_dwe$times12 <= end & breslow_table_dwe$times12 > start), ] #alpha12(u) > 0 for x in (start, end)
+  covariates <- exp(beta_wait*(alphas$times12 - start) + beta_wait2*((alphas$times12 - start)^2) + beta_wait3*((alphas$times12 - start)^3) + beta_logwait*log(alphas$times12 - start)) #exp(beta_wait*(x - start) + beta_wait2(x-start)^2 + beta_wait3(x-start)^3 + beta_logwait*log(x - start))
+  p11 <- exp(-(sum(alphas$haz_dw*covariates)))
+  return(p11)}
+
+#P_01(s,t) with detailed effect of wait
+dw01 <- function(end){
+  u <- p00alpha01[, 1][p00alpha01[, 1] <= end]
+  if (length(u) == 0){prob01 <- 0} #In case no one bleeds in interval (start,end]
+  else {
+    p01 <- p00alpha01[, 4][p00alpha01[, 1] <= end] #P_00(s,u-)alpha01(u)
+    p11 <- sapply(u, prob11_dwe, end = end) #P_11(u,t)
+    prob01 <- sum(p01*p11)}
+  return(prob01)}
+
+
+################################################## Table 5.4 ###########################################################################
+
+# Estimation of transition probabilities (Q_1(t)) under Markov assumption
+AaJ_Q1_data <- probtrans(msfit, predt = 0)[[1]] #P(V(t) = 1 | V(1) = 0)
+AaJ_Q1_data <- as.data.frame(cbind(AaJ_Q1_data$time, AaJ_Q1_data$pstate2, AaJ_Q1_data$se2, "AaJ"))
+
+#Function returning Q1(t) and SD based on the Aalen Johansen estimator
+AaJ_Q1_function <- function(t){
+  x <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V2, n = 1)
+  y <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V3, n = 1)
+  return(c(x,y))}
+
+# Q1(t) for t \in {0.5,1,...,4}
+time_s1 <- seq(0.5,4.,0.5)*365.25
+AaJ_Q1 <- t(sapply(time_s1, AaJ_Q1_function))
+rownames(AaJ_Q1) <- time_s1
+colnames(AaJ_Q1) <- c("Q1(t) estimate", "SD")
+
+
+# SD estimate for Q1(t) based on micro-simulation for t \in {0.5,1,...,4}. 
+# Takes approximately 5 min
+MS_Q1_est <- Q1_sd(N = 1000,B = 1000,t = time_s1, sd = TRUE)
+
+#Making table in LaTeX format of SD estimates of Q1(t)
+tab54 <- cbind(AaJ_Q1, MS_Q1_est)
+colnames(tab54) <- c("AaJ_est", "AaJ_SD", "MS_est", "MS_SD")
+class(tab54) <- "numeric"
+
+#Table for LaTeX
+print(xtable(tab54, digits = c(1,3,3,3,4), caption = "Q_{1}(t), t > 0"), include.rownames = TRUE) #output for LaTeX
+
+################################################## Figure 5.5 ###########################################################################
+
+# N=B=1000 
+#Takes approx. 5 min
+#hist_Q1 <- Q1_hist2(1000,1000) 
+#hist_Q1 <- as.data.frame(hist_Q1)
+
+hist_Q1 <- read.csv("data/datafig55.csv")
+
+# Histogram of Q1(2) with ggplot
+fig55 <- ggplot() + geom_histogram(aes(x = hist_Q1$hist_Q1,y = stat(count) / sum(count)), fill = "grey", color = "black", bins = 30) +
+  theme_bw() + geom_vline(xintercept = mean(hist_Q1$hist_Q1), color = "black", size = 1, linetype = "dashed") +
+  ylab("Density") + xlab(expression(Q[1]*(2))) +
+  theme_general
+fig55
+
+
+ggsave("figures/j_hist(N=B=1000).pdf", plot = fig55,
+       width = 29.7, height = 21, units = "cm")
+
+
+################################################## Figure 5.6 ###########################################################################
+
+# Creating data
+# Takes approximately 2 minutes
+# time_elos <- seq(0,4*365.25,1)
+# elos_aj <- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))
+# elos_ms <- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) 
+
+#Plot comparing epsilon1(tau) based on AaJ and micro-simulation (based on N = 10.000)
+elos_aj <- read.csv("data/datafig56a.csv")
+elos_ms <- read.csv("data/datafig56b.csv")
+
+fig56 <- ggplot() +
+  geom_step(data = elos_aj, aes(x =time_elos/365.25, y = V2/365.25, linetype = "Aalen-Johansen"), size =0.9) + 
+  geom_line(data =elos_ms, aes(x = time_elos/365.25, y = V2/365.25, linetype = "Micro-simulation"), size =0.9)+ 
+  theme_bw()  + xlab("Time since randomization (years)") +
+  ylab(expression(epsilon[1] * (t))) +
+  theme_general +
+  scale_linetype_manual("Estimator", values = c("solid", "dashed")) +
+  theme(legend.position = "bottom",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 20),
+        legend.key.size = unit(1.5, 'cm'))
+fig56
+
+ggsave("figures/h_epsilon_plot.pdf", plot = fig56,
+       width = 29.7, height = 21, units = "cm")
+
+
+################################################## Figure 5.7 ###########################################################################
+
+# Data for histogram. 
+# Takes approx. 10 min
+# hist_Q1_scle0 <- Q1_hist2_scle(1000,1000, 0)
+# hist_Q1_scle1 <- Q1_hist2_scle(1000,1000, 1)
+
+hist_Q1_scle0 <- read.csv("data/datafig57a.csv")$x
+hist_Q1_scle1 <- read.csv("data/datafig57b.csv")$x
+
+fills <- c("0" = "lightgrey", "1" = "darkgrey")
+
+fig57 <- ggplot() + 
+  geom_histogram(aes(x = as.numeric(hist_Q1_scle1), y = stat(count) / sum(count), fill = "1"), color = "black", bins = 40) +
+  geom_vline(xintercept = mean(hist_Q1_scle1), color = "black", size = 1, linetype = "dashed") + 
+  geom_histogram(aes(x = as.numeric(hist_Q1_scle0), y = stat(count) / sum(count), fill = "0"), color = "black", bins = 40) +
+  geom_vline(xintercept = mean(hist_Q1_scle0), color = "black", size = 1, linetype = "dashed") + 
+  ylab("Density") + xlab(expression(Q[1]*(2 * " | " * Z))) + scale_fill_manual("Z", values = fills) + 
+  theme_general
+fig57
+
+
+ggsave("figures/j_hist_skle(2xN=B=1000).pdf", plot = fig57,
+       width = 29.7, height = 21, units = "cm")
+
+
+################################################## Figure 5.8 ###########################################################################
+
+# Estimation of transition probabilities under Markov assumption
+# (AaJ1 <- probtrans(msfit, predt = s1)[[1]]) #P(V(t) = 1 | V(1) = 0)
+# 
+# # Estimation of transition probabilities with the Landmark Aalen-Johansen estimator
+# # Warning is not related to the estimate of pstate2
+# (LMAaJ1 <- LMAJ(long_format, s = s1, from = 1)) #P(V(t) = 1 | V(1) = 0)
+# 
+# # Data for estimation of transition probabilities, from s =1
+# time_in_days <- seq(from = s1, to = 1508, by = 0.8)
+# pstate2_pepe <- sapply(time_in_days, pepe01_s1)
+# pstate2_titman <- sapply(time_in_days, titman01_s1)
+# 
+# # Making a data frame
+# pepe_data <- as.data.frame(cbind(time_in_days, pstate2_pepe, "LM Pepe"))
+# colnames(pepe_data) <- c("time", "p01", "estimator")
+# titman_data <- as.data.frame(cbind(time_in_days, pstate2_titman, "LM Titman"))
+# colnames(titman_data) <- c("time", "p01", "estimator")
+# AaJ_data <- as.data.frame(cbind(AaJ1$time, AaJ1$pstate2, "AaJ"))
+# colnames(AaJ_data) <- c("time", "p01", "estimator")
+# LMAaJ_data <- as.data.frame(cbind(LMAaJ1$time, LMAaJ1$pstate2, "LM AaJ"))
+# colnames(LMAaJ_data) <- c("time", "p01", "estimator")
+# 
+# data_LMs1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, pepe_data, titman_data))
+# colnames(data_LMs1) <- c("time","p01","estimator")
+# data_LMs1$time <- as.numeric(data_LMs1$time)
+# data_LMs1$p01 <- as.numeric(data_LMs1$p01)
+# data_LMs1$estimator <- factor(data_LMs1$estimator, levels = c("AaJ", "LM AaJ", "LM Pepe", "LM Titman"))
+
+data_LMs1 <- read.csv("data/datafig58.csv")
+
+# Figure 5.8 
+fig58 <- ggplot(data_LMs1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
+  geom_step(size = 1) +
+  xlab("Time since randomization (years)") +
+  ylab("Probability") + 
+  theme_classic() + border(size = 0.7) +
+  scale_x_continuous(expand = expansion(),limits = c(0.94,4.2)) +  
+  aes(linetype=estimator) + 
+  scale_linetype_manual(values = c("solid", "dashed", "dotted", "dotdash")) +
+  labs(linetype="Estimator") +
+  theme_general + 
+  theme(legend.key.width = unit(2,"cm"),
+        legend.title=element_blank(),
+        legend.text = element_text(size = 20)) + 
+  guides(linetype = guide_legend(nrow = 2, byrow = TRUE))
+fig58
+
+ggsave("figures/h_PROVA-LM-s1.pdf", plot = fig58,
+       width = 29.7, height = 21, units = "cm")
+
+
+################################################## Figure 5.9 ###########################################################################
+
+# Creating data frame
+# pstate2_semi <- sapply(time_in_days, semi01)
+# pstate2_tbase_pcwe <- sapply(time_in_days, pcw01)
+# pstate2_tbase_lwe <- sapply(time_in_days, lw01)
+# pstate2_tbase_dwe <- sapply(time_in_days, dw01)
+# 
+# semi_data <- as.data.frame(cbind(time_in_days, pstate2_semi, "Semi"))
+# colnames(semi_data) <- c("time", "p01", "estimator")
+# tbase_pcwe_data <- as.data.frame(cbind(time_in_days,pstate2_tbase_pcwe, "PWCD"))
+# colnames(tbase_pcwe_data) <- c("time", "p01", "estimator")
+# tbase_lwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_lwe, "LD"))
+# colnames(tbase_lwe_data) <- c("time", "p01", "estimator")
+# tbase_dwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_dwe, "FPD"))
+# colnames(tbase_dwe_data) <- c("time", "p01", "estimator")
+# 
+# data_dur1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, semi_data, tbase_pcwe_data, tbase_lwe_data, tbase_dwe_data))
+# colnames(data_dur1) <- c("time","p01","estimator")
+# data_dur1$time <- as.numeric(data_dur1$time)
+# data_dur1$p01 <- as.numeric(data_dur1$p01)
+# data_dur1$estimator <- factor(data_dur1$estimator, levels = c("AaJ", "LM AaJ", "Semi", "PWCD", "LD", "FPD"))
+
+
+data_dur1 <- read.csv("data/datafig59.csv")
+
+# Figure 5.9
+fig59 <- ggplot(data_dur1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
+  geom_step(size = 1) +
+  xlab("Time since randomization (years)") +
+  ylab("Probability") +
+  scale_x_continuous(expand = expansion(),limits = c(0.94,4.2)) +
+  aes(linetype=estimator) + 
+  scale_linetype_manual(values = c("solid", "twodash", "dotted", "longdash", "dotdash", "dashed")) +
+  labs(linetype="Estimator") +
+  theme_general + 
+  theme(legend.key.width = unit(3,"cm"),
+        legend.title=element_blank(),
+        legend.text = element_text(size = 20)) + 
+  guides(linetype = guide_legend(nrow = 2, byrow = TRUE))
+fig59
+
+ggsave("figures/h_PROVA-tbase+semi.pdf", plot = fig59,
+       width = 29.7, height = 21, units = "cm")
+

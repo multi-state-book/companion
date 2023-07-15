@@ -1,13 +1,15 @@
 # Preface {.unnumbered}
 
-This is the companion website to this book published by Chapman & Hall (link).
+This is the companion website to our book published by Chapman & Hall (link).
 
-R and SAS code for all the analyses presented in the book is available, except for analyses on the LEADER data. The plots in the book are created using R and available as presented in the book.
+R code for the analyses and plots presented in the book is given, except for analyses on the LEADER data. SAS code is available for the analyses only.
 
-**VI DROPPEDE SAS TEGNINGER, IKK?**
+Solutions to the exercises in the book are available at the end of each chapter.
 
-Solutions to the book exercises are available at the end of the chapters.
+The code is neither optimized nor prettified but we hope you will find them helpful anyway. 
+
+This companion was created with R version ..., Rstudio version ..., Quarto version ..., and SAS version ...
 
 ## Acknowledgements {.unnumbered}
 
-Julie Kjærulff Furberg and Eva
+Sincerely thanks to Julie K. Furberg who carefully created figures and validated analyses quoted in the book. Eva N.S. Wandall thoroughly created solutions to practical exercises and contributed to some of the examples.

@@ -1,0 +1,65 @@
+#------------------------------------------------------------------#
+#------- Chapter 5, R code, LEADER data ---------------------------#
+#------------------------------------------------------------------#
+
+# Set working directory - location of data
+setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
+
+# Load required packages (should be installed if not already)
+require(survival)
+require(ggplot2)
+require(timereg)
+require(gridExtra)
+require(mets)
+
+
+leader <- read.csv("data/leader_mi_3p.csv")
+
+# One data set per endpoint type
+leader_mi <- subset(leader, type == "recurrent_mi")
+leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
+
+#------------------------------------------------------------------#
+# -------- General plotting style ---------------------------------# 
+#------------------------------------------------------------------#
+
+# General theme
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom", 
+        text = element_text(size = 20), 
+        axis.text.x = element_text(size = 20), 
+        axis.text.y = element_text(size = 20)) 
+
+theme_general
+
+
+#------------------------------------------------------------------#
+#---------------- Table 5.7 ---------------------------------------#
+#------------------------------------------------------------------#
+
+# Make a small hack to make data ready for analysis
+
+# Death = 1, recurrent MI = 2, cens = 0
+leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
+leader_mi1 <- leader_mi
+leader_mi1$status <- ifelse(leader_mi1$status == 1, 2, leader_mi1$status)
+
+require(dplyr)
+leader_mi2 <- leader_mi %>% 
+              filter(death == 1) %>% 
+              mutate(start = stop, 
+                     stop = start + 1,
+                     status = 1)
+
+leader_mi_hack <- rbind(leader_mi1, leader_mi2) %>% arrange(id, start)
+head(leader_mi_hack, 10)
+
+require(Wcompo)
+
+mlfit <- CompoML(id = leader_mi_hack$id, 
+                 time = leader_mi_hack$stop, 
+                 status = leader_mi_hack$status, 
+                 Z = leader_mi_hack[,c("treat")])
+
+mlfit
+summary(mlfit)
