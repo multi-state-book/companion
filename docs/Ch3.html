@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -30,7 +93,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Ch4.html" rel="next">
 <link href="./Ch2.html" rel="prev">
 <link href="./corvos.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -121,32 +183,54 @@ ul.task-list li input[type="checkbox"] {
   <a href="./Ch3.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intensity models</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch4.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intuition for marginal models</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch5.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Marginal models</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch6.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pseudo-values</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Ch7.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#guinea-bissau-study" id="toc-guinea-bissau-study" class="nav-link active" data-scroll-target="#guinea-bissau-study">Guinea-Bissau study</a>
+  <ul class="collapse">
+  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
+  <li><a href="#table-3.1" id="toc-table-3.1" class="nav-link" data-scroll-target="#table-3.1">Table 3.1</a></li>
+  <li><a href="#table-3.2" id="toc-table-3.2" class="nav-link" data-scroll-target="#table-3.2">Table 3.2</a></li>
+  </ul></li>
+  <li><a href="#pbc3-trial" id="toc-pbc3-trial" class="nav-link" data-scroll-target="#pbc3-trial">PBC3 trial</a>
+  <ul class="collapse">
+  <li><a href="#read-data-1" id="toc-read-data-1" class="nav-link" data-scroll-target="#read-data-1">Read data</a></li>
+  <li><a href="#table-3.11" id="toc-table-3.11" class="nav-link" data-scroll-target="#table-3.11">Table 3.11</a></li>
+  </ul></li>
+  <li><a href="#prova-trial" id="toc-prova-trial" class="nav-link" data-scroll-target="#prova-trial">PROVA trial</a>
+  <ul class="collapse">
+  <li><a href="#read-data-2" id="toc-read-data-2" class="nav-link" data-scroll-target="#read-data-2">Read data</a></li>
+  <li><a href="#table-3.3" id="toc-table-3.3" class="nav-link" data-scroll-target="#table-3.3">Table 3.3</a></li>
+  <li><a href="#table-3.4" id="toc-table-3.4" class="nav-link" data-scroll-target="#table-3.4">Table 3.4</a></li>
+  <li><a href="#table-3.8" id="toc-table-3.8" class="nav-link" data-scroll-target="#table-3.8">Table 3.8</a></li>
+  <li><a href="#figure-3.2" id="toc-figure-3.2" class="nav-link" data-scroll-target="#figure-3.2">Figure 3.2</a></li>
+  <li><a href="#figure-3.3" id="toc-figure-3.3" class="nav-link" data-scroll-target="#figure-3.3">Figure 3.3</a></li>
+  <li><a href="#table-3.9" id="toc-table-3.9" class="nav-link" data-scroll-target="#table-3.9">Table 3.9</a></li>
+  <li><a href="#table-3.10" id="toc-table-3.10" class="nav-link" data-scroll-target="#table-3.10">Table 3.10</a></li>
+  <li><a href="#table-3.13" id="toc-table-3.13" class="nav-link" data-scroll-target="#table-3.13">Table 3.13</a></li>
+  <li><a href="#figure-3.9" id="toc-figure-3.9" class="nav-link" data-scroll-target="#figure-3.9">Figure 3.9</a></li>
+  </ul></li>
+  <li><a href="#testis-cancer" id="toc-testis-cancer" class="nav-link" data-scroll-target="#testis-cancer">Testis cancer</a>
+  <ul class="collapse">
+  <li><a href="#read-data-3" id="toc-read-data-3" class="nav-link" data-scroll-target="#read-data-3">Read data</a></li>
+  <li><a href="#figure-3.1" id="toc-figure-3.1" class="nav-link" data-scroll-target="#figure-3.1">Figure 3.1</a></li>
+  <li><a href="#table-3.5" id="toc-table-3.5" class="nav-link" data-scroll-target="#table-3.5">Table 3.5</a></li>
+  </ul></li>
+  <li><a href="#recurrent-episodes-in-affective-disorders" id="toc-recurrent-episodes-in-affective-disorders" class="nav-link" data-scroll-target="#recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</a>
+  <ul class="collapse">
+  <li><a href="#read-data-4" id="toc-read-data-4" class="nav-link" data-scroll-target="#read-data-4">Read data</a></li>
+  <li><a href="#table-3.6" id="toc-table-3.6" class="nav-link" data-scroll-target="#table-3.6">Table 3.6</a></li>
+  <li><a href="#table-3.7" id="toc-table-3.7" class="nav-link" data-scroll-target="#table-3.7">Table 3.7</a></li>
+  </ul></li>
+  <li><a href="#bone-marrow-transplantation-in-acute-leukemia" id="toc-bone-marrow-transplantation-in-acute-leukemia" class="nav-link" data-scroll-target="#bone-marrow-transplantation-in-acute-leukemia">Bone marrow transplantation in acute leukemia</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -168,8 +252,1598 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="guinea-bissau-study" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="guinea-bissau-study">Guinea-Bissau study</h2>
+<section id="read-data" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="read-data">Read data</h3>
+<div class="cell" data-hash="Ch3_cache/html/read-bissau_4704984d65e903bedb6db66572bbbd00">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables for age as time scale and dtp binary</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agein  <span class="ot">&lt;-</span> <span class="fu">with</span>(bissau, age<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>ageout <span class="ot">&lt;-</span> <span class="fu">with</span>(bissau, agein<span class="sc">+</span>fuptime<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>dtpany <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span><span class="fu">with</span>(bissau, dtp<span class="sc">&gt;</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="table-3.1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.1">Table 3.1</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.1_c75c10b1c73ddab6324dd9d4062b1c24">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+       0    1    2    3
+  0 1942   19    9    3
+  1 1159 1299  582  261</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp) <span class="sc">/</span> <span class="fu">rowSums</span>(<span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+             0          1          2          3
+  0 98.4287886  0.9630005  0.4561581  0.1520527
+  1 35.1105726 39.3517116 17.6310209  7.9066949</code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.2">Table 3.2</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.2_c16a0ee13613e4d5caf4cf677dfd3634">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(agein, ageout, dead != 0) ~ bcg, data = bissau, 
+    method = "breslow", timefix = F)
+
+       coef exp(coef) se(coef)      z      p
+bcg -0.3558    0.7006   0.1407 -2.529 0.0114
+
+Likelihood ratio test=6.28  on 1 df, p=0.01218
+n= 5274, number of events= 222 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(agein, ageout, dead != 0) ~ dtpany, data = bissau, 
+    method = "breslow", timefix = F)
+
+           coef exp(coef) se(coef)      z     p
+dtpany -0.03855   0.96218  0.14904 -0.259 0.796
+
+Likelihood ratio test=0.07  on 1 df, p=0.7958
+n= 5274, number of events= 222 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg<span class="sc">+</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(agein, ageout, dead != 0) ~ bcg + dtpany, 
+    data = bissau, method = "breslow", timefix = F)
+
+          coef exp(coef) se(coef)      z      p
+bcg    -0.5585    0.5720   0.1924 -2.902 0.0037
+dtpany  0.3286    1.3890   0.2021  1.625 0.1041
+
+Likelihood ratio test=9.01  on 2 df, p=0.01106
+n= 5274, number of events= 222 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg<span class="sc">*</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(agein, ageout, dead != 0) ~ bcg * dtpany, 
+    data = bissau, method = "breslow", timefix = F)
+
+              coef exp(coef) se(coef)      z       p
+bcg        -0.5764    0.5619   0.2023 -2.849 0.00439
+dtpany      0.1252    1.1334   0.7178  0.174 0.86151
+bcg:dtpany  0.2212    1.2475   0.7429  0.298 0.76595
+
+Likelihood ratio test=9.1  on 3 df, p=0.02796
+n= 5274, number of events= 222 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="pbc3-trial" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="pbc3-trial">PBC3 trial</h2>
+<section id="read-data-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="read-data-1">Read data</h3>
+<div class="cell" data-hash="Ch3_cache/html/read-pbc3_482837a36b5e1f7842db442011126406">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>years <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, days<span class="sc">/</span><span class="fl">365.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="table-3.11" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.11">Table 3.11</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.11_631771ea8a9c8f3ccbf34bdf742a1784">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment </span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>t, <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(tment), data = pbc3, tt = function(x, t, ...) (x == 1) * 
+    t, method = "breslow")
+
+              coef exp(coef) se(coef)      z        p
+tment     -0.65937   0.51718  0.40576 -1.625    0.104
+alb       -0.09136   0.91269  0.02167 -4.216 2.49e-05
+log2bili   0.66299   1.94059  0.07478  8.866  &lt; 2e-16
+tt(tment)  0.04497   1.04600  0.17811  0.253    0.801
+
+Likelihood ratio test=120.1  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(tment), data = pbc3, tt = function(x, t, ...) (x == 1) * 
+    log(t), method = "breslow")
+
+              coef exp(coef) se(coef)      z        p
+tment     -0.61330   0.54156  0.24327 -2.521   0.0117
+alb       -0.09152   0.91254  0.02163 -4.232 2.32e-05
+log2bili   0.66214   1.93894  0.07462  8.873  &lt; 2e-16
+tt(tment)  0.10834   1.11442  0.25424  0.426   0.6700
+
+Likelihood ratio test=120.2  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(tment), data = pbc3, tt = function(x, t, ...) (x == 1) * 
+    (t &gt; 2), method = "breslow")
+
+              coef exp(coef) se(coef)      z        p
+tment     -0.58773   0.55559  0.29228 -2.011   0.0443
+alb       -0.09104   0.91298  0.02168 -4.199 2.68e-05
+log2bili   0.66456   1.94363  0.07466  8.901  &lt; 2e-16
+tt(tment)  0.03169   1.03220  0.43384  0.073   0.9418
+
+Likelihood ratio test=120  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Albumin </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span>t, <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(alb), data = pbc3, tt = function(x, t, ...) x * t, method = "breslow")
+
+             coef exp(coef) se(coef)      z        p
+tment    -0.59080   0.55389  0.22472 -2.629 0.008562
+alb      -0.13296   0.87550  0.03998 -3.326 0.000882
+log2bili  0.66405   1.94265  0.07476  8.882  &lt; 2e-16
+tt(alb)   0.02317   1.02344  0.01854  1.250 0.211400
+
+Likelihood ratio test=121.6  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(alb), data = pbc3, tt = function(x, t, ...) x * log(t), 
+    method = "breslow")
+
+             coef exp(coef) se(coef)      z        p
+tment    -0.58958   0.55456  0.22460 -2.625  0.00867
+alb      -0.10194   0.90308  0.02349 -4.341 1.42e-05
+log2bili  0.66488   1.94425  0.07483  8.885  &lt; 2e-16
+tt(alb)   0.03347   1.03404  0.02561  1.307  0.19120
+
+Likelihood ratio test=121.8  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3,  <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(alb), data = pbc3, tt = function(x, t, ...) (x) * (t &gt; 
+    2), method = "breslow")
+
+             coef exp(coef) se(coef)      z       p
+tment    -0.59037   0.55412  0.22472 -2.627 0.00861
+alb      -0.11369   0.89254  0.02779 -4.091 4.3e-05
+log2bili  0.66488   1.94426  0.07470  8.901 &lt; 2e-16
+tt(alb)   0.05674   1.05838  0.04330  1.310 0.19005
+
+Likelihood ratio test=121.8  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log2 bilirubin</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span>t, <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(log2bili), data = pbc3, tt = function(x, t, ...) x * t, 
+    method = "breslow")
+
+                 coef exp(coef) se(coef)      z        p
+tment        -0.54631   0.57908  0.22571 -2.420   0.0155
+alb          -0.09009   0.91385  0.02173 -4.147 3.37e-05
+log2bili      0.77736   2.17571  0.13382  5.809 6.28e-09
+tt(log2bili) -0.06299   0.93895  0.06181 -1.019   0.3081
+
+Likelihood ratio test=121.1  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(log2bili), data = pbc3, tt = function(x, t, ...) x * log(t), 
+    method = "breslow")
+
+                 coef exp(coef) se(coef)      z        p
+tment        -0.55398   0.57466  0.22536 -2.458    0.014
+alb          -0.09050   0.91347  0.02170 -4.170 3.04e-05
+log2bili      0.68779   1.98931  0.07968  8.632  &lt; 2e-16
+tt(log2bili) -0.07701   0.92588  0.08780 -0.877    0.380
+
+Likelihood ratio test=120.8  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3,  <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(years, status != 0) ~ tment + alb + log2bili + 
+    tt(log2bili), data = pbc3, tt = function(x, t, ...) (x) * 
+    (t &gt; 2), method = "breslow")
+
+                 coef exp(coef) se(coef)      z        p
+tment        -0.54878   0.57765  0.22521 -2.437   0.0148
+alb          -0.09045   0.91352  0.02176 -4.157 3.22e-05
+log2bili      0.73519   2.08587  0.09487  7.750 9.22e-15
+tt(log2bili) -0.18232   0.83334  0.14910 -1.223   0.2214
+
+Likelihood ratio test=121.5  on 4 df, p=&lt; 2.2e-16
+n= 343, number of events= 88 
+   (6 observations deleted due to missingness)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="prova-trial" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="prova-trial">PROVA trial</h2>
+<section id="read-data-2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="read-data-2">Read data</h3>
+<div class="cell" data-hash="Ch3_cache/html/read-prova_64f29bce51cd7fefeb1eec4fd6552814">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment 2x2 factorial</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>prova<span class="sc">$</span>beh <span class="ot">&lt;-</span> <span class="fu">with</span>(prova, <span class="fu">as.factor</span>(scle <span class="sc">+</span> beta<span class="sc">*</span><span class="dv">2</span>))</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extra variables</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>provany <span class="ot">&lt;-</span> prova</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(provany, <span class="fu">log2</span>(bili))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>btime    <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, provany<span class="sc">$</span>timebleed, provany<span class="sc">$</span>timedeath)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>d0time   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, provany<span class="sc">$</span>timebleed, provany<span class="sc">$</span>timedeath)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>dead0    <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, provany<span class="sc">$</span>death)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>outof0   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, provany<span class="sc">$</span>death)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>bdtime   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, provany<span class="sc">$</span>timedeath, <span class="cn">NA</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>deadb    <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, provany<span class="sc">$</span>death, <span class="cn">NA</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>wait     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(provany<span class="sc">$</span>bleed <span class="sc">==</span> <span class="dv">1</span>, provany<span class="sc">$</span>bdtime <span class="sc">-</span> provany<span class="sc">$</span>timebleed, <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="table-3.3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.3">Table 3.3</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.3_b23842efd6503399577a640760f42051">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Column 1</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Variceal bleeding</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bleed) <span class="sc">~</span> beh, <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bleed) ~ beh, data = provany, ties = "breslow")
+
+         coef exp(coef) se(coef)      z     p
+beh1  0.05563   1.05721  0.39235  0.142 0.887
+beh2 -0.03972   0.96106  0.40039 -0.099 0.921
+beh3 -0.03205   0.96846  0.40063 -0.080 0.936
+
+Likelihood ratio test=0.07  on 3 df, p=0.9951
+n= 286, number of events= 50 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh, <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(d0time, dead0) ~ beh, data = provany, ties = "breslow")
+
+        coef exp(coef) se(coef)      z      p
+beh1  0.5993    1.8208   0.4498  1.332 0.1828
+beh2 -0.4307    0.6501   0.5701 -0.755 0.4500
+beh3  1.0146    2.7582   0.4189  2.422 0.0154
+
+Likelihood ratio test=12.74  on 3 df, p=0.005244
+n= 286, number of events= 46 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logrank test: Variceal bleeding</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>lr<span class="ot">&lt;-</span><span class="fu">survdiff</span>(<span class="fu">Surv</span>(btime, bleed) <span class="sc">~</span> beh, <span class="at">data =</span> provany)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(lr<span class="sc">$</span>chisq,lr<span class="sc">$</span>pvalue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07114524 0.99505932</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logrank test: Death without bleeding</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>lr<span class="ot">&lt;-</span><span class="fu">survdiff</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh, <span class="at">data =</span> provany)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(lr<span class="sc">$</span>chisq,lr<span class="sc">$</span>pvalue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 12.856428541  0.004957601</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Column 2</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Variceal bleeding</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bleed) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bleed) ~ beh + sex + coag + log2bili + 
+    factor(varsize), data = provany, ties = "breslow")
+
+                      coef exp(coef)  se(coef)      z        p
+beh1              0.176844  1.193445  0.433336  0.408  0.68320
+beh2              0.207005  1.229989  0.424001  0.488  0.62539
+beh3              0.030562  1.031034  0.420784  0.073  0.94210
+sex              -0.025865  0.974467  0.329095 -0.079  0.93736
+coag             -0.020647  0.979565  0.007819 -2.641  0.00827
+log2bili          0.191011  1.210473  0.149142  1.281  0.20029
+factor(varsize)2  0.741460  2.098998  0.414959  1.787  0.07397
+factor(varsize)3  1.884681  6.584252  0.442325  4.261 2.04e-05
+
+Likelihood ratio test=37.67  on 8 df, p=8.654e-06
+n= 271, number of events= 47 
+   (15 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>cox1<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>cox1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(d0time, dead0) ~ beh + sex + coag + log2bili + 
+    factor(varsize), data = provany, ties = "breslow")
+
+                      coef exp(coef)  se(coef)      z       p
+beh1              0.826468  2.285233  0.458574  1.802 0.07151
+beh2             -0.159630  0.852459  0.575047 -0.278 0.78132
+beh3              0.910385  2.485279  0.420391  2.166 0.03034
+sex               0.841579  2.320027  0.415722  2.024 0.04293
+coag             -0.008112  0.991920  0.006804 -1.192 0.23312
+log2bili          0.445359  1.561051  0.136749  3.257 0.00113
+factor(varsize)2  0.221738  1.248245  0.347159  0.639 0.52300
+factor(varsize)3  0.753294  2.123984  0.448544  1.679 0.09307
+
+Likelihood ratio test=42.13  on 8 df, p=1.283e-06
+n= 271, number of events= 46 
+   (15 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding - reduced model</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>cox2<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> scle <span class="sc">+</span> beta <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>cox2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(d0time, dead0) ~ scle + beta + sex + coag + 
+    log2bili + factor(varsize), data = provany, ties = "breslow")
+
+                      coef exp(coef)  se(coef)      z       p
+scle              0.939205  2.557946  0.335429  2.800 0.00511
+beta              0.011998  1.012071  0.305720  0.039 0.96869
+sex               0.850389  2.340557  0.415216  2.048 0.04055
+coag             -0.008157  0.991876  0.006776 -1.204 0.22862
+log2bili          0.451920  1.571327  0.135600  3.333 0.00086
+factor(varsize)2  0.230482  1.259207  0.346233  0.666 0.50561
+factor(varsize)3  0.758804  2.135719  0.448553  1.692 0.09071
+
+Likelihood ratio test=42  on 7 df, p=5.204e-07
+n= 271, number of events= 46 
+   (15 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT reduced model</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(cox1,cox2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize)
+Model 2: Surv(d0time, dead0) ~ scle + beta + sex + coag + log2bili + factor(varsize)
+  #Df  LogLik Df Chisq Pr(&gt;Chisq)
+1   8 -216.13                    
+2   7 -216.19 -1 0.127     0.7215</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding - 'final model'</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>cox3<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> scle <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>cox3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(d0time, dead0) ~ scle + sex + coag + log2bili + 
+    factor(varsize), data = provany, ties = "breslow")
+
+                      coef exp(coef)  se(coef)      z        p
+scle              0.941366  2.563481  0.330894  2.845 0.004442
+sex               0.849376  2.338188  0.414391  2.050 0.040394
+coag             -0.008139  0.991894  0.006750 -1.206 0.227935
+log2bili          0.452745  1.572624  0.133959  3.380 0.000726
+factor(varsize)2  0.231860  1.260943  0.344458  0.673 0.500875
+factor(varsize)3  0.760486  2.139316  0.446540  1.703 0.088556
+
+Likelihood ratio test=42  on 6 df, p=1.841e-07
+n= 271, number of events= 46 
+   (15 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(cox2,cox3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(d0time, dead0) ~ scle + beta + sex + coag + log2bili + factor(varsize)
+Model 2: Surv(d0time, dead0) ~ scle + sex + coag + log2bili + factor(varsize)
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1   7 -216.19                     
+2   6 -216.19 -1 0.0015     0.9687</code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.4">Table 3.4</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.4_1faf1104007f75a9ebdf31188303f8c2">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>cox<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, outof0) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>cox</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, outof0) ~ beh + sex + coag + log2bili + 
+    factor(varsize), data = provany, ties = "breslow")
+
+                      coef exp(coef)  se(coef)      z        p
+beh1              0.525145  1.690704  0.312502  1.680  0.09287
+beh2              0.100189  1.105380  0.337918  0.296  0.76686
+beh3              0.494807  1.640181  0.291638  1.697  0.08976
+sex               0.360259  1.433701  0.253379  1.422  0.15508
+coag             -0.013600  0.986492  0.005287 -2.572  0.01010
+log2bili          0.328376  1.388711  0.101761  3.227  0.00125
+factor(varsize)2  0.446403  1.562681  0.263275  1.696  0.08997
+factor(varsize)3  1.332535  3.790639  0.301391  4.421 9.81e-06
+
+Likelihood ratio test=65.71  on 8 df, p=3.489e-11
+n= 271, number of events= 93 
+   (15 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for treatment</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>coxreduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, outof0) <span class="sc">~</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(cox,coxreduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(btime, outof0) ~ beh + sex + coag + log2bili + factor(varsize)
+Model 2: Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize)
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1   8 -455.35                     
+2   5 -457.74 -3 4.7717     0.1893</code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.8" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.8">Table 3.8</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.8_a2179040f496ed2d7f55f8074e2ba571">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time since randomization (tsr)</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>coxtsr<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>coxtsr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bdtime, deadb != 0) ~ beh + sex + 
+    log2bili, data = provany, ties = "breslow")
+
+            coef exp(coef) se(coef)      z       p
+beh0     -0.7327    0.4806   0.5439 -1.347 0.17796
+beh1     -2.1454    0.1170   0.7046 -3.045 0.00233
+beh2     -0.8472    0.4286   0.5694 -1.488 0.13674
+sex       1.1389    3.1234   0.5039  2.260 0.02380
+log2bili  0.1088    1.1149   0.2075  0.524 0.60011
+
+Likelihood ratio test=15.35  on 5 df, p=0.008958
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>coxtsr0<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili, </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>coxtsr0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bdtime, deadb != 0) ~ sex + log2bili, 
+    data = provany, ties = "breslow")
+
+            coef exp(coef) se(coef)      z      p
+sex       0.9095    2.4830   0.4807  1.892 0.0585
+log2bili -0.1618    0.8506   0.1826 -0.886 0.3758
+
+Likelihood ratio test=4.19  on 2 df, p=0.1232
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr,coxtsr0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili
+Model 2: Surv(btime, bdtime, deadb != 0) ~ sex + log2bili
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)  
+1   5 -59.626                       
+2   2 -65.208 -3 11.164    0.01087 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>coxnoint<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> scle <span class="sc">+</span> beta  <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT interaction</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr,coxnoint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili
+Model 2: Surv(btime, bdtime, deadb != 0) ~ scle + beta + sex + log2bili
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)   
+1   5 -59.626                        
+2   4 -63.061 -1 6.8707   0.008762 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>tsb<span class="ot">&lt;-</span>provany<span class="sc">$</span>btime</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>coxtsr_tt<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb66-6"><a href="#cb66-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb66-7"><a href="#cb66-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">dt1=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&lt;</span><span class="dv">5</span>), <span class="at">dt2=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;=</span><span class="dv">5</span> <span class="sc">&amp;</span> dt<span class="sc">&lt;</span><span class="dv">10</span>))</span>
+<span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a>coxtsr_tt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bdtime, deadb != 0) ~ beh + sex + 
+    log2bili + tt(tsb), data = provany, ties = "breslow", tt = function(x, 
+    t, ...) {
+    dt &lt;- t - x
+    cbind(dt1 = 1 * (dt &lt; 5), dt2 = 1 * (dt &gt;= 5 &amp; dt &lt; 10))
+})
+
+               coef exp(coef) se(coef)      z        p
+beh0       -0.42544   0.65348  0.61129 -0.696  0.48645
+beh1       -1.58150   0.20567  0.75830 -2.086  0.03702
+beh2       -0.44915   0.63817  0.63022 -0.713  0.47604
+sex         1.11875   3.06103  0.53261  2.101  0.03568
+log2bili   -0.04822   0.95292  0.22285 -0.216  0.82869
+tt(tsb)dt1  2.94285  18.96981  0.73891  3.983 6.81e-05
+tt(tsb)dt2  2.34525  10.43583  0.80285  2.921  0.00349
+
+Likelihood ratio test=33.65  on 7 df, p=2.005e-05
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr,coxtsr_tt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili
+Model 2: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili + tt(tsb)
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)    
+1   5 -59.626                         
+2   7 -50.478  2 18.295  0.0001065 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or as mentioned in text, model linear effect of time-dependent covariate</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh<span class="sc">+</span>sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...){t<span class="sc">-</span>x})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bdtime, deadb != 0) ~ beh + sex + 
+    log2bili + tt(tsb), data = provany, ties = "breslow", tt = function(x, 
+    t, ...) {
+    t - x
+})
+
+              coef exp(coef)  se(coef)      z       p
+beh0     -0.599364  0.549161  0.574135 -1.044 0.29651
+beh1     -2.061624  0.127247  0.724588 -2.845 0.00444
+beh2     -0.627738  0.533798  0.618629 -1.015 0.31024
+sex       0.899664  2.458776  0.530853  1.695 0.09012
+log2bili  0.349775  1.418749  0.224830  1.556 0.11977
+tt(tsb)  -0.005179  0.994834  0.001769 -2.927 0.00342
+
+Likelihood ratio test=25.54  on 6 df, p=0.0002708
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>coxtsr_tt_reduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>                   dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">cbind</span>(<span class="at">dt1=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&lt;</span><span class="dv">5</span>), <span class="at">dt2=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;=</span><span class="dv">5</span> <span class="sc">&amp;</span> dt<span class="sc">&lt;</span><span class="dv">10</span>))</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>                 })</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>coxtsr_tt_reduced</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(btime, bdtime, deadb != 0) ~ sex + log2bili + 
+    tt(tsb), data = provany, ties = "breslow", tt = function(x, 
+    t, ...) {
+    dt &lt;- t - x
+    cbind(dt1 = 1 * (dt &lt; 5), dt2 = 1 * (dt &gt;= 5 &amp; dt &lt; 10))
+})
+
+              coef exp(coef) se(coef)      z        p
+sex         0.8381    2.3120   0.4977  1.684  0.09219
+log2bili   -0.2288    0.7955   0.1965 -1.164  0.24434
+tt(tsb)dt1  3.1553   23.4609   0.6683  4.721 2.34e-06
+tt(tsb)dt2  2.3585   10.5748   0.7857  3.002  0.00268
+
+Likelihood ratio test=28.44  on 4 df, p=1.015e-05
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr_tt,coxtsr_tt_reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili + tt(tsb)
+Model 2: Surv(btime, bdtime, deadb != 0) ~ sex + log2bili + tt(tsb)
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1   7 -50.478                     
+2   4 -53.081 -3 5.2064     0.1573</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Duration</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>coxdur<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili,</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>coxdur</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(wait, deadb != 0) ~ beh + sex + log2bili, 
+    data = provany, ties = "breslow")
+
+            coef exp(coef) se(coef)      z       p
+beh0     -0.8708    0.4186   0.5136 -1.695 0.08999
+beh1     -1.8679    0.1544   0.6373 -2.931 0.00338
+beh2     -1.1704    0.3103   0.5915 -1.979 0.04785
+sex       0.6497    1.9149   0.5264  1.234 0.21712
+log2bili  0.2677    1.3070   0.1790  1.496 0.13463
+
+Likelihood ratio test=13.24  on 5 df, p=0.0212
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>coxdur0<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili,</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>coxdur0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(wait, deadb != 0) ~ sex + log2bili, data = provany, 
+    ties = "breslow")
+
+           coef exp(coef) se(coef)     z     p
+sex      0.6742    1.9625   0.4662 1.446 0.148
+log2bili 0.1210    1.1286   0.1677 0.721 0.471
+
+Likelihood ratio test=3.03  on 2 df, p=0.2195
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxdur,coxdur0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(wait, deadb != 0) ~ beh + sex + log2bili
+Model 2: Surv(wait, deadb != 0) ~ sex + log2bili
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)  
+1   5 -86.494                       
+2   2 -91.600 -3 10.211    0.01685 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>tsr<span class="ot">&lt;-</span>provany<span class="sc">$</span>btime</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>coxdur_tt<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsr),</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> x<span class="sc">+</span>t</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">v1=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&lt;</span><span class="dv">1</span><span class="sc">*</span><span class="fl">365.25</span>), <span class="at">v2=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;=</span><span class="dv">1</span><span class="sc">*</span><span class="fl">365.25</span> <span class="sc">&amp;</span> dt<span class="sc">&lt;</span><span class="dv">2</span><span class="sc">*</span><span class="fl">365.25</span>))</span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>coxdur_tt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(wait, deadb != 0) ~ beh + sex + log2bili + 
+    tt(tsr), data = provany, ties = "breslow", tt = function(x, 
+    t, ...) {
+    dt &lt;- x + t
+    cbind(v1 = 1 * (dt &lt; 1 * 365.25), v2 = 1 * (dt &gt;= 1 * 365.25 &amp; 
+        dt &lt; 2 * 365.25))
+})
+
+             coef exp(coef) se(coef)      z       p
+beh0      -0.8467    0.4288   0.5244 -1.615 0.10639
+beh1      -1.8660    0.1547   0.6400 -2.916 0.00355
+beh2      -1.1583    0.3140   0.5964 -1.942 0.05211
+sex        0.6441    1.9043   0.5303  1.215 0.22455
+log2bili   0.2829    1.3269   0.1966  1.439 0.15012
+tt(tsr)v1 -0.1723    0.8417   0.9096 -0.189 0.84973
+tt(tsr)v2 -0.2211    0.8016   0.8862 -0.250 0.80297
+
+Likelihood ratio test=13.31  on 7 df, p=0.065
+n= 48, number of events= 27 
+   (238 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxdur,coxdur_tt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: Surv(wait, deadb != 0) ~ beh + sex + log2bili
+Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1   5 -86.494                     
+2   7 -86.464  2 0.0618     0.9696</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>coxdur_tt_reduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>                           dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">cbind</span>(<span class="at">dt1=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&lt;</span><span class="dv">5</span>), <span class="at">dt2=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;=</span><span class="dv">5</span> <span class="sc">&amp;</span> dt<span class="sc">&lt;</span><span class="dv">10</span>))</span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>                         })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="figure-3.2" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="figure-3.2">Figure 3.2</h3>
+<div class="cell" data-hash="Ch3_cache/html/figure-3.2_a7a438671df2b0dc79af8c83521d1092">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting style </span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) </span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Make zeros print as "0" always for plot axes</span></span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a>prettyZero <span class="ot">&lt;-</span> <span class="cf">function</span>(l){</span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a>  max.decimals <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">nchar</span>(<span class="fu">str_extract</span>(l, <span class="st">"</span><span class="sc">\\</span><span class="st">.[0-9]+"</span>)), <span class="at">na.rm =</span> T)<span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true" tabindex="-1"></a>  lnew <span class="ot">=</span> <span class="fu">formatC</span>(l, <span class="at">replace.zero =</span> T, <span class="at">zero.print =</span> <span class="st">"0"</span>,</span>
+<span id="cb87-15"><a href="#cb87-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">digits =</span> max.decimals, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">preserve.width=</span>T)</span>
+<span id="cb87-16"><a href="#cb87-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(lnew)</span>
+<span id="cb87-17"><a href="#cb87-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb87-18"><a href="#cb87-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-19"><a href="#cb87-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
+<span id="cb87-20"><a href="#cb87-20" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">survfit</span>(coxtsr, </span>
+<span id="cb87-21"><a href="#cb87-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">sex =</span> <span class="dv">0</span>, </span>
+<span id="cb87-22"><a href="#cb87-22" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">beh =</span> <span class="st">"0"</span>, </span>
+<span id="cb87-23"><a href="#cb87-23" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">log2bili =</span> <span class="dv">0</span>))</span>
+<span id="cb87-24"><a href="#cb87-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-25"><a href="#cb87-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
+<span id="cb87-26"><a href="#cb87-26" aria-hidden="true" tabindex="-1"></a>coxdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> <span class="fu">append</span>(<span class="dv">0</span>,coxcumhaz<span class="sc">$</span>cumhaz), </span>
+<span id="cb87-27"><a href="#cb87-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> <span class="fu">append</span>(<span class="dv">0</span>,coxcumhaz<span class="sc">$</span>time), </span>
+<span id="cb87-28"><a href="#cb87-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"Breslow estimate"</span>, <span class="dv">1</span><span class="sc">+</span><span class="fu">length</span>(coxcumhaz<span class="sc">$</span>time)))</span>
+<span id="cb87-29"><a href="#cb87-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-30"><a href="#cb87-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.2</span></span>
+<span id="cb87-31"><a href="#cb87-31" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz), <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
+<span id="cb87-32"><a href="#cb87-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb87-33"><a href="#cb87-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb87-34"><a href="#cb87-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb87-35"><a href="#cb87-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
+<span id="cb87-36"><a href="#cb87-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb87-37"><a href="#cb87-37" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb87-38"><a href="#cb87-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-39"><a href="#cb87-39" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_files/figure-html/figure-3.2-1.png" class="img-fluid" width="1122"></p>
+</div>
+</div>
+</section>
+<section id="figure-3.3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="figure-3.3">Figure 3.3</h3>
+<div class="cell" data-hash="Ch3_cache/html/figure-3.3_2f07f9c0fb3ea524dc69a2135e5b019d">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">survfit</span>(coxdur, </span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">sex =</span> <span class="dv">0</span>, </span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">beh =</span> <span class="st">"0"</span>, </span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">log2bili =</span> <span class="dv">0</span>))</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>coxdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> <span class="fu">append</span>(<span class="dv">0</span>,coxcumhaz<span class="sc">$</span>cumhaz), </span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> <span class="fu">append</span>(<span class="dv">0</span>,coxcumhaz<span class="sc">$</span>time), </span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"Breslow estimate"</span>, <span class="dv">1</span><span class="sc">+</span><span class="fu">length</span>(coxcumhaz<span class="sc">$</span>time)))</span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.3</span></span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz), <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Duration (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), ) <span class="sc">+</span> </span>
+<span id="cb88-17"><a href="#cb88-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)),<span class="at">labels =</span> prettyZero) <span class="sc">+</span></span>
+<span id="cb88-18"><a href="#cb88-18" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb88-19"><a href="#cb88-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-20"><a href="#cb88-20" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_files/figure-html/figure-3.3-1.png" class="img-fluid" width="1122"></p>
+</div>
+</div>
+</section>
+<section id="table-3.9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.9">Table 3.9</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.9_99d3ef2e99fdbf5716b510b325d8eda3">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All bleeds</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>provasplit11 <span class="ot">&lt;-</span> <span class="fu">subset</span>(provany, bleed <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split by duration</span></span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>provasplit1 <span class="ot">&lt;-</span> <span class="fu">survSplit</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> ., <span class="at">data =</span> provasplit11, </span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cut =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">episode =</span> <span class="st">"wint"</span>)</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>provasplit1<span class="sc">$</span>start <span class="ot">&lt;-</span> <span class="fu">with</span>(provasplit1, </span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>                            btime <span class="sc">+</span> <span class="fu">ifelse</span>(wint <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, <span class="fu">ifelse</span>(wint <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">5</span> , <span class="dv">10</span>))</span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>                            )</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>provasplit1<span class="sc">$</span>stop <span class="ot">&lt;-</span> <span class="fu">with</span>(provasplit1, btime <span class="sc">+</span> wait)</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>provasplit1<span class="sc">$</span>risktime <span class="ot">&lt;-</span> <span class="fu">with</span>(provasplit1, wait <span class="sc">-</span> tstart)</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>provasplit1<span class="sc">$</span>logrisktime <span class="ot">&lt;-</span> <span class="fu">log</span>(provasplit1<span class="sc">$</span>risktime)</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>provasplit1<span class="sc">$</span>fail <span class="ot">&lt;-</span> provasplit1<span class="sc">$</span>event</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Split by time since rand (t)</span></span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a>provasplit2 <span class="ot">&lt;-</span> <span class="fu">survSplit</span>(<span class="fu">Surv</span>(start, stop, fail) <span class="sc">~</span> ., <span class="at">data =</span> provasplit1, </span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">cut =</span> <span class="fu">c</span>((<span class="dv">1</span>) <span class="sc">*</span> <span class="fl">365.25</span>, (<span class="dv">2</span>) <span class="sc">*</span> <span class="fl">365.25</span>),</span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a>                           <span class="at">episode =</span> <span class="st">"tint"</span>)</span>
+<span id="cb89-19"><a href="#cb89-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-20"><a href="#cb89-20" aria-hidden="true" tabindex="-1"></a>provasplit2<span class="sc">$</span>risktime2 <span class="ot">&lt;-</span> <span class="fu">with</span>(provasplit2, stop <span class="sc">-</span> start)</span>
+<span id="cb89-21"><a href="#cb89-21" aria-hidden="true" tabindex="-1"></a>provasplit2<span class="sc">$</span>risktimeys2 <span class="ot">&lt;-</span> provasplit2<span class="sc">$</span>risktime2 <span class="sc">/</span> <span class="fl">365.25</span></span>
+<span id="cb89-22"><a href="#cb89-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb89-23"><a href="#cb89-23" aria-hidden="true" tabindex="-1"></a>provasplit2<span class="sc">$</span>logrisktime2 <span class="ot">&lt;-</span> <span class="fu">log</span>(provasplit2<span class="sc">$</span>risktime2)</span>
+<span id="cb89-24"><a href="#cb89-24" aria-hidden="true" tabindex="-1"></a>provasplit2<span class="sc">$</span>fail2 <span class="ot">&lt;-</span> provasplit2<span class="sc">$</span>fail</span>
+<span id="cb89-25"><a href="#cb89-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-26"><a href="#cb89-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the data, Table 3.9 output</span></span>
+<span id="cb89-27"><a href="#cb89-27" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(<span class="fu">cbind</span>(fail2, risktimeys2) <span class="sc">~</span> tint <span class="sc">+</span> wint, provasplit2, </span>
+<span id="cb89-28"><a href="#cb89-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">FUN =</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">count =</span> <span class="fu">length</span>(x),</span>
+<span id="cb89-29"><a href="#cb89-29" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sum =</span> <span class="fu">sum</span>(x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  tint wint fail2.count fail2.sum risktimeys2.count risktimeys2.sum
+1    1    1          39         8       39.00000000      0.46338125
+2    2    1          11         2       11.00000000      0.13073238
+3    3    1           1         0        1.00000000      0.01368925
+4    1    2          30         2       30.00000000      0.38603696
+5    2    2           9         1        9.00000000      0.11635866
+6    3    2           1         0        1.00000000      0.01368925
+7    1    3          28         7       28.00000000     12.42984257
+8    2    3          28         5       28.00000000     19.88227242
+9    3    3          19         4       19.00000000     21.56468172</code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.10" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.10">Table 3.10</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.10_4a197e9f279b8d9df1529a0f70c2d7bf">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (a)</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span> </span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>              sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit1, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = fail ~ offset(log(risktime)) + beh + relevel(as.factor(wint), 
+    ref = "3") + sex + log2bili, family = poisson, data = provasplit1)
+
+Coefficients:
+                                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                           -8.8925     1.1282  -7.882 3.21e-15 ***
+beh1                                  -1.1301     0.6423  -1.759   0.0785 .  
+beh2                                  -0.3138     0.5887  -0.533   0.5940    
+beh3                                   0.9667     0.5157   1.874   0.0609 .  
+relevel(as.factor(wint), ref = "3")1   3.6024     0.4387   8.212  &lt; 2e-16 ***
+relevel(as.factor(wint), ref = "3")2   2.8437     0.6373   4.462 8.11e-06 ***
+sex                                    0.7327     0.5190   1.412   0.1581    
+log2bili                               0.2877     0.1824   1.577   0.1147    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 225.56  on 122  degrees of freedom
+Residual deviance: 149.88  on 115  degrees of freedom
+  (4 observations deleted due to missingness)
+AIC: 219.88
+
+Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (b)</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(tint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span> </span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>              sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(tint), 
+    ref = "3") + sex + log2bili, family = poisson, data = provasplit2)
+
+Coefficients:
+                                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                           -8.6775     1.2008  -7.226 4.96e-13 ***
+beh1                                  -1.2810     0.6522  -1.964   0.0495 *  
+beh2                                  -0.4317     0.5657  -0.763   0.4454    
+beh3                                   0.8006     0.5254   1.524   0.1275    
+relevel(as.factor(tint), ref = "3")1   1.5068     0.5785   2.605   0.0092 ** 
+relevel(as.factor(tint), ref = "3")2   0.4304     0.6482   0.664   0.5067    
+sex                                    0.9494     0.4922   1.929   0.0538 .  
+log2bili                               0.1792     0.2049   0.875   0.3817    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 237.84  on 160  degrees of freedom
+Residual deviance: 202.95  on 153  degrees of freedom
+  (5 observations deleted due to missingness)
+AIC: 272.95
+
+Number of Fisher Scoring iterations: 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (c)</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">relevel</span>(<span class="fu">as.factor</span>(tint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>              sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint), 
+    ref = "3") + relevel(as.factor(tint), ref = "3") + sex + 
+    log2bili, family = poisson, data = provasplit2)
+
+Coefficients:
+                                     Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                           -8.9276     1.1636  -7.673 1.68e-14 ***
+beh1                                  -1.1101     0.6475  -1.714   0.0864 .  
+beh2                                  -0.3181     0.5788  -0.550   0.5826    
+beh3                                   0.8260     0.5138   1.608   0.1079    
+relevel(as.factor(wint), ref = "3")1   3.3500     0.4641   7.219 5.25e-13 ***
+relevel(as.factor(wint), ref = "3")2   2.5827     0.6593   3.917 8.97e-05 ***
+relevel(as.factor(tint), ref = "3")1   0.7325     0.6176   1.186   0.2356    
+relevel(as.factor(tint), ref = "3")2   0.1889     0.6546   0.289   0.7729    
+sex                                    0.7672     0.5090   1.507   0.1317    
+log2bili                               0.2301     0.1900   1.211   0.2260    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 237.84  on 160  degrees of freedom
+Residual deviance: 160.21  on 151  degrees of freedom
+  (5 observations deleted due to missingness)
+AIC: 234.21
+
+Number of Fisher Scoring iterations: 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction model, in-text but not shown</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">as.factor</span>(tint) <span class="sc">*</span> <span class="fu">as.factor</span>(wint) <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson)</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = fail2 ~ offset(log(risktime2)) + beh + as.factor(tint) * 
+    as.factor(wint) + sex + log2bili, family = poisson, data = provasplit2)
+
+Coefficients:
+                                    Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                         -4.72678    1.20626  -3.919 8.91e-05 ***
+beh1                                -1.09421    0.64703  -1.691   0.0908 .  
+beh2                                -0.31016    0.57923  -0.535   0.5923    
+beh3                                 0.83850    0.51484   1.629   0.1034    
+as.factor(tint)2                    -0.74368    1.06413  -0.699   0.4846    
+as.factor(tint)3                   -14.39376 1275.75399  -0.011   0.9910    
+as.factor(wint)2                    -1.03184    0.79349  -1.300   0.1935    
+as.factor(wint)3                    -3.37183    0.51906  -6.496 8.24e-11 ***
+sex                                  0.77074    0.50839   1.516   0.1295    
+log2bili                             0.21347    0.18999   1.124   0.2612    
+as.factor(tint)2:as.factor(wint)2    1.26419    1.62046   0.780   0.4353    
+as.factor(tint)3:as.factor(wint)2    1.03184 1804.18859   0.001   0.9995    
+as.factor(tint)2:as.factor(wint)3    0.08176    1.23780   0.066   0.9473    
+as.factor(tint)3:as.factor(wint)3   13.70295 1275.75414   0.011   0.9914    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 237.84  on 160  degrees of freedom
+Residual deviance: 158.93  on 147  degrees of freedom
+  (5 observations deleted due to missingness)
+AIC: 240.93
+
+Number of Fisher Scoring iterations: 13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>glmboth<span class="ot">&lt;-</span><span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>               <span class="fu">relevel</span>(<span class="fu">as.factor</span>(tint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>               sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson)</span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>glmwint<span class="ot">&lt;-</span><span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>               sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson)</span>
+<span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>glmtint<span class="ot">&lt;-</span><span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
+<span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">relevel</span>(<span class="fu">as.factor</span>(tint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>               sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson)</span>
+<span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT effect of duration since bleeding</span></span>
+<span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(glmboth,glmtint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint), 
+    ref = "3") + relevel(as.factor(tint), ref = "3") + sex + 
+    log2bili
+Model 2: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(tint), 
+    ref = "3") + sex + log2bili
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)    
+1  10 -107.11                         
+2   8 -128.47 -2 42.736  5.248e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT effect of time since randomization</span></span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(glmboth,glmwint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint), 
+    ref = "3") + relevel(as.factor(tint), ref = "3") + sex + 
+    log2bili
+Model 2: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint), 
+    ref = "3") + sex + log2bili
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1  10 -107.11                     
+2   8 -108.08 -2 1.9499     0.3772</code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.13" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.13">Table 3.13</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.13_1edbf580ba1986551e7ff1cf8b61d7a3">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>double1 <span class="ot">&lt;-</span> provany <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">time =</span> d0time, </span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">status =</span> dead0, </span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">entrytime =</span> <span class="dv">0</span>, </span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sex1 =</span> sex, </span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sex2 =</span> <span class="dv">0</span>, </span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">age1 =</span> age, </span>
+<span id="cb103-8"><a href="#cb103-8" aria-hidden="true" tabindex="-1"></a>                              <span class="at">age2 =</span> <span class="dv">0</span>, </span>
+<span id="cb103-9"><a href="#cb103-9" aria-hidden="true" tabindex="-1"></a>                              <span class="at">bili1 =</span> log2bili, </span>
+<span id="cb103-10"><a href="#cb103-10" aria-hidden="true" tabindex="-1"></a>                              <span class="at">bili2 =</span> log2bili <span class="sc">*</span> <span class="dv">0</span>,</span>
+<span id="cb103-11"><a href="#cb103-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">stratum =</span> <span class="dv">1</span>)</span>
+<span id="cb103-12"><a href="#cb103-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-13"><a href="#cb103-13" aria-hidden="true" tabindex="-1"></a>double2 <span class="ot">&lt;-</span> provany <span class="sc">%&gt;%</span> <span class="fu">filter</span>(bleed <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb103-14"><a href="#cb103-14" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">mutate</span>(<span class="at">time =</span> bdtime, </span>
+<span id="cb103-15"><a href="#cb103-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">status =</span> deadb, </span>
+<span id="cb103-16"><a href="#cb103-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">entrytime =</span> btime, </span>
+<span id="cb103-17"><a href="#cb103-17" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sex1 =</span> <span class="dv">0</span>, </span>
+<span id="cb103-18"><a href="#cb103-18" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sex2 =</span> sex, </span>
+<span id="cb103-19"><a href="#cb103-19" aria-hidden="true" tabindex="-1"></a>                              <span class="at">age1 =</span> <span class="dv">0</span>, </span>
+<span id="cb103-20"><a href="#cb103-20" aria-hidden="true" tabindex="-1"></a>                              <span class="at">age2 =</span> age, </span>
+<span id="cb103-21"><a href="#cb103-21" aria-hidden="true" tabindex="-1"></a>                              <span class="at">bili1 =</span> log2bili <span class="sc">*</span> <span class="dv">0</span>, </span>
+<span id="cb103-22"><a href="#cb103-22" aria-hidden="true" tabindex="-1"></a>                              <span class="at">bili2 =</span> log2bili,</span>
+<span id="cb103-23"><a href="#cb103-23" aria-hidden="true" tabindex="-1"></a>                              <span class="at">stratum =</span> <span class="dv">2</span>)</span>
+<span id="cb103-24"><a href="#cb103-24" aria-hidden="true" tabindex="-1"></a>double <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(double1, double2))</span>
+<span id="cb103-25"><a href="#cb103-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-26"><a href="#cb103-26" aria-hidden="true" tabindex="-1"></a><span class="co"># part (a)</span></span>
+<span id="cb103-27"><a href="#cb103-27" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>a <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(stratum) <span class="sc">+</span> sex1 <span class="sc">+</span> sex2 <span class="sc">+</span> bili1 <span class="sc">+</span> bili2, </span>
+<span id="cb103-28"><a href="#cb103-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb103-29"><a href="#cb103-29" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entrytime, time, status != 0) ~ strata(stratum) + 
+    sex1 + sex2 + bili1 + bili2, data = double, ties = "breslow")
+
+         coef exp(coef) se(coef)      z        p
+sex1   1.0408    2.8316   0.4110  2.532   0.0113
+sex2   0.9095    2.4830   0.4807  1.892   0.0585
+bili1  0.5275    1.6947   0.1152  4.580 4.64e-06
+bili2 -0.1618    0.8506   0.1826 -0.886   0.3758
+
+Likelihood ratio test=32.5  on 4 df, p=1.509e-06
+n= 323, number of events= 73 
+   (13 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (b)</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>b <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(stratum) <span class="sc">+</span> sex <span class="sc">+</span> bili1 <span class="sc">+</span> bili2, </span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entrytime, time, status != 0) ~ strata(stratum) + 
+    sex + bili1 + bili2, data = double, ties = "breslow")
+
+         coef exp(coef) se(coef)      z        p
+sex    0.9866    2.6820   0.3115  3.167  0.00154
+bili1  0.5269    1.6936   0.1150  4.582 4.61e-06
+bili2 -0.1685    0.8449   0.1794 -0.939  0.34767
+
+Likelihood ratio test=32.46  on 3 df, p=4.185e-07
+n= 323, number of events= 73 
+   (13 observations deleted due to missingness)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (c)</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>c <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(stratum) <span class="sc">+</span> sex <span class="sc">+</span> bili1, </span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entrytime, time, status != 0) ~ strata(stratum) + 
+    sex + bili1, data = double, ties = "breslow")
+
+        coef exp(coef) se(coef)     z        p
+sex   0.9423    2.5659   0.3072 3.067  0.00216
+bili1 0.5263    1.6927   0.1149 4.582 4.61e-06
+
+Likelihood ratio test=31.58  on 2 df, p=1.387e-07
+n= 323, number of events= 73 
+   (13 observations deleted due to missingness)</code></pre>
+</div>
+</div>
+</section>
+<section id="figure-3.9" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="figure-3.9">Figure 3.9</h3>
+<div class="cell" data-hash="Ch3_cache/html/figure-3.9_e58b76158cfee32f8c5a5f7739d026af">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>survr1 <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(Table3<span class="fl">.13</span>a, <span class="at">center =</span> F)</span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>pcumhaz <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cumhaz =</span> <span class="fu">c</span>(survr1<span class="sc">$</span>hazard[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=1"</span>],<span class="dv">0</span>,survr1<span class="sc">$</span>hazard[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=2"</span>]), </span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">time   =</span> <span class="fu">c</span>(survr1<span class="sc">$</span>time[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=1"</span>],<span class="dv">0</span>,survr1<span class="sc">$</span>time[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=2"</span>]), </span>
+<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">strata =</span> <span class="fu">c</span>(survr1<span class="sc">$</span>strata[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=1"</span>],<span class="st">"2"</span>,survr1<span class="sc">$</span>strata[survr1<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"stratum=2"</span>])</span>
+<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.9</span></span>
+<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.9</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> strata), <span class="at">data =</span> pcumhaz) <span class="sc">+</span> </span>
+<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
+<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Stratum"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="sc">+</span> </span>
+<span id="cb109-17"><a href="#cb109-17" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb109-18"><a href="#cb109-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-19"><a href="#cb109-19" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_files/figure-html/figure-3.9-1.png" class="img-fluid" width="1122"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="testis-cancer" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="testis-cancer">Testis cancer</h2>
+<section id="read-data-3" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="read-data-3">Read data</h3>
+<div class="cell" data-hash="Ch3_cache/html/read-testis_3e047e0850e9d3ce1cfbc4a6b1e31f02">
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>testis <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/testis.csv"</span>))</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add extra variables</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>lpyrs <span class="ot">&lt;-</span> <span class="fu">log</span>(testis<span class="sc">$</span>pyrs)</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>par2 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(testis<span class="sc">$</span>parity <span class="sc">&lt;</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="figure-3.1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="figure-3.1">Figure 3.1</h3>
+<div class="cell" data-hash="Ch3_cache/html/figure-3.1_eb575b3be22ea1376ead86a7dfd779e2">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames</span></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="dv">1900</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">58</span>, <span class="dv">63</span>, <span class="dv">68</span>, <span class="dv">73</span>), </span>
+<span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y1 =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
+<span id="cb111-4"><a href="#cb111-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x2 =</span> <span class="fu">rep</span>(<span class="dv">2000</span>, <span class="dv">5</span>), </span>
+<span id="cb111-5"><a href="#cb111-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y2 =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">58</span>, <span class="dv">63</span>, <span class="dv">68</span>, <span class="dv">73</span>))</span>
+<span id="cb111-6"><a href="#cb111-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-7"><a href="#cb111-7" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fl">1968.25</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">73</span><span class="fl">-68.25</span>), </span>
+<span id="cb111-8"><a href="#cb111-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y1 =</span> <span class="fu">c</span>(<span class="fl">68.25</span> <span class="sc">-</span> <span class="dv">50</span>, <span class="fl">68.25</span> <span class="sc">-</span> <span class="dv">58</span>, <span class="fl">68.25</span> <span class="sc">-</span> <span class="dv">63</span>, <span class="fl">68.25</span> <span class="sc">-</span> <span class="dv">68</span>, <span class="dv">0</span>), </span>
+<span id="cb111-9"><a href="#cb111-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x2 =</span> <span class="fu">rep</span>(<span class="dv">1993</span>, <span class="dv">5</span>), </span>
+<span id="cb111-10"><a href="#cb111-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y2 =</span> <span class="dv">100</span> <span class="sc">-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">58</span>, <span class="dv">63</span>, <span class="dv">68</span>, <span class="dv">73</span>) <span class="sc">-</span> <span class="dv">7</span>)</span>
+<span id="cb111-11"><a href="#cb111-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-12"><a href="#cb111-12" aria-hidden="true" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fu">c</span>(<span class="fl">1968.25</span>, <span class="dv">1993</span>, <span class="fl">1968.25</span>, <span class="fl">1968.25</span>, <span class="fl">1968.25</span> <span class="sc">+</span> <span class="fl">1.75</span>, <span class="fl">1968.25</span> <span class="sc">+</span> <span class="fl">6.75</span>, <span class="fl">1968.25</span> <span class="sc">+</span> <span class="fl">11.75</span>), </span>
+<span id="cb111-13"><a href="#cb111-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y1 =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>), </span>
+<span id="cb111-14"><a href="#cb111-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="fl">1968.25</span>, <span class="dv">1993</span>, <span class="dv">1993</span>, <span class="dv">1993</span>, <span class="dv">1993</span>, <span class="dv">1993</span>, <span class="dv">1993</span>), </span>
+<span id="cb111-15"><a href="#cb111-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y2 =</span> <span class="fu">c</span>(<span class="fl">68.25</span> <span class="sc">-</span> <span class="dv">50</span>, <span class="dv">100</span> <span class="sc">-</span> <span class="dv">57</span>, <span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>) </span>
+<span id="cb111-16"><a href="#cb111-16" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb111-17"><a href="#cb111-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-18"><a href="#cb111-18" aria-hidden="true" tabindex="-1"></a><span class="co"># For labels</span></span>
+<span id="cb111-19"><a href="#cb111-19" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">tapply</span>( testis<span class="sc">$</span>cases, <span class="fu">list</span>( testis<span class="sc">$</span>age, testis<span class="sc">$</span>cohort ), sum )</span>
+<span id="cb111-20"><a href="#cb111-20" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">tapply</span>( testis<span class="sc">$</span>pyrs, <span class="fu">list</span>( testis<span class="sc">$</span>age, testis<span class="sc">$</span>cohort ), sum )</span>
+<span id="cb111-21"><a href="#cb111-21" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">outer</span>( <span class="fu">unique</span>( testis<span class="sc">$</span>age )<span class="sc">+</span><span class="fu">c</span>(<span class="fl">17.5</span>,<span class="fu">rep</span>(<span class="fl">2.5</span>,<span class="dv">4</span>)),</span>
+<span id="cb111-22"><a href="#cb111-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">unique</span>( testis<span class="sc">$</span>cohort )<span class="sc">+</span><span class="fl">2.5</span>,</span>
+<span id="cb111-23"><a href="#cb111-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"+"</span> )</span>
+<span id="cb111-24"><a href="#cb111-24" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>,] <span class="ot">&lt;-</span> x[<span class="dv">1</span>,]<span class="sc">-</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>)</span>
+<span id="cb111-25"><a href="#cb111-25" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">outer</span>( <span class="fu">c</span>(<span class="dv">13</span>,<span class="dv">17</span>,<span class="dv">22</span>,<span class="dv">27</span>,<span class="dv">32</span>), <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">5</span>), <span class="st">"*"</span> )</span>
+<span id="cb111-26"><a href="#cb111-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-27"><a href="#cb111-27" aria-hidden="true" tabindex="-1"></a>label_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x[<span class="sc">!</span><span class="fu">is.na</span>(Y)], </span>
+<span id="cb111-28"><a href="#cb111-28" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> y[<span class="sc">!</span><span class="fu">is.na</span>(Y)], </span>
+<span id="cb111-29"><a href="#cb111-29" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label =</span> <span class="fu">paste</span>( <span class="fu">round</span>( Y<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">4</span> )[<span class="sc">!</span><span class="fu">is.na</span>(Y)] )</span>
+<span id="cb111-30"><a href="#cb111-30" aria-hidden="true" tabindex="-1"></a>                         )</span>
+<span id="cb111-31"><a href="#cb111-31" aria-hidden="true" tabindex="-1"></a>label_data2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1956</span>, <span class="at">y =</span> <span class="fl">47.5</span>, <span class="at">label =</span> <span class="st">"PY (10,000)"</span>)</span>
+<span id="cb111-32"><a href="#cb111-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-33"><a href="#cb111-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
+<span id="cb111-34"><a href="#cb111-34" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb111-35"><a href="#cb111-35" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb111-36"><a href="#cb111-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
+<span id="cb111-37"><a href="#cb111-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), </span>
+<span id="cb111-38"><a href="#cb111-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>), </span>
+<span id="cb111-39"><a href="#cb111-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>))</span>
+<span id="cb111-40"><a href="#cb111-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-41"><a href="#cb111-41" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df1) <span class="sc">+</span> </span>
+<span id="cb111-42"><a href="#cb111-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">c</span>(<span class="fl">1968.25</span>, <span class="dv">1993</span>),</span>
+<span id="cb111-43"><a href="#cb111-43" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb111-44"><a href="#cb111-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>),</span>
+<span id="cb111-45"><a href="#cb111-45" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span></span>
+<span id="cb111-46"><a href="#cb111-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> y1, </span>
+<span id="cb111-47"><a href="#cb111-47" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> x2, <span class="at">yend =</span> y2), </span>
+<span id="cb111-48"><a href="#cb111-48" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> df1,</span>
+<span id="cb111-49"><a href="#cb111-49" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span> </span>
+<span id="cb111-50"><a href="#cb111-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> y1, </span>
+<span id="cb111-51"><a href="#cb111-51" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> x2, <span class="at">yend =</span> y2), </span>
+<span id="cb111-52"><a href="#cb111-52" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> df2,</span>
+<span id="cb111-53"><a href="#cb111-53" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb111-54"><a href="#cb111-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> y1, </span>
+<span id="cb111-55"><a href="#cb111-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xend =</span> x2, <span class="at">yend =</span> y2), </span>
+<span id="cb111-56"><a href="#cb111-56" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> df3,</span>
+<span id="cb111-57"><a href="#cb111-57" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb111-58"><a href="#cb111-58" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> </span>
+<span id="cb111-59"><a href="#cb111-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Calendar time"</span>) <span class="sc">+</span> </span>
+<span id="cb111-60"><a href="#cb111-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Age (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb111-61"><a href="#cb111-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.005</span>)),</span>
+<span id="cb111-62"><a href="#cb111-62" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1950</span>, <span class="dv">2000</span>), </span>
+<span id="cb111-63"><a href="#cb111-63" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1950</span>, <span class="dv">2000</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb111-64"><a href="#cb111-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.005</span>)), </span>
+<span id="cb111-65"><a href="#cb111-65" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">50</span>), </span>
+<span id="cb111-66"><a href="#cb111-66" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">10</span>)) <span class="sc">+</span> </span>
+<span id="cb111-67"><a href="#cb111-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> label), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">label.size =</span> <span class="cn">NA</span>,</span>
+<span id="cb111-68"><a href="#cb111-68" aria-hidden="true" tabindex="-1"></a>             <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="fl">0.7</span>, </span>
+<span id="cb111-69"><a href="#cb111-69" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> label_data) <span class="sc">+</span> </span>
+<span id="cb111-70"><a href="#cb111-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin=</span><span class="fu">unit</span>(<span class="fu">c</span>(<span class="fl">0.75</span>, <span class="fl">0.75</span>, <span class="fl">0.75</span>, <span class="fl">0.75</span>), <span class="st">"cm"</span>))</span>
+<span id="cb111-71"><a href="#cb111-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb111-72"><a href="#cb111-72" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Ch3_files/figure-html/figure-3.1-1.png" class="img-fluid" width="793"></p>
+</div>
+</div>
+</section>
+<section id="table-3.5" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.5">Table 3.5</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.5_e01ec4ce6196a94eb9289bf96e0cc6c3">
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb112-3"><a href="#cb112-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb112-4"><a href="#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
+<span id="cb112-5"><a href="#cb112-5" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>age)</span>
+<span id="cb112-6"><a href="#cb112-6" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>age, <span class="at">ref =</span> <span class="st">"20"</span>)</span>
+<span id="cb112-7"><a href="#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age, <span class="at">data =</span> testis, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ offset(lpyrs) + par2 + age, family = poisson, 
+    data = testis)
+
+Coefficients:
+            Estimate Std. Error  z value Pr(&gt;|z|)    
+(Intercept) -9.04435    0.08393 -107.757  &lt; 2e-16 ***
+par2         0.21663    0.08405    2.577  0.00996 ** 
+age0        -4.03084    0.21105  -19.099  &lt; 2e-16 ***
+age15       -1.17094    0.11886   -9.851  &lt; 2e-16 ***
+age25        0.55962    0.09802    5.709 1.14e-08 ***
+age30        0.75263    0.13272    5.671 1.42e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 1647.61  on 236  degrees of freedom
+Residual deviance:  201.07  on 231  degrees of freedom
+AIC: 540.84
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>motherage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>motherage)</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>motherage <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>motherage, <span class="at">ref =</span> <span class="st">"30"</span>)</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>cohort <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>cohort)</span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>cohort <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>cohort, <span class="at">ref =</span> <span class="st">"1973"</span>)</span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(poisfull<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort, </span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> testis,<span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cases ~ offset(lpyrs) + par2 + age + motherage + 
+    cohort, family = poisson, data = testis)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -9.11684    0.29271 -31.146  &lt; 2e-16 ***
+par2         0.22967    0.09112   2.521   0.0117 *  
+age0        -4.00398    0.23905 -16.749  &lt; 2e-16 ***
+age15       -1.16652    0.12522  -9.316  &lt; 2e-16 ***
+age25        0.61710    0.10445   5.908 3.46e-09 ***
+age30        0.95356    0.15378   6.201 5.62e-10 ***
+motherage12  0.02926    0.24121   0.121   0.9034    
+motherage20  0.05796    0.22233   0.261   0.7943    
+motherage25 -0.11663    0.22510  -0.518   0.6044    
+cohort1950  -0.36275    0.28800  -1.260   0.2078    
+cohort1958  -0.08031    0.24838  -0.323   0.7464    
+cohort1963   0.12346    0.23712   0.521   0.6026    
+cohort1968   0.13376    0.23600   0.567   0.5709    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 1647.6  on 236  degrees of freedom
+Residual deviance:  190.2  on 224  degrees of freedom
+AIC: 543.98
+
+Number of Fisher Scoring iterations: 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(poisfull, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 7
+   term        estimate std.error statistic   p.value  conf.low conf.high
+   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.000110    0.293    -31.1   5.74e-213 0.0000605  0.000191
+ 2 par2        1.26        0.0911     2.52  1.17e-  2 1.05       1.51    
+ 3 age0        0.0182      0.239    -16.7   5.72e- 63 0.0112     0.0286  
+ 4 age15       0.311       0.125     -9.32  1.21e- 20 0.243      0.397   
+ 5 age25       1.85        0.104      5.91  3.46e-  9 1.51       2.28    
+ 6 age30       2.59        0.154      6.20  5.62e- 10 1.91       3.50    
+ 7 motherage12 1.03        0.241      0.121 9.03e-  1 0.652      1.68    
+ 8 motherage20 1.06        0.222      0.261 7.94e-  1 0.698      1.68    
+ 9 motherage25 0.890       0.225     -0.518 6.04e-  1 0.583      1.41    
+10 cohort1950  0.696       0.288     -1.26  2.08e-  1 0.398      1.23    
+11 cohort1958  0.923       0.248     -0.323 7.46e-  1 0.574      1.52    
+12 cohort1963  1.13        0.237      0.521 6.03e-  1 0.720      1.83    
+13 cohort1968  1.14        0.236      0.567 5.71e-  1 0.729      1.84    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for mother's age</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>poismage<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> cohort, </span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> testis,<span class="at">family =</span> poisson)</span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(poisfull,poismage)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: cases ~ offset(lpyrs) + par2 + age + motherage + cohort
+Model 2: cases ~ offset(lpyrs) + par2 + age + cohort
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1  13 -258.99                     
+2  10 -260.25 -3 2.5336     0.4692</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for birth cohort of son</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>poiscohort<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage, </span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> testis,<span class="at">family =</span> poisson)</span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(poisfull,poiscohort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: cases ~ offset(lpyrs) + par2 + age + motherage + cohort
+Model 2: cases ~ offset(lpyrs) + par2 + age + motherage
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)  
+1  13 -258.99                       
+2   9 -263.60 -4 9.2204    0.05582 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT parity and age</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>poisinteract<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort <span class="sc">+</span> par2<span class="sc">*</span>age, </span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> testis, <span class="at">family =</span> poisson)</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(poisfull,poisinteract)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: cases ~ offset(lpyrs) + par2 + age + motherage + cohort
+Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 * 
+    age
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1  13 -258.99                     
+2  17 -255.11  4 7.7606     0.1008</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HR for seminomas</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">glm</span>(semi <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort, </span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> testis, <span class="at">family =</span> poisson),</span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">exponentiate =</span> T, <span class="at">conf.int =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 7
+   term         estimate std.error statistic  p.value   conf.low conf.high
+   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.0000297     1.00   -10.4    1.98e-25 0.00000314  0.000178
+ 2 par2        1.23          0.171    1.23   2.19e- 1 0.886       1.73    
+ 3 age0        0.00297       1.13    -5.17   2.38e- 7 0.000147    0.0176  
+ 4 age15       0.0949        0.443   -5.32   1.03e- 7 0.0357      0.209   
+ 5 age25       2.98          0.200    5.47   4.55e- 8 2.03        4.44    
+ 6 age30       6.62          0.245    7.71   1.30e-14 4.11       10.8     
+ 7 motherage12 0.900         0.640   -0.164  8.69e- 1 0.295       3.94    
+ 8 motherage20 0.978         0.618   -0.0360 9.71e- 1 0.339       4.15    
+ 9 motherage25 1.23          0.617    0.338  7.35e- 1 0.427       5.22    
+10 cohort1950  0.731         0.907   -0.345  7.30e- 1 0.140       5.71    
+11 cohort1958  0.966         0.879   -0.0389 9.69e- 1 0.198       7.26    
+12 cohort1963  0.862         0.869   -0.171  8.64e- 1 0.180       6.39    
+13 cohort1968  0.691         0.879   -0.421  6.74e- 1 0.140       5.18    </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HAr for non-seminomas</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">glm</span>(nonsemi <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort, </span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> testis, <span class="at">family =</span> poisson),</span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">exponentiate =</span> T, <span class="at">conf.int =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 7
+   term         estimate std.error statistic   p.value  conf.low conf.high
+   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.0000860     0.308   -30.4   7.09e-203 0.0000459  0.000154
+ 2 par2        1.27          0.108     2.19  2.88e-  2 1.03       1.56    
+ 3 age0        0.0223        0.246   -15.4   9.35e- 54 0.0135     0.0355  
+ 4 age15       0.369         0.133    -7.48  7.32e- 14 0.283      0.478   
+ 5 age25       1.49          0.125     3.21  1.35e-  3 1.17       1.91    
+ 6 age30       1.21          0.229     0.846 3.97e-  1 0.762      1.88    
+ 7 motherage12 1.09          0.264     0.341 7.33e-  1 0.662      1.87    
+ 8 motherage20 1.10          0.239     0.382 7.03e-  1 0.700      1.79    
+ 9 motherage25 0.804         0.244    -0.892 3.72e-  1 0.508      1.33    
+10 cohort1950  0.639         0.328    -1.37  1.72e-  1 0.335      1.22    
+11 cohort1958  0.828         0.264    -0.718 4.73e-  1 0.499      1.41    
+12 cohort1963  1.15          0.247     0.550 5.82e-  1 0.715      1.89    
+13 cohort1968  1.19          0.245     0.722 4.70e-  1 0.748      1.96    </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="recurrent-episodes-in-affective-disorders" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</h2>
+<section id="read-data-4" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="read-data-4">Read data</h3>
+<div class="cell" data-hash="Ch3_cache/html/read-affective_336c76a332a94bdaaa35718072e899f0">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>wait <span class="ot">&lt;-</span> <span class="fu">with</span>(affective, stop <span class="sc">-</span> start)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="table-3.6" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.6">Table 3.6</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.6_b22db2bcf36ef31dccc110f4987f4452">
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip,</span>
+<span id="cb129-3"><a href="#cb129-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(start, stop, status == 1) ~ bip, data = subset(affective, 
+    state == 0), ties = "breslow")
+
+       coef exp(coef) se(coef)     z        p
+bip 0.36593   1.44186  0.09448 3.873 0.000107
+
+Likelihood ratio test=14.24  on 1 df, p=0.0001612
+n= 626, number of events= 542 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> episode,</span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(start, stop, status == 1) ~ bip + episode, 
+    data = subset(affective, state == 0), ties = "breslow")
+
+            coef exp(coef) se(coef)      z        p
+bip     0.318455  1.375002 0.094545  3.368 0.000756
+episode 0.126230  1.134543 0.008675 14.552  &lt; 2e-16
+
+Likelihood ratio test=177.8  on 2 df, p=&lt; 2.2e-16
+n= 626, number of events= 542 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> episode <span class="sc">+</span> <span class="fu">I</span>(episode<span class="sc">*</span>episode),</span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(start, stop, status == 1) ~ bip + episode + 
+    I(episode * episode), data = subset(affective, state == 0), 
+    ties = "breslow")
+
+                          coef exp(coef)  se(coef)      z      p
+bip                   0.066935  1.069226  0.097084  0.689  0.491
+episode               0.424503  1.528831  0.032315 13.136 &lt;2e-16
+I(episode * episode) -0.013617  0.986476  0.001554 -8.764 &lt;2e-16
+
+Likelihood ratio test=283.1  on 3 df, p=&lt; 2.2e-16
+n= 626, number of events= 542 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>epi<span class="ot">&lt;-</span><span class="fu">with</span>(affective, <span class="fu">ifelse</span>(episode<span class="sc">&lt;</span><span class="dv">25</span>,episode,<span class="dv">25</span>))</span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> <span class="fu">factor</span>(epi),</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(start, stop, status == 1) ~ bip + factor(epi), 
+    data = subset(affective, state == 0), ties = "breslow")
+
+                  coef exp(coef) se(coef)      z       p
+bip            0.08265   1.08617  0.09911  0.834 0.40428
+factor(epi)1  -1.05299   0.34889  1.01925 -1.033 0.30156
+factor(epi)2  -0.19882   0.81969  1.01745 -0.195 0.84507
+factor(epi)3   0.10702   1.11296  1.01767  0.105 0.91625
+factor(epi)4   0.33779   1.40184  1.01879  0.332 0.74022
+factor(epi)5   0.87778   2.40555  1.01966  0.861 0.38932
+factor(epi)6   0.82540   2.28280  1.02289  0.807 0.41971
+factor(epi)7   1.03045   2.80233  1.02334  1.007 0.31396
+factor(epi)8   1.32179   3.75014  1.02557  1.289 0.19746
+factor(epi)9   1.93669   6.93579  1.02934  1.881 0.05990
+factor(epi)10  2.23691   9.36437  1.03634  2.158 0.03089
+factor(epi)11  1.43431   4.19677  1.03473  1.386 0.16569
+factor(epi)12  1.64060   5.15824  1.04425  1.571 0.11616
+factor(epi)13  1.81915   6.16659  1.05244  1.729 0.08390
+factor(epi)14  1.54530   4.68937  1.05713  1.462 0.14380
+factor(epi)15  2.17967   8.84340  1.07677  2.024 0.04294
+factor(epi)16  1.62044   5.05531  1.08609  1.492 0.13570
+factor(epi)17  2.64324  14.05863  1.11442  2.372 0.01770
+factor(epi)18  3.31788  27.60164  1.14484  2.898 0.00375
+factor(epi)19  2.77865  16.09720  1.17711  2.361 0.01825
+factor(epi)20  1.44524   4.24287  1.23541  1.170 0.24206
+factor(epi)21  2.94624  19.03419  1.26311  2.333 0.01967
+factor(epi)22  1.47210   4.35839  1.23833  1.189 0.23452
+factor(epi)23  2.08914   8.07794  1.23944  1.686 0.09188
+factor(epi)24  2.47251  11.85221  1.24911  1.979 0.04777
+
+Likelihood ratio test=324.9  on 25 df, p=&lt; 2.2e-16
+n= 626, number of events= 542 </code></pre>
+</div>
+</div>
+</section>
+<section id="table-3.7" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="table-3.7">Table 3.7</h3>
+<div class="cell" data-hash="Ch3_cache/html/table-3.7_0f758696dfdfd2a17d7fc4ade6288a84">
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> <span class="fu">tt</span>(year),</span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>         per <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">+</span> t<span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb137-5"><a href="#cb137-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">cbind</span>(<span class="at">period1=</span><span class="dv">1</span><span class="sc">*</span>(<span class="dv">66</span><span class="sc">&lt;=</span>per <span class="sc">&amp;</span> per<span class="sc">&lt;</span><span class="dv">71</span>),</span>
+<span id="cb137-6"><a href="#cb137-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">period2=</span><span class="dv">1</span><span class="sc">*</span>(<span class="dv">71</span><span class="sc">&lt;=</span>per <span class="sc">&amp;</span> per<span class="sc">&lt;</span><span class="dv">76</span>),</span>
+<span id="cb137-7"><a href="#cb137-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">period3=</span><span class="dv">1</span><span class="sc">*</span>(<span class="dv">76</span><span class="sc">&lt;=</span>per <span class="sc">&amp;</span> per<span class="sc">&lt;</span><span class="dv">81</span>),</span>
+<span id="cb137-8"><a href="#cb137-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">period4=</span><span class="dv">1</span><span class="sc">*</span>(<span class="dv">81</span><span class="sc">&lt;=</span>per))})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(start, stop, status == 1) ~ bip + tt(year), 
+    data = subset(affective, state == 0), ties = "breslow", tt = function(x, 
+        t, ...) {
+        per &lt;- x + 0.5 + t/12
+        cbind(period1 = 1 * (66 &lt;= per &amp; per &lt; 71), period2 = 1 * 
+            (71 &lt;= per &amp; per &lt; 76), period3 = 1 * (76 &lt;= per &amp; 
+            per &lt; 81), period4 = 1 * (81 &lt;= per))
+    })
+
+                    coef exp(coef) se(coef)      z        p
+bip              0.36123   1.43509  0.09454  3.821 0.000133
+tt(year)period1 -0.25060   0.77834  0.20834 -1.203 0.229047
+tt(year)period2 -0.17948   0.83570  0.33095 -0.542 0.587596
+tt(year)period3 -0.36737   0.69256  0.43858 -0.838 0.402237
+tt(year)period4 -1.33241   0.26384  0.55385 -2.406 0.016141
+
+Likelihood ratio test=25.16  on 5 df, p=0.0001299
+n= 626, number of events= 542 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="bone-marrow-transplantation-in-acute-leukemia" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="bone-marrow-transplantation-in-acute-leukemia">Bone marrow transplantation in acute leukemia</h2>
+<!-- {{< include R/chapter3_bmt.qmd >}} -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -312,9 +1986,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Ch4.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Intuition for marginal models</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -1,0 +1,383 @@
+### Read data {.unnumbered}
+
+```{r}
+#| label: read-prova
+prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
+# Treatment 2x2 factorial
+prova$beh <- with(prova, as.factor(scle + beta*2))
+# Extra variables
+provany <- prova
+provany$log2bili <- with(provany, log2(bili))
+provany$btime    <- ifelse(provany$bleed == 1, provany$timebleed, provany$timedeath)
+provany$d0time   <- ifelse(provany$bleed == 1, provany$timebleed, provany$timedeath)
+provany$dead0    <- ifelse(provany$bleed == 1, 0, provany$death)
+provany$outof0   <- ifelse(provany$bleed == 1, 1, provany$death)
+provany$bdtime   <- ifelse(provany$bleed == 1, provany$timedeath, NA)
+provany$deadb    <- ifelse(provany$bleed == 1, provany$death, NA)
+provany$wait     <- ifelse(provany$bleed == 1, provany$bdtime - provany$timebleed, NA)
+```
+
+### Table 3.3  {.unnumbered}
+
+```{r}
+#| label: table-3.3
+library(survival)
+options(contrasts=c("contr.treatment", "contr.poly"))
+
+## Column 1
+# Variceal bleeding
+coxph(Surv(btime, bleed) ~ beh, data = provany, ties = "breslow")
+# Death without bleeding
+coxph(Surv(d0time, dead0) ~ beh, data = provany, ties = "breslow")
+
+# logrank test: Variceal bleeding
+lr<-survdiff(Surv(btime, bleed) ~ beh, data = provany)
+c(lr$chisq,lr$pvalue)
+
+# logrank test: Death without bleeding
+lr<-survdiff(Surv(d0time, dead0) ~ beh, data = provany)
+c(lr$chisq,lr$pvalue)
+
+
+## Column 2
+# Variceal bleeding
+coxph(Surv(btime, bleed) ~ beh + sex + coag + log2bili + factor(varsize),
+      data = provany, ties = "breslow")
+
+# Death without bleeding
+cox1<-coxph(Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize),
+                    data = provany, ties = "breslow")
+cox1
+
+# Death without bleeding - reduced model
+cox2<-coxph(Surv(d0time, dead0) ~ scle + beta + sex + coag + log2bili + factor(varsize),
+                    data = provany, ties = "breslow")
+cox2
+
+# LRT reduced model
+library(lmtest)
+lrtest(cox1,cox2)
+
+# Death without bleeding - 'final model'
+cox3<-coxph(Surv(d0time, dead0) ~ scle + sex + coag + log2bili + factor(varsize),
+      data = provany, ties = "breslow")
+
+cox3
+lrtest(cox2,cox3)
+```
+
+### Table 3.4 {.unnumbered}
+
+```{r}
+#| label: table-3.4
+# Composite
+cox<-coxph(Surv(btime, outof0) ~ beh + sex + coag + log2bili + factor(varsize),
+      data = provany, ties = "breslow")
+cox
+# LRT for treatment
+coxreduced<-coxph(Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize),
+      data = provany, ties = "breslow")
+lrtest(cox,coxreduced)
+```
+
+### Table 3.8 {.unnumbered}
+
+```{r}
+#| label: table-3.8
+# Time since randomization (tsr)
+# Column 1
+coxtsr<-coxph(Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili, 
+              data = provany, ties = "breslow")
+coxtsr
+
+coxtsr0<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili, 
+              data = provany, ties = "breslow")
+coxtsr0
+
+# LRT for beh
+library(lmtest)
+lrtest(coxtsr,coxtsr0)
+
+coxnoint<-coxph(Surv(btime, bdtime, deadb != 0) ~ scle + beta  + sex + log2bili, 
+              data = provany, ties = "breslow")
+# LRT interaction
+lrtest(coxtsr,coxnoint)
+
+
+# Column 2
+provany$tsb<-provany$btime
+coxtsr_tt<-coxph(Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili+tt(tsb), 
+      data = provany, ties = "breslow",
+      tt=function(x, t, ...) {
+        dt <- t-x
+        cbind(dt1=1*(dt<5), dt2=1*(dt>=5 & dt<10))
+      })
+coxtsr_tt
+# LRT for time-dependent covariates
+lrtest(coxtsr,coxtsr_tt)
+
+# or as mentioned in text, model linear effect of time-dependent covariate
+coxph(Surv(btime, bdtime, deadb != 0) ~ beh+sex + log2bili+tt(tsb), 
+      data = provany, ties = "breslow",
+      tt=function(x, t, ...){t-x})
+
+
+coxtsr_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb), 
+                 data = provany, ties = "breslow",
+                 tt=function(x, t, ...) {
+                   dt <- t-x
+                   cbind(dt1=1*(dt<5), dt2=1*(dt>=5 & dt<10))
+                 })
+coxtsr_tt_reduced
+# LRT for beh
+lrtest(coxtsr_tt,coxtsr_tt_reduced)
+
+# Duration
+# Column 1
+coxdur<-coxph(Surv(wait, deadb != 0) ~ beh + sex + log2bili,
+              data = provany, ties = "breslow")
+coxdur
+coxdur0<-coxph(Surv(wait, deadb != 0) ~ sex + log2bili,
+              data = provany, ties = "breslow")
+coxdur0
+# LRT for beh
+lrtest(coxdur,coxdur0)
+
+# Column 2
+provany$tsr<-provany$btime
+coxdur_tt<-coxph(Surv(wait, deadb != 0) ~ beh + sex + log2bili+tt(tsr),
+      data = provany, ties = "breslow",
+      tt=function(x, t, ...) {
+        dt <- x+t
+        cbind(v1=1*(dt<1*365.25), v2=1*(dt>=1*365.25 & dt<2*365.25))
+      })
+coxdur_tt
+# LRT for time-dependent covariates
+lrtest(coxdur,coxdur_tt)
+
+coxdur_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb), 
+                         data = provany, ties = "breslow",
+                         tt=function(x, t, ...) {
+                           dt <- t-x
+                           cbind(dt1=1*(dt<5), dt2=1*(dt>=5 & dt<10))
+                         })
+```
+
+### Figure 3.2 {.unnumbered}
+
+```{r}
+#| label: figure-3.2
+# Plotting style 
+library(ggplot2)
+library(tidyverse)
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom", 
+        text = element_text(size = 20), 
+        axis.text.x = element_text(size = 20), 
+        axis.text.y = element_text(size = 20)) 
+
+# Make zeros print as "0" always for plot axes
+library(stringr)
+prettyZero <- function(l){
+  max.decimals = max(nchar(str_extract(l, "\\.[0-9]+")), na.rm = T)-1
+  lnew = formatC(l, replace.zero = T, zero.print = "0",
+                 digits = max.decimals, format = "f", preserve.width=T)
+  return(lnew)
+}
+
+# Extract cumulative baseline hazard
+coxcumhaz <- survfit(coxtsr, 
+                     newdata = data.frame(sex = 0, 
+                                          beh = "0", 
+                                          log2bili = 0))
+
+# Collect data for plot
+coxdata <- data.frame(cumhaz = append(0,coxcumhaz$cumhaz), 
+                      time = append(0,coxcumhaz$time), 
+                      type = rep("Breslow estimate", 1+length(coxcumhaz$time)))
+
+# Create Figure 3.2
+fig3.2 <- ggplot(aes(x = time / 365.25, y = cumhaz), data = coxdata) + 
+  geom_step(linewidth = 1) + 
+  xlab("Time since randomization (years)") + 
+  ylab("Cumulative hazard") + 
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05))) + 
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
+  theme_general
+
+fig3.2
+```
+
+
+### Figure 3.3 {.unnumbered}
+
+```{r}
+#| label: figure-3.3
+# Extract cumulative baseline hazard
+coxcumhaz <- survfit(coxdur, 
+                     newdata = data.frame(sex = 0, 
+                                          beh = "0", 
+                                          log2bili = 0))
+# Collect data for plot
+coxdata <- data.frame(cumhaz = append(0,coxcumhaz$cumhaz), 
+                      time = append(0,coxcumhaz$time), 
+                      type = rep("Breslow estimate", 1+length(coxcumhaz$time)))
+
+# Create Figure 3.3
+fig3.3 <- ggplot(aes(x = time / 365.25, y = cumhaz), data = coxdata) + 
+  geom_step(linewidth = 1) + 
+  xlab("Duration (years)") + 
+  ylab("Cumulative hazard") + 
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), ) + 
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)),labels = prettyZero) +
+  theme_general
+
+fig3.3
+```
+
+### Table 3.9 {.unnumbered}
+
+```{r}
+#| label: table-3.9
+# All bleeds
+provasplit11 <- subset(provany, bleed == 1)
+# Split by duration
+provasplit1 <- survSplit(Surv(wait, deadb != 0) ~ ., data = provasplit11, 
+                           cut = c(5, 10),
+                           episode = "wint")
+provasplit1$start <- with(provasplit1, 
+                            btime + ifelse(wint == 1, 0, ifelse(wint == 2, 5 , 10))
+                            )
+provasplit1$stop <- with(provasplit1, btime + wait)
+provasplit1$risktime <- with(provasplit1, wait - tstart)
+provasplit1$logrisktime <- log(provasplit1$risktime)
+provasplit1$fail <- provasplit1$event
+
+# Split by time since rand (t)
+provasplit2 <- survSplit(Surv(start, stop, fail) ~ ., data = provasplit1, 
+                           cut = c((1) * 365.25, (2) * 365.25),
+                           episode = "tint")
+
+provasplit2$risktime2 <- with(provasplit2, stop - start)
+provasplit2$risktimeys2 <- provasplit2$risktime2 / 365.25
+  
+provasplit2$logrisktime2 <- log(provasplit2$risktime2)
+provasplit2$fail2 <- provasplit2$fail
+
+# Summarize the data, Table 3.9 output
+aggregate(cbind(fail2, risktimeys2) ~ tint + wint, provasplit2, 
+          FUN = function(x) c(count = length(x),
+                              sum = sum(x)))
+```
+
+### Table 3.10 {.unnumbered}
+
+```{r}
+#| label: table-3.10
+# part (a)
+summary(glm(fail ~ offset(log(risktime)) + beh + relevel(as.factor(wint), ref = "3") + 
+              sex + log2bili, data = provasplit1, family = poisson))
+
+# part (b)
+summary(glm(fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(tint), ref = "3") + 
+              sex + log2bili, data = provasplit2, family = poisson))
+
+# part (c)
+summary(glm(fail2 ~ offset(log(risktime2)) + beh + 
+              relevel(as.factor(wint), ref = "3") +
+              relevel(as.factor(tint), ref = "3") +
+              sex + log2bili, data = provasplit2, family = poisson))
+
+
+# Interaction model, in-text but not shown
+summary(glm(fail2 ~ offset(log(risktime2)) + beh + as.factor(tint) * as.factor(wint) + sex + log2bili, 
+            data = provasplit2, family = poisson)
+)
+
+
+# LRT for time-dependent covariates
+glmboth<-glm(fail2 ~ offset(log(risktime2)) + beh + 
+               relevel(as.factor(wint), ref = "3") +
+               relevel(as.factor(tint), ref = "3") +
+               sex + log2bili, data = provasplit2, family = poisson)
+glmwint<-glm(fail2 ~ offset(log(risktime2)) + beh + 
+               relevel(as.factor(wint), ref = "3") +
+               sex + log2bili, data = provasplit2, family = poisson)
+glmtint<-glm(fail2 ~ offset(log(risktime2)) + beh + 
+               relevel(as.factor(tint), ref = "3") +
+               sex + log2bili, data = provasplit2, family = poisson)
+# LRT effect of duration since bleeding
+lrtest(glmboth,glmtint)
+# LRT effect of time since randomization
+lrtest(glmboth,glmwint)
+```
+
+### Table 3.13 {.unnumbered}
+
+```{r}
+#| label: table-3.13
+# Prepare data set for analysis - double
+double1 <- provany %>% mutate(time = d0time, 
+                              status = dead0, 
+                              entrytime = 0, 
+                              sex1 = sex, 
+                              sex2 = 0, 
+                              age1 = age, 
+                              age2 = 0, 
+                              bili1 = log2bili, 
+                              bili2 = log2bili * 0,
+                              stratum = 1)
+
+double2 <- provany %>% filter(bleed == 1) %>% 
+                       mutate(time = bdtime, 
+                              status = deadb, 
+                              entrytime = btime, 
+                              sex1 = 0, 
+                              sex2 = sex, 
+                              age1 = 0, 
+                              age2 = age, 
+                              bili1 = log2bili * 0, 
+                              bili2 = log2bili,
+                              stratum = 2)
+double <- as.data.frame(rbind(double1, double2))
+
+# part (a)
+Table3.13a <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex1 + sex2 + bili1 + bili2, 
+            data = double, ties = "breslow")
+Table3.13a
+
+# part (b)
+Table3.13b <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex + bili1 + bili2, 
+            data = double, ties = "breslow")
+Table3.13b
+
+# part (c)
+Table3.13c <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex + bili1, 
+            data = double, ties = "breslow")
+Table3.13c
+```
+
+### Figure 3.9 {.unnumbered}
+
+```{r}
+#| label: figure-3.9
+# Extract cumulative hazard from r1 
+survr1 <- basehaz(Table3.13a, center = F)
+pcumhaz <- data.frame(
+  cumhaz = c(survr1$hazard[survr1$strata=="stratum=1"],0,survr1$hazard[survr1$strata=="stratum=2"]), 
+  time   = c(survr1$time[survr1$strata=="stratum=1"],0,survr1$time[survr1$strata=="stratum=2"]), 
+  strata = c(survr1$strata[survr1$strata=="stratum=1"],"2",survr1$strata[survr1$strata=="stratum=2"])
+) 
+
+# Create Figure 3.9
+fig3.9 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = strata), data = pcumhaz) + 
+  geom_step(linewidth = 1) + 
+  xlab("Time since randomization (years)") + 
+  ylab("Cumulative hazard") + 
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05))) + 
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
+  scale_linetype_discrete("Stratum", labels = c("1", "2")) + 
+  theme_general + theme(legend.position = "none")
+
+fig3.9
+```

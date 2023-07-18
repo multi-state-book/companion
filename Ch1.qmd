@@ -2,7 +2,8 @@
 
 In the book, examples of event history data are used to illustrate different methods, models and approaches. All the data sets, except the LEADER data, are available for download as CSV files and description of the variables is given below.
 
-```{r alldata, echo=FALSE}
+
+```{r downloadthis, echo=FALSE}
 library(downloadthis)
 download_dir(
   path = "data",
@@ -43,6 +44,7 @@ download_dir(
 | `sex`         | 0 = female, 1 = male                                     |
 | `age`         | age in days at initial visit                             |
 
+
 ## Testis cancer incidence and maternal parity (`testis.csv`)
 
 | Variable name | Description |
@@ -72,7 +74,6 @@ download_dir(
 | `bili`        |                      |
 | `coag`        |                      |
 | `varsize`     |                      |
-| `beh`         |                      |
 
 ## Recurrent episodes in affective disorders (`affective.csv`)
 
@@ -137,10 +138,8 @@ Data not available.
 
 ## Small set of survival data
 
-Data from Table 1.6.
+{{< include R/chapter1_simpledata.qmd >}}
 
-```{r simpledata, file = "R/chapter1_simpledata.r",message=FALSE,warning=FALSE,cache=TRUE, fig.height = 8.27, fig.width = 8.27, out.width = "70%"}
-```
 
 ## Exercises {.unnumbered}
 
@@ -166,6 +165,7 @@ library(mstate)
 ```
 
 ```{r}
+#| label: exercise-1.2.1
 # The table from the exercise
 id <- factor(1:8)
 timeafib <- c(NA, 10, NA, 15, NA, 30, NA, 25)
@@ -207,6 +207,7 @@ long_data
 We can then repeat the procedure for the Copenhagen Holter Study data set.
 
 ```{r}
+#| label: exercise-1.2.2
 chs_data$timestroke <- ifelse(is.na(chs_data$timestroke),
                               chs_data$timedeath, chs_data$timestroke)
 chs_data$timeafib <- ifelse(is.na(chs_data$timeafib),

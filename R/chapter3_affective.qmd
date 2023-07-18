@@ -1,0 +1,39 @@
+### Read data {.unnumbered}
+
+```{r}
+#| label: read-affective
+affective <- data.frame(read.csv("data/affective.csv"))
+affective$wait <- with(affective, stop - start)
+
+```
+
+### Table 3.6 {.unnumbered}
+```{r}
+#| label: table-3.6
+library(survival)
+coxph(Surv(start, stop, status == 1) ~ bip,
+      data = subset(affective, state == 0), ties = "breslow")
+
+coxph(Surv(start, stop, status == 1) ~ bip + episode,
+      data = subset(affective, state == 0), ties = "breslow")
+
+coxph(Surv(start, stop, status == 1) ~ bip + episode + I(episode*episode),
+      data = subset(affective, state == 0), ties = "breslow")
+
+affective$epi<-with(affective, ifelse(episode<25,episode,25))
+coxph(Surv(start, stop, status == 1) ~ bip + factor(epi),
+      data = subset(affective, state == 0), ties = "breslow")
+```
+
+### Table 3.7 {.unnumbered}
+```{r}
+#| label: table-3.7
+coxph(Surv(start, stop, status == 1) ~ bip + tt(year),
+      data = subset(affective, state == 0), ties = "breslow",
+       tt=function(x, t, ...) {
+         per <- x + 0.5 + t/12
+         cbind(period1=1*(66<=per & per<71),
+               period2=1*(71<=per & per<76),
+               period3=1*(76<=per & per<81),
+               period4=1*(81<=per))})
+```

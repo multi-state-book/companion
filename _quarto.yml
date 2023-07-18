@@ -18,16 +18,28 @@ book:
     - Ch1.qmd
     - Ch2.qmd
     - Ch3.qmd
-    - Ch4.qmd
-    - Ch5.qmd
-    - Ch6.qmd
-    - Ch7.qmd
+    #- Ch4.qmd
+    #- Ch5.qmd
+    #- Ch6.qmd
+    #- Ch7.qmd
+
+execute: 
+  warning: false
+  message: false
+  cache: true
 
 format:
   html:
+    code-block-border-left: true
+    #code-block-bg: true
+    #code-block-border-left: "#31BAE9"
+    #code-fold: true
+    code-summary: "Code"
+    fig-width: 11.69
+    fig-height: 8.27
     theme:
       - cosmo
-      - msb.scss
+      #- msb.scss
 
 editor: source
 

@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5 {
   font-weight: normal;
 }
 
-/* Code ------------------------------------------------ */
+/* Code and output ----------------------------------------- */
 
 code {
   color: #373a3c;
@@ -49,6 +49,11 @@ code a:any-link {
 
 pre {
   background-image: linear-gradient(160deg,#f8f8f8 0,#f1f1f1 100%);
+}
+
+.cell-output {
+  background-color: lightgreen;
+  border-radius: 4px;
 }
 
 /* Printing ------------------------------------------------ */

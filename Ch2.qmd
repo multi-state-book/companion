@@ -1,22 +1,14 @@
 # Intuition for intensity models
 
 ## PBC3 trial {.unnumbered}
-
-
-```{r pbc3, file = "R/chapter2_pbc3.r", message=FALSE, warning=FALSE, cache=TRUE, fig.height = 8.27, fig.width = 11.69, out.width = "90%"}
-```
+{{< include R/chapter2_pbc3.qmd >}}
+<!-- #| out-width: 90% -->
 
 ## Guinea-Bissau study {.unnumbered}
-
-
-```{r bissau, file = "R/chapter2_bissau.r", message=FALSE, warning=FALSE, cache=TRUE, fig.height = 8.27, fig.width = 11.69, out.width = "90%"}
-```
+{{< include R/chapter2_bissau.qmd >}}
 
 ## Recurrent episodes in affective disorders {.unnumbered}
-
-
-```{r affective, file = "R/chapter2_affective.r", message=FALSE, warning=FALSE, cache=TRUE, fig.height = 8.27, fig.width = 11.69, out.width = "90%"}
-```
+{{< include R/chapter2_affective.qmd >}}
 
 ## Exercises {.unnumbered}
 

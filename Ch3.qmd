@@ -1,1 +1,19 @@
 # Intensity models
+
+## Guinea-Bissau study {.unnumbered}
+{{< include R/chapter3_bissau.qmd >}}
+
+## PBC3 trial {.unnumbered}
+{{< include R/chapter3_pbc3.qmd >}}
+
+## PROVA trial {.unnumbered}
+{{< include R/chapter3_prova.qmd >}}
+
+## Testis cancer {.unnumbered}
+{{< include R/chapter3_testis.qmd >}}
+
+## Recurrent episodes in affective disorders {.unnumbered}
+{{< include R/chapter3_affective.qmd >}}
+
+## Bone marrow transplantation in acute leukemia {.unnumbered}
+<!-- {{< include R/chapter3_bmt.qmd >}} -->

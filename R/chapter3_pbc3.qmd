@@ -1,0 +1,39 @@
+### Read data {.unnumbered}
+
+```{r}
+#| label: read-pbc3
+pbc3 <- data.frame(read.csv("data/pbc3.csv"))
+pbc3$log2bili <- with(pbc3, log2(bili))
+pbc3$years <- with(pbc3, days/365.25)
+```
+
+### Table 3.11 {.unnumbered}
+
+```{r}
+#| label: table-3.11
+library(survival)
+# Treatment 
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(tment), 
+      data = pbc3, tt = function(x,t, ...) (x==1)*t, method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(tment), 
+      data = pbc3, tt = function(x,t, ...) (x==1)*log(t), method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(tment), 
+      data = pbc3, tt = function(x,t, ...) (x==1)*(t>2), method = "breslow")
+
+# Albumin 
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(alb), 
+      data = pbc3, tt = function(x,t, ...) x*t, method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(alb), 
+      data = pbc3, tt = function(x,t, ...) x*log(t), method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(alb), 
+      data = pbc3,  tt = function(x,t, ...) (x)*(t>2), method = "breslow")
+
+# Log2 bilirubin
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(log2bili), 
+      data = pbc3, tt = function(x,t, ...) x*t, method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(log2bili), 
+      data = pbc3, tt = function(x,t, ...) x*log(t), method = "breslow")
+coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(log2bili), 
+      data = pbc3,  tt = function(x,t, ...) (x)*(t>2), method = "breslow")
+```
+

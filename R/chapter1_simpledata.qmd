@@ -1,0 +1,274 @@
+### Create data {.unnumbered}
+
+```{r}
+#| label: create-data
+times <- c(5,6,7,8,9,12,13,15,16,20,22,23)
+age <- c(12,0,0,10,6,6,9,3,8,0,0,2)
+event <- c(1,0,1,1,0,0,1,1,1,0,0,1)
+id <- 1:12
+exitage <- age + times
+simpledata <- as.data.frame(cbind(id, times, event, age, exitage))
+```
+
+### Figure 1.8 {.unnumbered} 
+
+```{r}
+#| label: figure-1.8
+#| fig-width: 8.27
+#| fig-height: 8.27
+#| out-width: 66%
+#------------------------------------------------------------------#
+# General plotting styles 
+#------------------------------------------------------------------#
+library(ggplot2)
+theme_general <- theme_bw() +
+  theme(legend.position = "none",
+        text = element_text(size = 20), 
+        axis.text.x = element_text(size = 20), 
+        axis.text.y = element_text(size = 20)) 
+
+theme_general_x <- theme_bw() +
+  theme(legend.position = "none",
+        text = element_text(size = 26), 
+        axis.text.x = element_text(size = 26), 
+        axis.text.y = element_text(size = 26)) 
+
+# Create Figure 1.8, part (a)
+fig1.8a <- ggplot(aes(x = times, y = id), data = simpledata) +
+  geom_segment(aes(x = 0, y = id, xend = times - 0.25, yend = id), size = 1) +
+  geom_point(aes(x = times, y = id), data = subset(simpledata,event==0),
+             shape = 21, size = 6, color='black', fill='white') +
+  geom_point(aes(x = times, y = id), data = subset(simpledata,event==1),
+             shape = 16, size = 6) +
+  xlab("Time (t)") +
+  ylab("Subject number") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0, 25)) +
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0.5, 12), breaks = seq(1, 12, 1)) +
+  theme_general_x +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+# Create Figure 1.8, part (b)
+fig1.8b <- ggplot(aes(x = exitage, y = id), data = simpledata) +
+  geom_segment(aes(x = age, y = id, xend = exitage - 0.25, yend = id), size = 1) +
+  geom_point(aes(x = exitage, y = id), data = subset(simpledata,event==0),
+             shape = 21, size = 6, color='black', fill='white') +
+  geom_point(aes(x = exitage, y = id), data = subset(simpledata,event==1),
+             shape = 16, size = 6) +
+  xlab("Age") +
+  ylab("Subject number") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0, 25)) +
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0.5, 12), breaks = seq(1, 12, 1)) +
+  theme_general_x + 
+  theme(legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank())
+
+fig1.8a
+fig1.8b
+```
+
+
+### Figure 1.9 {.unnumbered} 
+
+```{r}
+#| label: figure-1.9
+#| fig-width: 8.27
+#| fig-height: 8.27
+#| out-width: 66%
+#------------------------------------------------------------------#
+# Figure 1.9 
+#------------------------------------------------------------------#
+library(survival)
+# Kaplan-Meier time as time variable
+kmfit <- survfit(Surv(times, event) ~ 1)
+simpledata_km <- data.frame(surv = c(1, kmfit$surv), 
+                            time = c(0, kmfit$time))
+
+# Create Figure 1.9, part (a)
+fig1.9a <- ggplot(aes(x = time, y = surv), data = simpledata_km) +
+  geom_step(size = 1) +
+  xlab("Time (t)") +
+  ylab("Estimate of S(t)") +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 25)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  theme_general_x
+
+# Kaplan-Meier age as time variable
+kmfit2 <- survfit(Surv(age, exitage, event) ~ 1)
+simpledata_km_age <- data.frame(surv = c(1, kmfit2$surv), 
+                                time = c(0, kmfit2$time))
+
+# Create Figure 1.9, part (b)
+fig1.9b <- ggplot(aes(x = time, y = surv), data = simpledata_km_age) +
+  geom_step(size = 1) +
+  xlab("Age") +
+  ylab("Estimate of S(age)") +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 25)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  theme_general_x
+
+fig1.9a
+fig1.9b
+```
+
+### Figure 1.10 {.unnumbered} 
+
+```{r}
+#| label: figure-1.10
+#| fig-width: 8.27
+#| fig-height: 8.27
+#| out-width: 66%
+#------------------------------------------------------------------#
+# Figure 1.10 
+#------------------------------------------------------------------#
+
+# Kaplan-Meier time as time variable
+kmfit <- survfit(Surv(times, event) ~ 1)
+simpledata_km <- data.frame(surv = c(1, kmfit$surv), 
+                            time = c(0, kmfit$time))
+subdata<-simpledata_km[simpledata_km$time<=12,]
+
+# Create Figure 1.10
+library(dplyr)
+fig1.10 <- ggplot(mapping=aes(x = time, y = surv), data = simpledata_km) +
+  geom_rect(data=subdata,
+            aes(xmin = time, xmax = lead(time),
+                ymin = 0, ymax = surv),
+            linetype=0,fill="grey")+
+  geom_segment(aes(x = 12, y = -Inf, xend = 12, yend = 0.733),
+               size=1,linetype="dashed")+
+  geom_step(size = 1) +
+  xlab("Time (t)") +
+  ylab("Estimate of S(t)") +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 25)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  theme_general +
+  annotate(geom="text",x=6, y=0.45,
+           label=expression(epsilon[0](12)),size=8)
+fig1.10
+```
+
+### Figure 1.13 {.unnumbered} 
+
+```{r}
+#| label: figure-1.13
+#| fig-width: 8.27
+#| fig-height: 8.27
+#| out-width: 66%
+#------------------------------------------------------------------#
+# Figure 1.13 
+#------------------------------------------------------------------#
+
+# N(t)
+sfit <- survfit(Surv(times, event) ~ 1)
+p1 <- data.frame(time = c(0, sfit$time, 26), 
+                 n = c(0, cumsum(sfit$n.event), tail(cumsum(sfit$n.event),1)))
+p2 <- data.frame(time = sfit$time[sfit$n.event==1], 
+                 n = cumsum(sfit$n.event)[sfit$n.event==1]-1)
+p3 <- data.frame(time = sfit$time[sfit$n.event==1], 
+                 n = cumsum(sfit$n.event)[sfit$n.event==1])
+
+# Create Figure 1.13, part (a)
+fig1.13a <- ggplot(aes(x = time, y = n), data = p1) +
+  geom_step(size = 1) + 
+  geom_point(aes(x = time, y = n), data = p2, shape = 21, size = 6, 
+             color='black', fill='white') +
+  geom_point(aes(x = time, y = n), data = p3, shape = 16, size = 6) +
+  xlab("Time (t)") +
+  ylab("N(t)") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.005)), 
+                     limits = c(0, 26)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 12), breaks = seq(0, 12, 1)) +
+  theme_general_x
+
+# Y(t)
+sfit <- survfit(Surv(times, event) ~ 1)
+p1 <- data.frame(time = c(0, sfit$time, 26), 
+                 risk = c(sfit$n.risk, 0, 0))
+p2 <- data.frame(time = sfit$time, 
+                 risk = sfit$n.risk - 1)
+p3 <- data.frame(time = sfit$time, 
+                 risk = sfit$n.risk)
+
+# Create Figure 1.13, part (b)
+fig1.13b <- ggplot(aes(x = time, y = risk), data = p1) +
+  geom_step(size = 1) + 
+  geom_point(aes(x = time, y = risk), data = p2, shape = 21, size = 6, 
+             color='black', fill='white') +
+  geom_point(aes(x = time, y = risk), data = p3, shape = 16, size = 6) +
+  xlab("Time (t)") +
+  ylab("Y(t)") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.005)), 
+                     limits = c(0, 26)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 12), breaks = seq(0, 12, 1)) +
+  theme_general_x
+
+
+# N(age)
+asfit <- survfit(Surv(age, exitage, event) ~ 1)
+p1 <- data.frame(time = c(0, asfit$time, 26), 
+                 n = c(0, cumsum(asfit$n.event),tail(cumsum(asfit$n.event), 1)))
+p2 <- data.frame(time = asfit$time[asfit$n.event > 0], 
+                 n = cumsum(asfit$n.event)[asfit$n.event > 0])
+p3 <- data.frame(time = asfit$time[asfit$n.event > 0], 
+                 n = c(0, 1, 2, 4, 5, 6))
+
+# Create Figure 1.13, part (c)
+fig1.13c <- ggplot(aes(x = time, y = n), data = p1) +
+  geom_step(size = 1) + 
+  geom_point(aes(x = time, y = n), data = p2, shape = 16, size = 6) +
+  geom_point(aes(x = time, y = n), data = p3, shape = 21, size = 6, 
+             color='black', fill='white') +
+  xlab("Age") +
+  ylab("N(age)") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.005)), 
+                     limits = c(0, 26)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 12), breaks = seq(0, 12, 1)) +
+  theme_general_x 
+
+# Y(age)
+atriskage <- vector(length=25)
+for(i in 1:25){
+  atriskage[i] <- sum((age<=i & exitage>i))
+}
+
+p1 <- data.frame(time = 0:26, 
+                 risk = c(atriskage[1], atriskage, 0))
+p2 <- data.frame(time = c(2,3,6,7,8,9,10,12,15,17,18,20,22,24,25), 
+                 risk = c(5,6,7,6,7,8, 9,10, 9, 8, 5, 4, 2, 1,0))
+p3 <- data.frame(time = c(2,3,6,7,8,9,10,12,15,17,18,20,22,24,25), 
+                 risk = c(4,5,6,7,6,7, 8,9, 10, 9, 8, 5, 4, 2,1))
+
+# Create Figure 1.13, part (d)
+fig1.13d <- ggplot(aes(x = time, y = risk), data = p1) +
+  geom_step(size = 1) + 
+  geom_point(aes(x = time, y = risk), data = p2, shape = 21, size = 6, 
+             color='black', fill='white') +
+  geom_point(aes(x = time, y = risk), data = p3, shape = 16, size = 6) +
+  xlab("Age") +
+  ylab("Y(age)") +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.005)), 
+                     limits = c(0, 26)) +
+  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
+                     limits = c(0, 12), breaks = seq(0, 12, 1)) +
+  theme_general_x
+
+fig1.13a
+fig1.13b
+fig1.13c
+fig1.13d
+```

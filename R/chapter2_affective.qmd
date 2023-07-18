@@ -1,0 +1,55 @@
+### Read data {.unnumbered}
+
+```{r}
+#| label: read-affective
+affective <- data.frame(read.csv("data/affective.csv"))
+affective$wait <- with(affective, stop - start)
+```
+
+### Table 2.14 {.unnumbered} 
+
+```{r}
+#| label: table-2.14
+# Cox model for 1., 2., 3., 4. episode 'Markov': Column 1
+library(survival)
+coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, episode == 1 & state == 0))
+
+coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, episode == 2 & state == 0))
+
+coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, episode == 3 & state == 0)) 
+
+coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, episode == 4 & state == 0)) 
+
+# Cox model for 1., 2., 3., 4. episode 'Gap time': Column 2
+coxph(Surv(wait, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, episode == 1 & state == 0)) 
+
+coxph(Surv(wait, status == 1) ~ bip, method = "breslow",
+                     data = subset(affective, episode == 2 & state == 0))
+
+coxph(Surv(wait, status == 1) ~ bip, method = "breslow",
+                     data = subset(affective, episode == 3 & state == 0)) 
+
+coxph(Surv(wait, status == 1) ~ bip, method = "breslow",
+                     data = subset(affective, episode == 4 & state == 0)) 
+
+# AG cox model, total time
+coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
+                        data = subset(affective, state == 0))
+
+# AG cox model, gap time
+coxph(Surv(wait, status == 1) ~ bip, method = "breslow",
+                   data = subset(affective, state == 0))
+
+# PWP cox model, total time
+coxph(Surv(start, stop, status == 1) ~ strata(episode) + bip, method = "breslow",
+                   data = subset(affective, state == 0)) 
+
+# PWP cox model, gap time
+coxph(Surv(wait, status == 1) ~ strata(episode) + bip, method = "breslow", 
+                    data = subset(affective, state == 0)) 
+```

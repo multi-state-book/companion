@@ -198,8 +198,7 @@ fig2.3
 # Fit a Cox model using the pbc3 data with treatment as a covariate
 library(survival)
 coxfit <- coxph(Surv(days, status != 0) ~ tment, data = pbc3, method = "breslow")
-summary(coxfit)
-
+coxfit
 
 #------------------------------------------------------------------#
 # Figure 2.5 
@@ -250,7 +249,7 @@ data.frame(tabledata)
 library(survival)
 coxfit <- coxph(Surv(days, status != 0) ~ tment + alb + bili,
                 data = pbc3)
-summary(coxfit)
+coxfit
 
 
 #------------------------------------------------------------------#
@@ -306,39 +305,39 @@ base_coxmod_log <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
 # Splines Cox 1
 coxmod_t26_l1 <- coxph(Surv(days, status != 0) ~ tment + alb + albnorm + bili,
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_l1)
+coxmod_t26_l1
 lrtest(coxmod_t26_l1, base_coxmod)
 
 # Quadratic Cox 1
 coxmod_t26_q1 <- coxph(Surv(days, status != 0) ~ tment + alb + I(alb*alb) + bili ,
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_q1)
+coxmod_t26_q1
 lrtest(coxmod_t26_q1, base_coxmod)
 
 # Splines Cox 2
 coxmod_t26_l2 <- coxph(Surv(days, status != 0) ~ tment + alb + 
                          bili + bilihigh + bilitoohigh + bilimuchtoohigh,
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_l2)
+coxmod_t26_l2
 lrtest(coxmod_t26_l2, base_coxmod)
 
 # Quadratic Cox 2
 coxmod_t26_q2 <- coxph(Surv(days, status != 0) ~ tment + alb + bili + I(bili*bili),
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_q2)
+coxmod_t26_q2
 lrtest(coxmod_t26_q2, base_coxmod)
 
 # Splines Cox 3
 coxmod_t26_l3 <- coxph(Surv(days, status != 0) ~ tment + alb + 
                          log2bili + logbilihigh + logbilitoohigh + logbilimuchtoohigh,
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_l3)
+coxmod_t26_l3
 lrtest(coxmod_t26_l3, base_coxmod_log)
 
 # Quadratic Cox 3
 coxmod_t26_q3 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili + log2bili2,
                        eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t26_q3)
+coxmod_t26_q3
 lrtest(coxmod_t26_q3, base_coxmod_log)
 
 #------------------------------------------------------------------#
@@ -493,7 +492,7 @@ fig2.8
 # Cox model
 coxmod_t27 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
                     eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t27)
+coxmod_t27
 
 # Poisson model
 poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup + offset(log(risktime)),
@@ -514,7 +513,7 @@ pbc3$alb0 <- (pbc3$tment==0)*pbc3$alb
 pbc3$alb1 <- (pbc3$tment==1)*pbc3$alb
 coxmod_t28_1 <- coxph(Surv(days, status != 0) ~ tment + alb0 + alb1 + log2bili,
                       eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t28_1)
+coxmod_t28_1
 lrtest(coxmod_t28_1, coxmod_t28_base)
 
 # Cox model 2
@@ -522,7 +521,7 @@ pbc3$bili0 <- (pbc3$tment==0)*pbc3$log2bili
 pbc3$bili1 <- (pbc3$tment==1)*pbc3$log2bili
 coxmod_t28_2 <- coxph(Surv(days, status != 0) ~ tment + alb + bili0 + bili1,
                       eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_t28_2)
+coxmod_t28_2
 lrtest(coxmod_t28_2, coxmod_t28_base)
 
 # Poisson models
@@ -590,7 +589,7 @@ lrtest(poismod_t29_base, poismod_t29_bili)
 
 coxmod_f29 <- coxph(Surv(days, status != 0) ~ strata(tment) + alb + log2bili,
                       eps = 1e-8, method = "breslow", data = pbc3)
-tidy(coxmod_f29)
+coxmod_f29
 
 #------------------------------------------------------------------#
 # Figure 2.10 
@@ -807,14 +806,14 @@ tidy(additive_pcw2.11)
 #------------------------------------------------------------------#
 
 # Death without transplantation
-tidy(coxph(Surv(days, status == 2) ~ tment + alb + log2bili + sex + age,
-           method = "breslow", data = pbc3)) 
+coxph(Surv(days, status == 2) ~ tment + alb + log2bili + sex + age,
+           method = "breslow", data = pbc3)
 
 # Transplantation
-tidy(coxph(Surv(days, status == 1) ~ tment + alb + log2bili + sex + age,
-           method = "breslow", data = pbc3)) 
+coxph(Surv(days, status == 1) ~ tment + alb + log2bili + sex + age,
+           method = "breslow", data = pbc3) 
 
 # Failure of medical treatment
-tidy(coxph(Surv(days, status != 0) ~ tment + alb + log2bili + sex + age,
-           method = "breslow", data = pbc3)) 
+coxph(Surv(days, status != 0) ~ tment + alb + log2bili + sex + age,
+           method = "breslow", data = pbc3)
 
