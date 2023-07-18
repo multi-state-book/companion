@@ -1,32 +1,28 @@
 ### Read data {.unnumbered}
 
+```{r}
+#| label: read-bmt
 bmt <- data.frame(read.csv("data/bmt.csv"))
-library(tidyverse)
-bmt$intxsurv <- bmt$timedeath
-bmt$dead <- bmt$death
+bmt$intxsurv<- bmt$timedeath
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
-bmt$trm <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
-bmt$tgvhd <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
+bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
+bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
 bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
-bmt$state0 <- bmt$rel + 2*bmt$trm
+bmt$state0  <- bmt$rel + 2*bmt$trm
+```
 
 ### Figure 3.5 {.unnumbered}
 
+```{r}
+#| label: figure-3.5
+#| out-width: 90%
 # General theme
+library(ggplot2)
 theme_general <- theme_bw() +
   theme(legend.position = "bottom", 
         text = element_text(size = 20), 
         axis.text.x = element_text(size = 20), 
         axis.text.y = element_text(size = 20)) 
-
-# Make zeros print as "0" always in plots
-library(stringr)
-prettyZero <- function(l){
-  max.decimals = max(nchar(str_extract(l, "\\.[0-9]+")), na.rm = T)-1
-  lnew = formatC(l, replace.zero = T, zero.print = "0",
-                 digits = max.decimals, format = "f", preserve.width=T)
-  return(lnew)
-}
 
 # Model fit and make plot data
 library(survival)
@@ -45,10 +41,13 @@ fig3.5 <- ggplot(aes(x = time, y = cumhaz), data = pdata1) +
   theme_general
 
 fig3.5
-
+```
 
 ### Figure 3.6 {.unnumbered}
 
+```{r}
+#| label: figure-3.6
+#| out-width: 90%
 # Reformatting
 bmt$nyreltime <- with(bmt, ifelse(tgvhd < intxrel, tgvhd, intxrel))
 bmt$nyrel <- with(bmt, ifelse(tgvhd < intxrel, 0, rel))
@@ -56,27 +55,18 @@ bmt$nytrm <- with(bmt, ifelse(tgvhd < intxrel, 0, trm))
 
 # Cumulative relapse rate without GvHD 
 fit11 <- survfit(Surv(nyreltime, nyrel != 0) ~ 1, data = bmt)
-
 # Cumulative relapse rate after GvHD
-fit12 <- survfit(Surv(tgvhd, intxrel, rel != 0) ~ 1, data = subset(bmt, gvhd == 1 & tgvhd < intxrel))
-
+fit12 <- survfit(Surv(tgvhd, intxrel, rel != 0) ~ 1, 
+                 data = subset(bmt, gvhd == 1 & tgvhd < intxrel))
 # Collect plot data
-pdata11 <- data.frame(cumhaz = fit11$cumhaz, 
-                      time = fit11$time) 
-
-head(pdata11)
-
-
-pdata12 <- data.frame(cumhaz = fit12$cumhaz, 
-                      time = fit12$time) 
-
-head(pdata12)
-
+pdata11 <- data.frame(cumhaz = fit11$cumhaz, time = fit11$time) 
+pdata12 <- data.frame(cumhaz = fit12$cumhaz, time = fit12$time) 
 
 # Create Figure 3.6
 fig3.6 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) + 
   geom_step(linewidth = 1) +
-  geom_step(aes(x = time, y = cumhaz), data = pdata12, linewidth = 1, linetype = "dashed") + 
+  geom_step(aes(x = time, y = cumhaz), data = pdata12, 
+            linewidth = 1, linetype = "dashed") + 
   xlab("Time since bone marrow transplantation (months)") + 
   ylab("Cumulative relapse hazard") + 
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
@@ -86,17 +76,16 @@ fig3.6 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
   theme_general
 
 fig3.6
-
+```
 
 ### Figure 3.7 {.unnumbered}
 
-
+```{r}
+#| label: figure-3.7
+#| out-width: 90%
 # Need to get the cumulative hazard estimates at the same time points
 # All times
 all_t <- sort(unique(c(unique(pdata11$time), unique(pdata12$time))))
-all_t
-
-
 # Evaluate each step function at these time points 
 step11 <- stepfun(x = pdata11$time, y = c(0, pdata11$cumhaz))
 step12 <- stepfun(x = pdata12$time, y = c(0, pdata12$cumhaz))
@@ -105,33 +94,48 @@ pdata11_a <- data.frame(time = all_t,
                         cumhaz = step11(all_t))
 pdata12_a <- data.frame(time = all_t, 
                         cumhaz = step12(all_t))
-
 # Collect data
 pdata_b <- data.frame(cumhaz1 = pdata11_a$cumhaz, 
                       cumhaz2 = pdata12_a$cumhaz, 
                       time = all_t)
 
+# Make zeros print as "0" always in plots
+library(stringr)
+prettyZero <- function(l){
+  max.decimals = max(nchar(str_extract(l, "\\.[0-9]+")), na.rm = T)-1
+  lnew = formatC(l, replace.zero = T, zero.print = "0",
+                 digits = max.decimals, format = "f", preserve.width=T)
+  return(lnew)
+}
 # Create Figure 3.7
 fig3.7 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) + 
   geom_step(linewidth = 1) +
-  geom_abline(aes(intercept = 0, slope = 0.858), linewidth = 1, linetype = "dashed") + 
+  geom_abline(aes(intercept = 0, slope = 0.858), linewidth = 1, 
+              linetype = "dashed") + 
   xlab("Cumulative relapse hazard: no GvHD") + 
   ylab("Cumulative relapse hazard: GvHD") + 
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),labels = prettyZero) + 
+                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),
+                     labels = prettyZero) + 
   scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),labels = prettyZero) +
+                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),
+                     labels = prettyZero) +
   theme_general
 
 fig3.7
+```
 
 ### Figure 3.8 {.unnumbered}
 
+```{r}
+#| label: figure-3.8
+#| out-width: 90%
 # Cumulative death rate without GvHD 
 fit11 <- survfit(Surv(nyreltime, nytrm != 0) ~ 1, data = bmt)
 
 # Cumulative death rate with GvHD
-fit12 <- survfit(Surv(tgvhd, intxrel, trm != 0) ~ 1, data = subset(bmt, gvhd == 1 & tgvhd < intxrel))
+fit12 <- survfit(Surv(tgvhd, intxrel, trm != 0) ~ 1, 
+                 data = subset(bmt, gvhd == 1 & tgvhd < intxrel))
 
 # Collect plot data
 pdata11 <- data.frame(cumhaz = fit11$cumhaz, 
@@ -144,7 +148,6 @@ pdata12 <- data.frame(cumhaz = fit12$cumhaz,
 # Need to get the cumulative hazard estimates at the same time points
 # All times
 all_t <- sort(unique(c(unique(pdata11$time), unique(pdata12$time))))
-all_t
 
 # Evaluate each step function at these time points 
 step11 <- stepfun(x = pdata11$time, y = c(0, pdata11$cumhaz))
@@ -168,28 +171,29 @@ fig3.8 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) +
   xlab("Cumulative death hazard: no GvHD") + 
   ylab("Cumulative death hazard: GvHD") + 
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),labels = prettyZero) + 
+                     limits = c(0, 0.2), breaks = seq(0, 0.2, by = 0.05),
+                     labels = prettyZero) + 
   scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 1.0), breaks = seq(0, 1.0, by = 0.2),labels = prettyZero) +
+                     limits = c(0, 1.0), breaks = seq(0, 1.0, by = 0.2),
+                     labels = prettyZero) +
   theme_general
 
 fig3.8
-
+```
 
 ### Figure 3.4 {.unnumbered}
 
+```{r}
+#| label: figure-3.4
+#| out-width: 90%
 # Cumulative death hazards wrt relapse; 
-
 # Cumulative death rate no relapse or GvHD
 fit11 <- survfit(Surv(intxrel, trm != 0) ~ 1, data = bmt)
-
 # Cumulative death rate after relapse
 bmt$intxsurv <- with(bmt, ifelse(intxrel == intxsurv & rel == 1, intxsurv + 0.01, intxsurv))
-fit12 <- survfit(Surv(intxrel, intxsurv, dead != 0) ~ 1, data = subset(bmt, rel == 1))
-
+fit12 <- survfit(Surv(intxrel, intxsurv, death != 0) ~ 1, data = subset(bmt, rel == 1))
 # Cumulative death rate after GvHD
 fit13 <- survfit(Surv(tgvhd, intxrel, trm != 0) ~ 1, data = subset(bmt, gvhd == 1))
-
 # Collect plot data
 pdata11 <- data.frame(cumhaz = fit11$cumhaz, time = fit11$time) 
 pdata12 <- data.frame(cumhaz = fit12$cumhaz, time = fit12$time) 
@@ -200,8 +204,10 @@ tail(pdata12)
 # Create Figure 3.4
 fig3.4 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) + 
   geom_step(linewidth = 1) +
-  geom_step(aes(x = time, y = cumhaz), data = pdata12, linewidth = 1, linetype = "dashed") + 
-  geom_step(aes(x = time, y = cumhaz), data = pdata13, linewidth = 1, linetype = "dotted") + 
+  geom_step(aes(x = time, y = cumhaz), data = pdata12, 
+            linewidth = 1, linetype = "dashed") + 
+  geom_step(aes(x = time, y = cumhaz), data = pdata13, 
+            linewidth = 1, linetype = "dotted") + 
   xlab("Time since bone marrow transplantation (months)") + 
   ylab("Cumulative hazard of death") + 
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
@@ -210,9 +216,12 @@ fig3.4 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
   theme_general
 
 fig3.4
+```
 
 ### Table 3.12 {.unnumbered}
 
+```{r}
+#| label: table-3.12
 # Relapse
 # Column 1
 coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd) + I(age/10) + bmonly + all,
@@ -247,10 +256,40 @@ coxph(Surv(intxrel,trm!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500)
         dt <- t-x
         cbind(tdcgvhd=1*(dt>0))
       })
+```
 
-### Table 3.13 {.unnumbered}
 
+### Figure 3.10 {.unnumbered}
+
+```{r}
+#| label: figure-3.10
+#| out-width: 90%
+# Extract cumulative hazard from r1 
+survr1 <- basehaz(r1, center = F)
+pcumhaz <- data.frame(cumhaz = survr1$hazard, 
+                      time = survr1$time, 
+                      strata = survr1$strata) 
+
+# Create Figure 3.10
+fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) + 
+  geom_step(linewidth = 1) + 
+  xlab("Time since bone marrow transplantation (months)") + 
+  ylab("Cumulative hazard") + 
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0, 156), breaks = seq(0, 156, by = 12)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
+  scale_linetype_discrete("Stratum", labels = c("1", "2")) + 
+  theme_general + theme(legend.position = "none")
+
+fig3.10
+```
+
+### Table 3.14 {.unnumbered}
+
+```{r}
+#| label: table 3.14
 # Prepare data set for analysis - double
+library(tidyverse)
 bmtext <- bmt %>% mutate(nygsource = bmonly, 
                          nydisease = all, 
                          age10 = age/10,
@@ -284,49 +323,49 @@ double2 <- bmtext %>% filter(gvhd == 1) %>%
 doubledod <- as.data.frame(rbind(double1, double2))
 head(doubledod)
 
-
 # Row 1
-r1 <- coxph(Surv(entry, time, status != 0) ~ strata(stratum) + disease1 + disease2 + age1 + age2, 
+r1<-coxph(Surv(entry, time, status != 0) ~ strata(stratum) + disease1 + disease2 + age1 + age2, 
             data = doubledod, ties = "breslow")
-summary(r1)
-
+r1
 # Row 2
 doubledod$type <- doubledod$stratum - 1
-r2 <- coxph(Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 + age2 + type, 
+r2<-coxph(Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 + age2 + type, 
             data = doubledod, ties = "breslow")
-summary(r2)
+r2
+r2t<-coxph(Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 + age2 + type
+           +tt(type), 
+            data = doubledod, ties = "breslow",
+           tt = function(x,t, ...){
+             gvhdt = x*log(t)
+           })
+
+# In-text: LRT proportionality
+library(lmtest)
+lrtest(r2, r2t)
 
 # Row 3
-r3 <- coxph(Surv(entry, time, status != 0) ~ nydisease + age10 + type, 
+r3<-coxph(Surv(entry, time, status != 0) ~ nydisease + age10 + type, 
             data = doubledod, ties = "breslow")
-summary(r3)
+r3
+# In-text: LRT common coefficients
+lrtest(r3,r2)
 
+```
 
+### Table 3.15 {.unnumbered}
 
-### Figure 3.10 {.unnumbered}
+```{r}
+#| label: table-3.15
+coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age 
+      + frailty.gamma(team, eps = 1e-09), data = bmt, ties = "breslow")
+coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age
+      + frailty.gaussian(team, eps = 1e-09, sparse=F), data = bmt, ties = "breslow")
+```
 
-# Extract cumulative hazard from r1 
-survr1 <- basehaz(r1, center = F)
-pcumhaz <- data.frame(cumhaz = survr1$hazard, 
-                      time = survr1$time, 
-                      strata = survr1$strata) 
+### In-text: stratified Cox model by center {.unnumbered}
 
-# Create Figure 3.10
-fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) + 
-  geom_step(linewidth = 1) + 
-  xlab("Time since bone marrow transplantation (months)") + 
-  ylab("Cumulative hazard") + 
-  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 156), breaks = seq(0, 156, by = 12)) + 
-  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
-  scale_linetype_discrete("Stratum", labels = c("1", "2")) + 
-  theme_general + theme(legend.position = "none")
-
-fig3.10
-
-
-### Table 3.14 {.unnumbered}
-
-# Gamma
-coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age + frailty(team), 
-      data = bmt, ties = "breslow")
+```{r}
+#| label: in-text-stratified
+coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age 
+      + strata(team), data = bmt, ties = "breslow")
+```

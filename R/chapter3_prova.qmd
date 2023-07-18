@@ -167,6 +167,7 @@ coxdur_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb
 
 ```{r}
 #| label: figure-3.2
+#| out-width: 90%
 # Plotting style 
 library(ggplot2)
 library(tidyverse)
@@ -213,6 +214,7 @@ fig3.2
 
 ```{r}
 #| label: figure-3.3
+#| out-width: 90%
 # Extract cumulative baseline hazard
 coxcumhaz <- survfit(coxdur, 
                      newdata = data.frame(sex = 0, 
@@ -326,7 +328,7 @@ double1 <- provany %>% mutate(time = d0time,
                               age2 = 0, 
                               bili1 = log2bili, 
                               bili2 = log2bili * 0,
-                              stratum = 1)
+                              bleeding = 1)
 
 double2 <- provany %>% filter(bleed == 1) %>% 
                        mutate(time = bdtime, 
@@ -338,29 +340,50 @@ double2 <- provany %>% filter(bleed == 1) %>%
                               age2 = age, 
                               bili1 = log2bili * 0, 
                               bili2 = log2bili,
-                              stratum = 2)
+                              bleeding = 2)
 double <- as.data.frame(rbind(double1, double2))
 
 # part (a)
-Table3.13a <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex1 + sex2 + bili1 + bili2, 
+Table3.13a <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex1 + sex2 + bili1 + bili2, 
             data = double, ties = "breslow")
 Table3.13a
 
 # part (b)
-Table3.13b <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex + bili1 + bili2, 
-            data = double, ties = "breslow")
+Table3.13b <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex + bili1 + bili2, 
+                    data = double, ties = "breslow")
 Table3.13b
 
+# LRT sex
+lrtest(Table3.13a, Table3.13b)
+
+# In-text: LRT log2(bilirubin)
+Table3.13bx <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex1 + sex2 + log2bili, 
+                     data = double, ties = "breslow")
+lrtest(Table3.13a, Table3.13bx)
+
 # part (c)
-Table3.13c <- coxph(Surv(entrytime, time, status != 0) ~ strata(stratum) + sex + bili1, 
-            data = double, ties = "breslow")
+Table3.13c <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex + bili1, 
+                    data = double, ties = "breslow")
 Table3.13c
+
+# In-text: LRT proportionality
+ph<-coxph(Surv(entrytime, time, status != 0) ~ bleeding + sex + bili1, 
+          data = double, ties = "breslow")
+
+pht<-coxph(Surv(entrytime, time, status != 0) ~ bleeding + tt(bleeding) 
+           + sex + bili1, 
+          data = double, ties = "breslow",
+          tt = function(x,t, ...){
+             bleedt = x*log(t)
+           })
+lrtest(ph, pht)
 ```
 
 ### Figure 3.9 {.unnumbered}
 
 ```{r}
 #| label: figure-3.9
+#| out-width: 90%
 # Extract cumulative hazard from r1 
 survr1 <- basehaz(Table3.13a, center = F)
 pcumhaz <- data.frame(

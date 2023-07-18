@@ -16,4 +16,4 @@
 {{< include R/chapter3_affective.qmd >}}
 
 ## Bone marrow transplantation in acute leukemia {.unnumbered}
-<!-- {{< include R/chapter3_bmt.qmd >}} -->
+{{< include R/chapter3_bmt.qmd >}}
