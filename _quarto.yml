@@ -11,7 +11,7 @@ book:
       Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values
     right: |
       Built with <a href="https://quarto.org/">Quarto</a>
-  cover-image: MSBfrontpage.png
+  cover-image: MSB-cover.PNG
   favicon: corvos.png
   chapters:
     - index.qmd
