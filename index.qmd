@@ -1,11 +1,11 @@
 # Preface {.unnumbered}
 
-This is the code companion website to our book published by Chapman & Hall (link).
+This is the code companion website to our book published by [Chapman & Hall](https://www.taylorfrancis.com/books/mono/10.1201/9780429029684/models-multi-state-survival-data-per-kragh-andersen-henrik-ravn "go to the book at the publisher").
 
 R code for the analyses and plots presented in the book is given. SAS code is available for the analyses only. Solutions to the exercises in the book are available at the end of each chapter.
 
-This companion was created with R version ... and SAS version ...
+This code and output was created using R version 4.3.1 and SAS/Stat version 15.1.
 
 ## Acknowledgements {.unnumbered}
 
-Sincerely thanks to Julie K. Furberg who carefully created figures and validated analyses quoted in the book. Eva N.S. Wandall thoroughly created solutions to practical exercises and contributed to some of the examples.
+Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples.

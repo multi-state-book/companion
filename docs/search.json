@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values",
     "section": "",
-    "text": "This is the code companion website to our book published by Chapman & Hall (link).\nR code for the analyses and plots presented in the book is given. SAS code is available for the analyses only. Solutions to the exercises in the book are available at the end of each chapter.\nThis companion was created with R version … and SAS version …"
+    "text": "This is the code companion website to our book published by Chapman & Hall.\nR code for the analyses and plots presented in the book is given. SAS code is available for the analyses only. Solutions to the exercises in the book are available at the end of each chapter.\nThis code and output was created using R version 4.3.1 and SAS/Stat version 15.1."
   },
   {
     "objectID": "index.html#acknowledgements",
     "href": "index.html#acknowledgements",
     "title": "Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values",
     "section": "Acknowledgements",
-    "text": "Acknowledgements\nSincerely thanks to Julie K. Furberg who carefully created figures and validated analyses quoted in the book. Eva N.S. Wandall thoroughly created solutions to practical exercises and contributed to some of the examples."
+    "text": "Acknowledgements\nThanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples."
   },
   {
     "objectID": "Ch1.html#pbc3-trial-in-liver-cirrhosis-pbc3.csv",
