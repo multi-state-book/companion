@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="figure-2.1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.1">Figure 2.1</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.1_fbbc2b486d0aa32f8ec744f3b3d91640">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.1_50316df3a87d602982e482440fc299be">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -296,17 +296,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 2.1</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> tment), <span class="at">data =</span> nadata) <span class="sc">+</span> </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"CyA"</span>)) <span class="sc">+</span> </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>))  <span class="sc">+</span> </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  theme_general </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.1</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> tment),</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> nadata) <span class="sc">+</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"CyA"</span>)) <span class="sc">+</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>))  <span class="sc">+</span> </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  theme_general </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.1-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -359,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="figure-2.2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.2">Figure 2.2</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.2_d8a5eba525fd4d3701eb443fa33dc62a">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.2_cdfa8e9228fb317f206323bf02d03908">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rates + cuts from Table 2.1</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rateCyA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.1</span>,<span class="fl">13.1</span>,<span class="fl">9.6</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ratePbo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.4</span>,<span class="fl">12.5</span>,<span class="fl">8.5</span>)</span>
@@ -373,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 2.2</span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> rates, <span class="at">linetype =</span> tment), <span class="at">data =</span> plotdata) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> times_s, <span class="at">y =</span> rates, <span class="at">xend =</span> times, <span class="at">yend =</span> rates), <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> times_s, <span class="at">y =</span> rates, <span class="at">xend =</span> times, <span class="at">yend =</span> rates),<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"CyA"</span>))  <span class="sc">+</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Estimated hazard function (per 100 years)"</span>) <span class="sc">+</span></span>
@@ -392,12 +393,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="in-text-lrt-test-using-piece-wise-exponential-model" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="in-text-lrt-test-using-piece-wise-exponential-model">In-text: LRT test using piece-wise exponential model</h3>
-<div class="cell" data-hash="Ch2_cache/html/in-text-LRT-pcw_67080c64b94086f172684f29d60f7524">
+<div class="cell" data-hash="Ch2_cache/html/in-text-LRT-pcw_c03ccf9e5f69c6e3742244dd0d8a9419">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>poisfull <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> tment <span class="sc">+</span> timegroup <span class="sc">+</span> tment<span class="sc">:</span>timegroup <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>poisred <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> timegroup <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(poisred,poisfull,<span class="at">test=</span><span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
@@ -435,7 +436,7 @@ Model 2: fail ~ -1 + tment + timegroup + tment:timegroup + offset(log(risktime/3
 </section>
 <section id="figure-2.3" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.3">Figure 2.3</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.3_b2a58a569f4dbbcc76308973cc84c5c1">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.3_ed628aed2cc8f220f1da7e073bdce4fb">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA data from figure 2.1 model fit</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tment1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(nadata, tment <span class="sc">==</span> <span class="st">"tment=1"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimated hazard per time group</span></span>
@@ -445,9 +446,9 @@ Model 2: fail ~ -1 + tment + timegroup + tment:timegroup + offset(log(risktime/3
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add piecewise constant hazard to data</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>nadata<span class="sc">$</span>pwch <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Between time 0 and 2</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>nadata<span class="sc">$</span>pwch[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>] <span class="ot">&lt;-</span> nadata<span class="sc">$</span>time[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>] <span class="sc">*</span> </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                                 (pcwdata<span class="sc">$</span>hazard_timegroup[<span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>nadata<span class="sc">$</span>tmentnum[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>]) <span class="sc">+</span> </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                                  pcwdata<span class="sc">$</span>hazard_timegroup[<span class="dv">4</span>] <span class="sc">*</span> (nadata<span class="sc">$</span>tmentnum[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>]))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>nadata<span class="sc">$</span>pwch[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>] <span class="ot">&lt;-</span> nadata<span class="sc">$</span>time[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>] <span class="sc">*</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  (pcwdata<span class="sc">$</span>hazard_timegroup[<span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>nadata<span class="sc">$</span>tmentnum[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>]) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>     pcwdata<span class="sc">$</span>hazard_timegroup[<span class="dv">4</span>] <span class="sc">*</span> (nadata<span class="sc">$</span>tmentnum[nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>]))</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Between time 2 and 4</span></span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>nadata<span class="sc">$</span>pwch[nadata<span class="sc">$</span>time <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span> <span class="sc">&amp;</span> nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">4</span><span class="sc">*</span> <span class="fl">365.25</span> ] <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span> <span class="sc">*</span> </span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  (pcwdata<span class="sc">$</span>hazard_timegroup[<span class="dv">1</span>] <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>nadata<span class="sc">$</span>tmentnum[nadata<span class="sc">$</span>time <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span> <span class="sc">&amp;</span> nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">4</span> <span class="sc">*</span> <span class="fl">365.25</span>]) <span class="sc">+</span> </span>
@@ -520,7 +521,7 @@ n= 349, number of events= 90 </code></pre>
 </section>
 <section id="figure-2.5" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.5">Figure 2.5</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.5_47a0a8fe102f45363513134b2f76c5f3">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.5_0c862621c6956b8bf6c92bc6d7057f2e">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot (Breslow estimate)</span></span>
@@ -530,18 +531,19 @@ n= 349, number of events= 90 </code></pre>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"Breslow estimate"</span>, <span class="fu">nrow</span>(coxcumhaz)))</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 2.5</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> tment), <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>)) <span class="sc">+</span> </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>),</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  theme_general<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> tment),</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span> </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>)) <span class="sc">+</span> </span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>),</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  theme_general<span class="sc">+</span><span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.5-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -549,16 +551,17 @@ n= 349, number of events= 90 </code></pre>
 </section>
 <section id="table-2.3" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.3">Table 2.3</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.3_9895fa3f73c15a3b2be60ede4b5f4c33">
+<div class="cell" data-hash="Ch2_cache/html/table-2.3_00b9aacab73612e0e5825848a4ddd3dc">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average covariate values of albumin and bilirubin per treatment </span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>tabledata <span class="ot">&lt;-</span> pbc3 <span class="sc">%&gt;%</span> </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tment, tment_char) <span class="sc">%&gt;%</span> </span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">sum</span>(id <span class="sc">!=</span> <span class="dv">0</span>),  </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">average_albumin =</span> <span class="fu">mean</span>(alb, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="co"># </span><span class="al">NOTE</span><span class="co">: Removes missing observations from mean computation</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">average_bilirubin =</span> <span class="fu">mean</span>(bili, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(tabledata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">average_albumin =</span> <span class="fu">mean</span>(alb, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">NOTE</span><span class="co">: Removes missing observations from mean computation</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">average_bilirubin =</span> <span class="fu">mean</span>(bili, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(tabledata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  tment tment_char   n average_albumin average_bilirubin
 1     0    Placebo 173        39.26101          42.33674
@@ -611,10 +614,10 @@ n= 343, number of events= 88
 </section>
 <section id="table-2.5" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.5">Table 2.5</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.5_652cd0576ad954636d3381551bab399e">
+<div class="cell" data-hash="Ch2_cache/html/table-2.5_87688be478cebd55595065dab785a572">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson model with treatment, albumin and bilirubin as covariates</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>poismod_t25 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> bili<span class="sc">+</span> timegroup<span class="dv">-1</span> <span class="sc">+</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="fl">365.25</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="fl">365.25</span>)),<span class="at">data=</span>pbc3mult,<span class="at">family=</span>poisson)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(poismod_t25)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
@@ -631,7 +634,7 @@ n= 343, number of events= 88
 </section>
 <section id="table-2.6" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.6">Table 2.6</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.6_7acecfb63a1c8a5118bf49823fc16d3f">
+<div class="cell" data-hash="Ch2_cache/html/table-2.6_2f18d0f4f27f0f30ce57519454583517">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add transformations of covariates </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>albnorm <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (alb<span class="dv">-35</span>)<span class="sc">*</span>(alb<span class="sc">&gt;</span><span class="dv">35</span>))</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -687,7 +690,7 @@ Model 2: Surv(days, status != 0) ~ tment + alb + bili
 2   3 -413.42 -1 0.6001     0.4386</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic Cox 1</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q1 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">*</span>alb) <span class="sc">+</span> bili ,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q1 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">*</span>alb) <span class="sc">+</span> bili,</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -752,7 +755,7 @@ Model 2: Surv(days, status != 0) ~ tment + alb + bili
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic Cox 2</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> bili <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">*</span>bili),</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment<span class="sc">+</span>alb<span class="sc">+</span>bili <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">*</span>bili),</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -783,8 +786,8 @@ Model 2: Surv(days, status != 0) ~ tment + alb + bili
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Splines Cox 3</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> </span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                         log2bili <span class="sc">+</span> logbilihigh <span class="sc">+</span> logbilitoohigh <span class="sc">+</span> logbilimuchtoohigh,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                         logbilihigh <span class="sc">+</span> logbilitoohigh <span class="sc">+</span> logbilimuchtoohigh,</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>coxmod_t26_l3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -817,7 +820,7 @@ Model 2: Surv(days, status != 0) ~ tment + alb + log2bili
 2   3 -402.94 -3 1.6144     0.6561</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic Cox 3</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q3 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> log2bili2,</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q3 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment<span class="sc">+</span>alb<span class="sc">+</span>log2bili <span class="sc">+</span> log2bili2,</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>coxmod_t26_q3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -861,11 +864,11 @@ Model 2: Surv(days, status != 0) ~ tment + alb + log2bili
 <span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>base_poismod <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> timegroup <span class="sc">+</span> tment <span class="sc">+</span> alb <span class="sc">+</span> bili <span class="sc">+</span></span>
 <span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
 <span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>base_poismod_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> timegroup <span class="sc">+</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span></span>
-<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data=</span>pbc3mult,<span class="at">family=</span>poisson)</span>
 <span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Splines Poisson 1</span></span>
 <span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>poismod_t26_l1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> timegroup <span class="sc">+</span> tment <span class="sc">+</span> alb <span class="sc">+</span> albnorm <span class="sc">+</span> bili <span class="sc">+</span></span>
-<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data=</span>pbc3mult, <span class="at">family=</span>poisson)</span>
 <span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(poismod_t26_l1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 5
@@ -1035,38 +1038,42 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </section>
 <section id="figure-2.6" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.6">Figure 2.6</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.6_e8759c37e2fc15b4d3dab8501942fba7">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.6_427cf2c5f44c5f25db118a5d743a1045">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>timegroup <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(pbc3mult<span class="sc">$</span>timegroup), <span class="at">ref =</span> <span class="st">"3"</span>)</span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment_char <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pbc3mult<span class="sc">$</span>tment_char)</span>
 <span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment_char <span class="ot">&lt;-</span> <span class="fu">relevel</span>(pbc3mult<span class="sc">$</span>tment_char, <span class="at">ref =</span> <span class="st">"Placebo"</span>)</span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>base_poismod <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> tment_char <span class="sc">+</span> alb <span class="sc">+</span> bili,</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>poismod_t26_l1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> tment_char <span class="sc">+</span> alb <span class="sc">+</span> bili <span class="sc">+</span> albnorm,</span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>poismod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> tment_char <span class="sc">+</span> alb <span class="sc">+</span> </span>
-<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>                        bili <span class="sc">+</span> bilihigh <span class="sc">+</span> bilitoohigh <span class="sc">+</span> bilimuchtoohigh,</span>
-<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> pbc3mult,<span class="at">family =</span> poisson)</span>
-<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a dataset with linear predictor information</span></span>
-<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>lin2 <span class="ot">&lt;-</span> pbc3</span>
-<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp1 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">1.6076-0.1123</span><span class="sc">*</span>alb)</span>
-<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp2 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">0.7828-0.0864</span><span class="sc">*</span>alb<span class="fl">-0.0474</span><span class="sc">*</span>albnorm)</span>
-<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp3 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">1.6076+0.0085</span><span class="sc">*</span>bili<span class="fl">-38.7</span><span class="sc">*</span><span class="fl">0.1123</span>)</span>
-<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp4 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">0.5534+0.0617</span><span class="sc">*</span>bili<span class="fl">-0.0168</span><span class="sc">*</span>bilihigh<span class="fl">+0.0027</span><span class="sc">*</span>bilitoohigh<span class="fl">-0.0428</span><span class="sc">*</span>bilimuchtoohigh<span class="fl">-0.0865</span><span class="sc">*</span><span class="fl">38.7</span>)</span>
-<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>lin2row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">effect =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Linear effect"</span>, <span class="fu">nrow</span>(lin2)),</span>
-<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Effect as linear spline"</span>, <span class="fu">nrow</span>(lin2))), </span>
-<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lp =</span> <span class="fu">c</span>(lin2<span class="sc">$</span>lp1, lin2<span class="sc">$</span>lp2), <span class="at">alb =</span> <span class="fu">c</span>(lin2<span class="sc">$</span>alb, lin2<span class="sc">$</span>alb))</span>
-<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> alb, <span class="at">y =</span> lp, <span class="at">linetype =</span> effect), <span class="at">data =</span> lin2row) <span class="sc">+</span></span>
-<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb76-24"><a href="#cb76-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Albumin"</span>) <span class="sc">+</span> </span>
-<span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Linear predictor"</span>) <span class="sc">+</span> </span>
-<span id="cb76-26"><a href="#cb76-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Effect"</span>) <span class="sc">+</span> </span>
-<span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
-<span id="cb76-28"><a href="#cb76-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb76-29"><a href="#cb76-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb76-30"><a href="#cb76-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-31"><a href="#cb76-31" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>base_poismod <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>                      tment_char <span class="sc">+</span> alb <span class="sc">+</span> bili,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>poismod_t26_l1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>                        tment_char <span class="sc">+</span> alb <span class="sc">+</span> bili <span class="sc">+</span> albnorm,</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>poismod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>                        tment_char <span class="sc">+</span> alb <span class="sc">+</span> </span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>                        bili <span class="sc">+</span> bilihigh <span class="sc">+</span> bilitoohigh <span class="sc">+</span> bilimuchtoohigh,</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> pbc3mult,<span class="at">family =</span> poisson)</span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a dataset with linear predictor information</span></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a>lin2 <span class="ot">&lt;-</span> pbc3</span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp1 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">1.6076-0.1123</span><span class="sc">*</span>alb)</span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp2 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">0.7828-0.0864</span><span class="sc">*</span>alb<span class="fl">-0.0474</span><span class="sc">*</span>albnorm)</span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp3 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fl">1.6076+0.0085</span><span class="sc">*</span>bili<span class="fl">-38.7</span><span class="sc">*</span><span class="fl">0.1123</span>)</span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a>lin2<span class="sc">$</span>lp4 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">0.5534+0.0617</span><span class="sc">*</span>bili<span class="fl">-0.0168</span><span class="sc">*</span>bilihigh<span class="sc">+</span></span>
+<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a>                   <span class="fl">0.0027</span><span class="sc">*</span>bilitoohigh<span class="fl">-0.0428</span><span class="sc">*</span>bilimuchtoohigh<span class="fl">-0.0865</span><span class="sc">*</span><span class="fl">38.7</span>)</span>
+<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a>lin2row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">effect =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Linear effect"</span>, <span class="fu">nrow</span>(lin2)),</span>
+<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Effect as linear spline"</span>, <span class="fu">nrow</span>(lin2))), </span>
+<span id="cb76-24"><a href="#cb76-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lp =</span> <span class="fu">c</span>(lin2<span class="sc">$</span>lp1, lin2<span class="sc">$</span>lp2), <span class="at">alb =</span> <span class="fu">c</span>(lin2<span class="sc">$</span>alb, lin2<span class="sc">$</span>alb))</span>
+<span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb76-26"><a href="#cb76-26" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> alb, <span class="at">y =</span> lp, <span class="at">linetype =</span> effect), <span class="at">data =</span> lin2row) <span class="sc">+</span></span>
+<span id="cb76-27"><a href="#cb76-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb76-28"><a href="#cb76-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Albumin"</span>) <span class="sc">+</span> </span>
+<span id="cb76-29"><a href="#cb76-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Linear predictor"</span>) <span class="sc">+</span> </span>
+<span id="cb76-30"><a href="#cb76-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Effect"</span>) <span class="sc">+</span> </span>
+<span id="cb76-31"><a href="#cb76-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
+<span id="cb76-32"><a href="#cb76-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb76-33"><a href="#cb76-33" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb76-34"><a href="#cb76-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-35"><a href="#cb76-35" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.6-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -1098,32 +1105,37 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </section>
 <section id="figure-2.8" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.8">Figure 2.8</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.8_3d42f5d416b90bebc504b8efb212714a">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.8_68bc95690b89b4ec761ea06aee98c898">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>base_poismod2_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> tment_char <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>poismod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> tment_char <span class="sc">+</span> alb <span class="sc">+</span> </span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>                        log2bili <span class="sc">+</span> logbilihigh <span class="sc">+</span> logbilitoohigh <span class="sc">+</span> logbilimuchtoohigh,</span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a dataset with linear predictor information</span></span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>log2 <span class="ot">&lt;-</span> pbc3</span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a>log2<span class="sc">$</span>lp3 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">2.0162+0.6469</span><span class="sc">*</span>log2bili<span class="fl">-38.7</span><span class="sc">*</span><span class="fl">0.087</span>)</span>
-<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>log2<span class="sc">$</span>lp4 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">0.6194+0.198</span><span class="sc">*</span>log2bili<span class="fl">+0.8815</span><span class="sc">*</span>logbilihigh<span class="fl">-0.2336</span><span class="sc">*</span>logbilitoohigh</span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">-</span><span class="fl">0.3139</span><span class="sc">*</span>logbilimuchtoohigh<span class="fl">-0.0844</span><span class="sc">*</span><span class="fl">38.7</span>)</span>
-<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>log2row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">effect =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Linear effect"</span>, <span class="fu">nrow</span>(log2)),</span>
-<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Effect as linear spline"</span>, <span class="fu">nrow</span>(log2))), </span>
-<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lp =</span> <span class="fu">c</span>(log2<span class="sc">$</span>lp3, log2<span class="sc">$</span>lp4),<span class="at">log2bili =</span> <span class="fu">c</span>(log2<span class="sc">$</span>log2bili, log2<span class="sc">$</span>log2bili))</span>
-<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> lp, <span class="at">linetype =</span> effect), <span class="at">data =</span> log2row) <span class="sc">+</span> </span>
-<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(log[<span class="dv">2</span>] <span class="sc">*</span> <span class="st">"(bilirubin)"</span>)) <span class="sc">+</span></span>
-<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Linear predictor"</span>) <span class="sc">+</span> </span>
-<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Effect"</span>) <span class="sc">+</span> </span>
-<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
-<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>base_poismod2_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>                           tment_char <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>poismod_t26_l3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>                        tment_char <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> </span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>                        logbilihigh <span class="sc">+</span> logbilitoohigh <span class="sc">+</span> logbilimuchtoohigh,</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a dataset with linear predictor information</span></span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a>log2 <span class="ot">&lt;-</span> pbc3</span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>log2<span class="sc">$</span>lp3 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">2.0162+0.6469</span><span class="sc">*</span>log2bili<span class="fl">-38.7</span><span class="sc">*</span><span class="fl">0.087</span>)</span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a>log2<span class="sc">$</span>lp4 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="sc">-</span><span class="fl">0.6194+0.198</span><span class="sc">*</span>log2bili</span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">+</span><span class="fl">0.8815</span><span class="sc">*</span>logbilihigh<span class="fl">-0.2336</span><span class="sc">*</span>logbilitoohigh</span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">-</span><span class="fl">0.3139</span><span class="sc">*</span>logbilimuchtoohigh<span class="fl">-0.0844</span><span class="sc">*</span><span class="fl">38.7</span>)</span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a>log2row <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">effect =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Linear effect"</span>, <span class="fu">nrow</span>(log2)),</span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Effect as linear spline"</span>, <span class="fu">nrow</span>(log2))), </span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">lp =</span> <span class="fu">c</span>(log2<span class="sc">$</span>lp3, log2<span class="sc">$</span>lp4),</span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">log2bili =</span> <span class="fu">c</span>(log2<span class="sc">$</span>log2bili, log2<span class="sc">$</span>log2bili)</span>
+<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> lp, <span class="at">linetype =</span> effect), <span class="at">data =</span> log2row) <span class="sc">+</span> </span>
+<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(log[<span class="dv">2</span>] <span class="sc">*</span> <span class="st">"(bilirubin)"</span>)) <span class="sc">+</span></span>
+<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Linear predictor"</span>) <span class="sc">+</span> </span>
+<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Effect"</span>) <span class="sc">+</span> </span>
+<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
+<span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.8-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -1131,7 +1143,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </section>
 <section id="table-2.7" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.7">Table 2.7</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.7_3f0b8b294f3c3deef4185934d7f62c6c">
+<div class="cell" data-hash="Ch2_cache/html/table-2.7_d3494393697633912771ed05667fefe0">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>coxmod_t27 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
@@ -1151,8 +1163,8 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson model</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>poismod_t27 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> timegroup <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)),</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>poismod_t27 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> timegroup <span class="sc">+</span> </span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
 <span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(poismod_t27) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
@@ -1169,7 +1181,7 @@ n= 343, number of events= 88
 </section>
 <section id="table-2.8" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.8">Table 2.8</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.8_8178b731bed34c617d71c315261672b9">
+<div class="cell" data-hash="Ch2_cache/html/table-2.8_fadca5fe4fa2e2afe3c5dacef6ebf0f6">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox models</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Model for LR comparison</span></span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>coxmod_t28_base <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
@@ -1239,7 +1251,7 @@ Model 2: Surv(days, status != 0) ~ tment + alb + log2bili
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson models</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Model for LR comparison - no interaction</span></span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>poismod_t28_base <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> timegroup <span class="sc">+</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili<span class="sc">+</span></span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">offset</span>(<span class="fu">log</span>(risktime)), <span class="at">data=</span>pbc3mult, <span class="at">family=</span>poisson)</span>
 <span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson model 1</span></span>
 <span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>alb0 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>tment<span class="sc">==</span><span class="dv">0</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>alb</span>
@@ -1301,7 +1313,7 @@ Model 2: fail ~ tment + alb + bili0 + bili1 + timegroup + offset(log(risktime))
 </section>
 <section id="table-2.9" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.9">Table 2.9</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.9_7665db1436c334a41c9e2972189a457c">
+<div class="cell" data-hash="Ch2_cache/html/table-2.9_0918e4145e96437acf1c1b8d8a15d341">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment1 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment2 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">2</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment3 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">3</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
@@ -1312,7 +1324,7 @@ Model 2: fail ~ tment + alb + bili0 + bili1 + timegroup + offset(log(risktime))
 <span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>bili2 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">2</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>log2bili</span>
 <span id="cb99-9"><a href="#cb99-9" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>bili3 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">3</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>log2bili</span>
 <span id="cb99-10"><a href="#cb99-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>poismod_t29_base <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment<span class="sc">+</span>alb<span class="sc">+</span>log2bili<span class="sc">+</span>timegroup<span class="sc">+</span><span class="fu">offset</span>(<span class="fu">log</span>(risktime)),</span>
+<span id="cb99-11"><a href="#cb99-11" aria-hidden="true" tabindex="-1"></a>poismod_t29_base <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail<span class="sc">~</span>tment<span class="sc">+</span>alb<span class="sc">+</span>log2bili<span class="sc">+</span>timegroup<span class="sc">+</span><span class="fu">offset</span>(<span class="fu">log</span>(risktime)),</span>
 <span id="cb99-12"><a href="#cb99-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> pbc3mult, <span class="at">family =</span> poisson)</span>
 <span id="cb99-13"><a href="#cb99-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb99-14"><a href="#cb99-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment</span></span>
@@ -1425,7 +1437,7 @@ n= 343, number of events= 88
 </section>
 <section id="figure-2.10" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.10">Figure 2.10</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.10_518092fecab88087d97064a8318bda7f">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.10_74e2659262866a65fe51a14a62c49b08">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting cumulative baseline hazards per treatment</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>cumhaz_treat <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxmod_f29, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>cumhaz_treat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(cumhaz_treat)</span>
@@ -1437,23 +1449,26 @@ n= 343, number of events= 88
 <span id="cb113-9"><a href="#cb113-9" aria-hidden="true" tabindex="-1"></a>hazard_t1 <span class="ot">&lt;-</span> cumhaz_treat[cumhaz_treat<span class="sc">$</span>strata <span class="sc">==</span> <span class="st">"tment=1"</span>,]</span>
 <span id="cb113-10"><a href="#cb113-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Match times</span></span>
 <span id="cb113-11"><a href="#cb113-11" aria-hidden="true" tabindex="-1"></a>alltimes <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(cumhaz_treat<span class="sc">$</span>time))</span>
-<span id="cb113-12"><a href="#cb113-12" aria-hidden="true" tabindex="-1"></a>hazard_t0_allt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(alltimes), <span class="cf">function</span>(k) <span class="fu">tail</span>(hazard_t0<span class="sc">$</span>hazard[hazard_t0<span class="sc">$</span>time <span class="sc">&lt;=</span> alltimes[k]], <span class="dv">1</span>)))</span>
-<span id="cb113-13"><a href="#cb113-13" aria-hidden="true" tabindex="-1"></a>hazard_t1_allt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(alltimes), <span class="cf">function</span>(k) <span class="fu">tail</span>(hazard_t1<span class="sc">$</span>hazard[hazard_t1<span class="sc">$</span>time <span class="sc">&lt;=</span> alltimes[k]], <span class="dv">1</span>))) </span>
-<span id="cb113-14"><a href="#cb113-14" aria-hidden="true" tabindex="-1"></a>hazards <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(hazard_t0_allt, hazard_t1_allt)</span>
-<span id="cb113-15"><a href="#cb113-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficient</span></span>
-<span id="cb113-16"><a href="#cb113-16" aria-hidden="true" tabindex="-1"></a>coxmod_f29_t <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
-<span id="cb113-17"><a href="#cb113-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
-<span id="cb113-18"><a href="#cb113-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Make plot</span></span>
-<span id="cb113-19"><a href="#cb113-19" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hazard_t0_allt, <span class="at">y =</span> hazard_t1_allt), <span class="at">data =</span> hazards) <span class="sc">+</span> </span>
-<span id="cb113-20"><a href="#cb113-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb113-21"><a href="#cb113-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fu">exp</span>(<span class="fu">coef</span>(coxmod_f29_t)[[<span class="st">"tment"</span>]]), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb113-22"><a href="#cb113-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Cumulative baseline hazard: placebo"</span>) <span class="sc">+</span></span>
-<span id="cb113-23"><a href="#cb113-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard: CyA"</span>) <span class="sc">+</span> </span>
-<span id="cb113-24"><a href="#cb113-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
-<span id="cb113-25"><a href="#cb113-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb113-26"><a href="#cb113-26" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb113-27"><a href="#cb113-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb113-28"><a href="#cb113-28" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb113-12"><a href="#cb113-12" aria-hidden="true" tabindex="-1"></a>hazard_t0_allt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(alltimes),<span class="cf">function</span>(k) </span>
+<span id="cb113-13"><a href="#cb113-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tail</span>(hazard_t0<span class="sc">$</span>hazard[hazard_t0<span class="sc">$</span>time <span class="sc">&lt;=</span> alltimes[k]], <span class="dv">1</span>)))</span>
+<span id="cb113-14"><a href="#cb113-14" aria-hidden="true" tabindex="-1"></a>hazard_t1_allt <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(alltimes), <span class="cf">function</span>(k)</span>
+<span id="cb113-15"><a href="#cb113-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tail</span>(hazard_t1<span class="sc">$</span>hazard[hazard_t1<span class="sc">$</span>time <span class="sc">&lt;=</span> alltimes[k]], <span class="dv">1</span>))) </span>
+<span id="cb113-16"><a href="#cb113-16" aria-hidden="true" tabindex="-1"></a>hazards <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(hazard_t0_allt, hazard_t1_allt)</span>
+<span id="cb113-17"><a href="#cb113-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract coefficient</span></span>
+<span id="cb113-18"><a href="#cb113-18" aria-hidden="true" tabindex="-1"></a>coxmod_f29_t <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
+<span id="cb113-19"><a href="#cb113-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
+<span id="cb113-20"><a href="#cb113-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Make plot</span></span>
+<span id="cb113-21"><a href="#cb113-21" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hazard_t0_allt, <span class="at">y =</span> hazard_t1_allt), <span class="at">data =</span> hazards) <span class="sc">+</span> </span>
+<span id="cb113-22"><a href="#cb113-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb113-23"><a href="#cb113-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fu">exp</span>(<span class="fu">coef</span>(coxmod_f29_t)[[<span class="st">"tment"</span>]]), </span>
+<span id="cb113-24"><a href="#cb113-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb113-25"><a href="#cb113-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Cumulative baseline hazard: placebo"</span>) <span class="sc">+</span></span>
+<span id="cb113-26"><a href="#cb113-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard: CyA"</span>) <span class="sc">+</span> </span>
+<span id="cb113-27"><a href="#cb113-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span> </span>
+<span id="cb113-28"><a href="#cb113-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb113-29"><a href="#cb113-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb113-30"><a href="#cb113-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-31"><a href="#cb113-31" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.10-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -1461,7 +1476,7 @@ n= 343, number of events= 88
 </section>
 <section id="figure-2.11" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.11">Figure 2.11</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.11_653eae7f8890d876d4038f471a1bdb1d">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.11_83398db6aa6513d887c9589c5529da3f">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additive Aalen models - available with timereg</span></span>
 <span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
 <span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>nonparmod <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment, <span class="at">data =</span> pbc3)</span>
@@ -1473,16 +1488,16 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          5.96               0.000
-tment                                1.60               0.744
+(Intercept)                          5.96                0.00
+tment                                1.60                0.75
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.107                       0.526
-tment                               0.136                       0.601
+(Intercept)                         0.107                       0.564
+tment                               0.136                       0.614
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                          7.62                       0.399
-tment                                4.54                       0.704
+(Intercept)                          7.62                       0.424
+tment                                4.54                       0.710
 
    
    
@@ -1492,38 +1507,44 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>cumhazdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">eventtimes =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">1</span>],</span>
 <span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">basecumhaz =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">2</span>], </span>
 <span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cumhaztreat =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">3</span>], </span>
-<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cumhaztreat_ll =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">3</span>]<span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(nonparmod<span class="sc">$</span>var.cum[,<span class="dv">3</span>]),</span>
-<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cumhaztreat_ul =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">3</span>]<span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(nonparmod<span class="sc">$</span>var.cum[,<span class="dv">3</span>]))</span>
-<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Extend lines to last observed time</span></span>
-<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>cumhazdata[<span class="fu">nrow</span>(cumhazdata)<span class="sc">+</span><span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">max</span>(pbc3<span class="sc">$</span>days), <span class="fu">tail</span>(cumhazdata, <span class="dv">1</span>)[<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb116-8"><a href="#cb116-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-9"><a href="#cb116-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Left figure</span></span>
-<span id="cb116-10"><a href="#cb116-10" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>left <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> basecumhaz), <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
-<span id="cb116-11"><a href="#cb116-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb116-12"><a href="#cb116-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb116-13"><a href="#cb116-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb116-14"><a href="#cb116-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb116-15"><a href="#cb116-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>),<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb116-16"><a href="#cb116-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb116-17"><a href="#cb116-17" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb116-18"><a href="#cb116-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb116-19"><a href="#cb116-19" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cumhaztreat_ll =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">3</span>]</span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>                                          <span class="sc">-</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(nonparmod<span class="sc">$</span>var.cum[,<span class="dv">3</span>]),</span>
+<span id="cb116-6"><a href="#cb116-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">cumhaztreat_ul =</span> nonparmod<span class="sc">$</span>cum[,<span class="dv">3</span>]</span>
+<span id="cb116-7"><a href="#cb116-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="sc">+</span><span class="fl">1.96</span><span class="sc">*</span><span class="fu">sqrt</span>(nonparmod<span class="sc">$</span>var.cum[,<span class="dv">3</span>]))</span>
+<span id="cb116-8"><a href="#cb116-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extend lines to last observed time</span></span>
+<span id="cb116-9"><a href="#cb116-9" aria-hidden="true" tabindex="-1"></a>cumhazdata[<span class="fu">nrow</span>(cumhazdata)<span class="sc">+</span><span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">max</span>(pbc3<span class="sc">$</span>days), <span class="fu">tail</span>(cumhazdata, <span class="dv">1</span>)[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb116-10"><a href="#cb116-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-11"><a href="#cb116-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Left figure</span></span>
+<span id="cb116-12"><a href="#cb116-12" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>left <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> basecumhaz), </span>
+<span id="cb116-13"><a href="#cb116-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
+<span id="cb116-14"><a href="#cb116-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb116-15"><a href="#cb116-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb116-16"><a href="#cb116-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative baseline hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb116-17"><a href="#cb116-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb116-18"><a href="#cb116-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>),<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb116-19"><a href="#cb116-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb116-20"><a href="#cb116-20" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb116-21"><a href="#cb116-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb116-22"><a href="#cb116-22" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.11-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Right figure</span></span>
-<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat), <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
-<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat_ll), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span>  </span>
-<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat_ul), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative treatment effect"</span>) <span class="sc">+</span> </span>
-<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb117-12"><a href="#cb117-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb117-13"><a href="#cb117-13" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat), </span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat_ll), </span>
+<span id="cb117-6"><a href="#cb117-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span>  </span>
+<span id="cb117-7"><a href="#cb117-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>, <span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat_ul), </span>
+<span id="cb117-8"><a href="#cb117-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb117-9"><a href="#cb117-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb117-10"><a href="#cb117-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative treatment effect"</span>) <span class="sc">+</span> </span>
+<span id="cb117-11"><a href="#cb117-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb117-12"><a href="#cb117-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb117-13"><a href="#cb117-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb117-14"><a href="#cb117-14" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb117-15"><a href="#cb117-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-16"><a href="#cb117-16" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">11.</span>right</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.11-2.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -1531,7 +1552,7 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 </section>
 <section id="figure-2.12" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.12">Figure 2.12</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.12_99ed97ed6b1412976e8fff850331be81">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.12_3f2d52cbc9e5cab58de8cce8a63af60d">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Aalen model fit</span></span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
 <span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>nonparmod2 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> bili, <span class="at">data =</span> pbc3) </span>
@@ -1544,36 +1565,39 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 <span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a>cumhazdata[<span class="fu">nrow</span>(cumhazdata)<span class="sc">+</span><span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">max</span>(pbc3<span class="sc">$</span>days), <span class="fu">tail</span>(cumhazdata, <span class="dv">1</span>)[<span class="sc">-</span><span class="dv">1</span>])</span>
 <span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure treatment</span></span>
-<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.1</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat), <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
-<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative treatment effect"</span>) <span class="sc">+</span> </span>
-<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb118-21"><a href="#cb118-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb118-22"><a href="#cb118-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure albumin</span></span>
-<span id="cb118-23"><a href="#cb118-23" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhazalb), <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
-<span id="cb118-24"><a href="#cb118-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb118-25"><a href="#cb118-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb118-26"><a href="#cb118-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative albumin effect"</span>) <span class="sc">+</span> </span>
-<span id="cb118-27"><a href="#cb118-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb118-28"><a href="#cb118-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb118-29"><a href="#cb118-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb118-30"><a href="#cb118-30" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb118-31"><a href="#cb118-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb118-32"><a href="#cb118-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure bilirubin</span></span>
-<span id="cb118-33"><a href="#cb118-33" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.3</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhazbili), <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
-<span id="cb118-34"><a href="#cb118-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb118-35"><a href="#cb118-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb118-36"><a href="#cb118-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative bilirubin effect"</span>) <span class="sc">+</span> </span>
-<span id="cb118-37"><a href="#cb118-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)),</span>
-<span id="cb118-38"><a href="#cb118-38" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb118-39"><a href="#cb118-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb118-40"><a href="#cb118-40" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb118-41"><a href="#cb118-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb118-42"><a href="#cb118-42" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.1</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhaztreat), </span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative treatment effect"</span>) <span class="sc">+</span> </span>
+<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb118-21"><a href="#cb118-21" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb118-22"><a href="#cb118-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-23"><a href="#cb118-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure albumin</span></span>
+<span id="cb118-24"><a href="#cb118-24" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhazalb), </span>
+<span id="cb118-25"><a href="#cb118-25" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
+<span id="cb118-26"><a href="#cb118-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb118-27"><a href="#cb118-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb118-28"><a href="#cb118-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative albumin effect"</span>) <span class="sc">+</span> </span>
+<span id="cb118-29"><a href="#cb118-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb118-30"><a href="#cb118-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb118-31"><a href="#cb118-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb118-32"><a href="#cb118-32" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb118-33"><a href="#cb118-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-34"><a href="#cb118-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure bilirubin</span></span>
+<span id="cb118-35"><a href="#cb118-35" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.3</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> eventtimes <span class="sc">/</span> <span class="fl">365.25</span>, <span class="at">y =</span> cumhazbili), </span>
+<span id="cb118-36"><a href="#cb118-36" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> cumhazdata) <span class="sc">+</span> </span>
+<span id="cb118-37"><a href="#cb118-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb118-38"><a href="#cb118-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb118-39"><a href="#cb118-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative bilirubin effect"</span>) <span class="sc">+</span> </span>
+<span id="cb118-40"><a href="#cb118-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb118-41"><a href="#cb118-41" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb118-42"><a href="#cb118-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb118-43"><a href="#cb118-43" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb118-44"><a href="#cb118-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-45"><a href="#cb118-45" aria-hidden="true" tabindex="-1"></a>fig2.<span class="fl">12.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.12-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -1589,7 +1613,7 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 </section>
 <section id="table-2.10" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-2.10">Table 2.10</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.10_a13870a375727cea5a1ffa5871b1d897">
+<div class="cell" data-hash="Ch2_cache/html/table-2.10_610e643ee3d1537d1902588ae3b5a4e1">
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
 <span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 2.10 and in-text results</span></span>
 <span id="cb121-3"><a href="#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
@@ -1606,15 +1630,15 @@ Test for nonparametric terms
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
 (Intercept)                          5.96               0.000
-tment                                1.60               0.732
+tment                                1.60               0.744
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.107                       0.535
-tment                               0.136                       0.588
+(Intercept)                         0.107                       0.534
+tment                               0.136                       0.573
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                          7.62                       0.389
-tment                                4.54                       0.696
+(Intercept)                          7.62                       0.397
+tment                                4.54                       0.687
 
    
    
@@ -1635,9 +1659,9 @@ Test for non-significant effects
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                        0.0914                       0.382
+(Intercept)                        0.0914                        0.41
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0136                       0.272
+(Intercept)                        0.0136                       0.284
 
 Parametric terms :     
                 Coef.    SE Robust SE     z P-val lower2.5% upper97.5%
@@ -1659,22 +1683,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.62               0.005
-tment                                2.66               0.137
+(Intercept)                          3.62               0.008
+tment                                2.66               0.132
 alb                                  3.82               0.003
 bili                                 4.83               0.000
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                       0.30300                       0.920
-tment                             0.12100                       0.703
-alb                               0.00666                       0.952
-bili                              0.00301                       0.196
+(Intercept)                       0.30300                       0.928
+tment                             0.12100                       0.681
+alb                               0.00666                       0.962
+bili                              0.00300                       0.181
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                      14.20000                       0.990
-tment                             3.29000                       0.809
-alb                               0.00826                       0.985
-bili                              0.00203                       0.323
+(Intercept)                      14.20000                       0.995
+tment                             3.29000                       0.805
+alb                               0.00826                       0.991
+bili                              0.00203                       0.324
 
    
    
@@ -1693,17 +1717,17 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          4.03               0.001
+(Intercept)                          4.03                   0
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.119                       0.201
+(Intercept)                         0.119                       0.181
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0263                       0.121
+(Intercept)                        0.0263                       0.116
 
 Parametric terms :     
                 Coef.       SE Robust SE     z    P-val lower2.5% upper97.5%
-const(tment) -0.04130 0.021600  0.020100 -2.05 4.02e-02  -0.08360    0.00104
+const(tment) -0.04130 0.021600  0.020100 -2.05 4.01e-02  -0.08360    0.00104
 const(alb)   -0.00842 0.002290  0.002230 -3.77 1.63e-04  -0.01290   -0.00393
 const(bili)   0.00230 0.000483  0.000384  5.98 2.17e-09   0.00135    0.00325
    
@@ -1723,19 +1747,19 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.60               0.002
-alb                                  3.80               0.000
+(Intercept)                          3.60               0.001
+alb                                  3.80               0.002
 bili                                 4.83               0.000
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                       0.28500                       0.929
-alb                               0.00954                       0.785
-bili                              0.00315                       0.160
+(Intercept)                       0.28500                       0.939
+alb                               0.00954                       0.808
+bili                              0.00315                       0.159
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                      3.16e-02                       0.993
-alb                              5.26e-05                       0.894
-bili                             6.52e-06                       0.262
+(Intercept)                      3.16e-02                       0.995
+alb                              5.26e-05                       0.906
+bili                             6.52e-06                       0.293
 
 Parametric terms :     
                Coef.     SE Robust SE     z P-val lower2.5% upper97.5%
@@ -1746,8 +1770,8 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
     alb + bili, data = pbc3)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic effect for albumin; p-values not exactly as in book because seed changes</span></span>
-<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>nonparmod44 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> </span>
-<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">/</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fu">I</span>((alb<span class="sc">/</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> pbc3) </span>
+<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>nonparmod44 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">const</span>(tment)</span>
+<span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">/</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fu">I</span>((alb<span class="sc">/</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> pbc3) </span>
 <span id="cb131-4"><a href="#cb131-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonparmod44)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Additive Aalen Model 
@@ -1756,22 +1780,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
               Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                            3.23               0.020
-I(alb/10)                              3.00               0.040
+(Intercept)                            3.23               0.015
+I(alb/10)                              3.00               0.031
 I(bili/100)                            4.88               0.000
-I((alb/10)^2)                          2.77               0.082
+I((alb/10)^2)                          2.77               0.069
 
 Test for time invariant effects 
                     Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                           9.420                       0.230
-I(alb/10)                             4.950                       0.231
-I(bili/100)                           0.366                       0.066
-I((alb/10)^2)                         0.635                       0.232
+(Intercept)                           9.420                       0.236
+I(alb/10)                             4.950                       0.236
+I(bili/100)                           0.365                       0.079
+I((alb/10)^2)                         0.635                       0.252
                       Cramer von Mises test p-value H_0:constant effect
-(Intercept)                         83.6000                       0.332
-I(alb/10)                           24.4000                       0.328
-I(bili/100)                          0.0949                       0.170
-I((alb/10)^2)                        0.4160                       0.320
+(Intercept)                         83.6000                       0.338
+I(alb/10)                           24.4000                       0.333
+I(bili/100)                          0.0949                       0.172
+I((alb/10)^2)                        0.4160                       0.333
 
 Parametric terms :     
                Coef.     SE Robust SE     z  P-val lower2.5% upper97.5%
@@ -1781,9 +1805,9 @@ const(tment) -0.0421 0.0215    0.0201 -2.09 0.0366   -0.0842   3.92e-05
 aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) + 
     I(alb/10) + I(bili/100) + I((alb/10)^2), data = pbc3)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic effect for bilirubin; p-values not exactly as in book because seed changes</span></span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>nonparmod43 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> </span>
-<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">/</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fu">I</span>((bili<span class="sc">/</span><span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> pbc3) </span>
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quadratic effect for bilirubin; p-values not exactly as in book as seed changes</span></span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>nonparmod43 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">const</span>(tment)</span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">+</span> <span class="fu">I</span>(alb<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> <span class="fu">I</span>(bili<span class="sc">/</span><span class="dv">100</span>) <span class="sc">+</span> <span class="fu">I</span>((bili<span class="sc">/</span><span class="dv">100</span>)<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> pbc3) </span>
 <span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonparmod43)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Additive Aalen Model 
@@ -1792,22 +1816,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
                 Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                              3.82               0.001
+(Intercept)                              3.82               0.006
 I(alb/10)                                4.02               0.001
-I(bili/100)                              3.85               0.001
-I((bili/100)^2)                          3.01               0.052
+I(bili/100)                              3.85               0.002
+I((bili/100)^2)                          3.01               0.048
 
 Test for time invariant effects 
                       Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                             0.440                       0.645
-I(alb/10)                               0.117                       0.608
-I(bili/100)                             0.612                       0.428
-I((bili/100)^2)                         0.515                       0.163
+(Intercept)                             0.440                       0.665
+I(alb/10)                               0.117                       0.620
+I(bili/100)                             0.612                       0.440
+I((bili/100)^2)                         0.515                       0.175
                         Cramer von Mises test p-value H_0:constant effect
-(Intercept)                            0.1320                       0.751
-I(alb/10)                              0.0124                       0.603
-I(bili/100)                            0.4640                       0.337
-I((bili/100)^2)                        0.2880                       0.170
+(Intercept)                            0.1320                       0.752
+I(alb/10)                              0.0124                       0.607
+I(bili/100)                            0.4640                       0.353
+I((bili/100)^2)                        0.2880                       0.181
 
 Parametric terms :     
                Coef.     SE Robust SE     z  P-val lower2.5% upper97.5%
@@ -1818,8 +1842,8 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
     I(alb/10) + I(bili/100) + I((bili/100)^2), data = pbc3)</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactions</span></span>
-<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>nonparmod51 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span></span>
-<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">const</span>(alb) <span class="sc">+</span> <span class="fu">const</span>(bili) <span class="sc">+</span> <span class="fu">const</span>(tment <span class="sc">*</span> bili), <span class="at">data =</span> pbc3) </span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>nonparmod51 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">const</span>(alb)</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">+</span> <span class="fu">const</span>(bili) <span class="sc">+</span> <span class="fu">const</span>(tment <span class="sc">*</span> bili),<span class="at">data =</span> pbc3) </span>
 <span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonparmod51)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Additive Aalen Model 
@@ -1832,9 +1856,9 @@ Test for non-significant effects
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.123                       0.188
+(Intercept)                         0.123                       0.151
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0287                       0.108
+(Intercept)                        0.0287                       0.092
 
 Parametric terms :     
                        Coef.       SE Robust SE       z    P-val lower2.5%
@@ -1852,8 +1876,8 @@ const(tment * bili)   0.000839
 aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) + 
     const(alb) + const(bili) + const(tment * bili), data = pbc3)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>nonparmod52 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span></span>
-<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">const</span>(alb) <span class="sc">+</span> <span class="fu">const</span>(bili) <span class="sc">+</span> <span class="fu">const</span>(tment <span class="sc">*</span> alb), <span class="at">data =</span> pbc3) </span>
+<div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a>nonparmod52 <span class="ot">&lt;-</span> <span class="fu">aalen</span>(<span class="fu">Surv</span>(days<span class="sc">/</span><span class="fl">365.25</span>, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">const</span>(bili) </span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">+</span> <span class="fu">const</span>(alb) <span class="sc">+</span> <span class="fu">const</span>(tment <span class="sc">*</span> alb), <span class="at">data =</span> pbc3) </span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nonparmod52)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Additive Aalen Model 
@@ -1862,29 +1886,29 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.06               0.008
+(Intercept)                          3.06               0.002
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                          0.12                       0.201
+(Intercept)                          0.12                       0.188
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0265                       0.122
+(Intercept)                        0.0265                       0.127
 
 Parametric terms :     
                       Coef.       SE Robust SE       z    P-val lower2.5%
 const(tment)        0.01010 0.199000  0.176000  0.0576 9.54e-01  -0.38000
-const(alb)         -0.00771 0.003150  0.002780 -2.7700 5.54e-03  -0.01390
 const(bili)         0.00230 0.000482  0.000385  5.9600 2.45e-09   0.00136
+const(alb)         -0.00771 0.003150  0.002780 -2.7700 5.54e-03  -0.01390
 const(tment * alb) -0.00132 0.004790  0.004300 -0.3060 7.59e-01  -0.01070
                    upper97.5%
 const(tment)          0.40000
-const(alb)           -0.00154
 const(bili)           0.00324
+const(alb)           -0.00154
 const(tment * alb)    0.00807
    
   Call: 
 aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) + 
-    const(alb) + const(bili) + const(tment * alb), data = pbc3)</code></pre>
+    const(bili) + const(alb) + const(tment * alb), data = pbc3)</code></pre>
 </div>
 </div>
 </section>
@@ -2086,7 +2110,7 @@ n= 5274, number of events= 222 </code></pre>
 </section>
 <section id="figure-2.13" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.13">Figure 2.13</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.13_4a499acaf52cc3aeae73e3c5d6e31a87">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.13_8478225521d5252a76a48a0a95fe67be">
 <div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
 <span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -2112,11 +2136,12 @@ n= 5274, number of events= 222 </code></pre>
 <span id="cb158-23"><a href="#cb158-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb158-24"><a href="#cb158-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Follow-up time (months)"</span>) <span class="sc">+</span> </span>
 <span id="cb158-25"><a href="#cb158-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb158-26"><a href="#cb158-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb158-27"><a href="#cb158-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb158-28"><a href="#cb158-28" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb158-29"><a href="#cb158-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb158-30"><a href="#cb158-30" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb158-26"><a href="#cb158-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb158-27"><a href="#cb158-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb158-28"><a href="#cb158-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb158-29"><a href="#cb158-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb158-30"><a href="#cb158-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-31"><a href="#cb158-31" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.13-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
@@ -2124,7 +2149,7 @@ n= 5274, number of events= 222 </code></pre>
 </section>
 <section id="figure-2.14" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="figure-2.14">Figure 2.14</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.14_effd7f3701d707fe3b3fada2292f02b0">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.14_3c3a95fb93215c8a3aa7bddefd90aa4c">
 <div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
 <span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit2, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb159-3"><a href="#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
@@ -2138,12 +2163,14 @@ n= 5274, number of events= 222 </code></pre>
 <span id="cb159-11"><a href="#cb159-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb159-12"><a href="#cb159-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Age (months)"</span>) <span class="sc">+</span> </span>
 <span id="cb159-13"><a href="#cb159-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb159-14"><a href="#cb159-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb159-15"><a href="#cb159-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.1</span>)), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.15</span>, <span class="at">by =</span> <span class="fl">0.05</span>), </span>
-<span id="cb159-16"><a href="#cb159-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"0.05"</span>, <span class="st">"0.10"</span>, <span class="st">"0.15"</span>)) <span class="sc">+</span></span>
-<span id="cb159-17"><a href="#cb159-17" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb159-18"><a href="#cb159-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb159-19"><a href="#cb159-19" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb159-14"><a href="#cb159-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb159-15"><a href="#cb159-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb159-16"><a href="#cb159-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.1</span>)), </span>
+<span id="cb159-17"><a href="#cb159-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.15</span>, <span class="at">by =</span> <span class="fl">0.05</span>), </span>
+<span id="cb159-18"><a href="#cb159-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"0.05"</span>, <span class="st">"0.10"</span>, <span class="st">"0.15"</span>)) <span class="sc">+</span></span>
+<span id="cb159-19"><a href="#cb159-19" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb159-20"><a href="#cb159-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb159-21"><a href="#cb159-21" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.14-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>

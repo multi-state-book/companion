@@ -6,7 +6,7 @@ affective <- data.frame(read.csv("data/affective.csv"))
 affective$wait <- with(affective, stop - start)
 ```
 
-### Table 2.14 {.unnumbered} 
+### Table 2.14 {.unnumbered}
 
 ```{r}
 #| label: table-2.14

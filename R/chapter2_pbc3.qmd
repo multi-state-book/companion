@@ -33,7 +33,8 @@ nadata <- data.frame(cumhaz = nafit$cumhaz, time = nafit$time,
 
 # Create Figure 2.1
 library(ggplot2)
-fig2.1 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment), data = nadata) + 
+fig2.1 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
+                 data = nadata) + 
   geom_step(size = 1) + 
   scale_linetype_discrete("Treatment", labels = c("Placebo", "CyA")) + 
   xlab("Time since randomization (years)") + 
@@ -94,7 +95,7 @@ plotdata <- data.frame(rates = c(rateCyA, ratePbo),
 
 # Create Figure 2.2
 fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
-  geom_segment(aes(x = times_s, y = rates, xend = times, yend = rates), size = 1) +
+  geom_segment(aes(x = times_s, y = rates, xend = times, yend = rates),size=1) +
   scale_linetype_discrete("Treatment", labels = c("Placebo", "CyA"))  +
   xlab("Time since randomization (years)") +
   ylab("Estimated hazard function (per 100 years)") +
@@ -114,9 +115,9 @@ fig2.2
 #| label: in-text-LRT-pcw
 library(stats)
 poisfull <- glm(fail ~ - 1 + tment + timegroup + tment:timegroup +
-                  offset(log(risktime/36525)), data = pbc3mult, family = poisson)
+                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
 poisred <- glm(fail ~ - 1 + timegroup +
-                 offset(log(risktime/36525)), data = pbc3mult, family = poisson)
+                 offset(log(risktime/36525)), data = pbc3mult, family=poisson)
 anova(poisred,poisfull,test="LRT")
 # or
 library(lmtest)
@@ -145,9 +146,9 @@ nadata$tmentnum <- ifelse(nadata$tment == "tment=1", 1, 0)
 # Add piecewise constant hazard to data
 nadata$pwch <- NULL
 # Between time 0 and 2
-nadata$pwch[nadata$time <= 2 * 365.25] <- nadata$time[nadata$time <= 2 * 365.25] * 
-                                 (pcwdata$hazard_timegroup[1] * (1-nadata$tmentnum[nadata$time <= 2 * 365.25]) + 
-                                  pcwdata$hazard_timegroup[4] * (nadata$tmentnum[nadata$time <= 2 * 365.25]))
+nadata$pwch[nadata$time <= 2 * 365.25] <- nadata$time[nadata$time <= 2 * 365.25] *
+  (pcwdata$hazard_timegroup[1] * (1-nadata$tmentnum[nadata$time <= 2 * 365.25]) +
+     pcwdata$hazard_timegroup[4] * (nadata$tmentnum[nadata$time <= 2 * 365.25]))
 # Between time 2 and 4
 nadata$pwch[nadata$time > 2 * 365.25 & nadata$time <= 4* 365.25 ] <- 2 * 365.25 * 
   (pcwdata$hazard_timegroup[1] * (1-nadata$tmentnum[nadata$time > 2 * 365.25 & nadata$time <= 4 * 365.25]) + 
@@ -219,7 +220,8 @@ coxdata <- data.frame(cumhaz = coxcumhaz$hazard,
                       type = rep("Breslow estimate", nrow(coxcumhaz)))
 
 # Create Figure 2.5
-fig2.5 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment), data = coxdata) + 
+fig2.5 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
+                 data = coxdata) + 
   geom_step(size = 1) + 
   xlab("Time since randomization (years)") + 
   ylab("Cumulative baseline hazard") + 
@@ -242,7 +244,8 @@ library(dplyr)
 tabledata <- pbc3 %>% 
   group_by(tment, tment_char) %>% 
   summarise(n = sum(id != 0),  
-            average_albumin = mean(alb, na.rm = TRUE), # NOTE: Removes missing observations from mean computation
+            average_albumin = mean(alb, na.rm = TRUE), 
+            # NOTE: Removes missing observations from mean computation
             average_bilirubin = mean(bili, na.rm = TRUE), 
             )
 data.frame(tabledata)
@@ -276,7 +279,7 @@ tidy(poism, exponentiate = T, conf.int = T)
 #| label: table-2.5
 # Poisson model with treatment, albumin and bilirubin as covariates
 poismod_t25 <- glm(fail ~ tment + alb + bili+ timegroup-1 +
-                      offset(log(risktime/365.25)), data = pbc3mult, family = poisson)
+                     offset(log(risktime/365.25)),data=pbc3mult,family=poisson)
 tidy(poismod_t25)
 ```
 
@@ -316,7 +319,7 @@ coxmod_t26_l1
 lrtest(coxmod_t26_l1, base_coxmod)
 
 # Quadratic Cox 1
-coxmod_t26_q1 <- coxph(Surv(days, status != 0) ~ tment + alb + I(alb*alb) + bili ,
+coxmod_t26_q1 <- coxph(Surv(days, status != 0) ~ tment + alb + I(alb*alb) + bili,
                        eps = 1e-8, method = "breslow", data = pbc3)
 coxmod_t26_q1
 lrtest(coxmod_t26_q1, base_coxmod)
@@ -329,20 +332,20 @@ coxmod_t26_l2
 lrtest(coxmod_t26_l2, base_coxmod)
 
 # Quadratic Cox 2
-coxmod_t26_q2 <- coxph(Surv(days, status != 0) ~ tment + alb + bili + I(bili*bili),
+coxmod_t26_q2 <- coxph(Surv(days, status != 0) ~ tment+alb+bili + I(bili*bili),
                        eps = 1e-8, method = "breslow", data = pbc3)
 coxmod_t26_q2
 lrtest(coxmod_t26_q2, base_coxmod)
 
 # Splines Cox 3
-coxmod_t26_l3 <- coxph(Surv(days, status != 0) ~ tment + alb + 
-                         log2bili + logbilihigh + logbilitoohigh + logbilimuchtoohigh,
+coxmod_t26_l3 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili +
+                         logbilihigh + logbilitoohigh + logbilimuchtoohigh,
                        eps = 1e-8, method = "breslow", data = pbc3)
 coxmod_t26_l3
 lrtest(coxmod_t26_l3, base_coxmod_log)
 
 # Quadratic Cox 3
-coxmod_t26_q3 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili + log2bili2,
+coxmod_t26_q3 <- coxph(Surv(days, status != 0) ~ tment+alb+log2bili + log2bili2,
                        eps = 1e-8, method = "breslow", data = pbc3)
 coxmod_t26_q3
 lrtest(coxmod_t26_q3, base_coxmod_log)
@@ -363,11 +366,11 @@ pbc3mult$timegroup <- as.factor(pbc3mult$timegroup)
 base_poismod <- glm(fail ~ timegroup + tment + alb + bili +
                       offset(log(risktime)), data = pbc3mult, family = poisson)
 base_poismod_log <- glm(fail ~ timegroup + tment + alb + log2bili +
-                          offset(log(risktime)), data = pbc3mult, family = poisson)
+                          offset(log(risktime)), data=pbc3mult,family=poisson)
 
 # Splines Poisson 1
 poismod_t26_l1 <- glm(fail ~ timegroup + tment + alb + albnorm + bili +
-                        offset(log(risktime)), data = pbc3mult, family = poisson)
+                        offset(log(risktime)), data=pbc3mult, family=poisson)
 tidy(poismod_t26_l1)
 lrtest(poismod_t26_l1, base_poismod)
 
@@ -413,11 +416,14 @@ lrtest(poismod_t26_q3, base_poismod_log)
 pbc3mult$timegroup <- relevel(as.factor(pbc3mult$timegroup), ref = "3")
 pbc3mult$tment_char <- as.factor(pbc3mult$tment_char)
 pbc3mult$tment_char <- relevel(pbc3mult$tment_char, ref = "Placebo")
-base_poismod <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + tment_char + alb + bili,
+base_poismod <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
+                      tment_char + alb + bili,
                     data = pbc3mult, family = poisson)
-poismod_t26_l1 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + tment_char + alb + bili + albnorm,
+poismod_t26_l1 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
+                        tment_char + alb + bili + albnorm,
                       data = pbc3mult, family = poisson)
-poismod_t26_l3 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + tment_char + alb + 
+poismod_t26_l3 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
+                        tment_char + alb + 
                         bili + bilihigh + bilitoohigh + bilimuchtoohigh,
                       data = pbc3mult,family = poisson)
 # Make a dataset with linear predictor information
@@ -425,7 +431,8 @@ lin2 <- pbc3
 lin2$lp1 <- with(pbc3, 1.6076-0.1123*alb)
 lin2$lp2 <- with(pbc3, 0.7828-0.0864*alb-0.0474*albnorm)
 lin2$lp3 <- with(pbc3, 1.6076+0.0085*bili-38.7*0.1123)
-lin2$lp4 <- with(pbc3, -0.5534+0.0617*bili-0.0168*bilihigh+0.0027*bilitoohigh-0.0428*bilimuchtoohigh-0.0865*38.7)
+lin2$lp4 <- with(pbc3, -0.5534+0.0617*bili-0.0168*bilihigh+
+                   0.0027*bilitoohigh-0.0428*bilimuchtoohigh-0.0865*38.7)
 lin2row <- data.frame(effect = c(rep("Linear effect", nrow(lin2)),
                                  rep("Effect as linear spline", nrow(lin2))), 
                       lp = c(lin2$lp1, lin2$lp2), alb = c(lin2$alb, lin2$alb))
@@ -471,19 +478,24 @@ fig2.7
 #| label: figure-2.8
 #| out-width: 90%
 # The below linear predictors include estimates from the following models
-base_poismod2_log <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + tment_char + alb + log2bili,
+base_poismod2_log <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
+                           tment_char + alb + log2bili,
                          data = pbc3mult, family = poisson)
-poismod_t26_l3 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + tment_char + alb + 
-                        log2bili + logbilihigh + logbilitoohigh + logbilimuchtoohigh,
+poismod_t26_l3 <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
+                        tment_char + alb + log2bili + 
+                        logbilihigh + logbilitoohigh + logbilimuchtoohigh,
                         data = pbc3mult, family = poisson)
 # Make a dataset with linear predictor information
 log2 <- pbc3
 log2$lp3 <- with(pbc3, -2.0162+0.6469*log2bili-38.7*0.087)
-log2$lp4 <- with(pbc3, -0.6194+0.198*log2bili+0.8815*logbilihigh-0.2336*logbilitoohigh
+log2$lp4 <- with(pbc3, -0.6194+0.198*log2bili
+                 +0.8815*logbilihigh-0.2336*logbilitoohigh
                  -0.3139*logbilimuchtoohigh-0.0844*38.7)
 log2row <- data.frame(effect = c(rep("Linear effect", nrow(log2)),
                                  rep("Effect as linear spline", nrow(log2))), 
-                      lp = c(log2$lp3, log2$lp4),log2bili = c(log2$log2bili, log2$log2bili))
+                      lp = c(log2$lp3, log2$lp4),
+                      log2bili = c(log2$log2bili, log2$log2bili)
+                      )
 
 fig2.8 <- ggplot(aes(x = log2bili, y = lp, linetype = effect), data = log2row) + 
   geom_line(size = 1) + 
@@ -507,8 +519,8 @@ coxmod_t27 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
 coxmod_t27
 
 # Poisson model
-poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup + offset(log(risktime)),
-                   data = pbc3mult, family = poisson)
+poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup + 
+                     offset(log(risktime)), data = pbc3mult, family = poisson)
 tidy(poismod_t27) 
 ```
 
@@ -539,7 +551,7 @@ lrtest(coxmod_t28_2, coxmod_t28_base)
 # Poisson models
 # Model for LR comparison - no interaction
 poismod_t28_base <- glm(fail ~ timegroup + tment + alb + log2bili+
-                          offset(log(risktime)), data = pbc3mult, family = poisson)
+                          offset(log(risktime)), data=pbc3mult, family=poisson)
 
 # Poisson model 1
 pbc3mult$alb0 <- (pbc3mult$tment==0)*pbc3mult$alb
@@ -572,7 +584,7 @@ pbc3mult$bili1 <- (pbc3mult$timegroup==1)*pbc3mult$log2bili
 pbc3mult$bili2 <- (pbc3mult$timegroup==2)*pbc3mult$log2bili
 pbc3mult$bili3 <- (pbc3mult$timegroup==3)*pbc3mult$log2bili
 
-poismod_t29_base <- glm(fail ~ tment+alb+log2bili+timegroup+offset(log(risktime)),
+poismod_t29_base <- glm(fail~tment+alb+log2bili+timegroup+offset(log(risktime)),
                      data = pbc3mult, family = poisson)
 
 # Treatment
@@ -623,8 +635,10 @@ hazard_t0$hazard <- as.numeric(hazard_t0$hazard)
 hazard_t1 <- cumhaz_treat[cumhaz_treat$strata == "tment=1",]
 # Match times
 alltimes <- sort(unique(cumhaz_treat$time))
-hazard_t0_allt <- as.numeric(sapply(1:length(alltimes), function(k) tail(hazard_t0$hazard[hazard_t0$time <= alltimes[k]], 1)))
-hazard_t1_allt <- as.numeric(sapply(1:length(alltimes), function(k) tail(hazard_t1$hazard[hazard_t1$time <= alltimes[k]], 1))) 
+hazard_t0_allt <- as.numeric(sapply(1:length(alltimes),function(k) 
+  tail(hazard_t0$hazard[hazard_t0$time <= alltimes[k]], 1)))
+hazard_t1_allt <- as.numeric(sapply(1:length(alltimes), function(k)
+  tail(hazard_t1$hazard[hazard_t1$time <= alltimes[k]], 1))) 
 hazards <- data.frame(hazard_t0_allt, hazard_t1_allt)
 # Extract coefficient
 coxmod_f29_t <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
@@ -632,7 +646,8 @@ coxmod_f29_t <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
 # Make plot
 fig2.10 <- ggplot(aes(x = hazard_t0_allt, y = hazard_t1_allt), data = hazards) + 
   geom_step(size = 1) + 
-  geom_abline(intercept = 0, slope = exp(coef(coxmod_f29_t)[["tment"]]), linetype = "dashed", size = 1) + 
+  geom_abline(intercept = 0, slope = exp(coef(coxmod_f29_t)[["tment"]]), 
+              linetype = "dashed", size = 1) + 
   xlab("Cumulative baseline hazard: placebo") +
   ylab("Cumulative baseline hazard: CyA") + 
   scale_x_continuous(expand = expansion(mult = c(0.03, 0.05))) + 
@@ -655,13 +670,16 @@ summary(nonparmod)
 cumhazdata <- data.frame(eventtimes = nonparmod$cum[,1],
                          basecumhaz = nonparmod$cum[,2], 
                          cumhaztreat = nonparmod$cum[,3], 
-                         cumhaztreat_ll = nonparmod$cum[,3]-1.96*sqrt(nonparmod$var.cum[,3]),
-                         cumhaztreat_ul = nonparmod$cum[,3]+1.96*sqrt(nonparmod$var.cum[,3]))
+                         cumhaztreat_ll = nonparmod$cum[,3]
+                                          -1.96*sqrt(nonparmod$var.cum[,3]),
+                         cumhaztreat_ul = nonparmod$cum[,3]
+                                          +1.96*sqrt(nonparmod$var.cum[,3]))
 # Extend lines to last observed time
 cumhazdata[nrow(cumhazdata)+1,] <- c(max(pbc3$days), tail(cumhazdata, 1)[-1])
 
 # Left figure
-fig2.11.left <- ggplot(aes(x = eventtimes / 365.25, y = basecumhaz), data = cumhazdata) + 
+fig2.11.left <- ggplot(aes(x = eventtimes / 365.25, y = basecumhaz), 
+                       data = cumhazdata) + 
   geom_step(size = 1) + 
   xlab("Time since randomization (years)") +
   ylab("Cumulative baseline hazard") + 
@@ -673,10 +691,13 @@ fig2.11.left <- ggplot(aes(x = eventtimes / 365.25, y = basecumhaz), data = cumh
 fig2.11.left
 
 # Right figure
-fig2.11.right <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat), data = cumhazdata) + 
+fig2.11.right <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat), 
+                        data = cumhazdata) + 
   geom_step(size = 1) + 
-  geom_step(size = 1, aes(x = eventtimes / 365.25, y = cumhaztreat_ll), linetype = "dashed") +  
-  geom_step(size = 1, aes(x = eventtimes / 365.25, y = cumhaztreat_ul), linetype = "dashed") +
+  geom_step(size = 1, aes(x = eventtimes / 365.25, y = cumhaztreat_ll), 
+            linetype = "dashed") +  
+  geom_step(size = 1, aes(x = eventtimes / 365.25, y = cumhaztreat_ul), 
+            linetype = "dashed") +
   xlab("Time since randomization (years)") +
   ylab("Cumulative treatment effect") + 
   scale_x_continuous(expand = expansion(mult = c(0.03, 0.05)), 
@@ -705,7 +726,8 @@ cumhazdata <- data.frame(eventtimes = nonparmod2$cum[,1],
 cumhazdata[nrow(cumhazdata)+1,] <- c(max(pbc3$days), tail(cumhazdata, 1)[-1])
 
 # Figure treatment
-fig2.12.1 <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat), data = cumhazdata) + 
+fig2.12.1 <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat), 
+                    data = cumhazdata) + 
   geom_step(size = 1) + 
   xlab("Time since randomization (years)") +
   ylab("Cumulative treatment effect") + 
@@ -715,7 +737,8 @@ fig2.12.1 <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat), data = cumhaz
   theme_general
 
 # Figure albumin
-fig2.12.2 <- ggplot(aes(x = eventtimes / 365.25, y = cumhazalb), data = cumhazdata) + 
+fig2.12.2 <- ggplot(aes(x = eventtimes / 365.25, y = cumhazalb), 
+                    data = cumhazdata) + 
   geom_step(size = 1) + 
   xlab("Time since randomization (years)") +
   ylab("Cumulative albumin effect") + 
@@ -725,7 +748,8 @@ fig2.12.2 <- ggplot(aes(x = eventtimes / 365.25, y = cumhazalb), data = cumhazda
   theme_general
 
 # Figure bilirubin
-fig2.12.3 <- ggplot(aes(x = eventtimes / 365.25, y = cumhazbili), data = cumhazdata) + 
+fig2.12.3 <- ggplot(aes(x = eventtimes / 365.25, y = cumhazbili), 
+                    data = cumhazdata) + 
   geom_step(size = 1) + 
   xlab("Time since randomization (years)") +
   ylab("Cumulative bilirubin effect") + 
@@ -774,23 +798,23 @@ nonparmod3 <- aalen(Surv(days/365.25, status != 0) ~
 summary(nonparmod3)
 
 # Quadratic effect for albumin; p-values not exactly as in book because seed changes
-nonparmod44 <- aalen(Surv(days/365.25, status != 0) ~ 
-                       const(tment) + I(alb/10) + I(bili/100) + I((alb/10)^2), data = pbc3) 
+nonparmod44 <- aalen(Surv(days/365.25, status != 0) ~ const(tment)
+                       + I(alb/10) + I(bili/100) + I((alb/10)^2), data = pbc3) 
 summary(nonparmod44)
 
-# Quadratic effect for bilirubin; p-values not exactly as in book because seed changes
-nonparmod43 <- aalen(Surv(days/365.25, status != 0) ~ 
-                       const(tment) + I(alb/10) + I(bili/100) + I((bili/100)^2), data = pbc3) 
+# Quadratic effect for bilirubin; p-values not exactly as in book as seed changes
+nonparmod43 <- aalen(Surv(days/365.25, status != 0) ~ const(tment)
+                       + I(alb/10) + I(bili/100) + I((bili/100)^2), data = pbc3) 
 summary(nonparmod43)
 
 
 # Interactions
-nonparmod51 <- aalen(Surv(days/365.25, status != 0) ~
-                       const(tment) + const(alb) + const(bili) + const(tment * bili), data = pbc3) 
+nonparmod51 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(alb)
+                     + const(bili) + const(tment * bili),data = pbc3) 
 summary(nonparmod51)
 
-nonparmod52 <- aalen(Surv(days/365.25, status != 0) ~
-                       const(tment) + const(alb) + const(bili) + const(tment * alb), data = pbc3) 
+nonparmod52 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(bili) 
+                     + const(alb) + const(tment * alb), data = pbc3) 
 summary(nonparmod52)
 ```
 
