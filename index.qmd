@@ -1,6 +1,6 @@
 # Preface {.unnumbered}
 
-This is the code companion website to our book published by [Chapman & Hall](https://www.taylorfrancis.com/books/mono/10.1201/9780429029684/models-multi-state-survival-data-per-kragh-andersen-henrik-ravn "go to the book at the publisher").
+This is the code companion website to our book published by [Chapman & Hall](https://www.routledge.com/Models-for-Multi-State-Survival-Data-Rates-Risks-and-Pseudo-Values/Andersen-Ravn/p/book/9780367140021# "go to the book at the publisher").
 
 R code for the analyses and plots presented in the book is given. SAS code is available for the analyses only. Solutions to the exercises in the book are available at the end of each chapter.
 
