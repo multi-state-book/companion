@@ -42,7 +42,6 @@ format:
     number-depth: 1
     toc-depth: 4
     theme:
-      #- simplex
       - cosmo
       - msb.scss
 

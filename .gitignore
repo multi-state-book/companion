@@ -3,9 +3,7 @@
 .RData
 .Ruserdata
 
-/.quarto/
-/*_cache/
-/*_files/
-
+.quarto
 *_cache
 *_files
+SAS
