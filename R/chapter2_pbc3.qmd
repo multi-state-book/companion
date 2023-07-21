@@ -1,4 +1,4 @@
-### Read data {.unnumbered}
+### Read data
 
 ```{r}
 #| label: read-pbc3
@@ -7,7 +7,7 @@ pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
 pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
 ```
 
-### Figure 2.1 {.unnumbered} 
+### Figure 2.1 
 
 ```{r}
 #| label: figure-2.1
@@ -53,7 +53,7 @@ tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=0"),1)
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=1"),1)
 ```
 
-### Table 2.1 {.unnumbered} 
+### Table 2.1 
 
 ```{r}
 #| label: table-2.1
@@ -77,7 +77,7 @@ pcwdata$SD <- 36525*sqrt(pcwdata$fail)/pcwdata$risktime
 data.frame(pcwdata)
 ```
 
-### Figure 2.2 {.unnumbered} 
+### Figure 2.2 
 
 ```{r}
 #| label: figure-2.2
@@ -109,7 +109,7 @@ fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
 fig2.2
 ```
 
-### In-text: LRT test using piece-wise exponential model  {.unnumbered} 
+### In-text: LRT test piece-wise exponential model  
 
 ```{r}
 #| label: in-text-LRT-pcw
@@ -124,7 +124,7 @@ library(lmtest)
 lrtest(poisred,poisfull)
 ```
 
-### In-text: Logrank test and p-value  {.unnumbered}                      
+### In-text: Logrank test and p-value                       
 ```{r}
 #| label: in-text-logrank
 library(survival)
@@ -132,7 +132,7 @@ lr<-survdiff(Surv(days, status != 0) ~ tment, data = pbc3)
 c(lr$chisq,lr$pvalue)
 ```
 
-### Figure 2.3 {.unnumbered} 
+### Figure 2.3 
 
 ```{r}
 #| label: figure-2.3
@@ -196,7 +196,7 @@ fig2.3 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = type),
 fig2.3
 ```
 
-### In-text: Cox model with treatment only {.unnumbered} 
+### In-text: Cox model with treatment only 
 
 ```{r}
 #| label: in-text-cox
@@ -206,7 +206,7 @@ coxfit <- coxph(Surv(days, status != 0) ~ tment, data = pbc3, method = "breslow"
 coxfit
 ```
 
-### Figure 2.5 {.unnumbered} 
+### Figure 2.5 
 
 ```{r}
 #| label: figure-2.5
@@ -235,7 +235,7 @@ fig2.5 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
 fig2.5
 ```
 
-### Table 2.3 {.unnumbered} 
+### Table 2.3 
 
 ```{r}
 #| label: table-2.3
@@ -251,7 +251,7 @@ tabledata <- pbc3 %>%
 data.frame(tabledata)
 ```
 
-### Table 2.4 {.unnumbered} 
+### Table 2.4 
 
 ```{r}
 #| label: table-2.4
@@ -262,7 +262,7 @@ coxfit <- coxph(Surv(days, status != 0) ~ tment + alb + bili,
 coxfit
 ```
 
-### In-text: Poisson model with treatment only {.unnumbered} 
+### In-text: Poisson model with treatment only 
 
 ```{r}
 #| label: in-text-poission
@@ -273,7 +273,7 @@ poism <- glm(fail ~ tment + timegroup-1 +
 tidy(poism, exponentiate = T, conf.int = T)
 ```
 
-### Table 2.5 {.unnumbered} 
+### Table 2.5 
 
 ```{r}
 #| label: table-2.5
@@ -283,7 +283,7 @@ poismod_t25 <- glm(fail ~ tment + alb + bili+ timegroup-1 +
 tidy(poismod_t25)
 ```
 
-### Table 2.6 {.unnumbered}
+### Table 2.6
 
 ```{r}
 #| label: table-2.6
@@ -407,7 +407,7 @@ tidy(poismod_t26_q3)
 lrtest(poismod_t26_q3, base_poismod_log)
 ```
 
-### Figure 2.6 {.unnumbered} 
+### Figure 2.6 
 
 ```{r}
 #| label: figure-2.6
@@ -449,7 +449,7 @@ fig2.6 <- ggplot(aes(x = alb, y = lp, linetype = effect), data = lin2row) +
 fig2.6
 ```
 
-### Figure 2.7 {.unnumbered} 
+### Figure 2.7 
 
 ```{r}
 #| label: figure-2.7
@@ -472,7 +472,7 @@ fig2.7 <- ggplot(aes(x = bili, y = lp, linetype = effect), data = lin2row2) +
 fig2.7
 ```
 
-### Figure 2.8 {.unnumbered} 
+### Figure 2.8 
 
 ```{r}
 #| label: figure-2.8
@@ -509,7 +509,7 @@ fig2.8 <- ggplot(aes(x = log2bili, y = lp, linetype = effect), data = log2row) +
 fig2.8
 ```
 
-### Table 2.7 {.unnumbered} 
+### Table 2.7 
 
 ```{r}
 #| label: table-2.7
@@ -524,7 +524,7 @@ poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup +
 tidy(poismod_t27) 
 ```
 
-### Table 2.8 {.unnumbered} 
+### Table 2.8 
 
 ```{r}
 #| label: table-2.8
@@ -570,7 +570,7 @@ tidy(poismod_t28_2)
 lrtest(poismod_t28_base, poismod_t28_2)
 ```
 
-### Table 2.9 {.unnumbered} 
+### Table 2.9 
 
 ```{r}
 #| label: table-2.9
@@ -610,7 +610,7 @@ lrtest(poismod_t29_base, poismod_t29_bili)
 ```
 
 
-### In-text: stratified Cox model {.unnumbered} 
+### In-text: stratified Cox model 
 
 ```{r}
 #| label: in-text-stratified-cox
@@ -619,7 +619,7 @@ coxmod_f29 <- coxph(Surv(days, status != 0) ~ strata(tment) + alb + log2bili,
 coxmod_f29
 ```
 
-### Figure 2.10 {.unnumbered} 
+### Figure 2.10 
 
 ```{r}
 #| label: figure-2.10
@@ -658,7 +658,7 @@ fig2.10
 ```
 
 
-### Figure 2.11 {.unnumbered} 
+### Figure 2.11 
 
 ```{r}
 #| label: figure-2.11
@@ -709,7 +709,7 @@ fig2.11.right
 ```
 
 
-### Figure 2.12 {.unnumbered} 
+### Figure 2.12 
 
 ```{r}
 #| label: figure-2.12
@@ -763,7 +763,7 @@ fig2.12.2
 fig2.12.3
 ```
 
-### Table 2.10 {.unnumbered} 
+### Table 2.10 
 
 ```{r}
 #| label: table-2.10
@@ -818,7 +818,7 @@ nonparmod52 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(bili)
 summary(nonparmod52)
 ```
 
-### Table 2.11 {.unnumbered} 
+### Table 2.11 
 
 ```{r}
 #| label: table-2.11
@@ -857,7 +857,7 @@ tidy(additive_pcw2.11)
 ```
 
 
-### Table 2.13 {.unnumbered} 
+### Table 2.13 
 
 ```{r}
 #| label: table-2.13

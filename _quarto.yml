@@ -3,8 +3,9 @@ project:
   output-dir: docs
 
 book:
-  title: "Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values"
-  subtitle: "Per Kragh Andersen & Henrik Ravn"
+  title: "Models for Multi-State Survival Data"
+  subtitle: "Rates, Risks, and Pseudo-Values"
+  author: "Per Kragh Andersen & Henrik Ravn"
   reader-mode: true
   page-footer:
     left: |
@@ -13,6 +14,7 @@ book:
       Built with <a href="https://quarto.org/">Quarto</a>
   cover-image: MSB-cover.PNG
   favicon: corvos.png
+  repo-url: https://github.com/multi-state-book/companion
   chapters:
     - index.qmd
     - Ch1.qmd
@@ -22,7 +24,7 @@ book:
     - Ch5.qmd
     - Ch6.qmd
     - Ch7.qmd
-
+    
 execute: 
   warning: false
   message: false
@@ -37,9 +39,12 @@ format:
     code-summary: "Code"
     fig-width: 11.69
     fig-height: 8.27
+    number-depth: 1
+    toc-depth: 4
     theme:
+      #- simplex
       - cosmo
-      #- msb.scss
+      - msb.scss
 
 editor: source
 

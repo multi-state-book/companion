@@ -1,11 +1,11 @@
-### Read data {.unnumbered}
+### Read data
 
 ```{r}
 #| label: read-bissau
 bissau <- data.frame(read.csv("data/bissau.csv"))
 ```
 
-### Table 2.12 {.unnumbered} 
+### Table 2.12 
 
 ```{r}
 #| label: table-2.12
@@ -34,7 +34,7 @@ coxfit2
 ```
 
 
-### Figure 2.13 {.unnumbered} 
+### Figure 2.13 
 
 ```{r}
 #| label: figure-2.13
@@ -73,7 +73,7 @@ fig2.13
 ```
 
 
-### Figure 2.14 {.unnumbered} 
+### Figure 2.14 
 
 ```{r}
 #| label: figure-2.14

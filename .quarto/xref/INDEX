@@ -22,5 +22,23 @@
   },
   "Ch7.qmd": {
     "Ch7.html": "5bd80e73"
+  },
+  "Ch2part.qmd": {
+    "Ch2part.html": "43753c5f"
+  },
+  "R/chapter2_bissau.qmd": {
+    "chapter2_bissau.html": "f53bb745"
+  },
+  "R/chapter2_pbc3.qmd": {
+    "chapter2_pbc3.html": "7494729a"
+  },
+  "Ch3part.qmd": {
+    "Ch3part.html": "c352b414"
+  },
+  "R/chapter3_bissau.qmd": {
+    "chapter3_bissau.html": "97daf7e9"
+  },
+  "R/chapter3_pbc3.qmd": {
+    "chapter3_pbc3.html": "53b228d4"
   }
 }

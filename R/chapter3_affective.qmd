@@ -1,4 +1,4 @@
-### Read data {.unnumbered}
+### Read data 
 
 ```{r}
 #| label: read-affective
@@ -7,7 +7,7 @@ affective$wait <- with(affective, stop - start)
 
 ```
 
-### Table 3.6 {.unnumbered}
+### Table 3.6 
 ```{r}
 #| label: table-3.6
 library(survival)
@@ -25,7 +25,7 @@ coxph(Surv(start, stop, status == 1) ~ bip + factor(epi),
       data = subset(affective, state == 0), ties = "breslow")
 ```
 
-### Table 3.7 {.unnumbered}
+### Table 3.7 
 ```{r}
 #| label: table-3.7
 coxph(Surv(start, stop, status == 1) ~ bip + tt(year),

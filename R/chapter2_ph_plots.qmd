@@ -1,3 +1,10 @@
+## Illustration of proportionality in Cox
+
+### Figure 2.4
+
+```{r}
+#| label: figure-2.4
+#| out-width: 90%
 # illustration of PH in Cox and stratified Cox
 library(ggplot2)
 library(tidyverse)

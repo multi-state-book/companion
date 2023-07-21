@@ -1,15 +1,14 @@
 # Intuition for intensity models
 
-## PBC3 trial {.unnumbered}
+## PBC3 trial
 {{< include R/chapter2_pbc3.qmd >}}
-<!-- #| out-width: 90% -->
 
-## Guinea-Bissau study {.unnumbered}
+## Guinea-Bissau study
 {{< include R/chapter2_bissau.qmd >}}
 
-## Recurrent episodes in affective disorders {.unnumbered}
+## Recurrent episodes in affective disorders
 {{< include R/chapter2_affective.qmd >}}
 
-## Exercises {.unnumbered}
+## Exercises
 
-### Exercise 2.1 {.unnumbered}
+### Exercise 2.1

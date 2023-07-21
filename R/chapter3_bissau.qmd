@@ -1,4 +1,4 @@
-### Read data {.unnumbered}
+### Read data 
 
 ```{r}
 #| label: read-bissau
@@ -9,7 +9,7 @@ bissau$ageout <- with(bissau, agein+fuptime/(365.24/12))
 bissau$dtpany <- 1*with(bissau, dtp>0)
 ```
 
-### Table 3.1  {.unnumbered}
+### Table 3.1  
 
 ```{r}
 #| label: table-3.1
@@ -17,7 +17,7 @@ table(bissau$bcg, bissau$dtp)
 100*table(bissau$bcg, bissau$dtp) / rowSums(table(bissau$bcg, bissau$dtp))
 ```
 
-### Table 3.2  {.unnumbered}
+### Table 3.2  
 
 ```{r}
 #| label: table-3.2

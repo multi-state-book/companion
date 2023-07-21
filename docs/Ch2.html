@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values - 2&nbsp; Intuition for intensity models</title>
+<title>Models for Multi-State Survival Data - 2&nbsp; Intuition for intensity models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,8 +147,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values</a> 
+      <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
+    <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -214,12 +215,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#pbc3-trial" id="toc-pbc3-trial" class="nav-link active" data-scroll-target="#pbc3-trial">PBC3 trial</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
   <li><a href="#figure-2.1" id="toc-figure-2.1" class="nav-link" data-scroll-target="#figure-2.1">Figure 2.1</a></li>
   <li><a href="#table-2.1" id="toc-table-2.1" class="nav-link" data-scroll-target="#table-2.1">Table 2.1</a></li>
   <li><a href="#figure-2.2" id="toc-figure-2.2" class="nav-link" data-scroll-target="#figure-2.2">Figure 2.2</a></li>
-  <li><a href="#in-text-lrt-test-using-piece-wise-exponential-model" id="toc-in-text-lrt-test-using-piece-wise-exponential-model" class="nav-link" data-scroll-target="#in-text-lrt-test-using-piece-wise-exponential-model">In-text: LRT test using piece-wise exponential model</a></li>
+  <li><a href="#in-text-lrt-test-piece-wise-exponential-model" id="toc-in-text-lrt-test-piece-wise-exponential-model" class="nav-link" data-scroll-target="#in-text-lrt-test-piece-wise-exponential-model">In-text: LRT test piece-wise exponential model</a></li>
   <li><a href="#in-text-logrank-test-and-p-value" id="toc-in-text-logrank-test-and-p-value" class="nav-link" data-scroll-target="#in-text-logrank-test-and-p-value">In-text: Logrank test and p-value</a></li>
   <li><a href="#figure-2.3" id="toc-figure-2.3" class="nav-link" data-scroll-target="#figure-2.3">Figure 2.3</a></li>
   <li><a href="#in-text-cox-model-with-treatment-only" id="toc-in-text-cox-model-with-treatment-only" class="nav-link" data-scroll-target="#in-text-cox-model-with-treatment-only">In-text: Cox model with treatment only</a></li>
@@ -244,19 +245,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#table-2.13" id="toc-table-2.13" class="nav-link" data-scroll-target="#table-2.13">Table 2.13</a></li>
   </ul></li>
   <li><a href="#guinea-bissau-study" id="toc-guinea-bissau-study" class="nav-link" data-scroll-target="#guinea-bissau-study">Guinea-Bissau study</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#read-data-1" id="toc-read-data-1" class="nav-link" data-scroll-target="#read-data-1">Read data</a></li>
   <li><a href="#table-2.12" id="toc-table-2.12" class="nav-link" data-scroll-target="#table-2.12">Table 2.12</a></li>
   <li><a href="#figure-2.13" id="toc-figure-2.13" class="nav-link" data-scroll-target="#figure-2.13">Figure 2.13</a></li>
   <li><a href="#figure-2.14" id="toc-figure-2.14" class="nav-link" data-scroll-target="#figure-2.14">Figure 2.14</a></li>
   </ul></li>
   <li><a href="#recurrent-episodes-in-affective-disorders" id="toc-recurrent-episodes-in-affective-disorders" class="nav-link" data-scroll-target="#recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#read-data-2" id="toc-read-data-2" class="nav-link" data-scroll-target="#read-data-2">Read data</a></li>
   <li><a href="#table-2.14" id="toc-table-2.14" class="nav-link" data-scroll-target="#table-2.14">Table 2.14</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#exercise-2.1" id="toc-exercise-2.1" class="nav-link" data-scroll-target="#exercise-2.1">Exercise 2.1</a></li>
   </ul></li>
   </ul>
@@ -282,18 +283,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="pbc3-trial" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="pbc3-trial">PBC3 trial</h2>
-<section id="read-data" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="read-data">Read data</h3>
+<section id="pbc3-trial" class="level2">
+<h2 class="anchored" data-anchor-id="pbc3-trial">PBC3 trial</h2>
+<section id="read-data" class="level3">
+<h3 class="anchored" data-anchor-id="read-data">Read data</h3>
 <div class="cell" data-hash="Ch2_cache/html/read-pbc3_acf389a8fe9193e6b8517fb5400050b6">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>fail <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pbc3<span class="sc">$</span>status <span class="sc">!=</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># event/failure indicator</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>tment_char <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pbc3<span class="sc">$</span>tment <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Placebo"</span>, <span class="st">"CyA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="figure-2.1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.1">Figure 2.1</h3>
+<section id="figure-2.1" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.1">Figure 2.1</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.1_50316df3a87d602982e482440fc299be">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -346,8 +347,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="table-2.1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.1">Table 2.1</h3>
+<section id="table-2.1" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.1">Table 2.1</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.1_cbbb1711dffb6129bcc39979a7f92fc3">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for Table 2.1</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>cuts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>) <span class="sc">*</span> <span class="fl">365.25</span></span>
@@ -378,8 +379,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="figure-2.2" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.2">Figure 2.2</h3>
+<section id="figure-2.2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.2">Figure 2.2</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.2_cdfa8e9228fb317f206323bf02d03908">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rates + cuts from Table 2.1</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>rateCyA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.1</span>,<span class="fl">13.1</span>,<span class="fl">9.6</span>)</span>
@@ -411,8 +412,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="in-text-lrt-test-using-piece-wise-exponential-model" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="in-text-lrt-test-using-piece-wise-exponential-model">In-text: LRT test using piece-wise exponential model</h3>
+<section id="in-text-lrt-test-piece-wise-exponential-model" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-lrt-test-piece-wise-exponential-model">In-text: LRT test piece-wise exponential model</h3>
 <div class="cell" data-hash="Ch2_cache/html/in-text-LRT-pcw_c03ccf9e5f69c6e3742244dd0d8a9419">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>poisfull <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">+</span> tment <span class="sc">+</span> timegroup <span class="sc">+</span> tment<span class="sc">:</span>timegroup <span class="sc">+</span></span>
@@ -443,8 +444,8 @@ Model 2: fail ~ -1 + tment + timegroup + tment:timegroup + offset(log(risktime/3
 </div>
 </div>
 </section>
-<section id="in-text-logrank-test-and-p-value" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="in-text-logrank-test-and-p-value">In-text: Logrank test and p-value</h3>
+<section id="in-text-logrank-test-and-p-value" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-logrank-test-and-p-value">In-text: Logrank test and p-value</h3>
 <div class="cell" data-hash="Ch2_cache/html/in-text-logrank_fe03a3bd78470492a2c033abc3f7e551">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lr<span class="ot">&lt;-</span><span class="fu">survdiff</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment, <span class="at">data =</span> pbc3)</span>
@@ -454,8 +455,8 @@ Model 2: fail ~ -1 + tment + timegroup + tment:timegroup + offset(log(risktime/3
 </div>
 </div>
 </section>
-<section id="figure-2.3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.3">Figure 2.3</h3>
+<section id="figure-2.3" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.3">Figure 2.3</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.3_ed628aed2cc8f220f1da7e073bdce4fb">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA data from figure 2.1 model fit</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>tment1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(nadata, tment <span class="sc">==</span> <span class="st">"tment=1"</span>)</span>
@@ -519,8 +520,8 @@ Model 2: fail ~ -1 + tment + timegroup + tment:timegroup + offset(log(risktime/3
 </div>
 </div>
 </section>
-<section id="in-text-cox-model-with-treatment-only" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="in-text-cox-model-with-treatment-only">In-text: Cox model with treatment only</h3>
+<section id="in-text-cox-model-with-treatment-only" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-cox-model-with-treatment-only">In-text: Cox model with treatment only</h3>
 <div class="cell" data-hash="Ch2_cache/html/in-text-cox_53b2eaef896499f77ddc7ba98f90d2be">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Cox model using the pbc3 data with treatment as a covariate</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -539,8 +540,8 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 </section>
-<section id="figure-2.5" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.5">Figure 2.5</h3>
+<section id="figure-2.5" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.5">Figure 2.5</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.5_0c862621c6956b8bf6c92bc6d7057f2e">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
@@ -569,8 +570,8 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 </section>
-<section id="table-2.3" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.3">Table 2.3</h3>
+<section id="table-2.3" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.3">Table 2.3</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.3_00b9aacab73612e0e5825848a4ddd3dc">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average covariate values of albumin and bilirubin per treatment </span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
@@ -589,8 +590,8 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 </section>
-<section id="table-2.4" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.4">Table 2.4</h3>
+<section id="table-2.4" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.4">Table 2.4</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.4_165368f258430e68c91cc227567f2a95">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model with treatment, albumin and bilirubin as covariates </span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -613,8 +614,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="in-text-poisson-model-with-treatment-only" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="in-text-poisson-model-with-treatment-only">In-text: Poisson model with treatment only</h3>
+<section id="in-text-poisson-model-with-treatment-only" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-poisson-model-with-treatment-only">In-text: Poisson model with treatment only</h3>
 <div class="cell" data-hash="Ch2_cache/html/in-text-poission_7338ed18798ee4d13aae1f0fa3207431">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) <span class="co"># For using tidy() function</span></span>
@@ -632,8 +633,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="table-2.5" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.5">Table 2.5</h3>
+<section id="table-2.5" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.5">Table 2.5</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.5_87688be478cebd55595065dab785a572">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson model with treatment, albumin and bilirubin as covariates</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>poismod_t25 <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> bili<span class="sc">+</span> timegroup<span class="dv">-1</span> <span class="sc">+</span></span>
@@ -652,8 +653,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="table-2.6" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.6">Table 2.6</h3>
+<section id="table-2.6" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.6">Table 2.6</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.6_2f18d0f4f27f0f30ce57519454583517">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add transformations of covariates </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>albnorm <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (alb<span class="dv">-35</span>)<span class="sc">*</span>(alb<span class="sc">&gt;</span><span class="dv">35</span>))</span>
@@ -1056,8 +1057,8 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 </section>
-<section id="figure-2.6" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.6">Figure 2.6</h3>
+<section id="figure-2.6" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.6">Figure 2.6</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.6_427cf2c5f44c5f25db118a5d743a1045">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>timegroup <span class="ot">&lt;-</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(pbc3mult<span class="sc">$</span>timegroup), <span class="at">ref =</span> <span class="st">"3"</span>)</span>
@@ -1099,8 +1100,8 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 </section>
-<section id="figure-2.7" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.7">Figure 2.7</h3>
+<section id="figure-2.7" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.7">Figure 2.7</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.7_5eeb3a7f3682f2c1537d4f8cfe177b15">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bilirubin and the two last linear predictors</span></span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>lin2row2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">effect =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Linear effect"</span>, <span class="fu">nrow</span>(lin2)),</span>
@@ -1123,8 +1124,8 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 </section>
-<section id="figure-2.8" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.8">Figure 2.8</h3>
+<section id="figure-2.8" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.8">Figure 2.8</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.8_68bc95690b89b4ec761ea06aee98c898">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>base_poismod2_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> <span class="fu">as.factor</span>(timegroup) <span class="sc">+</span> </span>
@@ -1161,8 +1162,8 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 </section>
-<section id="table-2.7" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.7">Table 2.7</h3>
+<section id="table-2.7" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.7">Table 2.7</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.7_d3494393697633912771ed05667fefe0">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>coxmod_t27 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
@@ -1199,8 +1200,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="table-2.8" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.8">Table 2.8</h3>
+<section id="table-2.8" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.8">Table 2.8</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.8_fadca5fe4fa2e2afe3c5dacef6ebf0f6">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox models</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Model for LR comparison</span></span>
@@ -1331,8 +1332,8 @@ Model 2: fail ~ tment + alb + bili0 + bili1 + timegroup + offset(log(risktime))
 </div>
 </div>
 </section>
-<section id="table-2.9" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.9">Table 2.9</h3>
+<section id="table-2.9" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.9">Table 2.9</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.9_0918e4145e96437acf1c1b8d8a15d341">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment1 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment2 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">2</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
@@ -1434,8 +1435,8 @@ Model 2: fail ~ tment + alb + bili1 + bili2 + bili3 + timegroup + offset(log(ris
 </div>
 </div>
 </section>
-<section id="in-text-stratified-cox-model" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="in-text-stratified-cox-model">In-text: stratified Cox model</h3>
+<section id="in-text-stratified-cox-model" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-stratified-cox-model">In-text: stratified Cox model</h3>
 <div class="cell" data-hash="Ch2_cache/html/in-text-stratified-cox_d18ea612b436b77f9eb53f7cffe05eed">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>coxmod_f29 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(tment) <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">eps =</span> <span class="fl">1e-8</span>, <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">data =</span> pbc3)</span>
@@ -1455,8 +1456,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="figure-2.10" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.10">Figure 2.10</h3>
+<section id="figure-2.10" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.10">Figure 2.10</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.10_74e2659262866a65fe51a14a62c49b08">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting cumulative baseline hazards per treatment</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>cumhaz_treat <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxmod_f29, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
@@ -1494,8 +1495,8 @@ n= 343, number of events= 88
 </div>
 </div>
 </section>
-<section id="figure-2.11" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.11">Figure 2.11</h3>
+<section id="figure-2.11" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.11">Figure 2.11</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.11_83398db6aa6513d887c9589c5529da3f">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additive Aalen models - available with timereg</span></span>
 <span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
@@ -1570,8 +1571,8 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 </div>
 </div>
 </section>
-<section id="figure-2.12" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.12">Figure 2.12</h3>
+<section id="figure-2.12" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.12">Figure 2.12</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.12_3f2d52cbc9e5cab58de8cce8a63af60d">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Aalen model fit</span></span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
@@ -1631,8 +1632,8 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 </div>
 </div>
 </section>
-<section id="table-2.10" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.10">Table 2.10</h3>
+<section id="table-2.10" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.10">Table 2.10</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.10_610e643ee3d1537d1902588ae3b5a4e1">
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
 <span id="cb121-2"><a href="#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 2.10 and in-text results</span></span>
@@ -1932,8 +1933,8 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
 </div>
 </div>
 </section>
-<section id="table-2.11" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.11">Table 2.11</h3>
+<section id="table-2.11" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.11">Table 2.11</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.11_82e9738cbe3c624d2f5fcd23bc8f6137">
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
 <span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 2.11 and in-text results</span></span>
@@ -1998,8 +1999,8 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
 </div>
 </div>
 </section>
-<section id="table-2.13" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.13">Table 2.13</h3>
+<section id="table-2.13" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.13">Table 2.13</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.13_c6ebd6e723ec020fe26805b43842542f">
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without transplantation</span></span>
 <span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> sex <span class="sc">+</span> age,</span>
@@ -2059,19 +2060,18 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 </div>
-<!-- #| out-width: 90% -->
 </section>
 </section>
-<section id="guinea-bissau-study" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="guinea-bissau-study">Guinea-Bissau study</h2>
-<section id="read-data-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="read-data-1">Read data</h3>
+<section id="guinea-bissau-study" class="level2">
+<h2 class="anchored" data-anchor-id="guinea-bissau-study">Guinea-Bissau study</h2>
+<section id="read-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
 <div class="cell" data-hash="Ch2_cache/html/read-bissau_b0d8125fb229124d842112230c239609">
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="table-2.12" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.12">Table 2.12</h3>
+<section id="table-2.12" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.12">Table 2.12</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.12_112b5bc7e7edd9624227666a70004e0b">
 <div class="sourceCode cell-code" id="cb152"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb152-1"><a href="#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb152-2"><a href="#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 1</span></span>
@@ -2128,8 +2128,8 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 </section>
-<section id="figure-2.13" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.13">Figure 2.13</h3>
+<section id="figure-2.13" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.13">Figure 2.13</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.13_8478225521d5252a76a48a0a95fe67be">
 <div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
 <span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -2167,8 +2167,8 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 </section>
-<section id="figure-2.14" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="figure-2.14">Figure 2.14</h3>
+<section id="figure-2.14" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2.14">Figure 2.14</h3>
 <div class="cell" data-hash="Ch2_cache/html/figure-2.14_3c3a95fb93215c8a3aa7bddefd90aa4c">
 <div class="sourceCode cell-code" id="cb159"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb159-1"><a href="#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
 <span id="cb159-2"><a href="#cb159-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit2, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
@@ -2197,17 +2197,17 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </section>
 </section>
-<section id="recurrent-episodes-in-affective-disorders" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</h2>
-<section id="read-data-2" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="read-data-2">Read data</h3>
+<section id="recurrent-episodes-in-affective-disorders" class="level2">
+<h2 class="anchored" data-anchor-id="recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</h2>
+<section id="read-data-2" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-2">Read data</h3>
 <div class="cell" data-hash="Ch2_cache/html/read-affective_c4c57dae340b8ebfa52979c1abb6e2a0">
 <div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
 <span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>wait <span class="ot">&lt;-</span> <span class="fu">with</span>(affective, stop <span class="sc">-</span> start)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="table-2.14" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="table-2.14">Table 2.14</h3>
+<section id="table-2.14" class="level3">
+<h3 class="anchored" data-anchor-id="table-2.14">Table 2.14</h3>
 <div class="cell" data-hash="Ch2_cache/html/table-2.14_ec3f8976090995d4585731c70f6a8035">
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Markov': Column 1</span></span>
 <span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -2375,10 +2375,10 @@ n= 626, number of events= 542 </code></pre>
 </div>
 </section>
 </section>
-<section id="exercises" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
-<section id="exercise-2.1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="exercise-2.1">Exercise 2.1</h3>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercise-2.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2.1">Exercise 2.1</h3>
 
 
 </section>

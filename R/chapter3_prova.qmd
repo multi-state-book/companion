@@ -1,4 +1,4 @@
-### Read data {.unnumbered}
+### Read data 
 
 ```{r}
 #| label: read-prova
@@ -17,7 +17,7 @@ provany$deadb    <- ifelse(provany$bleed == 1, provany$death, NA)
 provany$wait     <- ifelse(provany$bleed == 1, provany$bdtime - provany$timebleed, NA)
 ```
 
-### Table 3.3  {.unnumbered}
+### Table 3.3  
 
 ```{r}
 #| label: table-3.3
@@ -66,7 +66,7 @@ cox3
 lrtest(cox2,cox3)
 ```
 
-### Table 3.4 {.unnumbered}
+### Table 3.4 
 
 ```{r}
 #| label: table-3.4
@@ -80,7 +80,7 @@ coxreduced<-coxph(Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize),
 lrtest(cox,coxreduced)
 ```
 
-### Table 3.8 {.unnumbered}
+### Table 3.8 
 
 ```{r}
 #| label: table-3.8
@@ -163,7 +163,7 @@ coxdur_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb
                          })
 ```
 
-### Figure 3.2 {.unnumbered}
+### Figure 3.2 
 
 ```{r}
 #| label: figure-3.2
@@ -210,7 +210,7 @@ fig3.2
 ```
 
 
-### Figure 3.3 {.unnumbered}
+### Figure 3.3 
 
 ```{r}
 #| label: figure-3.3
@@ -237,7 +237,7 @@ fig3.3 <- ggplot(aes(x = time / 365.25, y = cumhaz), data = coxdata) +
 fig3.3
 ```
 
-### Table 3.9 {.unnumbered}
+### Table 3.9 
 
 ```{r}
 #| label: table-3.9
@@ -272,7 +272,7 @@ aggregate(cbind(fail2, risktimeys2) ~ tint + wint, provasplit2,
                               sum = sum(x)))
 ```
 
-### Table 3.10 {.unnumbered}
+### Table 3.10 
 
 ```{r}
 #| label: table-3.10
@@ -314,7 +314,7 @@ lrtest(glmboth,glmtint)
 lrtest(glmboth,glmwint)
 ```
 
-### Table 3.13 {.unnumbered}
+### Table 3.13 
 
 ```{r}
 #| label: table-3.13
@@ -379,7 +379,7 @@ pht<-coxph(Surv(entrytime, time, status != 0) ~ bleeding + tt(bleeding)
 lrtest(ph, pht)
 ```
 
-### Figure 3.9 {.unnumbered}
+### Figure 3.9 
 
 ```{r}
 #| label: figure-3.9

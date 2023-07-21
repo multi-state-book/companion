@@ -1,4 +1,4 @@
-### Read data {.unnumbered}
+### Read data
 
 ```{r}
 #| label: read-bmt
@@ -11,7 +11,7 @@ bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
 bmt$state0  <- bmt$rel + 2*bmt$trm
 ```
 
-### Figure 3.5 {.unnumbered}
+### Figure 3.5
 
 ```{r}
 #| label: figure-3.5
@@ -43,7 +43,7 @@ fig3.5 <- ggplot(aes(x = time, y = cumhaz), data = pdata1) +
 fig3.5
 ```
 
-### Figure 3.6 {.unnumbered}
+### Figure 3.6
 
 ```{r}
 #| label: figure-3.6
@@ -58,6 +58,8 @@ fit11 <- survfit(Surv(nyreltime, nyrel != 0) ~ 1, data = bmt)
 # Cumulative relapse rate after GvHD
 fit12 <- survfit(Surv(tgvhd, intxrel, rel != 0) ~ 1, 
                  data = subset(bmt, gvhd == 1 & tgvhd < intxrel))
+
+
 # Collect plot data
 pdata11 <- data.frame(cumhaz = fit11$cumhaz, time = fit11$time) 
 pdata12 <- data.frame(cumhaz = fit12$cumhaz, time = fit12$time) 
@@ -78,7 +80,7 @@ fig3.6 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
 fig3.6
 ```
 
-### Figure 3.7 {.unnumbered}
+### Figure 3.7
 
 ```{r}
 #| label: figure-3.7
@@ -125,7 +127,48 @@ fig3.7 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) +
 fig3.7
 ```
 
-### Figure 3.8 {.unnumbered}
+### In-text: GvHD as time-dependent covariate
+
+#### Relapse
+
+```{r}
+#| label: in-text-tGvHD-relapse
+library(broom)
+tidy(coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
+      tt=function(x, t, ...) {
+        dt <- t-x
+        cbind(tdcgvhd=1*(dt>0))
+      }),exp=T, conf.int = T)
+
+# test ph
+tidy(coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
+      tt=function(x, t, ...) {
+        dt <- t-x
+        cbind(tdc=1*(dt>0),tdc_logt=(dt>0)*log(t+1))
+      }),exp=T, conf.int = T)
+
+```
+
+#### Death in remission
+
+```{r}
+#| label: in-text-tGvHD-death
+tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
+      tt=function(x, t, ...) {
+        dt <- t-x
+        cbind(tdcgvhd=1*(dt>0))
+      }), exp=T, conf.int = T)
+
+# test ph
+tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
+      tt=function(x, t, ...) {
+        dt <- t-x
+        cbind(tdc=1*(dt>0),tdc_logt=1*(dt>0)*log(t+1))
+      }), exp=T, conf.int = T)
+
+```
+      
+### Figure 3.8
 
 ```{r}
 #| label: figure-3.8
@@ -181,7 +224,7 @@ fig3.8 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) +
 fig3.8
 ```
 
-### Figure 3.4 {.unnumbered}
+### Figure 3.4
 
 ```{r}
 #| label: figure-3.4
@@ -218,7 +261,7 @@ fig3.4 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
 fig3.4
 ```
 
-### Table 3.12 {.unnumbered}
+### Table 3.12
 
 ```{r}
 #| label: table-3.12
@@ -230,6 +273,7 @@ coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd) + I(age/10) + bmonly + all,
         dt <- t-x
         cbind(tdcgvhd=1*(dt>0))
       })
+
 
 # Column 2
 coxph(Surv(intxrel,rel!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500),
@@ -259,7 +303,7 @@ coxph(Surv(intxrel,trm!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500)
 ```
 
 
-### Figure 3.10 {.unnumbered}
+### Figure 3.10
 
 ```{r}
 #| label: figure-3.10
@@ -284,7 +328,7 @@ fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) 
 fig3.10
 ```
 
-### Table 3.14 {.unnumbered}
+### Table 3.14
 
 ```{r}
 #| label: table 3.14
@@ -321,7 +365,6 @@ double2 <- bmtext %>% filter(gvhd == 1) %>%
          stratum = 2)
 
 doubledod <- as.data.frame(rbind(double1, double2))
-head(doubledod)
 
 # Row 1
 r1<-coxph(Surv(entry, time, status != 0) ~ strata(stratum) + disease1 + disease2 + age1 + age2, 
@@ -352,7 +395,7 @@ lrtest(r3,r2)
 
 ```
 
-### Table 3.15 {.unnumbered}
+### Table 3.15
 
 ```{r}
 #| label: table-3.15
@@ -362,7 +405,7 @@ coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age
       + frailty.gaussian(team, eps = 1e-09, sparse=F), data = bmt, ties = "breslow")
 ```
 
-### In-text: stratified Cox model by center {.unnumbered}
+### In-text: stratified Cox model by center
 
 ```{r}
 #| label: in-text-stratified

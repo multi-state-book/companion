@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values - 1&nbsp; Introduction and data sets</title>
+<title>Models for Multi-State Survival Data - 1&nbsp; Introduction and data sets</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -149,8 +149,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values</a> 
+      <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
+    <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -215,16 +216,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pbc3-trial-in-liver-cirrhosis-pbc3.csv" id="toc-pbc3-trial-in-liver-cirrhosis-pbc3.csv" class="nav-link active" data-scroll-target="#pbc3-trial-in-liver-cirrhosis-pbc3.csv"><span class="toc-section-number">1.1</span>  PBC3 trial in liver cirrhosis (<code>pbc3.csv</code>)</a></li>
-  <li><a href="#guinea-bissau-childhood-vaccination-study-bissau.csv" id="toc-guinea-bissau-childhood-vaccination-study-bissau.csv" class="nav-link" data-scroll-target="#guinea-bissau-childhood-vaccination-study-bissau.csv"><span class="toc-section-number">1.2</span>  Guinea-Bissau childhood vaccination study (<code>bissau.csv</code>)</a></li>
-  <li><a href="#testis-cancer-incidence-and-maternal-parity-testis.csv" id="toc-testis-cancer-incidence-and-maternal-parity-testis.csv" class="nav-link" data-scroll-target="#testis-cancer-incidence-and-maternal-parity-testis.csv"><span class="toc-section-number">1.3</span>  Testis cancer incidence and maternal parity (<code>testis.csv</code>)</a></li>
-  <li><a href="#prova-trial-in-liver-cirrhosis-prova.csv" id="toc-prova-trial-in-liver-cirrhosis-prova.csv" class="nav-link" data-scroll-target="#prova-trial-in-liver-cirrhosis-prova.csv"><span class="toc-section-number">1.4</span>  PROVA trial in liver cirrhosis (<code>prova.csv</code>)</a></li>
-  <li><a href="#recurrent-episodes-in-affective-disorders-affective.csv" id="toc-recurrent-episodes-in-affective-disorders-affective.csv" class="nav-link" data-scroll-target="#recurrent-episodes-in-affective-disorders-affective.csv"><span class="toc-section-number">1.5</span>  Recurrent episodes in affective disorders (<code>affective.csv</code>)</a></li>
-  <li><a href="#leader-cardiovascular-trial-in-type-2-diabetes" id="toc-leader-cardiovascular-trial-in-type-2-diabetes" class="nav-link" data-scroll-target="#leader-cardiovascular-trial-in-type-2-diabetes"><span class="toc-section-number">1.6</span>  LEADER cardiovascular trial in type 2 Diabetes</a></li>
-  <li><a href="#bone-marrow-transplantation-in-acute-leukemia-bmt.csv" id="toc-bone-marrow-transplantation-in-acute-leukemia-bmt.csv" class="nav-link" data-scroll-target="#bone-marrow-transplantation-in-acute-leukemia-bmt.csv"><span class="toc-section-number">1.7</span>  Bone marrow transplantation in acute leukemia (<code>bmt.csv</code>)</a></li>
-  <li><a href="#the-copenhagen-holter-study-cphholter.csv" id="toc-the-copenhagen-holter-study-cphholter.csv" class="nav-link" data-scroll-target="#the-copenhagen-holter-study-cphholter.csv"><span class="toc-section-number">1.8</span>  The Copenhagen Holter study (<code>cphholter.csv</code>)</a></li>
-  <li><a href="#small-set-of-survival-data" id="toc-small-set-of-survival-data" class="nav-link" data-scroll-target="#small-set-of-survival-data"><span class="toc-section-number">1.9</span>  Small set of survival data</a>
-  <ul class="collapse">
+  <li><a href="#pbc3-trial-in-liver-cirrhosis-pbc3.csv" id="toc-pbc3-trial-in-liver-cirrhosis-pbc3.csv" class="nav-link active" data-scroll-target="#pbc3-trial-in-liver-cirrhosis-pbc3.csv">1.1 PBC3 trial in liver cirrhosis (<code>pbc3.csv</code>)</a></li>
+  <li><a href="#guinea-bissau-childhood-vaccination-study-bissau.csv" id="toc-guinea-bissau-childhood-vaccination-study-bissau.csv" class="nav-link" data-scroll-target="#guinea-bissau-childhood-vaccination-study-bissau.csv">1.2 Guinea-Bissau childhood vaccination study (<code>bissau.csv</code>)</a></li>
+  <li><a href="#testis-cancer-incidence-and-maternal-parity-testis.csv" id="toc-testis-cancer-incidence-and-maternal-parity-testis.csv" class="nav-link" data-scroll-target="#testis-cancer-incidence-and-maternal-parity-testis.csv">1.3 Testis cancer incidence and maternal parity (<code>testis.csv</code>)</a></li>
+  <li><a href="#prova-trial-in-liver-cirrhosis-prova.csv" id="toc-prova-trial-in-liver-cirrhosis-prova.csv" class="nav-link" data-scroll-target="#prova-trial-in-liver-cirrhosis-prova.csv">1.4 PROVA trial in liver cirrhosis (<code>prova.csv</code>)</a></li>
+  <li><a href="#recurrent-episodes-in-affective-disorders-affective.csv" id="toc-recurrent-episodes-in-affective-disorders-affective.csv" class="nav-link" data-scroll-target="#recurrent-episodes-in-affective-disorders-affective.csv">1.5 Recurrent episodes in affective disorders (<code>affective.csv</code>)</a></li>
+  <li><a href="#leader-cardiovascular-trial-in-type-2-diabetes" id="toc-leader-cardiovascular-trial-in-type-2-diabetes" class="nav-link" data-scroll-target="#leader-cardiovascular-trial-in-type-2-diabetes">1.6 LEADER cardiovascular trial in type 2 Diabetes</a></li>
+  <li><a href="#bone-marrow-transplantation-in-acute-leukemia-bmt.csv" id="toc-bone-marrow-transplantation-in-acute-leukemia-bmt.csv" class="nav-link" data-scroll-target="#bone-marrow-transplantation-in-acute-leukemia-bmt.csv">1.7 Bone marrow transplantation in acute leukemia (<code>bmt.csv</code>)</a></li>
+  <li><a href="#the-copenhagen-holter-study-cphholter.csv" id="toc-the-copenhagen-holter-study-cphholter.csv" class="nav-link" data-scroll-target="#the-copenhagen-holter-study-cphholter.csv">1.8 The Copenhagen Holter study (<code>cphholter.csv</code>)</a></li>
+  <li><a href="#small-set-of-survival-data" id="toc-small-set-of-survival-data" class="nav-link" data-scroll-target="#small-set-of-survival-data">1.9 Small set of survival data</a>
+  <ul>
   <li><a href="#create-data" id="toc-create-data" class="nav-link" data-scroll-target="#create-data">Create data</a></li>
   <li><a href="#figure-1.8" id="toc-figure-1.8" class="nav-link" data-scroll-target="#figure-1.8">Figure 1.8</a></li>
   <li><a href="#figure-1.9" id="toc-figure-1.9" class="nav-link" data-scroll-target="#figure-1.9">Figure 1.9</a></li>
@@ -232,11 +233,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#figure-1.13" id="toc-figure-1.13" class="nav-link" data-scroll-target="#figure-1.13">Figure 1.13</a></li>
   </ul></li>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul>
+  <li><a href="#exercise-1.1" id="toc-exercise-1.1" class="nav-link" data-scroll-target="#exercise-1.1">Exercise 1.1</a>
   <ul class="collapse">
-  <li><a href="#exercise-1.1" id="toc-exercise-1.1" class="nav-link" data-scroll-target="#exercise-1.1">Exercise 1.1</a></li>
-  <li><a href="#exercise-1.2" id="toc-exercise-1.2" class="nav-link" data-scroll-target="#exercise-1.2">Exercise 1.2</a></li>
-  <li><a href="#exercise-1.3" id="toc-exercise-1.3" class="nav-link" data-scroll-target="#exercise-1.3">Exercise 1.3</a></li>
-  <li><a href="#exercise-1.4" id="toc-exercise-1.4" class="nav-link" data-scroll-target="#exercise-1.4">Exercise 1.4 (*)</a></li>
+  <li><a href="#consider-the-small-data-set-in-table-1.6-and-argue-why-both-the-average-of-all-12-observation-times-and-the-average-of-the-7-uncensored-times-will-likely-underestimate-the-true-mean-survival-time-from-entry-into-the-study." id="toc-consider-the-small-data-set-in-table-1.6-and-argue-why-both-the-average-of-all-12-observation-times-and-the-average-of-the-7-uncensored-times-will-likely-underestimate-the-true-mean-survival-time-from-entry-into-the-study." class="nav-link" data-scroll-target="#consider-the-small-data-set-in-table-1.6-and-argue-why-both-the-average-of-all-12-observation-times-and-the-average-of-the-7-uncensored-times-will-likely-underestimate-the-true-mean-survival-time-from-entry-into-the-study."><em>Consider the small data set in Table 1.6 and argue why both the average of all (12) observation times and the average of the (7) uncensored times will likely underestimate the true mean survival time from entry into the study</em>.</a></li>
+  </ul></li>
+  <li><a href="#exercise-1.2" id="toc-exercise-1.2" class="nav-link" data-scroll-target="#exercise-1.2">Exercise 1.2</a>
+  <ul class="collapse">
+  <li><a href="#consider-the-following-records-mimicking-the-copenhagen-holter-study-example-1.1.8-in-wide-format-and-transform-them-into-long-format-i.e.-create-one-data-set-for-each-of-the-possible-six-transitions-in-figure-1.7." id="toc-consider-the-following-records-mimicking-the-copenhagen-holter-study-example-1.1.8-in-wide-format-and-transform-them-into-long-format-i.e.-create-one-data-set-for-each-of-the-possible-six-transitions-in-figure-1.7." class="nav-link" data-scroll-target="#consider-the-following-records-mimicking-the-copenhagen-holter-study-example-1.1.8-in-wide-format-and-transform-them-into-long-format-i.e.-create-one-data-set-for-each-of-the-possible-six-transitions-in-figure-1.7.">1. <em>Consider the following records mimicking the Copenhagen Holter study (Example 1.1.8) in wide format and transform them into long format, i.e., create one data set for each of the possible six transitions in Figure 1.7.</em></a></li>
+  <li><a href="#do-the-same-for-the-entire-data-set." id="toc-do-the-same-for-the-entire-data-set." class="nav-link" data-scroll-target="#do-the-same-for-the-entire-data-set.">2. <em>Do the same for the entire data set</em>.</a></li>
+  </ul></li>
+  <li><a href="#exercise-1.3" id="toc-exercise-1.3" class="nav-link" data-scroll-target="#exercise-1.3">Exercise 1.3</a>
+  <ul class="collapse">
+  <li><a href="#derive-equations-1.2-and-1.3-for-respectively-the-survival-function-in-the-two-state-model-figure-1.1-and-the-cumulative-incidence-function-in-the-competing-risks-model-figure-1.2." id="toc-derive-equations-1.2-and-1.3-for-respectively-the-survival-function-in-the-two-state-model-figure-1.1-and-the-cumulative-incidence-function-in-the-competing-risks-model-figure-1.2." class="nav-link" data-scroll-target="#derive-equations-1.2-and-1.3-for-respectively-the-survival-function-in-the-two-state-model-figure-1.1-and-the-cumulative-incidence-function-in-the-competing-risks-model-figure-1.2.">1. <em>Derive Equations (1.2) and (1.3) for, respectively, the survival function in the two-state model (Figure 1.1) and the cumulative incidence function in the competing risks model (Figure 1.2).</em></a></li>
+  <li><a href="#show-for-the-markov-illness-death-model-figure-1.3-that-the-state-occupation-probability-for-state-1-at-time-t-q_1t-is-int_0texpleft-int_0ualpha_01xalpha_02xdxrightalpha_01uexpleft-int_utalpha_12xdxrightdu." id="toc-show-for-the-markov-illness-death-model-figure-1.3-that-the-state-occupation-probability-for-state-1-at-time-t-q_1t-is-int_0texpleft-int_0ualpha_01xalpha_02xdxrightalpha_01uexpleft-int_utalpha_12xdxrightdu." class="nav-link" data-scroll-target="#show-for-the-markov-illness-death-model-figure-1.3-that-the-state-occupation-probability-for-state-1-at-time-t-q_1t-is-int_0texpleft-int_0ualpha_01xalpha_02xdxrightalpha_01uexpleft-int_utalpha_12xdxrightdu.">2. <em>Show, for the Markov illness-death model (Figure 1.3), that the state occupation probability for state 1 at time</em> <span class="math inline">\(t\)</span><em>,</em> <span class="math inline">\(Q_1(t)\)</span><em>, is</em> <span class="math display">\[\int_0^t\exp\left(-\int_0^u(\alpha_{01}(x)+\alpha_{02}(x))dx\right)\alpha_{01}(u)\exp\left(-\int_u^t\alpha_{12}(x)dx\right)du.\]</span></a></li>
+  </ul></li>
+  <li><a href="#exercise-1.4" id="toc-exercise-1.4" class="nav-link" data-scroll-target="#exercise-1.4">Exercise 1.4 (*)</a>
+  <ul class="collapse">
+  <li><a href="#argue-intuitively-how-the-martingale-property-emtmid-cal-h_sms-follows-from-edmtmid-cal-h_t-0-section-1.4.3." id="toc-argue-intuitively-how-the-martingale-property-emtmid-cal-h_sms-follows-from-edmtmid-cal-h_t-0-section-1.4.3." class="nav-link" data-scroll-target="#argue-intuitively-how-the-martingale-property-emtmid-cal-h_sms-follows-from-edmtmid-cal-h_t-0-section-1.4.3."><em>Argue (intuitively) how the martingale property</em> <span class="math inline">\(E(M(t)\mid {\cal H}_{s})=M(s)\)</span> <em>follows from</em> <span class="math inline">\(E(dM(t)\mid {\cal H}_{t-})=0\)</span> <em>(Section 1.4.3).</em></a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -277,8 +292,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </a>
 </div>
 </div>
-<section id="pbc3-trial-in-liver-cirrhosis-pbc3.csv" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="pbc3-trial-in-liver-cirrhosis-pbc3.csv"><span class="header-section-number">1.1</span> PBC3 trial in liver cirrhosis (<code>pbc3.csv</code>)</h2>
+<section id="pbc3-trial-in-liver-cirrhosis-pbc3.csv" class="level2">
+<h2 class="anchored" data-anchor-id="pbc3-trial-in-liver-cirrhosis-pbc3.csv">1.1 PBC3 trial in liver cirrhosis (<code>pbc3.csv</code>)</h2>
 <table class="table">
 <colgroup>
 <col style="width: 35%">
@@ -334,8 +349,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="guinea-bissau-childhood-vaccination-study-bissau.csv" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="guinea-bissau-childhood-vaccination-study-bissau.csv"><span class="header-section-number">1.2</span> Guinea-Bissau childhood vaccination study (<code>bissau.csv</code>)</h2>
+<section id="guinea-bissau-childhood-vaccination-study-bissau.csv" class="level2">
+<h2 class="anchored" data-anchor-id="guinea-bissau-childhood-vaccination-study-bissau.csv">1.2 Guinea-Bissau childhood vaccination study (<code>bissau.csv</code>)</h2>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -383,8 +398,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="testis-cancer-incidence-and-maternal-parity-testis.csv" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="testis-cancer-incidence-and-maternal-parity-testis.csv"><span class="header-section-number">1.3</span> Testis cancer incidence and maternal parity (<code>testis.csv</code>)</h2>
+<section id="testis-cancer-incidence-and-maternal-parity-testis.csv" class="level2">
+<h2 class="anchored" data-anchor-id="testis-cancer-incidence-and-maternal-parity-testis.csv">1.3 Testis cancer incidence and maternal parity (<code>testis.csv</code>)</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -428,8 +443,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="prova-trial-in-liver-cirrhosis-prova.csv" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="prova-trial-in-liver-cirrhosis-prova.csv"><span class="header-section-number">1.4</span> PROVA trial in liver cirrhosis (<code>prova.csv</code>)</h2>
+<section id="prova-trial-in-liver-cirrhosis-prova.csv" class="level2">
+<h2 class="anchored" data-anchor-id="prova-trial-in-liver-cirrhosis-prova.csv">1.4 PROVA trial in liver cirrhosis (<code>prova.csv</code>)</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -489,8 +504,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="recurrent-episodes-in-affective-disorders-affective.csv" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="recurrent-episodes-in-affective-disorders-affective.csv"><span class="header-section-number">1.5</span> Recurrent episodes in affective disorders (<code>affective.csv</code>)</h2>
+<section id="recurrent-episodes-in-affective-disorders-affective.csv" class="level2">
+<h2 class="anchored" data-anchor-id="recurrent-episodes-in-affective-disorders-affective.csv">1.5 Recurrent episodes in affective disorders (<code>affective.csv</code>)</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -546,12 +561,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="leader-cardiovascular-trial-in-type-2-diabetes" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="leader-cardiovascular-trial-in-type-2-diabetes"><span class="header-section-number">1.6</span> LEADER cardiovascular trial in type 2 Diabetes</h2>
+<section id="leader-cardiovascular-trial-in-type-2-diabetes" class="level2">
+<h2 class="anchored" data-anchor-id="leader-cardiovascular-trial-in-type-2-diabetes">1.6 LEADER cardiovascular trial in type 2 Diabetes</h2>
 <p>Data not available.</p>
 </section>
-<section id="bone-marrow-transplantation-in-acute-leukemia-bmt.csv" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="bone-marrow-transplantation-in-acute-leukemia-bmt.csv"><span class="header-section-number">1.7</span> Bone marrow transplantation in acute leukemia (<code>bmt.csv</code>)</h2>
+<section id="bone-marrow-transplantation-in-acute-leukemia-bmt.csv" class="level2">
+<h2 class="anchored" data-anchor-id="bone-marrow-transplantation-in-acute-leukemia-bmt.csv">1.7 Bone marrow transplantation in acute leukemia (<code>bmt.csv</code>)</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -619,8 +634,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="the-copenhagen-holter-study-cphholter.csv" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="the-copenhagen-holter-study-cphholter.csv"><span class="header-section-number">1.8</span> The Copenhagen Holter study (<code>cphholter.csv</code>)</h2>
+<section id="the-copenhagen-holter-study-cphholter.csv" class="level2">
+<h2 class="anchored" data-anchor-id="the-copenhagen-holter-study-cphholter.csv">1.8 The Copenhagen Holter study (<code>cphholter.csv</code>)</h2>
 <table class="table">
 <thead>
 <tr class="header">
@@ -700,8 +715,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </section>
-<section id="small-set-of-survival-data" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="small-set-of-survival-data"><span class="header-section-number">1.9</span> Small set of survival data</h2>
+<section id="small-set-of-survival-data" class="level2">
+<h2 class="anchored" data-anchor-id="small-set-of-survival-data">1.9 Small set of survival data</h2>
 <section id="create-data" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="create-data">Create data</h3>
 <div class="cell" data-hash="Ch1_cache/html/create-data_e514c5974c390ca08fb3480aeb17d237">
@@ -987,8 +1002,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
-<section id="exercises" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <section id="exercise-1.1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="exercise-1.1">Exercise 1.1</h3>
 <section id="consider-the-small-data-set-in-table-1.6-and-argue-why-both-the-average-of-all-12-observation-times-and-the-average-of-the-7-uncensored-times-will-likely-underestimate-the-true-mean-survival-time-from-entry-into-the-study." class="level4 unnumbered">
