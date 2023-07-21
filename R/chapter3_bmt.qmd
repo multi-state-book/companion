@@ -302,32 +302,6 @@ coxph(Surv(intxrel,trm!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500)
       })
 ```
 
-
-### Figure 3.10
-
-```{r}
-#| label: figure-3.10
-#| out-width: 90%
-# Extract cumulative hazard from r1 
-survr1 <- basehaz(r1, center = F)
-pcumhaz <- data.frame(cumhaz = survr1$hazard, 
-                      time = survr1$time, 
-                      strata = survr1$strata) 
-
-# Create Figure 3.10
-fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) + 
-  geom_step(linewidth = 1) + 
-  xlab("Time since bone marrow transplantation (months)") + 
-  ylab("Cumulative hazard") + 
-  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0, 156), breaks = seq(0, 156, by = 12)) + 
-  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
-  scale_linetype_discrete("Stratum", labels = c("1", "2")) + 
-  theme_general + theme(legend.position = "none")
-
-fig3.10
-```
-
 ### Table 3.14
 
 ```{r}
@@ -394,6 +368,33 @@ r3
 lrtest(r3,r2)
 
 ```
+
+
+### Figure 3.10
+
+```{r}
+#| label: figure-3.10
+#| out-width: 90%
+# Extract cumulative hazard from r1 
+survr1 <- basehaz(r1, center = F)
+pcumhaz <- data.frame(cumhaz = survr1$hazard, 
+                      time = survr1$time, 
+                      strata = survr1$strata) 
+
+# Create Figure 3.10
+fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) + 
+  geom_step(linewidth = 1) + 
+  xlab("Time since bone marrow transplantation (months)") + 
+  ylab("Cumulative hazard") + 
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0, 156), breaks = seq(0, 156, by = 12)) + 
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05))) +
+  scale_linetype_discrete("Stratum", labels = c("1", "2")) + 
+  theme_general + theme(legend.position = "none")
+
+fig3.10
+```
+
 
 ### Table 3.15
 
