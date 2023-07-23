@@ -97,6 +97,7 @@ fig4.2 <- ggplot(aes(x = time / 365.25, y = surv, linetype = tment), data = kmda
   theme_general
 
 fig4.2
+
 ```
 
 ## SAS
