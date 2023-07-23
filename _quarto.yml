@@ -38,7 +38,7 @@ format:
     code-block-border-left: true
     #code-block-bg: true
     #code-block-border-left: "#6C6C6C"
-    code-fold: false
+    code-fold: true
     code-summary: "Code"
     fig-width: 11.69
     fig-height: 8.27

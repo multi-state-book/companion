@@ -1,3 +1,6 @@
+options(contrasts=c("contr.treatment", "contr.poly"))
+
+
 #library(tidyverse)
 #library(broom)
 #library(data.table)

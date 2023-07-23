@@ -1,23 +1,10 @@
-#------------------------------------------------------------------#
-#------- Chapter 4, R code, affective data-------------------------#
-#------------------------------------------------------------------#
+### Read data 
 
-# Set working directory - location of data
-#setwd("C:/Users/JUKF/University of Copenhagen/UCPH_MSB - General/Julie programs")
-
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-
-affective <- read.csv("data/affective.csv")
-head(affective)
-
-affective <- data.frame(affective)
-
+```{r}
+#| label: read-affective
+affective <- data.frame(read.csv("data/affective.csv"))
 affective$wait <- with(affective, stop - start)
+```
 
 #------------------------------------------------------------------#
 # -------- General plotting style ---------------------------------# 

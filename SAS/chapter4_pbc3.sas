@@ -4,13 +4,8 @@
 
 * Load pbc data; 
 proc import out=pbc3
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/pbc3.csv"
+	datafile="data/pbc3.csv"
 	dbms=csv replace;
-run;
-
-* Summarise data set; 
-proc contents 
-	data=pbc3; 
 run;
 
 data pbc3; 
@@ -26,7 +21,10 @@ data pbc3;
 	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
 	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
 	log2bili2=log2bili*log2bili;
+	followup=days/365.25;
 run;
+
+
 
 *---------------------------------------------------------------;
 *--------------------- Table 4.1 -------------------------------;
@@ -485,6 +483,7 @@ data survdat;
 	set survdat; 
 	daysyears = days/365.25; 
 run; 
+proc print;run;
 
 proc gplot data=survdat;
 plot km*daysyears=tment/haxis=axis1 vaxis=axis2;
@@ -1104,11 +1103,17 @@ proc gplot data=plot3plac;
 run;
 
 *---------------------------------------------------------------;
-*--------------------- Table 4.5 -------------------------------;
+*--------------------- Table 4.4 -------------------------------;
 *---------------------------------------------------------------;
 
+proc rmstreg data=pbc3 tau=3;
+  model followup*status(0)=tment alb log2bili / 
+        link=linear method=ipcw(strata=tment);
+run;
+
+
 *---------------------------------------------------------------;
-*--------------------- Table 4.6 -------------------------------;
+*--------------------- Table 4.5 -------------------------------;
 *---------------------------------------------------------------;
 
 * Death without transplantation; 

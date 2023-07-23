@@ -3,11 +3,11 @@
 ## PBC3 trial
 {{< include R/chapter4_pbc3.qmd >}}
 
-<!-- ## Bone marrow transplantation in acute leukemia -->
-<!-- {{< include R/chapter4_bmt.qmd >}} -->
+## Bone marrow transplantation in acute leukemia
+{{< include R/chapter4_bmt.qmd >}}
 
 <!-- ## Recurrent episodes in affective disorders -->
 <!-- {{< include R/chapter4_affective.qmd >}} -->
 
-<!-- ## PROVA trial -->
-<!-- {{< include R/chapter4_prova.qmd >}} -->
+## PROVA trial
+{{< include R/chapter4_prova.qmd >}}

@@ -87,6 +87,15 @@ fig4.15 <- ggplot(aes(x = time, y = prob, linetype = type), data = plotdata) +
 
 fig4.15
 ```
+
+### In-text: $Q_q(t)$ etc - where???
+
+```{r}
+#| label: in-text-Q
+
+print("where is?")
+```
+
 ### Table 4.8
 
 ```{r}
@@ -118,6 +127,11 @@ summary(coxph(Surv(intxsurv, dead != 0) ~ bmonly + all + age + cluster(team),
 ```
 
 ### Table 4.11
+
+::: callout-important
+Still missing to make double data set etc...
+:::
+
 
 ```{r}
 #| label: table-4.11

@@ -1,43 +1,27 @@
-#------------------------------------------------------------------#
-#------- Chapter 4, R code, PROVA data ----------------------------#
-#------------------------------------------------------------------#
+### Read data 
 
-# Set working directory - location of data
-#setwd("C:/Users/JUKF/University of Copenhagen/UCPH_MSB - General/Julie programs")
-
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-
-provany <- read.csv("data/prova.csv", na.strings = c("."))
-head(provany)
-
-
-provany <- data.frame(provany)
-
-# Structure
-str(provany)
-summary(provany)
-
-provany$beh <- with(provany, scle*2 + beta)
+```{r}
+#| label: read-prova
+prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
+# Treatment 2x2 factorial
+prova$beh <- with(prova, as.factor(scle + beta*2))
+# Extra variables
+provany <- prova
 provany$log2bili <- with(provany, log2(bili))
+```
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------#
-#------------------------------------------------------------------#
+### Figure 4.22
 
+```{r}
+#| label: figure-4.2
+#| out-width: 90%
+
+library(ggplot2)
 theme_general <- theme_bw() +
   theme(legend.position = "bottom",
         text = element_text(size = 20),
         axis.text.x = element_text(size = 20),
         axis.text.y = element_text(size = 20))
-
-#------------------------------------------------------------------#
-#---------------- Figure 4.25 -------------------------------------#
-#------------------------------------------------------------------#
 
 # Make KM estimate of censoring distribution
 provany$time <- with(provany, ifelse(!is.na(timebleed), timebleed + timedeath, timedeath))
@@ -49,10 +33,10 @@ pdata <- data.frame(time = censdist$time,
                     surv = censdist$surv)
 
 
-# Create Figure 4.24
-fig424 <- ggplot(aes(x = time / 365.25, y = surv),
+# Create Figure
+fig4.22 <- ggplot(aes(x = time / 365.25, y = surv),
                  data = pdata) +
-  geom_step(size = 1) +
+  geom_step(linewidth = 1) +
   xlab("Time since randomization (years)") +
   ylab('Probability of no censoring') +
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.005)),
@@ -66,48 +50,26 @@ fig424 <- ggplot(aes(x = time / 365.25, y = surv),
         legend.key.size = unit(1.5, 'cm'))
 
 
-fig424
+fig4.22
+```
 
 
-ggsave("figures/j_provacens.pdf", plot = fig424,
-       width = 29.7, height = 21, units = "cm")
+### Table 4.12
 
-#------------------------------------------------------------------#
-#---------------- Table 4.13 --------------------------------------#
-#------------------------------------------------------------------#
-
-# null model
-censcoxnull <- coxph(Surv(time, death == 0) ~ 1, data = provany)
-summary(censcoxnull)
-
+```{r}
+#| label: table-4.12
+library(survival)
+options(contrasts=c("contr.treatment", "contr.poly"))
 # treat
-censcoxtreat <- coxph(Surv(time, death == 0) ~ beh, data = provany)
-summary(censcoxtreat)
-
-require(lmtest)
-lrtest(censcoxtreat, censcoxnull)
-
-
+coxph(Surv(time, death == 0) ~ beh, data = provany)
 # size 
-censcoxvapr <- coxph(Surv(time, death == 0) ~ varsize, data = provany)
-summary(censcoxvapr)
-
-lrtest(censcoxvapr, censcoxnull)
-
+coxph(Surv(time, death == 0) ~ factor(varsize), data = provany)
 # sex
-censcoxsex <- coxph(Surv(time, death == 0) ~ sex, data = provany)
-summary(censcoxsex)
-
+coxph(Surv(time, death == 0) ~ sex, data = provany)
 # coag
-censcoxkoag <- coxph(Surv(time, death == 0) ~ coag, data = provany)
-summary(censcoxkoag)
-
+coxph(Surv(time, death == 0) ~ coag, data = provany)
 # bili
-censcoxbili <- coxph(Surv(time, death == 0) ~ log2bili, data = provany)
-summary(censcoxbili)
-
+coxph(Surv(time, death == 0) ~ log2bili, data = provany)
 # age
-censcoxage <- coxph(Surv(time, death == 0) ~ age, data = provany)
-summary(censcoxage)
-
-
+coxph(Surv(time, death == 0) ~ age, data = provany)
+```
