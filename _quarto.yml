@@ -8,13 +8,14 @@ book:
   author: "Per Kragh Andersen & Henrik Ravn"
   reader-mode: true
   sidebar:
+    logo: MSBfrontbirds.png
     collapse-level: 1
   page-footer:
     left: |
       Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values
     right: |
       Built with <a href="https://quarto.org/">Quarto</a>
-  cover-image: MSB-cover.PNG
+  cover-image: MSB-cover.png
   favicon: corvos.png
   repo-url: https://github.com/multi-state-book/companion
   chapters:
