@@ -1,0 +1,30 @@
+### Figure
+
+```{r}
+#| label: figure-
+#| out-width: 90%
+```
+
+### Table
+
+```{r}
+#| label: table-
+```
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: 
+
+
+```
+
+## SAS
+```{r}
+#| eval: false 
+#| output: false
+
+
+```
+:::
+  

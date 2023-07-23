@@ -7,6 +7,17 @@ pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
 pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
 ```
 
+#### SAS
+```{r}
+#| eval: false 
+#| output: false
+#| code-fold: true
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+```
+
 ### Figure 2.1 
 
 ```{r}
@@ -45,13 +56,39 @@ fig2.1 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
   theme_general 
 
 fig2.1
+```
 
-#------------------------------------------------------------------#
-# In-text: Nelson-Aalen estimates at 2 years
-#------------------------------------------------------------------#
+#### SAS
+```{r}
+#| eval: false 
+#| output: false
+#| code-fold: true
+proc phreg data=pbc3; 
+	model days*status(0)=;
+	strata tment;
+	baseline out=hazdat cumhaz=naa stdcumhaz=sdnaa;
+run;
+data hazdat; 
+	set hazdat; 
+	daysyears = days/365.25; 
+run; 
+proc gplot data=hazdat;
+	plot naa*daysyears=tment/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative hazard');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=stepjl c=blue;
+run;
+```
+
+### In-text: Nelson-Aalen estimates at 2 years
+
+```{r}
+#| label: in-text-Naa2
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=0"),1)
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=1"),1)
 ```
+
 
 ### Table 2.1 
 
@@ -75,6 +112,49 @@ pcwdata$risktimeyrs <- pcwdata$risktime/365.25
 pcwdata$hazard <- 36525*pcwdata$fail/pcwdata$risktime
 pcwdata$SD <- 36525*sqrt(pcwdata$fail)/pcwdata$risktime
 data.frame(pcwdata)
+```
+
+#### SAS
+```{r}
+#| eval: false 
+#| output: false
+#| code-fold: true
+/* prepare for poisson model */
+data pbc3mult; 
+	set pbc3;
+	fail=(days<=2 * 365.25)*(status ne 0);
+	risktime=min(2 * 365.25, days);
+	logrisk=log(risktime); interv=1; output;  
+	if days>2 * 365.25 then do;
+	fail=(days<=4 * 365.25)*(status ne 0);
+	risktime=min(2 * 365.25 ,days-2 * 365.25);
+	logrisk=log(risktime); interv=2; output; end;
+	if days>4 * 365.25  then do;
+	fail=status ne 0; 
+	risktime=days-4 * 365.25;
+	logrisk=log(risktime); interv=3; output; end;
+run;
+proc means sum  data=pbc3mult;
+	class tment interv;
+	var fail risktime;
+run;
+
+proc genmod data=pbc3mult;
+	where tment=1;
+	class interv;
+	model fail=interv/dist=poi offset=logrisk;
+	estimate '0-2 years' intercept 1  interv 1 0 0/exp;
+	estimate '2-4 years' intercept 1  interv 0 1 0/exp;
+	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
+run;
+proc genmod data=pbc3mult;
+	where tment=0;
+	class interv;
+	model fail=interv/dist=poi offset=logrisk;
+	estimate '0-2 years' intercept 1  interv 1 0 0/exp;
+	estimate '2-4 years' intercept 1  interv 0 1 0/exp;
+	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
+run;
 ```
 
 ### Figure 2.2 
@@ -130,6 +210,17 @@ lrtest(poisred,poisfull)
 library(survival)
 lr<-survdiff(Surv(days, status != 0) ~ tment, data = pbc3)
 c(lr$chisq,lr$pvalue)
+```
+
+#### SAS
+```{r}
+#| eval: false 
+#| output: false
+#| code-fold: true
+proc lifetest data=pbc3 notable; 
+	time days*status(0);
+	strata tment;
+run; 
 ```
 
 ### Figure 2.3 

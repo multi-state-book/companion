@@ -2,9 +2,9 @@
 
 ```{r}
 #| echo: false
-
 source("_common.R")
 ```
+
 
 This is the code companion website to our book published by [Chapman & Hall](https://www.routledge.com/Models-for-Multi-State-Survival-Data-Rates-Risks-and-Pseudo-Values/Andersen-Ravn/p/book/9780367140021# "go to the book at the publisher").
 
