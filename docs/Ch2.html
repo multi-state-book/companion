@@ -216,10 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#pbc3-trial" id="toc-pbc3-trial" class="nav-link active" data-scroll-target="#pbc3-trial">PBC3 trial</a>
   <ul>
-  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a>
-  <ul class="collapse">
-  <li><a href="#sas" id="toc-sas" class="nav-link" data-scroll-target="#sas">SAS</a></li>
-  </ul></li>
+  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
   <li><a href="#figure-2.1" id="toc-figure-2.1" class="nav-link" data-scroll-target="#figure-2.1">Figure 2.1</a>
   <ul class="collapse">
   <li><a href="#sas-1" id="toc-sas-1" class="nav-link" data-scroll-target="#sas-1">SAS</a></li>
@@ -300,23 +297,59 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="pbc3-trial">PBC3 trial</h2>
 <section id="read-data" class="level3">
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
-<div class="cell" data-hash="Ch2_cache/html/read-pbc3_acf389a8fe9193e6b8517fb5400050b6">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-hash="Ch2_cache/html/read-pbc3_7c5e7a0ce7561c276bfae76569ad2280">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>fail <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pbc3<span class="sc">$</span>status <span class="sc">!=</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># event/failure indicator</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>tment_char <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pbc3<span class="sc">$</span>tment <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Placebo"</span>, <span class="st">"CyA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>tment_char <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(pbc3<span class="sc">$</span>tment <span class="sc">==</span> <span class="dv">0</span>, <span class="st">"Placebo"</span>, <span class="st">"CyA"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add transformations of covariates </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>albnorm <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (alb<span class="dv">-35</span>)<span class="sc">*</span>(alb<span class="sc">&gt;</span><span class="dv">35</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>alb10 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, alb<span class="sc">/</span><span class="dv">10</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>alb2 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, alb10<span class="sc">*</span>alb10)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>bilihigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (bili<span class="fl">-17.1</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">17.1</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>bilitoohigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (bili<span class="fl">-34.2</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">34.2</span>))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>bilimuchtoohigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (bili<span class="fl">-51.3</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">51.3</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>bili100 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, bili<span class="sc">/</span><span class="dv">100</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>bili2 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, bili100<span class="sc">*</span>bili100)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili2 <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, log2bili<span class="sc">*</span>log2bili)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>logbilihigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">17.1</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">17.1</span>))</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>logbilitoohigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">34.2</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">34.2</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>logbilimuchtoohigh <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, (log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">51.3</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">51.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="sas" class="level4">
-<h4 class="anchored" data-anchor-id="sas">SAS</h4>
-<div class="cell" data-hash="Ch2_cache/html/unnamed-chunk-2_b57ee7852c6fa22addb5093342a2aba2">
-<details>
-<summary>Code</summary>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/read-pbc3-sas_725bad615aefdd47a7b30571e1bd1371">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>pbc3</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    datafile<span class="ot">=</span><span class="st">"data/pbc3.csv"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dbms<span class="ot">=</span>csv replace;</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data pbc3; </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    set pbc3;</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    albnorm<span class="ot">=</span>(alb<span class="dv">-35</span>)<span class="sc">*</span>(alb<span class="sc">&gt;</span><span class="dv">35</span>);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    alb10<span class="ot">=</span>alb<span class="sc">/</span><span class="dv">10</span>; alb2<span class="ot">=</span>alb10<span class="sc">*</span>alb10;</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    bilihigh<span class="ot">=</span>(bili<span class="fl">-17.1</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">17.1</span>);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    bilitoohigh<span class="ot">=</span>(bili<span class="fl">-34.2</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">34.2</span>);</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    bilimuchtoohigh<span class="ot">=</span>(bili<span class="fl">-51.3</span>)<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">51.3</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    bili100<span class="ot">=</span>bili<span class="sc">/</span><span class="dv">100</span>; bili2<span class="ot">=</span>bili100<span class="sc">*</span>bili100;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    log2bili<span class="ot">=</span><span class="fu">log2</span>(bili);</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    logbilihigh<span class="ot">=</span>(log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">17.1</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">17.1</span>);</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    logbilitoohigh<span class="ot">=</span>(log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">34.2</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">34.2</span>);</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    logbilimuchtoohigh<span class="ot">=</span>(log2bili<span class="sc">-</span><span class="fu">log2</span>(<span class="fl">51.3</span>))<span class="sc">*</span>(bili<span class="sc">&gt;</span><span class="fl">51.3</span>);</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    log2bili2<span class="ot">=</span>log2bili<span class="sc">*</span>log2bili;</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
+</div>
+</div>
+</div>
 </section>
 <section id="figure-2.1" class="level3">
 <h3 class="anchored" data-anchor-id="figure-2.1">Figure 2.1</h3>

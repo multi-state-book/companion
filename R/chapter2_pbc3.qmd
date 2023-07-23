@@ -1,22 +1,60 @@
 ### Read data
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: read-pbc3
 pbc3 <- data.frame(read.csv("data/pbc3.csv"))
 pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
 pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
+
+# Add transformations of covariates 
+pbc3$albnorm <- with(pbc3, (alb-35)*(alb>35))
+pbc3$alb10 <- with(pbc3, alb/10)
+pbc3$alb2 <- with(pbc3, alb10*alb10)
+
+pbc3$bilihigh <- with(pbc3, (bili-17.1)*(bili>17.1))
+pbc3$bilitoohigh <- with(pbc3, (bili-34.2)*(bili>34.2))
+pbc3$bilimuchtoohigh <- with(pbc3, (bili-51.3)*(bili>51.3))
+pbc3$bili100 <- with(pbc3, bili/100)
+pbc3$bili2 <- with(pbc3, bili100*bili100)
+
+pbc3$log2bili <- with(pbc3, log2(bili))
+pbc3$log2bili2 <- with(pbc3, log2bili*log2bili)
+
+pbc3$logbilihigh <- with(pbc3, (log2bili-log2(17.1))*(bili>17.1))
+pbc3$logbilitoohigh <- with(pbc3, (log2bili-log2(34.2))*(bili>34.2))
+pbc3$logbilimuchtoohigh <- with(pbc3, (log2bili-log2(51.3))*(bili>51.3))
 ```
 
-#### SAS
+## SAS
 ```{r}
+#| label: read-pbc3-sas
 #| eval: false 
 #| output: false
-#| code-fold: true
 proc import out=pbc3
 	datafile="data/pbc3.csv"
 	dbms=csv replace;
 run;
+	
+data pbc3; 
+	set pbc3;
+	albnorm=(alb-35)*(alb>35);
+	alb10=alb/10; alb2=alb10*alb10;
+	bilihigh=(bili-17.1)*(bili>17.1);
+	bilitoohigh=(bili-34.2)*(bili>34.2);
+	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
+	bili100=bili/100; bili2=bili100*bili100;
+	log2bili=log2(bili);
+	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
+	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
+	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
+	log2bili2=log2bili*log2bili;
+run;
+
 ```
+:::
+
 
 ### Figure 2.1 
 
