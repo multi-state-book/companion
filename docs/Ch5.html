@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -150,7 +213,35 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#bone-marrow-transplantation-in-acute-leukemia" id="toc-bone-marrow-transplantation-in-acute-leukemia" class="nav-link active" data-scroll-target="#bone-marrow-transplantation-in-acute-leukemia">Bone marrow transplantation in acute leukemia</a>
+  <ul>
+  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
+  <li><a href="#table-5.1" id="toc-table-5.1" class="nav-link" data-scroll-target="#table-5.1">Table 5.1</a></li>
+  <li><a href="#table-5.2" id="toc-table-5.2" class="nav-link" data-scroll-target="#table-5.2">Table 5.2</a></li>
+  <li><a href="#figure-5.1" id="toc-figure-5.1" class="nav-link" data-scroll-target="#figure-5.1">Figure 5.1</a></li>
+  <li><a href="#table-5.3" id="toc-table-5.3" class="nav-link" data-scroll-target="#table-5.3">Table 5.3</a></li>
+  <li><a href="#figure-5.2" id="toc-figure-5.2" class="nav-link" data-scroll-target="#figure-5.2">Figure 5.2</a></li>
+  <li><a href="#figure-5.3" id="toc-figure-5.3" class="nav-link" data-scroll-target="#figure-5.3">Figure 5.3</a></li>
+  </ul></li>
+  <li><a href="#missing-tab-5.5-and-figs-5.10-5.11" id="toc-missing-tab-5.5-and-figs-5.10-5.11" class="nav-link" data-scroll-target="#missing-tab-5.5-and-figs-5.10-5.11">MISSING: Tab 5.5 and Figs 5.10-5.11</a></li>
+  <li><a href="#pbc3-trial" id="toc-pbc3-trial" class="nav-link" data-scroll-target="#pbc3-trial">PBC3 trial</a>
+  <ul>
+  <li><a href="#read-data-1" id="toc-read-data-1" class="nav-link" data-scroll-target="#read-data-1">Read data</a></li>
+  <li><a href="#table-5.6" id="toc-table-5.6" class="nav-link" data-scroll-target="#table-5.6">Table 5.6</a></li>
+  <li><a href="#figure-5.12" id="toc-figure-5.12" class="nav-link" data-scroll-target="#figure-5.12">Figure 5.12</a></li>
+  <li><a href="#figure-5.13" id="toc-figure-5.13" class="nav-link" data-scroll-target="#figure-5.13">Figure 5.13</a></li>
+  <li><a href="#figure-5.14" id="toc-figure-5.14" class="nav-link" data-scroll-target="#figure-5.14">Figure 5.14</a></li>
+  <li><a href="#figure-5.15" id="toc-figure-5.15" class="nav-link" data-scroll-target="#figure-5.15">Figure 5.15</a></li>
+  <li><a href="#figure-5.16" id="toc-figure-5.16" class="nav-link" data-scroll-target="#figure-5.16">Figure 5.16</a></li>
+  <li><a href="#figure-5.17" id="toc-figure-5.17" class="nav-link" data-scroll-target="#figure-5.17">Figure 5.17</a></li>
+  </ul></li>
+  <li><a href="#prova-trial" id="toc-prova-trial" class="nav-link" data-scroll-target="#prova-trial">Prova trial</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -172,8 +263,1092 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="bone-marrow-transplantation-in-acute-leukemia" class="level2">
+<h2 class="anchored" data-anchor-id="bone-marrow-transplantation-in-acute-leukemia">Bone marrow transplantation in acute leukemia</h2>
+<section id="read-data" class="level3">
+<h3 class="anchored" data-anchor-id="read-data">Read data</h3>
+<div class="cell" data-hash="Ch5_cache/html/read-bmt_28c2ad3e8954cac01720a01925aef859">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bmt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bmt.csv"</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxsurv<span class="ot">&lt;-</span> bmt<span class="sc">$</span>timedeath</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>dead <span class="ot">&lt;-</span> bmt<span class="sc">$</span>death</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxrel <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bmt<span class="sc">$</span>rel <span class="sc">==</span> <span class="dv">1</span>, bmt<span class="sc">$</span>timerel, bmt<span class="sc">$</span>timedeath)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>trm     <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bmt<span class="sc">$</span>rel <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> bmt<span class="sc">$</span>death <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>tgvhd   <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bmt<span class="sc">$</span>gvhd <span class="sc">==</span> <span class="dv">1</span>, bmt<span class="sc">$</span>timegvhd, bmt<span class="sc">$</span>intxrel)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>tanc500 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bmt<span class="sc">$</span>anc500 <span class="sc">==</span> <span class="dv">1</span>, bmt<span class="sc">$</span>timeanc500, bmt<span class="sc">$</span>intxrel)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>state0  <span class="ot">&lt;-</span> bmt<span class="sc">$</span>rel <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>bmt<span class="sc">$</span>trm</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>dytxanc5 <span class="ot">&lt;-</span> bmt<span class="sc">$</span>timeanc500 <span class="sc">*</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="table-5.1" class="level3">
+<h3 class="anchored" data-anchor-id="table-5.1">Table 5.1</h3>
+<div class="cell" data-hash="Ch5_cache/html/table-5.1_c307baf19e10d4fc9ceff070b4477bfa">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make landmark data at 0.5, 1, 1.5, 2, 2.5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dat05 <span class="ot">&lt;-</span> bmt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat05 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bmt, intxrel <span class="sc">&gt;=</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">pmin</span>(intxrel, <span class="fl">6.5</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> <span class="fu">ifelse</span>(time <span class="sc">&lt;</span> <span class="fl">6.5</span>, state0, <span class="dv">0</span>),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">landmark =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc =</span> <span class="fu">ifelse</span>(anc500 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> timeanc500 <span class="sc">&lt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;=</span> <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># dat05</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>dat10 <span class="ot">&lt;-</span> bmt</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>dat10 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bmt, intxrel <span class="sc">&gt;=</span> <span class="fl">1.0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">pmin</span>(intxrel, <span class="dv">7</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> <span class="fu">ifelse</span>(time <span class="sc">&lt;</span> <span class="dv">7</span>, state0, <span class="dv">0</span>),</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">landmark =</span> <span class="fl">1.0</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> <span class="fl">1.0</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc =</span> <span class="fu">ifelse</span>(anc500 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> timeanc500 <span class="sc">&lt;=</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;=</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>dat15 <span class="ot">&lt;-</span> bmt</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>dat15 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bmt, intxrel <span class="sc">&gt;=</span> <span class="fl">1.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">pmin</span>(intxrel, <span class="fl">7.5</span>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> <span class="fu">ifelse</span>(time <span class="sc">&lt;</span> <span class="fl">7.5</span>, state0, <span class="dv">0</span>),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">landmark =</span> <span class="fl">1.5</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> <span class="fl">1.5</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc =</span> <span class="fu">ifelse</span>(anc500 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> timeanc500 <span class="sc">&lt;=</span> <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;=</span> <span class="fl">1.5</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>dat20 <span class="ot">&lt;-</span> bmt</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>dat20 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bmt, intxrel <span class="sc">&gt;=</span> <span class="fl">2.0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">pmin</span>(intxrel, <span class="dv">8</span>),</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> <span class="fu">ifelse</span>(time <span class="sc">&lt;</span> <span class="dv">8</span>, state0, <span class="dv">0</span>),</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">landmark =</span> <span class="dv">2</span>,</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> <span class="dv">2</span>,</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc =</span> <span class="fu">ifelse</span>(anc500 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> timeanc500 <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;=</span> <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>dat25 <span class="ot">&lt;-</span> bmt</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>dat25 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bmt, intxrel <span class="sc">&gt;=</span> <span class="fl">2.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">pmin</span>(intxrel, <span class="fl">8.5</span>),</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> <span class="fu">ifelse</span>(time <span class="sc">&lt;</span> <span class="fl">8.5</span>, state0, <span class="dv">0</span>),</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>         <span class="at">landmark =</span> <span class="fl">2.5</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> <span class="fl">2.5</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc =</span> <span class="fu">ifelse</span>(anc500 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> timeanc500 <span class="sc">&lt;=</span> <span class="fl">2.5</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;=</span> <span class="fl">2.5</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>landmark <span class="ot">&lt;-</span> <span class="fu">rbind</span>(dat05, dat10, dat15, dat20, dat25)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Table 5.1 output</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="fu">rowSums</span>(<span class="fu">with</span>(landmark, <span class="fu">table</span>(landmark, anc <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> gvh <span class="sc">&gt;</span> <span class="dv">0</span>))) <span class="co"># at risk</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> 0.5    1  1.5    2  2.5 
+1988 1949 1905 1876 1829 </code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(landmark, <span class="fu">table</span>(landmark, anc)) <span class="co"># anc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        anc
+landmark    0    1
+     0.5 1082  906
+     1     37 1912
+     1.5    6 1899
+     2      2 1874
+     2.5    1 1828</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(landmark, <span class="fu">table</span>(landmark, gvh)) <span class="co"># gvhd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        gvh
+landmark    0    1
+     0.5 1808  180
+     1   1558  391
+     1.5 1424  481
+     2   1377  499
+     2.5 1334  495</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop observations with stoptime = starttime</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>landmark <span class="ot">&lt;-</span> <span class="fu">subset</span>(landmark, time <span class="sc">&gt;</span> entry)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="table-5.2" class="level3">
+<h3 class="anchored" data-anchor-id="table-5.2">Table 5.2</h3>
+<div class="cell" data-hash="Ch5_cache/html/table-5.2_6ba41468ec28c63e9f678b55249490d9">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add time-varying covariates from previous object</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>landmarkw <span class="ot">&lt;-</span> landmark <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">anc05 =</span> (landmark <span class="sc">==</span> <span class="fl">0.5</span>) <span class="sc">*</span> anc,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh05 =</span> (landmark <span class="sc">==</span> <span class="fl">0.5</span>) <span class="sc">*</span> gvh,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc10 =</span> (landmark <span class="sc">==</span> <span class="fl">1.0</span>) <span class="sc">*</span> anc,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh10 =</span> (landmark <span class="sc">==</span> <span class="fl">1.0</span>) <span class="sc">*</span> gvh,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc15 =</span> (landmark <span class="sc">==</span> <span class="fl">1.5</span>) <span class="sc">*</span> anc,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh15 =</span> (landmark <span class="sc">==</span> <span class="fl">1.5</span>) <span class="sc">*</span> gvh,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc20 =</span> (landmark <span class="sc">==</span> <span class="fl">2.0</span>) <span class="sc">*</span> anc,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh20 =</span> (landmark <span class="sc">==</span> <span class="fl">2.0</span>) <span class="sc">*</span> gvh,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">anc25 =</span> (landmark <span class="sc">==</span> <span class="fl">2.5</span>) <span class="sc">*</span> anc,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvh25 =</span> (landmark <span class="sc">==</span> <span class="fl">2.5</span>) <span class="sc">*</span> gvh</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># with(landmarkw, table(landmark, status))</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>cox_land <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">cluster</span>(id) <span class="sc">+</span> <span class="fu">strata</span>(landmark) <span class="sc">+</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>                    anc05 <span class="sc">+</span> anc10 <span class="sc">+</span> anc15 <span class="sc">+</span> anc20 <span class="sc">+</span> anc25 <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>                    gvh05 <span class="sc">+</span> gvh10 <span class="sc">+</span> gvh15 <span class="sc">+</span> gvh20 <span class="sc">+</span> gvh25 ,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> landmarkw, <span class="at">method =</span> <span class="st">"breslow"</span>,  <span class="at">eps =</span> <span class="fl">1e-9</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>cox_land</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entry, time, status != 0) ~ strata(landmark) + 
+    anc05 + anc10 + anc15 + anc20 + anc25 + gvh05 + gvh10 + gvh15 + 
+    gvh20 + gvh25, data = landmarkw, method = "breslow", eps = 1e-09, 
+    cluster = id)
+
+          coef exp(coef) se(coef) robust se       z        p
+anc05 -0.33460   0.71563  0.10680   0.10680  -3.133  0.00173
+anc10 -0.60851   0.54416  0.30635   0.31981  -1.903  0.05708
+anc15 -1.68452   0.18553  0.50439   0.61065  -2.759  0.00581
+anc20 -2.96384   0.05162  0.71909   0.40406  -7.335 2.21e-13
+anc25 -3.35202   0.03501  1.01558   0.17840 -18.789  &lt; 2e-16
+gvh05  0.70277   2.01934  0.14751   0.14894   4.718 2.38e-06
+gvh10  0.67945   1.97280  0.11489   0.11523   5.897 3.71e-09
+gvh15  0.86339   2.37119  0.11246   0.11254   7.672 1.69e-14
+gvh20  0.80243   2.23095  0.11514   0.11511   6.971 3.15e-12
+gvh25  0.83065   2.29481  0.12151   0.12129   6.848 7.47e-12
+
+Likelihood ratio test=230.2  on 10 df, p=&lt; 2.2e-16
+n= 9542, number of events= 1643 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.1" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.1">Figure 5.1</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.1_e4c1ef3d054a8e2ae6db93547ac7c37c">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General theme</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>))</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract estimated survival probabilities</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_land,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">anc05 =</span> <span class="dv">0</span>, <span class="at">anc10 =</span> <span class="dv">0</span>, <span class="at">anc15 =</span> <span class="dv">0</span>, <span class="at">anc20 =</span> <span class="dv">0</span>, <span class="at">anc25 =</span> <span class="dv">0</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">gvh05 =</span> <span class="dv">0</span>, <span class="at">gvh10 =</span> <span class="dv">0</span>, <span class="at">gvh15 =</span> <span class="dv">0</span>, <span class="at">gvh20 =</span> <span class="dv">0</span>, <span class="at">gvh25 =</span> <span class="dv">0</span>))</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Order data for plotting</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">surv =</span> surv<span class="sc">$</span>surv,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time =</span> surv<span class="sc">$</span>time,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">landmark =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"0.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">1</span>]]),</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"1.0"</span>, surv<span class="sc">$</span>strata[[<span class="dv">2</span>]]),</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"1.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">3</span>]]),</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"2.0"</span>, surv<span class="sc">$</span>strata[[<span class="dv">4</span>]]),</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"2.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">5</span>]]))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Add prob 1 in beginning for all</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>pdata2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pdata <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(landmark) <span class="sc">%&gt;%</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_modify</span>(<span class="sc">~</span> <span class="fu">add_row</span>(.x, <span class="at">surv =</span> <span class="dv">1</span>, <span class="at">time =</span> <span class="dv">0</span>, <span class="at">.before=</span><span class="dv">0</span>)))</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure (a)</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.1</span>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> surv, <span class="at">linetype =</span> landmark), <span class="at">data =</span> pdata2) <span class="sc">+</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>) <span class="sc">+</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>)) <span class="sc">+</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.1</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.1-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For anc = gvh = 1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add LP to data</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pdata2<span class="sc">$</span>lp <span class="ot">&lt;-</span> <span class="fu">with</span>(pdata2,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">ifelse</span>(landmark <span class="sc">==</span> <span class="st">'0.5'</span>, <span class="fu">coef</span>(cox_land)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land)[<span class="dv">6</span>],</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">ifelse</span>(landmark <span class="sc">==</span> <span class="st">'1.0'</span>, <span class="fu">coef</span>(cox_land)[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land)[<span class="dv">7</span>],</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">ifelse</span>(landmark <span class="sc">==</span> <span class="st">'1.5'</span>, <span class="fu">coef</span>(cox_land)[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land)[<span class="dv">8</span>],</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">ifelse</span>(landmark <span class="sc">==</span> <span class="st">'2.0'</span>, <span class="fu">coef</span>(cox_land)[<span class="dv">4</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land)[<span class="dv">9</span>],</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">ifelse</span>(landmark <span class="sc">==</span> <span class="st">'2.5'</span>, <span class="fu">coef</span>(cox_land)[<span class="dv">5</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land)[<span class="dv">10</span>],</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">0</span>))))))</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>pdata2_wc <span class="ot">&lt;-</span> pdata2</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>pdata2_wc<span class="sc">$</span>survlp <span class="ot">&lt;-</span> <span class="fu">with</span>(pdata2, surv <span class="sc">^</span> <span class="fu">exp</span>(lp))</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 5.1 (b)</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.1</span>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> survlp, <span class="at">linetype =</span> landmark), <span class="at">data =</span> pdata2_wc) <span class="sc">+</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>)) <span class="sc">+</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.1</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.1-2.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+</div>
+</section>
+<section id="table-5.3" class="level3">
+<h3 class="anchored" data-anchor-id="table-5.3">Table 5.3</h3>
+<div class="cell" data-hash="Ch5_cache/html/table-5.3_2ac36aa41fdfe6d072925d3ba3f1bd74">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## COLUMN 1 </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add extra variables</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>landmarkw2 <span class="ot">&lt;-</span> landmark <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">anctime  =</span> anc <span class="sc">*</span> (landmark <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">anctime2 =</span> anc <span class="sc">*</span> ((landmark <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvhtime  =</span> gvh <span class="sc">*</span> (landmark <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">gvhtime2 =</span> gvh <span class="sc">*</span> ((landmark <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>cox_land2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">cluster</span>(id) <span class="sc">+</span> <span class="fu">strata</span>(landmark) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                    anc <span class="sc">+</span> anctime <span class="sc">+</span> anctime2 <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>                    gvh <span class="sc">+</span> gvhtime <span class="sc">+</span> gvhtime2,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> landmarkw2,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">method =</span> <span class="st">"breslow"</span>, <span class="at">timefix =</span> <span class="cn">FALSE</span>, <span class="at">eps =</span> <span class="fl">1e-9</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_land2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entry, time, status != 0) ~ strata(landmark) + 
+    anc + anctime + anctime2 + gvh + gvhtime + gvhtime2, data = landmarkw2, 
+    method = "breslow", timefix = FALSE, eps = 1e-09, cluster = id)
+
+  n= 9542, number of events= 1643 
+
+            coef exp(coef) se(coef) robust se      z Pr(&gt;|z|)    
+anc      -0.3220    0.7247   0.1061    0.1057 -3.046  0.00232 ** 
+anctime  -1.1908    0.3040   1.4081    1.6699 -0.713  0.47581    
+anctime2 -2.2570    0.1047   1.8161    1.7911 -1.260  0.20762    
+gvh       0.6626    1.9398   0.1352    0.1429  4.636 3.55e-06 ***
+gvhtime   0.3913    1.4790   0.5865    0.4304  0.909  0.36323    
+gvhtime2 -0.2264    0.7974   0.5398    0.3421 -0.662  0.50808    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+         exp(coef) exp(-coef) lower .95 upper .95
+anc         0.7247     1.3799  0.589072    0.8915
+anctime     0.3040     3.2896  0.011519    8.0225
+anctime2    0.1047     9.5548  0.003127    3.5025
+gvh         1.9398     0.5155  1.465873    2.5668
+gvhtime     1.4790     0.6762  0.636204    3.4380
+gvhtime2    0.7974     1.2541  0.407813    1.5591
+
+Concordance= 0.581  (se = 0.01 )
+Likelihood ratio test= 228.4  on 6 df,   p=&lt;2e-16
+Wald test            = 212.6  on 6 df,   p=&lt;2e-16
+Score (logrank) test = 349.6  on 6 df,   p=&lt;2e-16,   Robust = 56.74  p=2e-10
+
+  (Note: the likelihood ratio and score tests assume independence of
+     observations within a cluster, the Wald and robust score tests do not).</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="do">## COLUMN 2</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add extra variables</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>landmarkw3 <span class="ot">&lt;-</span> landmarkw2 <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">strtime =</span> (landmark <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">strtime2 =</span> strtime<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>cox_land3 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">cluster</span>(id) <span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                     anc <span class="sc">+</span> anctime <span class="sc">+</span> anctime2 <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>                     gvh <span class="sc">+</span> gvhtime <span class="sc">+</span> gvhtime2 <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>                     strtime <span class="sc">+</span> strtime2,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> landmarkw3,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cox_land3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(entry, time, status != 0) ~ anc + anctime + 
+    anctime2 + gvh + gvhtime + gvhtime2 + strtime + strtime2, 
+    data = landmarkw3, method = "breslow", cluster = id)
+
+  n= 9542, number of events= 1643 
+
+             coef exp(coef) se(coef) robust se      z Pr(&gt;|z|)    
+anc      -0.29798   0.74232  0.09953   0.09402 -3.169  0.00153 ** 
+anctime  -1.39312   0.24830  1.38042   1.62961 -0.855  0.39262    
+anctime2 -2.03744   0.13036  1.79663   1.76544 -1.154  0.24847    
+gvh       0.67374   1.96156  0.13323   0.14048  4.796 1.62e-06 ***
+gvhtime   0.33291   1.39502  0.57606   0.41695  0.798  0.42462    
+gvhtime2 -0.17548   0.83906  0.53237   0.33324 -0.527  0.59849    
+strtime   1.41388   4.11189  1.35613   1.60559  0.881  0.37853    
+strtime2  1.94032   6.96098  1.78860   1.75102  1.108  0.26781    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+         exp(coef) exp(-coef) lower .95 upper .95
+anc         0.7423     1.3471  0.617386    0.8925
+anctime     0.2483     4.0274  0.010182    6.0548
+anctime2    0.1304     7.6709  0.004096    4.1485
+gvh         1.9616     0.5098  1.489437    2.5833
+gvhtime     1.3950     0.7168  0.616125    3.1586
+gvhtime2    0.8391     1.1918  0.436650    1.6123
+strtime     4.1119     0.2432  0.176752   95.6575
+strtime2    6.9610     0.1437  0.225010  215.3469
+
+Concordance= 0.587  (se = 0.012 )
+Likelihood ratio test= 227.9  on 8 df,   p=&lt;2e-16
+Wald test            = 233.2  on 8 df,   p=&lt;2e-16
+Score (logrank) test = 348.8  on 8 df,   p=&lt;2e-16,   Robust = 56.74  p=2e-09
+
+  (Note: the likelihood ratio and score tests assume independence of
+     observations within a cluster, the Wald and robust score tests do not).</code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.2">Figure 5.2</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.2_14f3a231bf8b9bd8cfa3ccbbb10b5e01">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract estimated survival probabilities</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_land2,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">anc =</span> <span class="dv">0</span>, <span class="at">anctime =</span> <span class="dv">0</span>, <span class="at">anctime2 =</span> <span class="dv">0</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">gvh =</span> <span class="dv">0</span>, <span class="at">gvhtime =</span> <span class="dv">0</span>, <span class="at">gvhtime2 =</span> <span class="dv">0</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Order data for plotting</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">surv =</span> surv<span class="sc">$</span>surv,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time =</span> surv<span class="sc">$</span>time,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">landmark =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"0.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">1</span>]]),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"1.0"</span>, surv<span class="sc">$</span>strata[[<span class="dv">2</span>]]),</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"1.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">3</span>]]),</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"2.0"</span>, surv<span class="sc">$</span>strata[[<span class="dv">4</span>]]),</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"2.5"</span>, surv<span class="sc">$</span>strata[[<span class="dv">5</span>]]))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add prob 1 in beginning for all</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>pdata2 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pdata <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(landmark) <span class="sc">%&gt;%</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">group_modify</span>(<span class="sc">~</span> <span class="fu">add_row</span>(.x, <span class="at">surv =</span> <span class="dv">1</span>, <span class="at">time =</span> <span class="dv">0</span>, <span class="at">.before=</span><span class="dv">0</span>)))</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure (a)</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.2</span>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> surv, <span class="at">linetype =</span> landmark), <span class="at">data =</span> pdata2) <span class="sc">+</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>) <span class="sc">+</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>)) <span class="sc">+</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.2</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.2-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For anc = gvh = 1</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add LP to data</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>pdata2<span class="sc">$</span>landmarknum <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(pdata2<span class="sc">$</span>landmark)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>pdata2<span class="sc">$</span>lp <span class="ot">&lt;-</span> <span class="fu">with</span>(pdata2,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">coef</span>(cox_land2)[<span class="dv">1</span>] <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">coef</span>(cox_land2)[<span class="dv">2</span>] <span class="sc">*</span> (landmarknum <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">coef</span>(cox_land2)[<span class="dv">3</span>] <span class="sc">*</span> ((landmarknum <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">coef</span>(cox_land2)[<span class="dv">4</span>] <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">coef</span>(cox_land2)[<span class="dv">5</span>] <span class="sc">*</span> (landmarknum <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">coef</span>(cox_land2)[<span class="dv">6</span>] <span class="sc">*</span> ((landmarknum <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>pdata2_wc <span class="ot">&lt;-</span> pdata2</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>pdata2_wc<span class="sc">$</span>survlp <span class="ot">&lt;-</span> <span class="fu">with</span>(pdata2, surv <span class="sc">^</span> <span class="fu">exp</span>(lp))</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure (b)</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.2</span>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> survlp, <span class="at">linetype =</span> landmark), <span class="at">data =</span> pdata2_wc) <span class="sc">+</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>) <span class="sc">+</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>)) <span class="sc">+</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.2</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.2-2.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+</div>
+</section>
+<section id="figure-5.3" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.3">Figure 5.3</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.3_e90ba79c584fc05fa2d8d9088b9fea25">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract estimated survival probabilities</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>surv <span class="ot">&lt;-</span> <span class="fu">survfit</span>(cox_land3,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">anc =</span> <span class="dv">0</span>, <span class="at">anctime =</span> <span class="dv">0</span>, <span class="at">anctime2 =</span> <span class="dv">0</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">gvh =</span> <span class="dv">0</span>, <span class="at">gvhtime =</span> <span class="dv">0</span>, <span class="at">gvhtime2 =</span> <span class="dv">0</span> ,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strtime =</span> <span class="dv">0</span>, <span class="at">strtime2 =</span> <span class="dv">0</span>))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Order data for plotting</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">surv =</span> surv<span class="sc">$</span>surv,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">time =</span> surv<span class="sc">$</span>time)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(dplyr)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>base305 <span class="ot">&lt;-</span> pdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">&lt;</span> <span class="fl">6.5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">landmark =</span> <span class="fl">0.5</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">km0 =</span> surv, </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpt =</span> <span class="dv">0</span>,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpz =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">4</span>],</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">km1 =</span> km0<span class="sc">^</span><span class="fu">exp</span>(lpz))</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>base310 <span class="ot">&lt;-</span> pdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">&amp;</span> time <span class="sc">&lt;</span> <span class="dv">7</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">landmark =</span> <span class="dv">1</span>,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpt =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">7</span>] <span class="sc">*</span> <span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">8</span>] <span class="sc">*</span> (<span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">km0 =</span> (surv <span class="sc">/</span> <span class="fl">0.9784098</span>)<span class="sc">^</span><span class="fu">exp</span>(lpt), </span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpz =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">4</span>] <span class="sc">+</span> </span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">5</span>] <span class="sc">*</span> <span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">3</span>] <span class="sc">*</span> (<span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">6</span>] <span class="sc">*</span> (<span class="fl">0.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> ,</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">km1 =</span> km0<span class="sc">^</span><span class="fu">exp</span>(lpz))</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>base315 <span class="ot">&lt;-</span> pdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">&gt;</span> <span class="fl">1.5</span> <span class="sc">&amp;</span> time <span class="sc">&lt;</span> <span class="fl">7.5</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">landmark =</span> <span class="fl">1.5</span>,</span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpt =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">7</span>] <span class="sc">*</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">8</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">km0 =</span> (surv <span class="sc">/</span> <span class="fl">0.9554490</span>)<span class="sc">^</span><span class="fu">exp</span>(lpt), </span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpz =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">4</span>] <span class="sc">+</span> </span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">5</span>] <span class="sc">*</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">3</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">6</span>] <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> ,</span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">km1 =</span> km0<span class="sc">^</span><span class="fu">exp</span>(lpz))</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>base320 <span class="ot">&lt;-</span> pdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">&gt;</span> <span class="dv">2</span> <span class="sc">&amp;</span> time <span class="sc">&lt;</span> <span class="dv">8</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">landmark =</span> <span class="dv">2</span>,</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpt =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">7</span>] <span class="sc">*</span> <span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">8</span>] <span class="sc">*</span> (<span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>         <span class="at">km0 =</span> (surv <span class="sc">/</span> <span class="fl">0.9395795</span>)<span class="sc">^</span><span class="fu">exp</span>(lpt), </span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpz =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">4</span>] <span class="sc">+</span> </span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">5</span>] <span class="sc">*</span> <span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">3</span>] <span class="sc">*</span> (<span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">6</span>] <span class="sc">*</span> (<span class="fl">1.5</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> ,</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">km1 =</span> km0<span class="sc">^</span><span class="fu">exp</span>(lpz))</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>base325 <span class="ot">&lt;-</span> pdata <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time <span class="sc">&gt;</span> <span class="fl">2.5</span> <span class="sc">&amp;</span> time <span class="sc">&lt;</span> <span class="fl">8.5</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">landmark =</span> <span class="fl">2.5</span>,</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpt =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">7</span>] <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">8</span>] <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>         <span class="at">km0 =</span> (surv <span class="sc">/</span> <span class="fl">0.9126288</span>)<span class="sc">^</span><span class="fu">exp</span>(lpt), </span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>         <span class="at">lpz =</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(cox_land3)[<span class="dv">4</span>] <span class="sc">+</span> </span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">2</span>] <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">5</span>] <span class="sc">*</span> <span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span></span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">3</span>] <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>           <span class="fu">coef</span>(cox_land3)[<span class="dv">6</span>] <span class="sc">*</span> (<span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span>)<span class="sc">^</span><span class="dv">2</span> ,</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">km1 =</span> km0<span class="sc">^</span><span class="fu">exp</span>(lpz))</span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>base3slut <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(base305, base310, base315, base320, base325))</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Add prob 1 in beginning for all</span></span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>pdata3 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(base3slut <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(landmark) <span class="sc">%&gt;%</span></span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">group_modify</span>(<span class="sc">~</span> <span class="fu">add_row</span>(.x, <span class="at">km0 =</span> <span class="dv">1</span>, <span class="at">km1  =</span> <span class="dv">1</span>, <span class="at">time =</span> <span class="dv">0</span>, <span class="at">.before=</span><span class="dv">0</span>)))</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure (a)</span></span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.3</span>a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> km0, <span class="at">linetype =</span> <span class="fu">as.factor</span>(landmark)), <span class="at">data =</span> pdata3) <span class="sc">+</span></span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"0.5"</span>,<span class="st">"1.0"</span>,<span class="st">"1.5"</span>, <span class="st">"2.0"</span>,<span class="st">"2.5"</span>)) <span class="sc">+</span></span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>)) <span class="sc">+</span> </span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.3</span>a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.3-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 5.3 (right)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.3</span>b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> km1, <span class="at">linetype =</span> <span class="fu">as.factor</span>(landmark)), <span class="at">data =</span> pdata3) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Landmark"</span>,<span class="at">labels=</span><span class="fu">c</span>(<span class="st">"0.5"</span>,<span class="st">"1.0"</span>,<span class="st">"1.5"</span>, <span class="st">"2.0"</span>,<span class="st">"2.5"</span>)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Conditional survival probability"</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">9</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>),</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>   theme_general <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>   <span class="fu">theme</span>(<span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>))  <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">1</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.3</span>b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.3-2.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="missing-tab-5.5-and-figs-5.10-5.11" class="level2">
+<h2 class="anchored" data-anchor-id="missing-tab-5.5-and-figs-5.10-5.11">MISSING: Tab 5.5 and Figs 5.10-5.11</h2>
+<p>TODO: run HNRV’s adapted chapter5_bmt_Eva.qmd (made frome Eva’s bmt230217.R)</p>
+</section>
+<section id="pbc3-trial" class="level2">
+<h2 class="anchored" data-anchor-id="pbc3-trial">PBC3 trial</h2>
+<section id="read-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-hash="Ch5_cache/html/read-pbc3_d3cda577702d7aa78f5ca901ec8a1f56">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-hash="Ch5_cache/html/read-pbc3-sas_619fe93ba7c6e0ce1b1c92103c49f16c">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>pbc3</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    datafile<span class="ot">=</span><span class="st">"data/pbc3.csv"</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    dbms<span class="ot">=</span>csv replace;</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>data pbc3; </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    set pbc3;</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    log2bili<span class="ot">=</span><span class="fu">log2</span>(bili);</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="table-5.6" class="level3">
+<h3 class="anchored" data-anchor-id="table-5.6">Table 5.6</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-hash="Ch5_cache/html/table-5.6_174c1bcb8b4ad75e33a01e172306b4c9">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mets)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pbcny <span class="ot">&lt;-</span> <span class="fu">subset</span>(pbc3, <span class="sc">!</span><span class="fu">is.na</span>(alb))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># COLUMN 1: t0 = 2</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>dirbin2tment <span class="ot">&lt;-</span> <span class="fu">binreg</span>(<span class="fu">Event</span>(days, status) <span class="sc">~</span> tment,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> pbc3, <span class="at">cause =</span> <span class="dv">2</span>, <span class="at">time =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>, <span class="at">cens.code =</span> <span class="dv">0</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dirbin2tment)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   n events
+ 349     33
+
+ 349 clusters
+coeffients:
+             Estimate   Std.Err      2.5%     97.5% P-value
+(Intercept) -2.209708  0.264482 -2.728083 -1.691333   0.000
+tment        0.093432  0.370632 -0.632994  0.819858   0.801
+
+exp(coeffients):
+            Estimate     2.5%  97.5%
+(Intercept) 0.109733 0.065344 0.1843
+tment       1.097936 0.530999 2.2702</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dirbin2 <span class="ot">&lt;-</span> <span class="fu">binreg</span>(<span class="fu">Event</span>(days, status) <span class="sc">~</span> tment <span class="sc">+</span> <span class="fu">I</span>(alb <span class="sc">-</span> <span class="dv">40</span>) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">log2</span>(bili) <span class="sc">-</span> <span class="fl">4.6</span>), </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> pbcny, <span class="at">cause =</span> <span class="dv">2</span>, <span class="at">time =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>, <span class="at">cens.code =</span> <span class="dv">0</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dirbin2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   n events
+ 343     33
+
+ 343 clusters
+coeffients:
+                     Estimate   Std.Err      2.5%     97.5% P-value
+(Intercept)         -2.931782  0.353853 -3.625322 -2.238242  0.0000
+tment               -0.462652  0.438797 -1.322677  0.397374  0.2917
+I(alb - 40)         -0.147338  0.036961 -0.219780 -0.074897  0.0001
+I(log2(bili) - 4.6)  0.639318  0.151149  0.343071  0.935564  0.0000
+
+exp(coeffients):
+                    Estimate     2.5%  97.5%
+(Intercept)         0.053302 0.026641 0.1066
+tment               0.629612 0.266421 1.4879
+I(alb - 40)         0.863002 0.802695 0.9278
+I(log2(bili) - 4.6) 1.895187 1.409269 2.5487</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timereg)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># COLUMN 2: t1,t2,t3 = 1,2,3</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>timereg3 <span class="ot">&lt;-</span> <span class="fu">comp.risk</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Event</span>(days, status) <span class="sc">~</span> <span class="fu">const</span>(tment),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pbc3, <span class="at">cause =</span> <span class="dv">2</span>, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="sc">*</span> <span class="fl">365.25</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"logistic"</span>, <span class="at">resample.iid =</span> <span class="dv">1</span>, <span class="at">n.sim =</span> <span class="dv">100</span>, <span class="at">monotone =</span> <span class="dv">1</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(timereg3)<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Competing risks Model 
+
+Test for nonparametric terms 
+
+Test for non-significant effects 
+            Supremum-test of significance p-value H_0: B(t)=0
+(Intercept)                          8.96                   0
+
+Test for time invariant effects 
+                  Kolmogorov-Smirnov test p-value H_0:constant effect
+(Intercept)                         0.505                           0
+                    Cramer von Mises test p-value H_0:constant effect
+(Intercept)                          94.3                           0
+
+Parametric terms : 
+               Coef.    SE Robust SE       z P-val lower2.5% upper97.5%
+const(tment) -0.0304 0.323     0.323 -0.0941 0.925    -0.663      0.603
+   </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>timereg3 <span class="ot">&lt;-</span> <span class="fu">comp.risk</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Event</span>(days, status) <span class="sc">~</span> <span class="fu">const</span>(tment) <span class="sc">+</span> <span class="fu">const</span>(<span class="fu">I</span>(alb <span class="sc">-</span> <span class="dv">40</span>)) <span class="sc">+</span>  <span class="fu">const</span>(<span class="fu">I</span>(<span class="fu">log2</span>(bili) <span class="sc">-</span> <span class="fl">4.6</span>)),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pbcny, <span class="at">cause =</span> <span class="dv">2</span>, <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>) <span class="sc">*</span> <span class="fl">365.25</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> <span class="st">"logistic"</span>, <span class="at">resample.iid =</span> <span class="dv">1</span>, <span class="at">n.sim =</span> <span class="dv">100</span>, <span class="at">monotone =</span> <span class="dv">1</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(timereg3)<span class="sc">$</span>coef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Competing risks Model 
+
+Test for nonparametric terms 
+
+Test for non-significant effects 
+            Supremum-test of significance p-value H_0: B(t)=0
+(Intercept)                          9.49                   0
+
+Test for time invariant effects 
+                  Kolmogorov-Smirnov test p-value H_0:constant effect
+(Intercept)                         0.651                           0
+                    Cramer von Mises test p-value H_0:constant effect
+(Intercept)                           156                           0
+
+Parametric terms : 
+                            Coef.     SE Robust SE     z    P-val lower2.5%
+const(tment)               -0.520 0.3730    0.3730 -1.39 1.63e-01    -1.250
+const(I(alb - 40))         -0.125 0.0349    0.0349 -3.58 3.45e-04    -0.193
+const(I(log2(bili) - 4.6))  0.579 0.1280    0.1280  4.54 5.74e-06     0.328
+                           upper97.5%
+const(tment)                   0.2110
+const(I(alb - 40))            -0.0566
+const(I(log2(bili) - 4.6))     0.8300
+   </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Not available</p>
+</div>
+</div>
+</div>
+</section>
+<section id="figure-5.12" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.12">Figure 5.12</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.12_d0d640fa8c1155cda87859a89d591dea">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>        <span class="fu">library</span>(timereg)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Cox model fit</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>followup <span class="ot">&lt;-</span> pbc3<span class="sc">$</span>days <span class="sc">/</span> <span class="fl">365.25</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cox.aalen</span>(<span class="fu">Surv</span>(followup, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">prop</span>(tment) <span class="sc">+</span> <span class="fu">prop</span>(alb) <span class="sc">+</span> <span class="fu">prop</span>(bili),</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> pbc3, <span class="at">n.sim =</span> <span class="dv">0</span>,</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">residuals =</span> <span class="dv">1</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative martingale residuals</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">061166</span>)</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>cum_res <span class="ot">&lt;-</span> <span class="fu">cum.residuals</span>(fit, pbc3, <span class="at">cum.resid=</span><span class="dv">1</span>, <span class="at">max.point.func =</span> <span class="dv">50</span>, <span class="at">n.sim =</span> <span class="dv">1000</span>)</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>cumresdata_alb <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">alb =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">1</span>]][,<span class="dv">1</span>]),</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">1</span>]][,<span class="dv">2</span>])</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>cumresdata_albsim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">alb =</span> <span class="fu">rep</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">1</span>]][,<span class="dv">1</span>]),<span class="at">times =</span> <span class="dv">50</span>),</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">c</span>(cum_res<span class="sc">$</span>sim.test.proccumz[[<span class="dv">1</span>]]),</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="at">each =</span> <span class="fu">length</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">1</span>]][,<span class="dv">1</span>])))</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.12</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> alb, <span class="at">y =</span> cum_mg_res), <span class="at">data =</span> cumresdata_alb) <span class="sc">+</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> alb, <span class="at">y =</span> cum_mg_res, <span class="at">group =</span> sim), </span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> cumresdata_albsim) <span class="sc">+</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Albumin"</span>) <span class="sc">+</span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative martingale residuals"</span>) <span class="sc">+</span></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.12-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>cum_res<span class="sc">$</span>pval.test[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(alb) 
+    0.459 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.13" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.13">Figure 5.13</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.13_0edad9c85596a5b2c6c7334d4466c462">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Figure bili</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cumresdata_bili <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">bili =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>]),</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">2</span>])</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>cumresdata_bilisim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">bili=</span> <span class="fu">rep</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>]), <span class="at">times =</span> <span class="dv">50</span>),</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">c</span>(cum_res<span class="sc">$</span>sim.test.proccumz[[<span class="dv">2</span>]]),</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="at">each =</span> <span class="fu">length</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>])))</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.13</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bili, <span class="at">y =</span> cum_mg_res), <span class="at">data =</span> cumresdata_bili) <span class="sc">+</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> bili, <span class="at">y =</span> cum_mg_res, <span class="at">group =</span> sim),</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> cumresdata_bilisim) <span class="sc">+</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Bilirubin"</span>) <span class="sc">+</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative martingale residuals"</span>) <span class="sc">+</span> </span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.13-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p-value</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cum_res<span class="sc">$</span>pval.test[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(bili) 
+         0 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.14" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.14">Figure 5.14</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.14_a62f46e8c507f48f7eeda44135e8370a">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Cox model fit with log2bili</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">cox.aalen</span>(</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(followup, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">prop</span>(tment) <span class="sc">+</span> <span class="fu">prop</span>(alb) <span class="sc">+</span> <span class="fu">prop</span>(log2bili),</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pbc3, <span class="at">n.sim =</span> <span class="dv">0</span>, <span class="at">residuals =</span> <span class="dv">1</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative martingale residuals</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">061166</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>cum_res <span class="ot">&lt;-</span> <span class="fu">cum.residuals</span>(fit2, pbc3, <span class="at">cum.resid=</span><span class="dv">1</span>, <span class="at">max.point.func =</span> <span class="dv">50</span>, <span class="at">n.sim =</span> <span class="dv">1000</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>cumresdata_log2bili <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">log2bili =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>]),</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">2</span>])</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>cumresdata_log2bilisim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">log2bili =</span> <span class="fu">rep</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>]),<span class="at">times =</span> <span class="dv">50</span>),</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">cum_mg_res =</span> <span class="fu">c</span>(cum_res<span class="sc">$</span>sim.test.proccumz[[<span class="dv">2</span>]]),</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">each =</span> <span class="fu">length</span>(<span class="fu">unname</span>(cum_res<span class="sc">$</span>proc.cumz[[<span class="dv">2</span>]][,<span class="dv">1</span>])))</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.14</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> cum_mg_res), </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> cumresdata_log2bili) <span class="sc">+</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> cum_mg_res, <span class="at">group =</span> sim), </span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> cumresdata_log2bilisim) <span class="sc">+</span></span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(<span class="st">"log"</span> [<span class="dv">2</span>] <span class="sc">*</span> <span class="st">"(bilirubin)"</span>))<span class="sc">+</span></span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative martingale residuals"</span>) <span class="sc">+</span></span>
+<span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.14-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>cum_res<span class="sc">$</span>pval.test[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(log2bili) 
+         0.481 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.15" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.15">Figure 5.15</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.15_88642af797eec34b8f16e15c49e90ebd">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute Schoenfeld residuals (standardized)</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">130966</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">cox.aalen</span>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Surv</span>(followup, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">prop</span>(tment) <span class="sc">+</span> <span class="fu">prop</span>(alb) <span class="sc">+</span> <span class="fu">prop</span>(log2bili),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> pbc3, <span class="at">n.sim =</span> <span class="dv">1000</span>, <span class="at">residuals =</span> <span class="dv">1</span>, <span class="at">weighted.test =</span> <span class="dv">1</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cox-Aalen Model 
+
+Test for Aalen terms 
+Test not computed, sim=0 
+
+Proportional Cox terms :  
+                 Coef.     SE Robust SE D2log(L)^-1     z    P-val lower2.5%
+prop(tment)    -0.5750 0.2250    0.2240      0.2240 -2.57 1.02e-02    -1.020
+prop(alb)      -0.0909 0.0208    0.0211      0.0216 -4.31 1.62e-05    -0.132
+prop(log2bili)  0.6650 0.0728    0.0696      0.0744  9.56 0.00e+00     0.522
+               upper97.5%
+prop(tment)       -0.1340
+prop(alb)         -0.0501
+prop(log2bili)     0.8080
+Test of Proportionality 
+               sup|  hat U(t) | p-value H_0 
+prop(tment)                1.33        0.919
+prop(alb)                  2.04        0.418
+prop(log2bili)             1.89        0.568</code></pre>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit3, <span class="at">score =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.15-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.15-2.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.15-3.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> fit3<span class="sc">$</span>residuals<span class="sc">$</span>time</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>sim <span class="ot">&lt;-</span> fit3<span class="sc">$</span>sim.test.procProp</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>obs <span class="ot">&lt;-</span> fit3<span class="sc">$</span>test.procProp</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>data_tment_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> time,<span class="at">res =</span> obs[,<span class="dv">2</span>])</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>data_tment_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">res =</span> <span class="fu">do.call</span>(<span class="st">"rbind"</span>, sim)[,<span class="dv">1</span>],</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">time =</span> <span class="fu">rep</span>(time, <span class="at">times =</span> <span class="dv">50</span>), </span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">each =</span> <span class="fu">length</span>(time)))</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.15</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res), <span class="at">data =</span> data_tment_obs) <span class="sc">+</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res, <span class="at">group =</span> sim), </span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> data_tment_sim) <span class="sc">+</span></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(<span class="st">"Time since randomization (years)"</span>))<span class="sc">+</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Standardized score process"</span>) <span class="sc">+</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.15-4.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fit3<span class="sc">$</span>pval.Prop[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(tment) 
+      0.919 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.16" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.16">Figure 5.16</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.16_3aed2dd91c1b73cd41b5fe7010287e42">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same but for albumin</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>data_alb_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> time, </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">res =</span> obs[,<span class="dv">3</span>])</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>data_alb_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">res =</span> <span class="fu">do.call</span>(<span class="st">"rbind"</span>, sim)[,<span class="dv">2</span>],</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">time =</span> <span class="fu">rep</span>(time, <span class="at">times =</span> <span class="dv">50</span>), </span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">each =</span> <span class="fu">length</span>(time)))</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.16</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res), <span class="at">data =</span> data_alb_obs) <span class="sc">+</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res, <span class="at">group =</span> sim), </span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> data_alb_sim) <span class="sc">+</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(<span class="st">"Time since randomization (years)"</span>))<span class="sc">+</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Standardized score process"</span>) <span class="sc">+</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.16-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>fit3<span class="sc">$</span>pval.Prop[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(alb) 
+    0.418 </code></pre>
+</div>
+</div>
+</section>
+<section id="figure-5.17" class="level3">
+<h3 class="anchored" data-anchor-id="figure-5.17">Figure 5.17</h3>
+<div class="cell" data-hash="Ch5_cache/html/figure-5.17_9e1a22408656cc5af10caa70159f0b89">
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same but for log2bili</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>data_log2bili_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> time, </span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">res =</span> obs[,<span class="dv">4</span>])</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>data_log2bili_sim <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">res =</span> <span class="fu">do.call</span>(<span class="st">"rbind"</span>, sim)[,<span class="dv">3</span>],</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">time =</span> <span class="fu">rep</span>(time, <span class="at">times =</span> <span class="dv">50</span>), </span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sim =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>, <span class="at">each =</span> <span class="fu">length</span>(time)))</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.17</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res), <span class="at">data =</span> data_log2bili_obs) <span class="sc">+</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> res, <span class="at">group =</span> sim), </span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">data =</span> data_log2bili_sim) <span class="sc">+</span></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(<span class="st">"Time since randomization (years)"</span>))<span class="sc">+</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Standardized score process"</span>) <span class="sc">+</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.17</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Ch5_files/figure-html/figure-5.17-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+<details>
+<summary>Code hide/show</summary>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit3<span class="sc">$</span>pval.Prop[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop(log2bili) 
+         0.568 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="prova-trial" class="level2">
+<h2 class="anchored" data-anchor-id="prova-trial">Prova trial</h2>
+<p>TODO: take some runtime <!-- {{< include R/chapter5_prova.qmd >}} --></p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

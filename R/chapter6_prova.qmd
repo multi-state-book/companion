@@ -1,21 +1,11 @@
-#------------------------------------------------------------------#
-#------- Chapter 6, R code, PROVA data ----------------------------#
-#------------------------------------------------------------------#
+### Read data
 
-# Set working directory - location of data
-#setwd("C:/Users/JUKF/University of Copenhagen/UCPH_MSB - General/Julie programs")
-
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-
-prova <- read.csv("data/prova.csv", na.strings = c("."))
-head(prova)
-
-prova <- data.frame(prova)
+```{r}
+#| label: read-prova
+prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
+# Treatment 2x2 factorial
+prova$beh <- with(prova, as.factor(scle + beta*2))
+library(tidyverse)
 prova <- prova %>% mutate(timebleed = ifelse(bleed == 1, timebleed, timedeath),
                           outof0 = ifelse(bleed ==1, 1, death),
                           wait = ifelse(bleed ==1, timedeath - timebleed, NA))
@@ -31,25 +21,19 @@ s2 = 2*365.25
 #Censoring times
 cens_outof0 <- 1509
 cens_wait <- 1363
+```
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------#
-#------------------------------------------------------------------#
+### Figure 6.10
 
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom",
-        text = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
+TODO: get program to make data file `datafig610.csv`
 
-#------------------------------------------------------------------#
-#---------------- Figure 6.10 -------------------------------------#
-#------------------------------------------------------------------#
-library(survival) #Cox models, Kaplan-Meier, ect. 
-library(tidyverse) #Plots
-library(data.table) #Faster aggregation of data
+```{r}
+#| label: figure-6.10
+#| out-width: 90%
+
 library(mstate)
-library(xtable)
+library(survival)
+library(data.table) #Faster aggregation of data
 
 # Creating data frame
 # Converting data to long format
@@ -60,8 +44,8 @@ long_format_scle1 <- msprep(time = c(NA, "timebleed", "timedeath"), status = c(N
 
 # Estimation of transition probabilities with the Landmark Aalen-Johansen estimator
 # Warning is not related to the estimate of pstate2
-(LMAaJ_scle0 <- LMAJ(long_format_scle0, s = s1, from = 1)) #P(V(t) = 1 | V(1) = 0)
-(LMAaJ_scle1 <- LMAJ(long_format_scle1, s = s1, from = 1)) #P(V(t) = 1 | V(1) = 0)
+LMAaJ_scle0 <- LMAJ(long_format_scle0, s = s1, from = 1) #P(V(t) = 1 | V(1) = 0)
+LMAaJ_scle1 <- LMAJ(long_format_scle1, s = s1, from = 1) #P(V(t) = 1 | V(1) = 0)
 
 LMAJ_scle0_data <- as.data.frame(cbind(LMAaJ_scle0$time, LMAaJ_scle0$pstate2, "No"))
 colnames(LMAJ_scle0_data) <- c("time", "p01", "Sclerotherapy")
@@ -69,11 +53,16 @@ LMAJ_scle1_data <- as.data.frame(cbind(LMAaJ_scle1$time, LMAaJ_scle1$pstate2, "Y
 colnames(LMAJ_scle1_data) <- c("time", "p01", "Sclerotherapy")
 
 LMAJ_scle <- as.data.frame(rbind(LMAJ_scle0_data, LMAJ_scle1_data))
+LMAJ_scle <- read.csv("R/data/datafig610.csv")
 
+library(ggplot2)
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 20),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20))
 
-LMAJ_scle <- read.csv("data/datafig610.csv")
-
-fig610 <- ggplot(LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01), group = Sclerotherapy)) + 
+fig6.10 <- ggplot(LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01), group = Sclerotherapy)) + 
   geom_step(size = 1) +
   xlab("Time since randomization (years)") +
   ylab("Probability") + 
@@ -81,18 +70,10 @@ fig610 <- ggplot(LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01),
   scale_x_continuous(expand = expansion(),limits = c(0.94,4.2)) +  
   aes(linetype=Sclerotherapy) + theme_general + 
   theme(legend.key.width = unit(1,"cm"),legend.text = element_text(size = 20)) 
-fig610
+fig6.10
 
-ggsave("figures/h_provascle.pdf", plot = fig610,
-       width = 29.7, height = 21, units = "cm")
+```
 
+### Table 6.7
 
-#------------------------------------------------------------------#
-#---------------- Table 6.7 ---------------------------------------#
-#------------------------------------------------------------------#
-
-## SEE REFERENCE PAPER
-
-
-
-
+No code available - results are from: Andersen, P. K., Wandall, E. N. S., Pohar Perme, M. (2022). Inference for transition probabilities in non-Markov multi-state models. *Lifetime Data Analysis*, 28:585--604. 

@@ -301,7 +301,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-bissau_4704984d65e903bedb6db66572bbbd00">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables for age as time scale and dtp binary</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agein  <span class="ot">&lt;-</span> <span class="fu">with</span>(bissau, age<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>))</span>
@@ -314,7 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="table-3.1">Table 3.1</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.1_c75c10b1c73ddab6324dd9d4062b1c24">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -324,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   1 1159 1299  582  261</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp) <span class="sc">/</span> <span class="fu">rowSums</span>(<span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -339,7 +339,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="table-3.2">Table 3.2</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.2_c16a0ee13613e4d5caf4cf677dfd3634">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -355,7 +355,7 @@ Likelihood ratio test=6.28  on 1 df, p=0.01218
 n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -370,7 +370,7 @@ Likelihood ratio test=0.07  on 1 df, p=0.7958
 n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg<span class="sc">+</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -386,7 +386,7 @@ Likelihood ratio test=9.01  on 2 df, p=0.01106
 n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(agein,ageout,dead<span class="sc">!=</span><span class="dv">0</span>)<span class="sc">~</span>bcg<span class="sc">*</span>dtpany,<span class="at">data=</span>bissau,<span class="at">method=</span><span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -411,7 +411,7 @@ n= 5274, number of events= 222 </code></pre>
 <h3 class="unnumbered anchored" data-anchor-id="read-data-1">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-pbc3_482837a36b5e1f7842db442011126406">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>years <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, days<span class="sc">/</span><span class="fl">365.25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -422,7 +422,7 @@ n= 5274, number of events= 222 </code></pre>
 <h3 class="unnumbered anchored" data-anchor-id="table-3.11">Table 3.11</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.11_631771ea8a9c8f3ccbf34bdf742a1784">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment </span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
@@ -445,7 +445,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -466,7 +466,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(tment), </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -487,7 +487,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Albumin </span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span>t, <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -508,7 +508,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -529,7 +529,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(alb), </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3,  <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -550,7 +550,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log2 bilirubin</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span>t, <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -572,7 +572,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3, <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) x<span class="sc">*</span><span class="fu">log</span>(t), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -593,7 +593,7 @@ n= 343, number of events= 88
    (6 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(years, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">tt</span>(log2bili), </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> pbc3,  <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...) (x)<span class="sc">*</span>(t<span class="sc">&gt;</span><span class="dv">2</span>), <span class="at">method =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -622,7 +622,7 @@ n= 343, number of events= 88
 <h3 class="anchored" data-anchor-id="read-data-2">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-prova_64f29bce51cd7fefeb1eec4fd6552814">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment 2x2 factorial</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>prova<span class="sc">$</span>beh <span class="ot">&lt;-</span> <span class="fu">with</span>(prova, <span class="fu">as.factor</span>(scle <span class="sc">+</span> beta<span class="sc">*</span><span class="dv">2</span>))</span>
@@ -643,7 +643,7 @@ n= 343, number of events= 88
 <h3 class="anchored" data-anchor-id="table-3.3">Table 3.3</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.3_b23842efd6503399577a640760f42051">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -664,7 +664,7 @@ Likelihood ratio test=0.07  on 3 df, p=0.9951
 n= 286, number of events= 50 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh, <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -681,7 +681,7 @@ Likelihood ratio test=12.74  on 3 df, p=0.005244
 n= 286, number of events= 46 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logrank test: Variceal bleeding</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>lr<span class="ot">&lt;-</span><span class="fu">survdiff</span>(<span class="fu">Surv</span>(btime, bleed) <span class="sc">~</span> beh, <span class="at">data =</span> provany)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(lr<span class="sc">$</span>chisq,lr<span class="sc">$</span>pvalue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -690,7 +690,7 @@ n= 286, number of events= 46 </code></pre>
 <pre><code>[1] 0.07114524 0.99505932</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># logrank test: Death without bleeding</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>lr<span class="ot">&lt;-</span><span class="fu">survdiff</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh, <span class="at">data =</span> provany)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(lr<span class="sc">$</span>chisq,lr<span class="sc">$</span>pvalue)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -699,7 +699,7 @@ n= 286, number of events= 46 </code></pre>
 <pre><code>[1] 12.856428541  0.004957601</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Column 2</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Variceal bleeding</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bleed) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
@@ -725,7 +725,7 @@ n= 271, number of events= 47
    (15 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>cox1<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -751,7 +751,7 @@ n= 271, number of events= 46
    (15 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding - reduced model</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>cox2<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> scle <span class="sc">+</span> beta <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -776,7 +776,7 @@ n= 271, number of events= 46
    (15 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT reduced model</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(cox1,cox2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -791,7 +791,7 @@ Model 2: Surv(d0time, dead0) ~ scle + beta + sex + coag + log2bili + factor(vars
 2   7 -216.19 -1 0.127     0.7215</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without bleeding - 'final model'</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>cox3<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(d0time, dead0) <span class="sc">~</span> scle <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -816,7 +816,7 @@ n= 271, number of events= 46
    (15 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(cox2,cox3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -834,7 +834,7 @@ Model 2: Surv(d0time, dead0) ~ scle + sex + coag + log2bili + factor(varsize)
 <h3 class="anchored" data-anchor-id="table-3.4">Table 3.4</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.4_1faf1104007f75a9ebdf31188303f8c2">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>cox<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, outof0) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -860,7 +860,7 @@ n= 271, number of events= 93
    (15 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for treatment</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>coxreduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, outof0) <span class="sc">~</span> sex <span class="sc">+</span> coag <span class="sc">+</span> log2bili <span class="sc">+</span> <span class="fu">factor</span>(varsize),</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -881,7 +881,7 @@ Model 2: Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize)
 <h3 class="anchored" data-anchor-id="table-3.8">Table 3.8</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.8_a2179040f496ed2d7f55f8074e2ba571">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time since randomization (tsr)</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>coxtsr<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
@@ -905,7 +905,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>coxtsr0<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili, </span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>coxtsr0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -924,7 +924,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr,coxtsr0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -941,7 +941,7 @@ Model 2: Surv(btime, bdtime, deadb != 0) ~ sex + log2bili
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>coxnoint<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> scle <span class="sc">+</span> beta  <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT interaction</span></span>
@@ -959,7 +959,7 @@ Model 2: Surv(btime, bdtime, deadb != 0) ~ scle + beta + sex + log2bili
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>tsb<span class="ot">&lt;-</span>provany<span class="sc">$</span>btime</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>coxtsr_tt<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
@@ -993,7 +993,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr,coxtsr_tt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1009,7 +1009,7 @@ Model 2: Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili + tt(tsb)
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or as mentioned in text, model linear effect of time-dependent covariate</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh<span class="sc">+</span>sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
@@ -1036,7 +1036,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>coxtsr_tt_reduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -1065,7 +1065,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxtsr_tt,coxtsr_tt_reduced)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1079,7 +1079,7 @@ Model 2: Surv(btime, bdtime, deadb != 0) ~ sex + log2bili + tt(tsb)
 2   4 -53.081 -3 5.2064     0.1573</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Duration</span></span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>coxdur<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili,</span>
@@ -1103,7 +1103,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>coxdur0<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili,</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>coxdur0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1122,7 +1122,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for beh</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxdur,coxdur0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1138,7 +1138,7 @@ Model 2: Surv(wait, deadb != 0) ~ sex + log2bili
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>provany<span class="sc">$</span>tsr<span class="ot">&lt;-</span>provany<span class="sc">$</span>btime</span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>coxdur_tt<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> beh <span class="sc">+</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsr),</span>
@@ -1173,7 +1173,7 @@ n= 48, number of events= 27
    (238 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(coxdur,coxdur_tt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1187,7 +1187,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 2   7 -86.464  2 0.0618     0.9696</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>coxdur_tt_reduced<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(btime, bdtime, deadb <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> sex <span class="sc">+</span> log2bili<span class="sc">+</span><span class="fu">tt</span>(tsb), </span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">data =</span> provany, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -1201,7 +1201,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 <h3 class="anchored" data-anchor-id="figure-3.2">Figure 3.2</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.2_7061bc40db363e3e55f24a674f84d208">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting style </span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -1251,7 +1251,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 <h3 class="anchored" data-anchor-id="figure-3.3">Figure 3.3</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.3_744c761998021b7767c923bce316df5e">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">survfit</span>(coxdur, </span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">sex =</span> <span class="dv">0</span>, </span>
@@ -1282,7 +1282,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 <h3 class="anchored" data-anchor-id="table-3.9">Table 3.9</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.9_99d3ef2e99fdbf5716b510b325d8eda3">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All bleeds</span></span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>provasplit11 <span class="ot">&lt;-</span> <span class="fu">subset</span>(provany, bleed <span class="sc">==</span> <span class="dv">1</span>)</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Split by duration</span></span>
@@ -1331,7 +1331,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 <h3 class="anchored" data-anchor-id="table-3.10">Table 3.10</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.10_4a197e9f279b8d9df1529a0f70c2d7bf">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (a)</span></span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span> </span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>              sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit1, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1365,7 +1365,7 @@ AIC: 219.88
 Number of Fisher Scoring iterations: 8</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (b)</span></span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">relevel</span>(<span class="fu">as.factor</span>(tint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span> </span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>              sex <span class="sc">+</span> log2bili, <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1399,7 +1399,7 @@ AIC: 272.95
 Number of Fisher Scoring iterations: 8</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (c)</span></span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
@@ -1438,7 +1438,7 @@ AIC: 234.21
 Number of Fisher Scoring iterations: 7</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interaction model, in-text but not shown</span></span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> <span class="fu">as.factor</span>(tint) <span class="sc">*</span> <span class="fu">as.factor</span>(wint) <span class="sc">+</span> sex <span class="sc">+</span> log2bili, </span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> provasplit2, <span class="at">family =</span> poisson)</span>
@@ -1479,7 +1479,7 @@ AIC: 240.93
 Number of Fisher Scoring iterations: 13</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for time-dependent covariates</span></span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>glmboth<span class="ot">&lt;-</span><span class="fu">glm</span>(fail2 <span class="sc">~</span> <span class="fu">offset</span>(<span class="fu">log</span>(risktime2)) <span class="sc">+</span> beh <span class="sc">+</span> </span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">relevel</span>(<span class="fu">as.factor</span>(wint), <span class="at">ref =</span> <span class="st">"3"</span>) <span class="sc">+</span></span>
@@ -1509,7 +1509,7 @@ Model 2: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(tint),
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT effect of time since randomization</span></span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(glmboth,glmwint)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1531,7 +1531,7 @@ Model 2: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint),
 <h3 class="anchored" data-anchor-id="table-3.13">Table 3.13</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.13_4f5b331c396d39dd2dc178e33addf185">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>double1 <span class="ot">&lt;-</span> provany <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">time =</span> d0time, </span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">status =</span> dead0, </span>
@@ -1578,7 +1578,7 @@ n= 323, number of events= 73
    (13 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (b)</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>b <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(bleeding) <span class="sc">+</span> sex <span class="sc">+</span> bili1 <span class="sc">+</span> bili2, </span>
 <span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -1599,7 +1599,7 @@ n= 323, number of events= 73
    (13 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT sex</span></span>
 <span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(Table3<span class="fl">.13</span>a, Table3<span class="fl">.13</span>b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1615,7 +1615,7 @@ Model 2: Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex +
 2   3 -288.94 -1 0.043     0.8357</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT log2(bilirubin)</span></span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>bx <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(bleeding) <span class="sc">+</span> sex1 <span class="sc">+</span> sex2 <span class="sc">+</span> log2bili, </span>
 <span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -1635,7 +1635,7 @@ Model 2: Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex1 +
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (c)</span></span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>Table3<span class="fl">.13</span>c <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(bleeding) <span class="sc">+</span> sex <span class="sc">+</span> bili1, </span>
 <span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -1655,7 +1655,7 @@ n= 323, number of events= 73
    (13 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT proportionality</span></span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a>ph<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entrytime, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bleeding <span class="sc">+</span> sex <span class="sc">+</span> bili1, </span>
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> double, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -1686,7 +1686,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.9">Figure 3.9</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.9_931a5767622d106822114cd4059e3d69">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>survr1 <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(Table3<span class="fl">.13</span>a, <span class="at">center =</span> F)</span>
 <span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>pcumhaz <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -1719,7 +1719,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="read-data-3">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-testis_3e047e0850e9d3ce1cfbc4a6b1e31f02">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>testis <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/testis.csv"</span>))</span>
 <span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add extra variables</span></span>
 <span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>lpyrs <span class="ot">&lt;-</span> <span class="fu">log</span>(testis<span class="sc">$</span>pyrs)</span>
@@ -1731,7 +1731,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.1">Figure 3.1</h3>
 <div class="cell" data-out.widt="66%" data-hash="Ch3_cache/html/figure-3.1_ac3c980399c65e3cc7a99a2119398916">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames</span></span>
 <span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="dv">1900</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">58</span>, <span class="dv">63</span>, <span class="dv">68</span>, <span class="dv">73</span>), </span>
 <span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y1 =</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
@@ -1814,7 +1814,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="table-3.5">Table 3.5</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.5_e01ec4ce6196a94eb9289bf96e0cc6c3">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1849,7 +1849,7 @@ AIC: 540.84
 Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
 <span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>motherage <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>motherage)</span>
 <span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>motherage <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>motherage, <span class="at">ref =</span> <span class="st">"30"</span>)</span>
@@ -1891,7 +1891,7 @@ AIC: 543.98
 Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(poisfull, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -1913,7 +1913,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 13 cohort1968  1.14        0.236      0.567 5.71e-  1 0.729      1.84    </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for mother's age</span></span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>poismage<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> cohort, </span>
 <span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> testis,<span class="at">family =</span> poisson)</span>
@@ -1929,7 +1929,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + cohort
 2  10 -260.25 -3 2.5336     0.4692</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT for birth cohort of son</span></span>
 <span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>poiscohort<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage, </span>
 <span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> testis,<span class="at">family =</span> poisson)</span>
@@ -1947,7 +1947,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LRT parity and age</span></span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>poisinteract<span class="ot">&lt;-</span><span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort <span class="sc">+</span> par2<span class="sc">*</span>age, </span>
 <span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> testis, <span class="at">family =</span> poisson)</span>
@@ -1964,7 +1964,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 2  17 -255.11  4 7.7606     0.1008</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HR for seminomas</span></span>
 <span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">glm</span>(semi <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort, </span>
 <span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> testis, <span class="at">family =</span> poisson),</span>
@@ -1989,7 +1989,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 13 cohort1968  0.691         0.879   -0.421  6.74e- 1 0.140       5.18    </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HAr for non-seminomas</span></span>
 <span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">glm</span>(nonsemi <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age <span class="sc">+</span> motherage <span class="sc">+</span> cohort, </span>
 <span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> testis, <span class="at">family =</span> poisson),</span>
@@ -2022,7 +2022,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 <h3 class="anchored" data-anchor-id="read-data-4">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-affective_336c76a332a94bdaaa35718072e899f0">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>wait <span class="ot">&lt;-</span> <span class="fu">with</span>(affective, stop <span class="sc">-</span> start)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2032,7 +2032,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 <h3 class="anchored" data-anchor-id="table-3.6">Table 3.6</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.6_b22db2bcf36ef31dccc110f4987f4452">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip,</span>
 <span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2049,7 +2049,7 @@ Likelihood ratio test=14.24  on 1 df, p=0.0001612
 n= 626, number of events= 542 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> episode,</span>
 <span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2066,7 +2066,7 @@ Likelihood ratio test=177.8  on 2 df, p=&lt; 2.2e-16
 n= 626, number of events= 542 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb139"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb139-1"><a href="#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> episode <span class="sc">+</span> <span class="fu">I</span>(episode<span class="sc">*</span>episode),</span>
 <span id="cb139-2"><a href="#cb139-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2085,7 +2085,7 @@ Likelihood ratio test=283.1  on 3 df, p=&lt; 2.2e-16
 n= 626, number of events= 542 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>epi<span class="ot">&lt;-</span><span class="fu">with</span>(affective, <span class="fu">ifelse</span>(episode<span class="sc">&lt;</span><span class="dv">25</span>,episode,<span class="dv">25</span>))</span>
 <span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> <span class="fu">factor</span>(epi),</span>
 <span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2131,7 +2131,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="table-3.7">Table 3.7</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.7_0f758696dfdfd2a17d7fc4ade6288a84">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> <span class="fu">tt</span>(year),</span>
 <span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>), <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
 <span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -2171,7 +2171,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="read-data-5">Read data</h3>
 <div class="cell" data-hash="Ch3_cache/html/read-bmt_6052f2ef2561f9517630da7497eb6616">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>bmt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bmt.csv"</span>))</span>
 <span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxsurv<span class="ot">&lt;-</span> bmt<span class="sc">$</span>timedeath</span>
 <span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxrel <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(bmt<span class="sc">$</span>rel <span class="sc">==</span> <span class="dv">1</span>, bmt<span class="sc">$</span>timerel, bmt<span class="sc">$</span>timedeath)</span>
@@ -2186,7 +2186,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.5">Figure 3.5</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.5_2ccb469d3eff5860bab77f31012e397b">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General theme</span></span>
 <span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -2222,7 +2222,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.6">Figure 3.6</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.6_13ff574fd56dbf7748437b940400bd08">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformatting</span></span>
 <span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>nyreltime <span class="ot">&lt;-</span> <span class="fu">with</span>(bmt, <span class="fu">ifelse</span>(tgvhd <span class="sc">&lt;</span> intxrel, tgvhd, intxrel))</span>
 <span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>nyrel <span class="ot">&lt;-</span> <span class="fu">with</span>(bmt, <span class="fu">ifelse</span>(tgvhd <span class="sc">&lt;</span> intxrel, <span class="dv">0</span>, rel))</span>
@@ -2263,7 +2263,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.7">Figure 3.7</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.7_c03e11e2049222e624583466cb3d66da">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to get the cumulative hazard estimates at the same time points</span></span>
 <span id="cb148-2"><a href="#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co"># All times</span></span>
 <span id="cb148-3"><a href="#cb148-3" aria-hidden="true" tabindex="-1"></a>all_t <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">c</span>(<span class="fu">unique</span>(pdata11<span class="sc">$</span>time), <span class="fu">unique</span>(pdata12<span class="sc">$</span>time))))</span>
@@ -2316,7 +2316,7 @@ n= 626, number of events= 542 </code></pre>
 <h4 class="anchored" data-anchor-id="relapse">Relapse</h4>
 <div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-relapse_87db1869db401b8dd1c826d9008defc9">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb149-2"><a href="#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd), <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
 <span id="cb149-3"><a href="#cb149-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -2331,7 +2331,7 @@ n= 626, number of events= 542 </code></pre>
 1 tt(tgvhd)    0.858     0.132     -1.15   0.248    0.663      1.11</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb151"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb151-1"><a href="#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test ph</span></span>
 <span id="cb151-2"><a href="#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd), <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
 <span id="cb151-3"><a href="#cb151-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -2352,7 +2352,7 @@ n= 626, number of events= 542 </code></pre>
 <h4 class="anchored" data-anchor-id="death-in-remission">Death in remission</h4>
 <div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-death_eedff2b58e94b6730e223cace4ef7320">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd), <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
 <span id="cb153-2"><a href="#cb153-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
 <span id="cb153-3"><a href="#cb153-3" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
@@ -2366,7 +2366,7 @@ n= 626, number of events= 542 </code></pre>
 1 tt(tgvhd)     3.11    0.0964      11.8 4.88e-32     2.58      3.76</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test ph</span></span>
 <span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd), <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
 <span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
@@ -2388,7 +2388,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.8">Figure 3.8</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.8_820025365488e09d26a9188e99f07463">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate without GvHD </span></span>
 <span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(nyreltime, nytrm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
 <span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2448,7 +2448,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-3.4">Figure 3.4</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.4_bcaa08ad25f88d12dd87d93c3da11758">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death hazards wrt relapse; </span></span>
 <span id="cb158-2"><a href="#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate no relapse or GvHD</span></span>
 <span id="cb158-3"><a href="#cb158-3" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
@@ -2474,7 +2474,7 @@ n= 626, number of events= 542 </code></pre>
 225 8.057091 105.10</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.4</span></span>
 <span id="cb160-2"><a href="#cb160-2" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata11) <span class="sc">+</span> </span>
 <span id="cb160-3"><a href="#cb160-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
@@ -2500,7 +2500,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="table-3.12">Table 3.12</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.12_dc810ad2eeaad57a353de9a80af56df1">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relapse</span></span>
 <span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
 <span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
@@ -2529,7 +2529,7 @@ Likelihood ratio test=22.52  on 4 df, p=0.0001578
 n= 2009, number of events= 259 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb163"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb163-1"><a href="#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
 <span id="cb163-2"><a href="#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
 <span id="cb163-3"><a href="#cb163-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
@@ -2558,7 +2558,7 @@ Likelihood ratio test=24.91  on 5 df, p=0.0001452
 n= 2009, number of events= 259 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death in remission</span></span>
 <span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
 <span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
@@ -2587,7 +2587,7 @@ Likelihood ratio test=227  on 4 df, p=&lt; 2.2e-16
 n= 2009, number of events= 505 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
 <span id="cb167-2"><a href="#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
 <span id="cb167-3"><a href="#cb167-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
@@ -2621,7 +2621,7 @@ n= 2009, number of events= 505 </code></pre>
 <h3 class="anchored" data-anchor-id="table-3.14">Table 3.14</h3>
 <div class="cell" data-hash="Ch3_cache/html/table 3.14_8a3738d98dc75138dd248fd2f3a3b49f">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
 <span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a>bmtext <span class="ot">&lt;-</span> bmt <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">nygsource =</span> bmonly, </span>
@@ -2677,7 +2677,7 @@ n= 2983, number of events= 505
    (2 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb171"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb171-1"><a href="#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 2</span></span>
 <span id="cb171-2"><a href="#cb171-2" aria-hidden="true" tabindex="-1"></a>doubledod<span class="sc">$</span>type <span class="ot">&lt;-</span> doubledod<span class="sc">$</span>stratum <span class="sc">-</span> <span class="dv">1</span></span>
 <span id="cb171-3"><a href="#cb171-3" aria-hidden="true" tabindex="-1"></a>r2<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type, </span>
@@ -2701,7 +2701,7 @@ n= 2983, number of events= 505
    (2 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>r2t<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type</span>
 <span id="cb173-2"><a href="#cb173-2" aria-hidden="true" tabindex="-1"></a>           <span class="sc">+</span><span class="fu">tt</span>(type), </span>
 <span id="cb173-3"><a href="#cb173-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
@@ -2725,7 +2725,7 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 2   6 -3541.8  1 2.0768     0.1496</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 3</span></span>
 <span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>r3<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> nydisease <span class="sc">+</span> age10 <span class="sc">+</span> type, </span>
 <span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
@@ -2746,7 +2746,7 @@ n= 2983, number of events= 505
    (2 observations deleted due to missingness)</code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT common coefficients</span></span>
 <span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(r3,r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2766,7 +2766,7 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <h3 class="anchored" data-anchor-id="figure-3.10">Figure 3.10</h3>
 <div class="cell" data-hash="Ch3_cache/html/figure-3.10_b8fe03b561bb2a1c7b45aa0399c5722a">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
 <span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>survr1 <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(r1, <span class="at">center =</span> F)</span>
 <span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>pcumhaz <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> survr1<span class="sc">$</span>hazard, </span>
@@ -2795,7 +2795,7 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <h3 class="anchored" data-anchor-id="table-3.15">Table 3.15</h3>
 <div class="cell" data-hash="Ch3_cache/html/table-3.15_50ba97e9a9fb8f826e862ccc8ed259ea">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
 <span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gamma</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2817,7 +2817,7 @@ Likelihood ratio test=214  on 53.7 df, p=&lt;2e-16
 n= 2009, number of events= 764 </code></pre>
 </div>
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age</span>
 <span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gaussian</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>, <span class="at">sparse=</span>F), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -2845,7 +2845,7 @@ n= 2009, number of events= 764 </code></pre>
 <h3 class="anchored" data-anchor-id="in-text-stratified-cox-model-by-center">In-text: stratified Cox model by center</h3>
 <div class="cell" data-hash="Ch3_cache/html/in-text-stratified_941f2de5660fd1123813bb224b26c0fa">
 <details>
-<summary>Code</summary>
+<summary>Code hide/show</summary>
 <div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
 <span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">strata</span>(team), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>

@@ -1,60 +1,23 @@
-#------------------------------------------------------------------#
-#------- Chapter 5, R code, bmt data ------------------------------#
-#------------------------------------------------------------------#
+### Read data
 
-# Set working directory - location of data
-#setwd("C:/Users/JUKF/University of Copenhagen/UCPH_MSB - General/Julie programs")
-
-# Load required packages (should be installed if not already)
-require(haven)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-
-# Read data and create a data frame
-bmt <- read.csv("data/bmt.csv")
-bmt <- data.frame(bmt)
-
-# See the head of the data
-head(bmt)
-
-# Summary of the data
-summary(bmt)
-
-# Reformatting and adding extra variables
-bmt$intxsurv <- bmt$timedeath
+```{r}
+#| label: read-bmt
+bmt <- data.frame(read.csv("data/bmt.csv"))
+bmt$intxsurv<- bmt$timedeath
 bmt$dead <- bmt$death
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
-bmt$trm <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
-bmt$tgvhd <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
-bmt$state0 <- bmt$rel + 2*bmt$trm
+bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
+bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
+bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
+bmt$state0  <- bmt$rel + 2*bmt$trm
 bmt$dytxanc5 <- bmt$timeanc500 * 30
+```
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------#
-#------------------------------------------------------------------#
 
-# Make zeros print as "0" always
-library(stringr)
-prettyZero <- function(l){
-  max.decimals = max(nchar(str_extract(l, "\\.[0-9]+")), na.rm = T)-1
-  lnew = formatC(l, replace.zero = T, zero.print = "0",
-                 digits = max.decimals, format = "f", preserve.width=T)
-  return(lnew)
-}
+### Table 5.1
 
-# General theme
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom",
-        text = element_text(size = 26),
-        axis.text.x = element_text(size = 26),
-        axis.text.y = element_text(size = 26),
-        legend.text = element_text(size = 26))
-
-#------------------------------------------------------------------#
-#---------------- Table 5.1 ---------------------------------------#
-#------------------------------------------------------------------#
+```{r}
+#| label: table-5.1
 
 # Make landmark data at 0.5, 1, 1.5, 2, 2.5
 require(dplyr)
@@ -107,22 +70,20 @@ dat25 <- subset(bmt, intxrel >= 2.5) %>%
 
 landmark <- rbind(dat05, dat10, dat15, dat20, dat25)
 
-head(landmark)
-
 # Table 5.1 output
 rowSums(with(landmark, table(landmark, anc > 0 | gvh > 0))) # at risk
 with(landmark, table(landmark, anc)) # anc
 with(landmark, table(landmark, gvh)) # gvhd
 
-
 # Drop observations with stoptime = starttime
 landmark <- subset(landmark, time > entry)
+```
+### Table 5.2
 
-#------------------------------------------------------------------#
-#---------------- Table 5.2 ---------------------------------------#
-#------------------------------------------------------------------#
+```{r}
+#| label: table-5.2
 
-# Add time-varying covariates
+# Add time-varying covariates from previous object
 landmarkw <- landmark %>%
   mutate(anc05 = (landmark == 0.5) * anc,
          gvh05 = (landmark == 0.5) * gvh,
@@ -136,21 +97,32 @@ landmarkw <- landmark %>%
          gvh25 = (landmark == 2.5) * gvh
          )
 
-head(landmarkw)
-
 # with(landmarkw, table(landmark, status))
 
 
+library(survival)
 cox_land <- coxph(Surv(entry, time, status != 0) ~ cluster(id) + strata(landmark) +
                     anc05 + anc10 + anc15 + anc20 + anc25 +
                     gvh05 + gvh10 + gvh15 + gvh20 + gvh25 ,
-                  data = landmarkw,
-                  method = "breslow", timefix = FALSE, eps = 1e-9)
-summary(cox_land)
+                  data = landmarkw, method = "breslow",  eps = 1e-9)
+cox_land
+```
 
-#------------------------------------------------------------------#
-#---------------- Figure 5.1 --------------------------------------#
-#------------------------------------------------------------------#
+
+### Figure 5.1
+
+```{r}
+#| label: figure-5.1
+#| out-width: 90%
+
+# General theme
+library(ggplot2)
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 26),
+        axis.text.x = element_text(size = 26),
+        axis.text.y = element_text(size = 26),
+        legend.text = element_text(size = 26))
 
 # Extract estimated survival probabilities
 surv <- survfit(cox_land,
@@ -172,8 +144,8 @@ pdata2 <- as.data.frame(pdata %>% group_by(landmark) %>%
   group_modify(~ add_row(.x, surv = 1, time = 0, .before=0)))
 
 
-# Create Figure 5.1 (left)
-fig51_a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
+# Create Figure (a)
+fig5.1a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark") +
   xlab("Time since bone marrow transplantation (months)") +
@@ -188,11 +160,7 @@ fig51_a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
   theme(legend.key.size = unit(1.5, 'cm')) +
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig51_a
-
-ggsave("figures/h_bmtLM10.pdf", plot = fig51_a,
-       width = 29.7, height = 21, units = "cm")
-
+fig5.1a
 
 # For anc = gvh = 1
 # Add LP to data
@@ -208,8 +176,8 @@ pdata2_wc <- pdata2
 pdata2_wc$survlp <- with(pdata2, surv ^ exp(lp))
 
 
-# Create Figure 5.1 (right)
-fig51_b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_wc) +
+# Create Figure 5.1 (b)
+fig5.1b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_wc) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark") +
   xlab("Time since bone marrow transplantation (months)") +
@@ -224,15 +192,14 @@ fig51_b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_
   theme(legend.key.size = unit(1.5, 'cm')) +
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig51_b
+fig5.1b
+```
 
-ggsave("figures/h_bmtLM11.pdf", plot = fig51_b,
-       width = 29.7, height = 21, units = "cm")
+### Table 5.3
 
+```{r}
+#| label: table-5.3
 
-#------------------------------------------------------------------#
-#---------------- Table 5.3 ---------------------------------------#
-#------------------------------------------------------------------#
 ## COLUMN 1 
 # Add extra variables
 landmarkw2 <- landmark %>%
@@ -241,8 +208,6 @@ landmarkw2 <- landmark %>%
          gvhtime  = gvh * (landmark - 0.5)/2,
          gvhtime2 = gvh * ((landmark - 0.5)/2)^2
         )
-
-landmarkw2
 
 # Fit model
 cox_land2 <- coxph(Surv(entry, time, status != 0) ~ cluster(id) + strata(landmark) +
@@ -270,12 +235,13 @@ cox_land3 <- coxph(Surv(entry, time, status != 0) ~ cluster(id) +
                    data = landmarkw3,
                    method = "breslow")
 summary(cox_land3)
+```
 
+### Figure 5.2
 
-#------------------------------------------------------------------#
-#---------------- Figure 5.2 --------------------------------------#
-#------------------------------------------------------------------#
-
+```{r}
+#| label: figure-5.2
+#| out-width: 90%
 
 # Extract estimated survival probabilities
 surv <- survfit(cox_land2,
@@ -297,8 +263,8 @@ pdata2 <- as.data.frame(pdata %>% group_by(landmark) %>%
                           group_modify(~ add_row(.x, surv = 1, time = 0, .before=0)))
 
 
-# Create Figure 5.2 (left)
-fig52_a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
+# Create Figure (a)
+fig5.2a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark") +
   xlab("Time since bone marrow transplantation (months)") +
@@ -313,10 +279,7 @@ fig52_a <- ggplot(aes(x = time, y = surv, linetype = landmark), data = pdata2) +
   theme(legend.key.size = unit(1.5, 'cm')) +
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig52_a
-
-ggsave("figures/h_bmtLM20.pdf", plot = fig52_a,
-       width = 29.7, height = 21, units = "cm")
+fig5.2a
 
 
 # For anc = gvh = 1
@@ -337,8 +300,8 @@ pdata2_wc <- pdata2
 pdata2_wc$survlp <- with(pdata2, surv ^ exp(lp))
 
 
-# Create Figure 5.2 (right)
-fig52_b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_wc) +
+# Create Figure (b)
+fig5.2b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_wc) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark") +
   xlab("Time since bone marrow transplantation (months)") +
@@ -353,18 +316,14 @@ fig52_b <- ggplot(aes(x = time, y = survlp, linetype = landmark), data = pdata2_
   theme(legend.key.size = unit(1.5, 'cm')) +
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig52_b
+fig5.2b
+```
 
-ggsave("figures/h_bmtLM21.pdf", plot = fig52_b,
-       width = 29.7, height = 21, units = "cm")
+### Figure 5.3
 
-
-
-#------------------------------------------------------------------#
-#---------------- Figure 5.3 --------------------------------------#
-#------------------------------------------------------------------#
-
-
+```{r}
+#| label: figure-5.3
+#| out-width: 90%
 
 # Extract estimated survival probabilities
 surv <- survfit(cox_land3,
@@ -436,8 +395,8 @@ base3slut <- as.data.frame(rbind(base305, base310, base315, base320, base325))
 pdata3 <- as.data.frame(base3slut %>% group_by(landmark) %>%
                            group_modify(~ add_row(.x, km0 = 1, km1  = 1, time = 0, .before=0)))
 
-# Create Figure 5.3 (left)
-fig53_a <- ggplot(aes(x = time, y = km0, linetype = as.factor(landmark)), data = pdata3) +
+# Create Figure (a)
+fig5.3a <- ggplot(aes(x = time, y = km0, linetype = as.factor(landmark)), data = pdata3) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark",labels=c("0.5","1.0","1.5", "2.0","2.5")) +
   xlab("Time since bone marrow transplantation (months)") +
@@ -452,14 +411,11 @@ fig53_a <- ggplot(aes(x = time, y = km0, linetype = as.factor(landmark)), data =
   theme(legend.key.size = unit(1.5, 'cm')) + 
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig53_a
-
-ggsave("figures/h_bmtLM30.pdf", plot = fig53_a,
-       width = 29.7, height = 21, units = "cm")
+fig5.3a
 
 
 # Create Figure 5.3 (right)
-fig53_b <- ggplot(aes(x = time, y = km1, linetype = as.factor(landmark)), data = pdata3) +
+fig5.3b <- ggplot(aes(x = time, y = km1, linetype = as.factor(landmark)), data = pdata3) +
   geom_step(size = 1) +
   scale_linetype_discrete("Landmark",labels=c("0.5","1.0","1.5", "2.0","2.5")) +
   xlab("Time since bone marrow transplantation (months)") +
@@ -474,20 +430,10 @@ fig53_b <- ggplot(aes(x = time, y = km1, linetype = as.factor(landmark)), data =
    theme(legend.key.size = unit(1.5, 'cm'))  +
   guides(linetype = guide_legend(nrow = 1, byrow = TRUE))
 
-fig53_b
+fig5.3b
+```
 
+## MISSING: Tab 5.5 and Figs 5.10-5.11 
 
-ggsave("figures/h_bmtLM31.pdf", plot = fig53_b,
-       width = 29.7, height = 21, units = "cm")
+TODO: run HNRV's adapted chapter5_bmt_Eva.qmd (made frome Eva's bmt230217.R)
 
-
-
-#------------------------------------------------------------------#
-#---------------- Table 5.5 ---------------------------------------#
-#------------------------------------------------------------------#
-# and
-#------------------------------------------------------------------#
-#---------------- Figure 5.9+5.10 ---------------------------------#
-#------------------------------------------------------------------#
-#
-# See Eva's great program bmt230217.R

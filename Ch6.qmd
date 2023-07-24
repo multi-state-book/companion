@@ -1,1 +1,7 @@
 # Pseudo-values
+
+## PBC3 trial
+{{< include R/chapter6_pbc3.qmd >}}
+
+## Prova trial
+{{< include R/chapter6_prova.qmd >}}

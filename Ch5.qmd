@@ -1,1 +1,13 @@
 # Marginal models
+
+## Bone marrow transplantation in acute leukemia
+{{< include R/chapter5_bmt.qmd >}}
+
+
+## PBC3 trial
+{{< include R/chapter5_pbc3.qmd >}}
+
+## Prova trial
+
+TODO: take some runtime
+<!-- {{< include R/chapter5_prova.qmd >}} -->

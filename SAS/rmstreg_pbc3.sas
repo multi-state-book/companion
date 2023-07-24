@@ -8,7 +8,11 @@ table days;
 run;
 /* Tian et al */
 proc rmstreg data=pbc3 tau=3;
-  model followup*status(0)=tment alb log2bili / link=linear method=ipcw(strata=tment);
+  model followup*status(0)=tment alb log2bili / link=linear method=ipcw;
+run;
+proc rmstreg data=pbc3 tau=3;
+  model followup*status(0)=tment alb log2bili / 
+        link=linear method=ipcw(strata=tment);
 run;
 
 /* Pseudo values */
