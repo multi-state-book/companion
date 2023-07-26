@@ -20,13 +20,13 @@ book:
   repo-url: https://github.com/multi-state-book/companion
   chapters:
     - index.qmd
-    - Ch1.qmd
+    #- Ch1.qmd
     - Ch2.qmd
-    - Ch3.qmd
-    - Ch4.qmd
-    - Ch5.qmd
-    - Ch6.qmd
-    - Ch7.qmd
+    #- Ch3.qmd
+    #- Ch4.qmd
+    #- Ch5.qmd
+    #- Ch6.qmd
+    #- Ch7.qmd
     
 execute: 
   warning: false
@@ -36,8 +36,9 @@ execute:
 format:
   html:
     code-block-border-left: true
-    #code-block-bg: true
+    code-block-bg: true
     #code-block-border-left: "#6C6C6C"
+    #code-fold: true
     code-fold: true
     code-summary: "Code hide/show"
     #code-overflow: wrap

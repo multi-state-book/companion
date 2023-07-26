@@ -39,8 +39,8 @@ download_dir(
 | `cluster`     | cluster id                                               |
 | `fuptime`     | follow-up time (days)                                    |
 | `dead`        | 0 = alive, 1 = dead                                      |
-| `bcg`         | bcg vaccination status at initial visit: 1 = yes, 2 = no |
-| `dtp`         | dtp vaccination status at initial visit: 1 = yes, 2 = no |
+| `bcg`         | bcg vaccination status at initial visit: 0 = no, 1 = yes |
+| `dtp`         | no of dtp vaccinations at initial visit|
 | `sex`         | 0 = female, 1 = male                                     |
 | `age`         | age in days at initial visit                             |
 

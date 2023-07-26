@@ -40,11 +40,13 @@ run;
 data pbc3; 
 	set pbc3;
 	albnorm=(alb-35)*(alb>35);
-	alb10=alb/10; alb2=alb10*alb10;
+	alb10=alb/10;
+	alb2=alb*alb;
 	bilihigh=(bili-17.1)*(bili>17.1);
 	bilitoohigh=(bili-34.2)*(bili>34.2);
 	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-	bili100=bili/100; bili2=bili100*bili100;
+	bili100=bili/100;
+	bili2=bili*bili;
 	log2bili=log2(bili);
 	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
 	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
@@ -58,8 +60,10 @@ run;
 
 ### Figure 2.1 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.1
+#| label: figure-2.1-r
 #| out-width: 90%
 # General plotting style 
 library(ggplot2)
@@ -96,11 +100,11 @@ fig2.1 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
 fig2.1
 ```
 
-#### SAS
+## SAS
 ```{r}
+#| label: figure-2.1-sas
 #| eval: false 
 #| output: false
-#| code-fold: true
 proc phreg data=pbc3; 
 	model days*status(0)=;
 	strata tment;
@@ -112,26 +116,46 @@ data hazdat;
 run; 
 proc gplot data=hazdat;
 	plot naa*daysyears=tment/haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 6 by 1 minor=none label=('Years');
-	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative hazard');
+	axis1 order=0 to 6 by 1 minor=none
+    label=('Years');
+	axis2 order=0 to 0.7 by 0.1 minor=none
+    label=(a=90 'Cumulative hazard');
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
 run;
 ```
 
+:::
+
 ### In-text: Nelson-Aalen estimates at 2 years
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-Naa2
+#| label: in-text-Naa2-r
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=0"),1)
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=1"),1)
 ```
 
+## SAS
+```{r}
+#| label: in-text-Naa2-sas
+#| eval: false 
+#| output: false
+proc print data=hazdat;
+	where 1.5<daysyears<=2; 
+run;
+```
+:::
 
 ### Table 2.1 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-2.1
+#| label: table-2.1-r
 # Data for Table 2.1
 cuts <- c(0, 2, 4) * 365.25
 # Make the data ready using survSplit from survival package
@@ -152,11 +176,11 @@ pcwdata$SD <- 36525*sqrt(pcwdata$fail)/pcwdata$risktime
 data.frame(pcwdata)
 ```
 
-#### SAS
+## SAS
 ```{r}
+#| label: table-2.1-sas
 #| eval: false 
 #| output: false
-#| code-fold: true
 /* prepare for poisson model */
 data pbc3mult; 
 	set pbc3;
@@ -194,6 +218,8 @@ proc genmod data=pbc3mult;
 	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
 run;
 ```
+::: 
+
 
 ### Figure 2.2 
 
@@ -229,42 +255,94 @@ fig2.2
 
 ### In-text: LRT test piece-wise exponential model  
 
+::: {.panel-tabset}
+
 ```{r}
-#| label: in-text-LRT-pcw
+#| label: in-text-lrt-pcw-sas-r
 library(stats)
-poisfull <- glm(fail ~ - 1 + tment + timegroup + tment:timegroup +
+poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
                   offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-poisred <- glm(fail ~ - 1 + timegroup +
+poisred <- glm(fail ~  timegroup + tment +
                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
 anova(poisred,poisfull,test="LRT")
 # or
 library(lmtest)
 lrtest(poisred,poisfull)
 ```
+## SAS
+
+```{r}
+#| label: in-text-lrt-pcw-sas
+#| eval: false 
+#| output: false
+ods output modelfit=full;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv|tment /dist=poi offset=logrisk;
+run;
+data full;
+  set full;
+	 where Criterion="Deviance";
+	 full_like=value;
+	 full_df=df;
+	 keep full_like full_df;
+run;
+proc print;run;
+ods output modelfit=reduced;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv /dist=poi offset=logrisk;
+run;
+data reduced;
+  set reduced;
+	 where Criterion="Deviance";
+	 reduced_like=value;
+	 reduced_df=df;
+	 keep reduced_like reduced_df;
+run;
+data lrt_pval;
+ merge full reduced;
+  lrt = reduced_like - full_like;
+	df  = reduced_df - full_df;
+  p_value = 1 - probchi(lrt,df);
+run;
+proc print data=lrt_pval;
+  title "LR test statistic and p-value";
+run;
+```
+:::
 
 ### In-text: Logrank test and p-value                       
+
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-logrank
+#| label: in-text-logrank-r
 library(survival)
 lr<-survdiff(Surv(days, status != 0) ~ tment, data = pbc3)
 c(lr$chisq,lr$pvalue)
 ```
 
-#### SAS
+## SAS
 ```{r}
+#| label: in-text-logrank-sas
 #| eval: false 
 #| output: false
-#| code-fold: true
 proc lifetest data=pbc3 notable; 
 	time days*status(0);
 	strata tment;
-run; 
+run;
 ```
+:::
 
 ### Figure 2.3 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-2.3
+#| label: figure-2.3-r
 #| out-width: 90%
 # NA data from figure 2.1 model fit
 tment1 <- subset(nadata, tment == "tment=1")
@@ -325,20 +403,71 @@ fig2.3 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = type),
 fig2.3
 ```
 
+## SAS
+```{r}
+#| label: figure-2.3-sas
+#| eval: false 
+#| output: false
+
+data hazdat; 
+	set hazdat;
+	if days<=2 * 365.25 then 
+		pwch=days*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment);
+
+	if 2 * 365.25 <days<=4 * 365.25 then
+		pwch=2* 365.25*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
+		+(days-2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment);
+
+	if 4 * 365.25 <days then
+		pwch=2* 365.25 *(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
+		+(2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment)
+		+(days-4* 365.25)*(2.0000000/8642*(1-tment)+2.0000000/7599*tment);
+	daysyears = days/365.25; 
+run; 
+
+proc gplot data=hazdat; where tment=1;
+	plot (naa pwch)*daysyears/overlay haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=0 to 0.7 by 0.1 minor=none
+	  label=(a=90 'Cumulative hazard');
+	symbol1  v=none i=stepjl r=1 c=red;
+	symbol2 v=none i=join r=1 c=blue;
+run;
+```
+:::
+
+
 ### In-text: Cox model with treatment only 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-cox
+#| label: in-text-cox-r
 # Fit a Cox model using the pbc3 data with treatment as a covariate
 library(survival)
 coxfit <- coxph(Surv(days, status != 0) ~ tment, data = pbc3, method = "breslow")
 coxfit
 ```
 
+## SAS
+```{r}
+#| label: in-text-cox-sas
+#| eval: false 
+#| output: false
+proc phreg data=pbc3;
+	model days*status(0)=tment/rl;
+run;
+```
+:::
+
 ### Figure 2.5 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-2.5
+#| label: figure-2.5-r
 #| out-width: 90%
 # Extract cumulative baseline hazard
 coxcumhaz <- basehaz(coxfit, centered = FALSE)
@@ -348,7 +477,6 @@ coxdata <- data.frame(cumhaz = coxcumhaz$hazard,
                       tment = rep("0", nrow(coxcumhaz)), 
                       type = rep("Breslow estimate", nrow(coxcumhaz)))
 
-# Create Figure 2.5
 fig2.5 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
                  data = coxdata) + 
   geom_step(size = 1) + 
@@ -364,10 +492,38 @@ fig2.5 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = tment),
 fig2.5
 ```
 
+## SAS
+```{r}
+#| label: figure-2.5-sas
+#| eval: false 
+#| output: false
+data cov;
+	tment=0;
+run;
+proc phreg data=pbc3;
+	model days*status(0)=tment/rl;
+	baseline out=breslow cumhaz=breslow covariates=cov;
+run;
+data breslow; 
+	set breslow; 
+	daysyears = days/365.25; 
+run; 
+proc gplot data=breslow;
+	plot breslow*daysyears=tment/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative baseline hazard');
+	symbol1  v=none i=stepjl c=blue;
+run;
+```
+:::
+
+
 ### Table 2.3 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.3
+#| label: table-2.3-r
 # Average covariate values of albumin and bilirubin per treatment 
 library(dplyr)
 tabledata <- pbc3 %>% 
@@ -380,10 +536,24 @@ tabledata <- pbc3 %>%
 data.frame(tabledata)
 ```
 
-### Table 2.4 
-
+## SAS
 ```{r}
-#| label: table-2.4
+#| label: table-2.3-sas
+#| eval: false 
+#| output: false
+proc means data=pbc3 mean;
+  class tment;
+	var alb bili;
+run;
+```
+:::
+
+### Table 2.4
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-2.4-r
 # Cox model with treatment, albumin and bilirubin as covariates 
 library(survival)
 coxfit <- coxph(Surv(days, status != 0) ~ tment + alb + bili,
@@ -391,45 +561,73 @@ coxfit <- coxph(Surv(days, status != 0) ~ tment + alb + bili,
 coxfit
 ```
 
-### In-text: Poisson model with treatment only 
-
+## SAS
 ```{r}
-#| label: in-text-poission
+#| label: table-2.4-sas
+#| eval: false 
+#| output: false
+proc phreg data=pbc3;
+	model days*status(0)=tment alb bili / rl;
+run;
+```
+:::
+
+### In-text: Poisson model with treatment only (and time) 
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: in-text-poission-r
 library(stats)
-library(broom) # For using tidy() function
+library(broom) # For using tidy() function to get exp(beta)
 poism <- glm(fail ~ tment + timegroup-1 +
                offset(log(risktime/365.25)), data = pbc3mult,family = poisson)
 tidy(poism, exponentiate = T, conf.int = T)
 ```
 
+## SAS
+```{r}
+#| label: in-text-poission-sas
+#| eval: false 
+#| output: false
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail = interv tment / dist=poi offset=logrisk;
+	estimate 'CyA  vs placebo' tment -1 1 / exp;
+run;
+```
+:::
+
 ### Table 2.5 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.5
+#| label: table-2.5-r
 # Poisson model with treatment, albumin and bilirubin as covariates
 poismod_t25 <- glm(fail ~ tment + alb + bili+ timegroup-1 +
                      offset(log(risktime/365.25)),data=pbc3mult,family=poisson)
 tidy(poismod_t25)
 ```
 
+## SAS
+```{r}
+#| label: table-2.5-sas
+#| eval: false 
+#| output: false
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= tment interv alb  bili / dist=poi offset=logrisk ;
+run;
+```
+:::
+
 ### Table 2.6
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.6
-# Add transformations of covariates 
-pbc3$albnorm <- with(pbc3, (alb-35)*(alb>35))
-
-pbc3$bilihigh <- with(pbc3, (bili-17.1)*(bili>17.1))
-pbc3$bilitoohigh <- with(pbc3, (bili-34.2)*(bili>34.2))
-pbc3$bilimuchtoohigh <- with(pbc3, (bili-51.3)*(bili>51.3))
-
-pbc3$log2bili <- with(pbc3, log2(bili))
-pbc3$log2bili2 <- with(pbc3, log2bili*log2bili)
-
-pbc3$logbilihigh <- with(pbc3, (log2bili-log2(17.1))*(bili>17.1))
-pbc3$logbilitoohigh <- with(pbc3, (log2bili-log2(34.2))*(bili>34.2))
-pbc3$logbilimuchtoohigh <- with(pbc3, (log2bili-log2(51.3))*(bili>51.3))
-
+#| label: table-2.6-r
 #------------------------------------------------------------------#
 # Table 2.6 Cox models 
 #------------------------------------------------------------------#
@@ -535,6 +733,168 @@ poismod_t26_q3 <- glm(fail ~ timegroup + tment + alb + log2bili + log2bili2 +
 tidy(poismod_t26_q3)
 lrtest(poismod_t26_q3, base_poismod_log)
 ```
+
+## SAS
+```{r}
+#| label: table-2.6-sas
+#| eval: false 
+#| output: false
+
+** Cox models **;
+
+* Base models for LR tests; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+
+* Splines Cox 1; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb albnorm bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+
+* Quadratic Cox 1; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+  alb2=alb*alb;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 alb2 bili100/rl type3(LR);
+run;
+
+* Splines Cox 2;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb bili bilihigh bilitoohigh 
+	                         bilimuchtoohigh/rl type3(lr) ties=breslow CONVERGELIKE=1E-8;
+run;
+* LRT; 
+data p;
+	chi2=826.830-802.434;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Cox 2; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+  bili2=bili*bili;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 bili bili2 / rl type3(LR);
+run;
+
+* Splines Cox 3;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili logbilihigh 
+	                         logbilitoohigh logbilimuchtoohigh/rl ties=breslow CONVERGELIKE=1E-8;
+*linbili: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
+run;
+* LRT; 
+data p;
+	chi2=805.881-804.267;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Cox 3; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 log2bili log2bili2/rl type3(LR);
+run;
+
+* Split data into timegroups for Poisson models; 
+data pbc3mult; 
+	set pbc3;
+	fail=(days<=2 * 365.25)*(status ne 0);
+	risktime=min(2 * 365.25,days);
+	logrisk=log(risktime); interv=1; output;  
+	if days>2* 365.25 then do;
+	fail=(days<=4* 365.25)*(status ne 0);
+	risktime=min(2* 365.25,days-2* 365.25);
+	logrisk=log(risktime); interv=2; output; end;
+	if days>4* 365.25 then do;
+	fail=status ne 0; 
+	risktime=days-4* 365.25;
+	logrisk=log(risktime); interv=3; output; end;
+run;
+
+
+** Possion models **;
+
+* Models to compare with for the LR tests; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb bili/ dist=poi offset=logrisk type3;
+run;
+
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili/ dist=poi offset=logrisk type3;
+run;
+
+* Splines Poisson 1; 
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb albnorm bili/ dist=poi offset=logrisk type3;
+run;
+
+* Quadratic Poisson 1;
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb10 alb2 bili100/ dist=poi offset=logrisk type3;
+run;
+
+* Splines Poisson 2; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb bili bilihigh bilitoohigh  
+	             bilimuchtoohigh/ dist=poi offset=logrisk type3;
+run;
+* LRT; 
+data p;
+	chi2=350.7253-326.1805;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Poisson 2;
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb10 bili100 bili2/ dist=poi offset=logrisk type3;
+run;
+
+* Splines Poisson 3;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili logbilihigh logbilitoohigh 
+	             logbilimuchtoohigh / dist=poi offset=logrisk type3;
+run;
+* LRT; 
+data p;
+	chi2=329.2509-327.5375;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Poisson 3;
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb10 log2bili log2bili2/ dist=poi offset=logrisk type3;
+run;
+```
+:::
+
 
 ### Figure 2.6 
 

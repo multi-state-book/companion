@@ -4,27 +4,22 @@
 
 * Load data; 
 proc import 
-datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bissau.csv"
+datafile="data/bissau.csv"
 	out=bissau
 	dbms = csv
 	replace;
 run;
+data bissau; 
+	set bissau; 
+	agem = int(age/30.44);
+run; 
 
-* Summarise data set; 
-proc contents 
-	data=bissau; 
-run;
 
 *---------------------------------------------------------------;
 *--------------------- Table 8.1 -------------------------------;
 *---------------------------------------------------------------;
 
 /* 1.: Fit Cox model */
-data bissau; 
-	set bissau; 
-	agem = int(age/30.44);
-run; 
-
 proc phreg data=bissau;
   class bcg agem;
   model fuptime*dead(0)=bcg agem / rl;
@@ -37,13 +32,11 @@ data bissau;
 	seed=260452;
 	s=ranbin(seed,1,0.125);
 run;
-
 proc freq; 
 	tables s*dead; 
 run;
 
 /* 3.: Fit Cox model to case-cohort data */
-
 data casecoho; set bissau;
 	epsilon=0.001;
 	if dead=1 and s=0 then do;

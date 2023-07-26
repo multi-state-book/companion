@@ -1,16 +1,15 @@
+proc genmod data=pbc3mult;
+  class tment (ref='0') interv;
+  model fail= tment interv alb  bili / dist=poi offset=logrisk ;
+run;
 *------------------------------------------------------------------;
 *------- Chapter 2, SAS code, PBC3 data ---------------------------;
 *------------------------------------------------------------------;
 
 * Load pbc data; 
 proc import out=pbc3
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/pbc3.csv"
+	datafile="data/pbc3.csv"
 	dbms=csv replace;
-run;
-
-* Summarise data set; 
-proc contents 
-	data=pbc3; 
 run;
 
 *---------------------------------------------------------------;
@@ -22,19 +21,21 @@ proc phreg data=pbc3;
 	strata tment;
 	baseline out=hazdat cumhaz=naa stdcumhaz=sdnaa;
 run;
-
 data hazdat; 
 	set hazdat; 
 	daysyears = days/365.25; 
-run; 
-
-
+run;
 proc gplot data=hazdat;
 	plot naa*daysyears=tment/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative hazard');
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
+run;
+
+* In-text: Nelson-Aalen estimates at 2 years;
+proc print data=hazdat;
+	where 1.5<daysyears<=2; 
 run;
 
 * Logrank for tment; 
@@ -80,7 +81,6 @@ proc genmod data=pbc3mult;
 	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
 run;
 
-
 proc genmod data=pbc3mult;
 	where tment=0;
 	class interv;
@@ -90,24 +90,57 @@ proc genmod data=pbc3mult;
 	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
 run;
 
+ods output modelfit=full;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv|tment /dist=poi offset=logrisk;
+run;
+data full;
+  set full;
+	 where Criterion="Deviance";
+	 full_like=value;
+	 full_df=df;
+	 keep full_like full_df;
+run;
+proc print;run;
+ods output modelfit=reduced;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv /dist=poi offset=logrisk;
+run;
+data reduced;
+  set reduced;
+	 where Criterion="Deviance";
+	 reduced_like=value;
+	 reduced_df=df;
+	 keep reduced_like reduced_df;
+run;
+data lrt_pval;
+ merge full reduced;
+  lrt = reduced_like - full_like;
+	df  = reduced_df - full_df;
+  p_value = 1 - probchi(lrt,df);
+run;
+proc print data=lrt_pval;
+  title "LR test statistic and p-value";
+run;
 *---------------------------------------------------------------;
-*--------------------- Figure 2.4 ------------------------------;
+*--------------------- Figure 2.3 ------------------------------;
 *---------------------------------------------------------------; 
  
-data hazdat; set hazdat;
-	if days<=2 * 365.25 then
-	pwch=days*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment);
-	if 2 * 365.25 <days<=4 * 365.25 then
-	pwch=2* 365.25*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
-	+(days-2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment);
-	if 4 * 365.25 <days then
-	pwch=2* 365.25 *(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
-	+(2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment)
-	+(days-4* 365.25)*(2.0000000/8642*(1-tment)+2.0000000/7599*tment);
-run;
-
 data hazdat; 
-	set hazdat; 
+	set hazdat;
+	if days<=2 * 365.25 then 
+		pwch=days*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment);
+
+	if 2 * 365.25 <days<=4 * 365.25 then
+		pwch=2* 365.25*(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
+		+(days-2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment);
+
+	if 4 * 365.25 <days then
+		pwch=2* 365.25 *(27.0000000/104856*(1-tment)+24.0000000/107931.5*tment)
+		+(2* 365.25)*(17.0000000/49673*(1-tment)+18.0000000/50284*tment)
+		+(days-4* 365.25)*(2.0000000/8642*(1-tment)+2.0000000/7599*tment);
 	daysyears = days/365.25; 
 run; 
 
@@ -122,24 +155,29 @@ run;
 
 
 *---------------------------------------------------------------;
+*--------------------- In-text Cox model -----------------------;
+*---------------------------------------------------------------; 
+ 
+proc phreg data=pbc3;
+	model days*status(0)=tment/rl;
+run;
+
+
+*---------------------------------------------------------------;
 *--------------------- Figure 2.5 ------------------------------;
 *---------------------------------------------------------------; 
  
 data cov;
 	tment=0;
 run;
-
 proc phreg data=pbc3;
 	model days*status(0)=tment/rl;
 	baseline out=breslow cumhaz=breslow covariates=cov;
 run;
-
 data breslow; 
 	set breslow; 
 	daysyears = days/365.25; 
 run; 
-
-
 proc gplot data=breslow;
 	plot breslow*daysyears=tment/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
@@ -148,19 +186,38 @@ proc gplot data=breslow;
 run;
 
 
+
+*---------------------------------------------------------------;
+*--------------------- Table 2.3 -------------------------------;
+*---------------------------------------------------------------; 
+proc means data=pbc3 mean;
+  class tment;
+	var alb bili;
+run; 
+
 *---------------------------------------------------------------;
 *--------------------- Table 2.4 -------------------------------;
 *---------------------------------------------------------------; 
 
 proc phreg data=pbc3;
-	model days*status(0)=tment alb bili/rl;
+	model days*status(0)=tment alb bili / rl;
 run;
 
+ 
+*---------------------------------------------------------------;
+* --In-text: Poisson model with treatment only (and time)-------;
+*---------------------------------------------------------------;
+
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail = interv tment / dist=poi offset=logrisk;
+	estimate 'CyA  vs placebo' tment -1 1 / exp;
+run;
 
 *---------------------------------------------------------------;
 *--------------------- Table 2.5 -------------------------------;
 *---------------------------------------------------------------;
-
+options ps=200;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= tment interv alb  bili / dist=poi offset=logrisk ;
@@ -175,11 +232,13 @@ run;
 data pbc3; 
 	set pbc3;
 	albnorm=(alb-35)*(alb>35);
-	alb10=alb/10; alb2=alb10*alb10;
+	alb10=alb/10; 
+	alb2=alb*alb;
 	bilihigh=(bili-17.1)*(bili>17.1);
 	bilitoohigh=(bili-34.2)*(bili>34.2);
 	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-	bili100=bili/100; bili2=bili100*bili100;
+	bili100=bili/100;
+	bili2=bili*bili;
 	log2bili=log2(bili);
 	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
 	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
@@ -187,7 +246,76 @@ data pbc3;
 	log2bili2=log2bili*log2bili;
 run;
 
-* Split data into cuts again; 
+** Cox models **;
+
+* Base models for LR tests; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+
+* Splines Cox 1; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb albnorm bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
+run;
+
+* Quadratic Cox 1; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+  alb2=alb*alb;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 alb2 bili100/rl type3(LR);
+run;
+
+* Splines Cox 2;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb bili bilihigh bilitoohigh 
+	                         bilimuchtoohigh/rl type3(lr) ties=breslow CONVERGELIKE=1E-8;
+run;
+* LRT; 
+data p;
+	chi2=826.830-802.434;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Cox 2; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+  bili2=bili*bili;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 bili bili2 / rl type3(LR);
+run;
+
+* Splines Cox 3;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili logbilihigh 
+	                         logbilitoohigh logbilimuchtoohigh/rl ties=breslow CONVERGELIKE=1E-8;
+*linbili: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
+run;
+* LRT; 
+data p;
+	chi2=805.881-804.267;
+	p=1-probchi(chi2,3);
+proc print;
+run;
+
+* Quadratic Cox 3; 
+* LRT can here be read of type3 test result; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb10 log2bili log2bili2/rl type3(LR);
+run;
+
+* Split data into timegroups for Poisson models; 
 data pbc3mult; 
 	set pbc3;
 	fail=(days<=2 * 365.25)*(status ne 0);
@@ -203,6 +331,7 @@ data pbc3mult;
 	logrisk=log(risktime); interv=3; output; end;
 run;
 
+
 ** Possion models **;
 
 * Models to compare with for the LR tests; 
@@ -216,156 +345,60 @@ proc genmod data=pbc3mult;
 	model fail= interv tment alb log2bili/ dist=poi offset=logrisk type3;
 run;
 
-
-* Linear effects; 
-* Poisson model 1; 
+* Splines Poisson 1; 
+* LRT can here be read of type3 test result; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb albnorm bili/ dist=poi offset=logrisk type3;
 run;
 
-* LR test (also in output from type 3 test); 
-data p;
-	chi2=350.7253-350.2849;
-	p=1-probchi(chi2,1);
-proc print;
+* Quadratic Poisson 1;
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb10 alb2 bili100/ dist=poi offset=logrisk type3;
 run;
 
-
-* Poisson model 2; 
+* Splines Poisson 2; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb bili bilihigh bilitoohigh  
 	             bilimuchtoohigh/ dist=poi offset=logrisk type3;
 run;
-
-* LR test; 
+* LRT; 
 data p;
 	chi2=350.7253-326.1805;
 	p=1-probchi(chi2,3);
 proc print;
 run;
 
-* Poisson model 3;
+* Quadratic Poisson 2;
+* LRT can here be read of type3 test result; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb10 bili100 bili2/ dist=poi offset=logrisk type3;
+run;
+
+* Splines Poisson 3;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb log2bili logbilihigh logbilitoohigh 
 	             logbilimuchtoohigh / dist=poi offset=logrisk type3;
 run;
-
-* LR test - compare with the simpler model with log2bili; 
+* LRT; 
 data p;
 	chi2=329.2509-327.5375;
 	p=1-probchi(chi2,3);
 proc print;
 run;
 
-
-* Quadratic effects; 
-
-* Poisson model 1;
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv;
-	model fail= interv tment alb10 alb2 bili100/ dist=poi offset=logrisk type3;
-run;
-
-* Poisson model 2;
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv;
-	model fail= interv tment alb10 bili100 bili2/ dist=poi offset=logrisk type3;
-run;
-
-* Poisson model 3;
+* Quadratic Poisson 3;
+* LRT can here be read of type3 test result; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb10 log2bili log2bili2/ dist=poi offset=logrisk type3;
 run;
 
-
-
-** Cox models **;
-
-* Base models for LR tests; 
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
-run;
-
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb log2bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
-run;
-
- 
-* Linear effects; 
-* Cox model 1; 
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb albnorm bili/rl ties=breslow CONVERGELIKE=1E-8 type3(lr);
-*linalb: test  albnorm=0; *Wald test; 
-run;
-
-* LR test can be read of type3 test result; 
-* Alternatively as an LR test; 
-data p;
-	chi2=826.830-826.230;
-	p=1-probchi(chi2,1);
-proc print;
-run;
-
-
-* Cox model 2;
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb bili bilihigh bilitoohigh 
-	                         bilimuchtoohigh/rl type3(lr) ties=breslow CONVERGELIKE=1E-8;
-*linbili: test  bilihigh=bilitoohigh=bilimuchtoohigh=0;
-run;
-
-* LR test; 
-data p;
-	chi2=826.830-802.434;
-	p=1-probchi(chi2,3);
-proc print;
-run;
-
-
-* Cox model 3;
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb log2bili logbilihigh 
-	                         logbilitoohigh logbilimuchtoohigh/rl ties=breslow CONVERGELIKE=1E-8;
-*linbili: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
-run;
-
-* LR test; 
-data p;
-	chi2=805.881-804.267;
-	p=1-probchi(chi2,3);
-proc print;
-run;
-
-
-
-* Quadratic effects; 
-
-* Cox model 1; 
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb10 alb2 bili100/rl type3(LR);
-run;
-
-* Cox model 2; 
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb10 bili100 bili2/rl type3(LR);
-run;
-
-* Cox model 3; 
-proc phreg data=pbc3;
-	class tment (ref='0');
-	model days*status(0)=tment alb10 log2bili log2bili2/rl type3(LR);
-run;
 
 
 *---------------------------------------------------------------;

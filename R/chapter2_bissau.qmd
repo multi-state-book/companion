@@ -3,6 +3,7 @@
 ```{r}
 #| label: read-bissau
 bissau <- data.frame(read.csv("data/bissau.csv"))
+bissau$agem <- as.integer(bissau$age/30.44)
 ```
 
 ### Table 2.12 
@@ -11,7 +12,6 @@ bissau <- data.frame(read.csv("data/bissau.csv"))
 #| label: table-2.12
 library(survival)
 # Cox model in column 1
-bissau$agem <- as.integer(bissau$age/30.44)
 coxfit0 <- coxph(Surv(fuptime, dead) ~ bcg, 
                  data = bissau, method = "breslow")
 coxfit0

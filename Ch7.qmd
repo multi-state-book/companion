@@ -1,1 +1,4 @@
 # Further topics
+
+## Guine-Bissau study
+{{< include R/chapter7_bissau.qmd >}}

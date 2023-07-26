@@ -1,5 +1,5 @@
-options(contrasts=c("contr.treatment", "contr.poly"))
-
+#options()$contrasts
+#options(contrasts=c("contr.treatment", "contr.poly"))
 
 #library(tidyverse)
 #library(broom)

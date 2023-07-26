@@ -1,45 +1,45 @@
-#------------------------------------------------------------------#
-#------- Chapter 8, R code, Bissau data ---------------------------#
-#------------------------------------------------------------------#
+### Read data
 
-# Set working directory - location of data
-setwd("C:/Users/JUKF/University of Copenhagen/UCPH_MSB - General/Julie programs")
+::: {.panel-tabset}
 
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-
-bissau <- read.csv("data/bissau.csv")
-head(bissau)
-
-bissau <- data.frame(bissau)
+## R
+```{r}
+#| label: read-bissau-r
+bissau <- data.frame(read.csv("data/bissau.csv"))
 bissau$agem <- as.integer(bissau$age/30.44)
+```
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------#
-#------------------------------------------------------------------#
+## SAS
+```{r}
+#| label: read-bissau-sas
+#| eval: false 
+#| output: false
+proc import 
+datafile="data/bissau.csv"
+	out=bissau
+	dbms = csv
+	replace;
+run;
+data bissau; 
+	set bissau; 
+	agem = int(age/30.44);
+run; 
+```
+:::
+  
+### Table 8.1
 
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom",
-        text = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
-
-theme_general
-
-#------------------------------------------------------------------#
-#---------------- Table 8.1 ---------------------------------------#
-#------------------------------------------------------------------#
-
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-8.1-r
 # Cox model - full cohort
+library(survival)
+options(contrasts=c("contr.treatment", "contr.poly"))
 coxph(Surv(fuptime, dead != 0) ~ factor(bcg) + factor(agem), data = bissau)
 
 # 12.5 pct sub-cohort
 bissau$s <- rbinom(nrow(bissau), 1, prob = 0.125)
-
 with(bissau, table(dead, s))
 
 # Case-cohort data
@@ -49,20 +49,144 @@ ccfit <- cch(Surv(fuptime, dead!= 0) ~ factor(bcg) + factor(agem),
              subcoh=bis2$s, id=bis2$id, cohort.size=nrow(bissau))
 summary(ccfit)
 
-
 # Nested-case control
-require(multipleNCC)
-require(Epi)
-
+library(multipleNCC)
+library(Epi)
 
 # Add noise to remove ties
+
 bis2$fuptime_noise <- jitter(bis2$fuptime, factor=1, amount = NULL)
 
 nccdata <- Epi::ccwc(exit=fuptime_noise, 
                      fail=dead!=0, 
                      data=bis2, 
                      include=list(bcg, agem), controls=3, silent=TRUE)
-head(nccdata)
-
 summary(clogit(Fail ~ factor(bcg) + factor(agem), data=nccdata))
+```
 
+## SAS
+```{r}
+#| label: table-8.1-sas
+#| eval: false 
+#| output: false
+
+/* 1.: Fit Cox model */
+proc phreg data=bissau;
+  class bcg agem;
+  model fuptime*dead(0)=bcg agem / rl;
+run;
+
+/* 2.: Create a 12.5 pct sub-cohort */
+
+data bissau; 
+	set bissau;
+	seed=260452;
+	s=ranbin(seed,1,0.125);
+run;
+proc freq; 
+	tables s*dead; 
+run;
+
+/* 3.: Fit Cox model to case-cohort data */
+data casecoho; set bissau;
+	epsilon=0.001;
+	if dead=1 and s=0 then do;
+	d=1; start=fuptime-epsilon; stop=fuptime; w=1; output; end;
+	if dead=0 and s=1 then do;
+	d=0; start=0; stop=fuptime; w=1/0.125; output; end;
+	if dead=1 and s=1 then do;
+	d=0; start=0; stop=fuptime-epsilon; w=1/0.125; output;
+	d=1; start=fuptime-epsilon; stop=fuptime; w=1; output; end;
+run;
+
+proc phreg data=casecoho covsandwich(aggregate);
+	class bcg agem;
+	model stop*d(0)=bcg agem/rl entry=start;
+	weight w; id id;
+run;
+
+/* NCC MACRO */
+
+data source; set bissau;
+	study_id=id;
+	age_entry=0;
+	age_dlo=fuptime;
+	censor=dead;
+run;
+
+%macro caseset;
+	%let sampling = 1;
+	%let ratio = 3;
+	/* Enumerate Cases */
+	data cases;
+	set source ;
+	if censor = 1;
+	run;
+	data cases;
+	set cases end = eof;
+	if eof then call symput ('ncases', put(_n_,6.));
+	run;
+	/* Create Risk Set */
+	%do iter = 1 %to &ncases;
+	data temp_case;
+	set cases;
+
+	if _n_ = &iter ;
+	call symput ('rs', put(_n_,6.));
+	call symput ('age_rs', put(age_dlo,8.)); call symput ('case_id',
+	put(study_id,8.));
+	run;
+	data temp_control;
+	set source;
+	if age_entry  <= &age_rs  <= age_dlo;
+	/* Exclude Index Case */
+	if study_id = &case_id then delete;
+	number = ranuni(0);
+	age_rs = &age_rs;
+	censor = 0;
+	run;
+	/* Sample Controls */
+	%if &sampling = 1 %then %do;
+	proc sort data = temp_control;
+	by number;
+	data temp_control;
+	set temp_control;
+	by age_rs;
+	retain m;
+	if first.age_rs then m = 0;
+	m=m+1;
+	if m <= &ratio then output temp_control;
+	run;
+	%end; 
+	/* End If Sampling = 1 */
+	/* Combine Case with Controls */
+	data rs_&iter;
+	set temp_case
+	temp_control;
+	rs = &rs;
+	age_rs = &age_rs;
+	run;
+	/* DM Output 'Clear'; Log 'Clear'; */
+
+	%end; 
+	/* End Loop Creating Risk Set */
+	/* Append Risk Sets */
+	%do j = 2 %to &ncases;
+	proc append base = rs_1 data = rs_&j;
+	run;
+	%end;
+	data final; set rs_1; run;
+%mend ; 
+/* End Macro */
+
+/* Invoke Macro */
+%caseset;
+
+proc phreg data=final;
+class bcg agem;
+  model fuptime*censor(0)=bcg agem / rl;
+  strata rs;
+run;
+```
+:::
+  
