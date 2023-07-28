@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-hash="Ch7_cache/html/read-bissau-r_4ad91290faf7a58e27e692bfd4feaf13">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.44</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -263,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell" data-hash="Ch7_cache/html/read-bissau-sas_bdadbca559ee42c8f593a4edf6dad2a2">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc import </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datafile<span class="ot">=</span><span class="st">"data/bissau.csv"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    out<span class="ot">=</span>bissau</span>
@@ -288,7 +288,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell" data-hash="Ch7_cache/html/table-8.1-r_a441a507e3cf39353a78a9d98f60e0a0">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model - full cohort</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
@@ -312,7 +312,7 @@ Likelihood ratio test=12.39  on 7 df, p=0.08834
 n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 12.5 pct sub-cohort</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>s <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">nrow</span>(bissau), <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.125</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(bissau, <span class="fu">table</span>(dead, s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -324,7 +324,7 @@ dead    0    1
    1  195   27</code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Case-cohort data</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bis2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bissau, s <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> dead <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">|</span> s <span class="sc">==</span> <span class="dv">1</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ccfit <span class="ot">&lt;-</span> <span class="fu">cch</span>(<span class="fu">Surv</span>(fuptime, dead<span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), </span>
@@ -350,7 +350,7 @@ factor(agem)5  0.459 1.583 0.889 2.819 0.119
 factor(agem)6  0.159 1.172 0.536 2.563 0.690</code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nested-case control</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multipleNCC)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Epi)</span>
@@ -402,7 +402,7 @@ Score (logrank) test = 12.04  on 7 df,   p=0.1</code></pre>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell" data-hash="Ch7_cache/html/table-8.1-sas_6ddb38089d20ae1cf9f360aab7f2d9b2">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">*</span> <span class="fl">1.</span><span class="sc">:</span> Fit Cox model <span class="sc">*</span><span class="er">/</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  class bcg agem;</span>

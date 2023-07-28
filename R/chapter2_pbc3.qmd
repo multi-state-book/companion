@@ -3,7 +3,7 @@
 ::: {.panel-tabset}
 ## R
 ```{r}
-#| label: read-pbc3
+#| label: read-pbc3-r
 pbc3 <- data.frame(read.csv("data/pbc3.csv"))
 pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
 pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
@@ -223,6 +223,9 @@ run;
 
 ### Figure 2.2 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
 #| label: figure-2.2
 #| out-width: 90%
@@ -252,11 +255,13 @@ fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
 
 fig2.2
 ```
+:::
 
 ### In-text: LRT test piece-wise exponential model  
 
 ::: {.panel-tabset}
 
+## R
 ```{r}
 #| label: in-text-lrt-pcw-sas-r
 library(stats)
@@ -772,6 +777,7 @@ proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb bili bilihigh bilitoohigh 
 	                         bilimuchtoohigh/rl type3(lr) ties=breslow CONVERGELIKE=1E-8;
+  Wald_same_as_LRT: test  bilihigh=bilitoohigh=bilimuchtoohigh=0;
 run;
 * LRT; 
 data p;
@@ -793,7 +799,7 @@ proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb log2bili logbilihigh 
 	                         logbilitoohigh logbilimuchtoohigh/rl ties=breslow CONVERGELIKE=1E-8;
-*linbili: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
+  Wald_same_as_LRT: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
 run;
 * LRT; 
 data p;
@@ -898,8 +904,10 @@ run;
 
 ### Figure 2.6 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.6
+#| label: figure-2.6-r
 #| out-width: 90%
 # The below linear predictors include estimates from the following models
 pbc3mult$timegroup <- relevel(as.factor(pbc3mult$timegroup), ref = "3")
@@ -938,10 +946,55 @@ fig2.6 <- ggplot(aes(x = alb, y = lp, linetype = effect), data = lin2row) +
 fig2.6
 ```
 
+## SAS
+```{r}
+#| label: figure-2.6-sas
+#| eval: false 
+#| output: false
+* Below is estimates from the following models collected; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb bili/ dist=poi offset=logrisk type3;
+run;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb albnorm bili/ dist=poi offset=logrisk type3;
+run;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb bili bilihigh bilitoohigh 
+             logbilimuchtoohigh / dist=poi offset=logrisk type3;
+run;
+
+* Collect linear predictor information; 
+data lin2; set pbc3;
+	lp1=1.6076-0.1123*alb; * bilirubin = 0; 
+	lp2=0.7828-0.0864*alb-0.0474*albnorm;
+	lp3=1.6076+0.0085*bili-38.7*0.1123; *also an effect of albumin at 38.7; 
+	lp4=-0.5534+0.0617*bili-0.0168*bilihigh+0.0027*bilitoohigh
+	    -0.0428*bilimuchtoohigh-0.0865*38.7;
+run;
+proc sort data=lin2; by alb; run;
+legend1 label=none;
+proc gplot data=lin2;
+	plot (lp2 lp1)*alb/overlay haxis=axis1 vaxis=axis2 legend=legend1;
+	axis1 order=20 to 60 by 10 minor=none label=('Se-albumin');
+	axis2 order=-6 to 0 by 1 minor=none label=(a=90 'Linear predictor');
+	symbol1 v=none i=join r=1 c=red;
+	symbol2 v=none i=join r=1 c=blue;
+	label lp2="Effect as linear spline";
+	label lp1="Linear effect";
+run; 
+quit;
+```
+:::
+
 ### Figure 2.7 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.7
+#| label: figure-2.7-r
 #| out-width: 90%
 # bilirubin and the two last linear predictors
 lin2row2 <- data.frame(effect = c(rep("Linear effect", nrow(lin2)),
@@ -961,10 +1014,31 @@ fig2.7 <- ggplot(aes(x = bili, y = lp, linetype = effect), data = lin2row2) +
 fig2.7
 ```
 
+## SAS
+```{r}
+#| label: figure-2.7-sas
+#| eval: false 
+#| output: false
+
+proc sort data=lin2; by bili; run;
+proc gplot data=lin2;
+	plot (lp4 lp3)*bili/overlay haxis=axis1 vaxis=axis2 legend=legend1;
+	axis1 order=0 to 500 by 100 minor=none label=('Se-bilirubin');
+	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Linear predictor');
+	symbol1 v=none i=join r=1 c=red;
+	symbol2 v=none i=join r=1 c=blue;
+	label lp4="Effect as linear spline";
+	label lp3="Linear effect";
+run;quit;
+```
+:::
+
 ### Figure 2.8 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.8
+#| label: figure-2.8-r
 #| out-width: 90%
 # The below linear predictors include estimates from the following models
 base_poismod2_log <- glm(fail ~ offset(log(risktime)) + as.factor(timegroup) + 
@@ -998,10 +1072,49 @@ fig2.8 <- ggplot(aes(x = log2bili, y = lp, linetype = effect), data = log2row) +
 fig2.8
 ```
 
+## SAS
+```{r}
+#| label: figure-2.8-sas
+#| eval: false 
+#| output: false
+ 
+* Linear predictors from the following models; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili / dist=poi offset=logrisk type3;
+run;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili logbilihigh logbilitoohigh 
+	             logbilimuchtoohigh / dist=poi offset=logrisk type3;
+run;
+
+* Create data with linear predictors as a function of bilirubin values; 
+data log2; 
+	set pbc3;
+	lp3=-2.0162+0.6469*log2bili-38.7*0.087;
+	lp4=-0.6194+0.198*log2bili+0.8815*logbilihigh-0.2336*logbilitoohigh
+	    -0.3139*logbilimuchtoohigh-0.0844*38.7;
+run; 
+proc sort data=log2;by bili; run;
+proc gplot data=log2;
+	plot (lp4 lp3)*log2bili/overlay haxis=axis1 vaxis=axis2 legend=legend1;
+	axis1 order=1 to 9 by 1 minor=none label=('log2(Se-bilirubin)');
+	axis2 order=-5 to 1 by 1 minor=none label=(a=90 'Linear predictor');
+	symbol1 v=none i=join r=1 c=red;
+	symbol2 v=none i=join r=1 c=blue;
+	label lp4="Effect as linear spline";
+	label lp3="Linear effect";
+run;quit;
+```
+:::
+
 ### Table 2.7 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.7
+#| label: table-2.7-r
 # Cox model
 coxmod_t27 <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
                     eps = 1e-8, method = "breslow", data = pbc3)
@@ -1013,10 +1126,31 @@ poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup +
 tidy(poismod_t27) 
 ```
 
+## SAS
+```{r}
+#| label: table-2.7-sas
+#| eval: false 
+#| output: false
+
+* Cox model; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili / rl;
+run;
+* Poisson model;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili / dist=poi offset=logrisk;
+run;
+```
+:::
+
 ### Table 2.8 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.8
+#| label: table-2.8-r
 # Cox models
 # Model for LR comparison
 coxmod_t28_base <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
@@ -1059,10 +1193,47 @@ tidy(poismod_t28_2)
 lrtest(poismod_t28_base, poismod_t28_2)
 ```
 
+## SAS
+```{r}
+#| label: table-2.8-sas
+#| eval: false 
+#| output: false
+* Cox model 1; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb tment*alb log2bili /rl type3 (LR);
+	estimate 'alb, tment=0' alb 1;
+	estimate 'alb, tment=1' alb 1 tment*alb 1;
+run;
+* Cox model 2; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili tment*log2bili/rl  type3 (LR);
+	estimate 'log2bili, tment=0' log2bili 1;
+	estimate 'log2bili, tment=1' log2bili 1 tment*log2bili 1;
+run;
+
+* Poisson model 1; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment log2bili alb(tment) / dist=poi offset=logrisk type3;
+	contrast 'LRT' alb(tment) 1 -1;
+run;
+* Poisson model 2; 
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv;
+	model fail= interv tment alb log2bili(tment)/ dist=poi offset=logrisk type3;
+	contrast 'LRT' log2bili(tment) 1 -1;
+run;
+```
+:::
+
 ### Table 2.9 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.9
+#| label: table-2.9-r
 pbc3mult$tment1 <- (pbc3mult$timegroup==1)*pbc3mult$tment
 pbc3mult$tment2 <- (pbc3mult$timegroup==2)*pbc3mult$tment
 pbc3mult$tment3 <- (pbc3mult$timegroup==3)*pbc3mult$tment
@@ -1073,6 +1244,7 @@ pbc3mult$bili1 <- (pbc3mult$timegroup==1)*pbc3mult$log2bili
 pbc3mult$bili2 <- (pbc3mult$timegroup==2)*pbc3mult$log2bili
 pbc3mult$bili3 <- (pbc3mult$timegroup==3)*pbc3mult$log2bili
 
+options(contrasts=c("contr.treatment", "contr.poly"))
 poismod_t29_base <- glm(fail~tment+alb+log2bili+timegroup+offset(log(risktime)),
                      data = pbc3mult, family = poisson)
 
@@ -1098,20 +1270,80 @@ tidy(poismod_t29_bili)
 lrtest(poismod_t29_base, poismod_t29_bili)
 ```
 
+## SAS
+```{r}
+#| label: table-2.9-sas
+#| eval: false 
+#| output: false
+
+* Treatment; 
+* Estimates ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment(interv) alb log2bili/ dist=poi offset=logrisk type3;
+run;
+* LRT ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment interv*tment alb log2bili/ dist=poi offset=logrisk type3;
+run;
+
+* Albumin;
+* Estimates ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment log2bili alb(interv) / dist=poi offset=logrisk type3;
+run;
+* LRT ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment alb log2bili alb*interv/ dist=poi offset=logrisk type3;
+run;
+
+* Bilirubin;
+* Estimates ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment alb log2bili(interv)/ dist=poi offset=logrisk type3;
+run;
+* LRT ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment alb log2bili log2bili*interv/ dist=poi offset=logrisk type3;
+run;
+```
+:::
 
 ### In-text: stratified Cox model 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: in-text-stratified-cox
+#| label: in-text-stratified-cox-r
 coxmod_f29 <- coxph(Surv(days, status != 0) ~ strata(tment) + alb + log2bili,
                       eps = 1e-8, method = "breslow", data = pbc3)
 coxmod_f29
 ```
 
+## SAS
+```{r}
+#| label: in-text-stratified-cox-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=pbc3;
+	model days*status(0)= alb log2bili / rl;
+	strata tment;
+run;
+```
+:::
+
 ### Figure 2.10 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.10
+#| label: figure-2.10-r
 #| out-width: 90%
 # Extracting cumulative baseline hazards per treatment
 cumhaz_treat <- basehaz(coxmod_f29, centered = FALSE)
@@ -1133,8 +1365,9 @@ hazards <- data.frame(hazard_t0_allt, hazard_t1_allt)
 coxmod_f29_t <- coxph(Surv(days, status != 0) ~ tment + alb + log2bili,
                       eps = 1e-8, method = "breslow", data = pbc3)
 # Make plot
+library(ggplot2)
 fig2.10 <- ggplot(aes(x = hazard_t0_allt, y = hazard_t1_allt), data = hazards) + 
-  geom_step(size = 1) + 
+  geom_step(linewidth = 1) + 
   geom_abline(intercept = 0, slope = exp(coef(coxmod_f29_t)[["tment"]]), 
               linetype = "dashed", size = 1) + 
   xlab("Cumulative baseline hazard: placebo") +
@@ -1146,11 +1379,64 @@ fig2.10 <- ggplot(aes(x = hazard_t0_allt, y = hazard_t1_allt), data = hazards) +
 fig2.10
 ```
 
+## SAS
+```{r}
+#| label: figure-2.10-sas
+#| eval: false 
+#| output: false
+
+data covstr;
+	alb=0; log2bili=0;
+run;
+proc phreg data=pbc3;
+	model days*status(0)= alb log2bili/rl;
+	strata tment;
+	baseline out=breslowstr cumhaz=breslow covariates=covstr;
+run;
+data breslow0;
+	set breslowstr; 
+	if tment=0; 
+  a00=breslow; 
+run;
+data breslow1; 
+	set breslowstr; 
+	if tment=1; 	
+	a01=breslow; 
+run;
+data breslow01; 
+	merge breslow0 breslow1; 
+	by days; 
+run;
+data breslowrev; 
+  set breslow01;
+	by days;
+	retain last1 last2;
+	if a00=. then cumhaz0=last1; if a00 ne . then cumhaz0=a00; 
+	if a01=. then cumhaz1=last2; if a01 ne . then cumhaz1=a01;
+	output;
+	last1=cumhaz0; last2=cumhaz1; 
+run;
+data breslowrev; 
+	set breslowrev;
+	line=exp(-0.574)*cumhaz0;
+run;
+proc gplot data=breslowrev;
+	plot cumhaz1*cumhaz0 line*cumhaz0/haxis=axis1 vaxis=axis2 overlay;
+	axis1 order=0 to 1.5 by 0.5 minor=none label=('Cumulative baseline hazard: placebo');
+	axis2 order=0 to 1 by 0.5 minor=none label=(a=90 'Cumulative baseline hazard: CyA');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=rl c=blue;
+run;
+quit;
+```
+:::
 
 ### Figure 2.11 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.11
+#| label: figure-2.11-r
 #| out-width: 90%
 # Additive Aalen models - available with timereg
 library(timereg)
@@ -1196,12 +1482,14 @@ fig2.11.right <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat),
 
 fig2.11.right
 ```
-
+:::
 
 ### Figure 2.12 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-2.12
+#| label: figure-2.12-r
 #| out-width: 90%
 # Make Aalen model fit
 library(timereg)
@@ -1252,10 +1540,14 @@ fig2.12.2
 fig2.12.3
 ```
 
+:::
+
 ### Table 2.10 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.10
+#| label: table-2.10-r
 #------------------------------------------------------------------#
 # Table 2.10 and in-text results
 #------------------------------------------------------------------#
@@ -1275,6 +1567,7 @@ summary(nonparmod01)
 nonparmod1 <- aalen(Surv(days, status != 0) ~ tment + alb + bili, data = pbc3) 
 summary(nonparmod1)
 
+# Constant effects per year
 # Table 2.10, last columns
 nonparmod2 <- aalen(Surv(days/365.25, status != 0) ~ 
                       const(tment) + const(alb) + const(bili), data = pbc3) 
@@ -1307,10 +1600,44 @@ nonparmod52 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(bili)
 summary(nonparmod52)
 ```
 
+## SAS
+```{r}
+#| label: table-2.10-sas
+#| eval: false 
+#| output: false
+
+* Only constant effect per year possible;
+* Create new variables;
+data pbc3add; 
+	set pbc3mult;
+	time1=(interv=1)*risktime/365.25; 
+	time2=(interv=2)*risktime/365.25; 
+	time3=(interv=3)*risktime/365.25;
+	tment0=(tment=0)*risktime/365.25; 
+	tment1=(tment=1)*risktime/365.25;
+	albny=(alb-35)*risktime/365.25;
+	biliny=(bili-50)*risktime/365.25;
+run;
+
+* link=id;
+* Constant effect of treatment per year;
+proc genmod data=pbc3add;
+	model fail=time1 time2 time3 tment1/dist=poi link=id noint;
+run;
+
+* Constant effects per year;
+proc genmod data=pbc3add;
+	model fail=time1 time2 time3 tment1 albny biliny/dist=poi link=id noint;
+run;
+```
+:::
+
 ### Table 2.11 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.11
+#| label: table-2.11-r
 #------------------------------------------------------------------#
 # Table 2.11 and in-text results
 #------------------------------------------------------------------#
@@ -1345,11 +1672,15 @@ additive_pcw2.11 <- glm(fail ~ time1 + time2 + time3 + tment1 + albny + biliny -
 tidy(additive_pcw2.11)
 ```
 
+:::
 
 ### Table 2.13 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-2.13
+#| label: table-2.13-r
 
 # Death without transplantation
 coxph(Surv(days, status == 2) ~ tment + alb + log2bili + sex + age,
@@ -1363,3 +1694,4 @@ coxph(Surv(days, status == 1) ~ tment + alb + log2bili + sex + age,
 coxph(Surv(days, status != 0) ~ tment + alb + log2bili + sex + age,
            method = "breslow", data = pbc3)
 ```
+:::

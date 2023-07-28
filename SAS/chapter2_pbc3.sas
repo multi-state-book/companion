@@ -1,7 +1,3 @@
-proc genmod data=pbc3mult;
-  class tment (ref='0') interv;
-  model fail= tment interv alb  bili / dist=poi offset=logrisk ;
-run;
 *------------------------------------------------------------------;
 *------- Chapter 2, SAS code, PBC3 data ---------------------------;
 *------------------------------------------------------------------;
@@ -10,6 +6,23 @@ run;
 proc import out=pbc3
 	datafile="data/pbc3.csv"
 	dbms=csv replace;
+run;
+* Transform albumin and bilirubin values; 
+data pbc3; 
+	set pbc3;
+	albnorm=(alb-35)*(alb>35);
+	alb10=alb/10; 
+	alb2=alb*alb;
+	bilihigh=(bili-17.1)*(bili>17.1);
+	bilitoohigh=(bili-34.2)*(bili>34.2);
+	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
+	bili100=bili/100;
+	bili2=bili*bili;
+	log2bili=log2(bili);
+	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
+	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
+	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
+	log2bili2=log2bili*log2bili;
 run;
 
 *---------------------------------------------------------------;
@@ -228,23 +241,6 @@ run;
 *--------------------- Table 2.6 -------------------------------;
 *---------------------------------------------------------------; 
  
-* Transform albumin and bilirubin values; 
-data pbc3; 
-	set pbc3;
-	albnorm=(alb-35)*(alb>35);
-	alb10=alb/10; 
-	alb2=alb*alb;
-	bilihigh=(bili-17.1)*(bili>17.1);
-	bilitoohigh=(bili-34.2)*(bili>34.2);
-	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-	bili100=bili/100;
-	bili2=bili*bili;
-	log2bili=log2(bili);
-	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
-	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
-	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
-	log2bili2=log2bili*log2bili;
-run;
 
 ** Cox models **;
 
@@ -278,6 +274,7 @@ proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb bili bilihigh bilitoohigh 
 	                         bilimuchtoohigh/rl type3(lr) ties=breslow CONVERGELIKE=1E-8;
+  Wald_same_as_LRT: test  bilihigh=bilitoohigh=bilimuchtoohigh=0;
 run;
 * LRT; 
 data p;
@@ -299,7 +296,7 @@ proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb log2bili logbilihigh 
 	                         logbilitoohigh logbilimuchtoohigh/rl ties=breslow CONVERGELIKE=1E-8;
-*linbili: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
+  Wald_same_as_LRT: test  logbilihigh=logbilitoohigh=logbilimuchtoohigh=0;
 run;
 * LRT; 
 data p;
@@ -405,28 +402,22 @@ run;
 *--------------------- Figure 2.6 ------------------------------;
 *---------------------------------------------------------------; 
 
-
 * Below is estimates from the following models collected; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb bili/ dist=poi offset=logrisk type3;
 run;
-
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb albnorm bili/ dist=poi offset=logrisk type3;
 run;
-
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb bili bilihigh bilitoohigh 
              logbilimuchtoohigh / dist=poi offset=logrisk type3;
 run;
 
-
-
 * Collect linear predictor information; 
-
 data lin2; set pbc3;
 	lp1=1.6076-0.1123*alb; * bilirubin = 0; 
 	lp2=0.7828-0.0864*alb-0.0474*albnorm;
@@ -434,35 +425,33 @@ data lin2; set pbc3;
 	lp4=-0.5534+0.0617*bili-0.0168*bilihigh+0.0027*bilitoohigh
 	    -0.0428*bilimuchtoohigh-0.0865*38.7;
 run;
-
 proc sort data=lin2; by alb; run;
-
+legend1 label=none;
 proc gplot data=lin2;
-	plot (lp1 lp2)*alb/overlay haxis=axis1 vaxis=axis2;
+	plot (lp2 lp1)*alb/overlay haxis=axis1 vaxis=axis2 legend=legend1;
 	axis1 order=20 to 60 by 10 minor=none label=('Se-albumin');
 	axis2 order=-6 to 0 by 1 minor=none label=(a=90 'Linear predictor');
-	symbol1  v=circle i=join r=1 c=red;
+	symbol1 v=none i=join r=1 c=red;
 	symbol2 v=none i=join r=1 c=blue;
+	label lp2="Effect as linear spline";
+	label lp1="Linear effect";
 run; 
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 2.7 ------------------------------;
 *---------------------------------------------------------------; 
 
-proc sort data=lin2; 
-	by bili; 
-run;
-
-
+proc sort data=lin2; by bili; run;
 proc gplot data=lin2;
-	plot (lp3 lp4)*bili/overlay haxis=axis1 vaxis=axis2;
+	plot (lp4 lp3)*bili/overlay haxis=axis1 vaxis=axis2 legend=legend1;
 	axis1 order=0 to 500 by 100 minor=none label=('Se-bilirubin');
 	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Linear predictor');
-	symbol1  v=circle i=join r=1 c=red;
+	symbol1 v=none i=join r=1 c=red;
 	symbol2 v=none i=join r=1 c=blue;
-run;
-
+	label lp4="Effect as linear spline";
+	label lp3="Linear effect";
+run;quit;
 
 
 *---------------------------------------------------------------;
@@ -470,13 +459,10 @@ run;
 *---------------------------------------------------------------; 
 
 * Linear predictors from the following models; 
-
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb log2bili / dist=poi offset=logrisk type3;
 run;
-
-
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
 	model fail= interv tment alb log2bili logbilihigh logbilitoohigh 
@@ -490,20 +476,16 @@ data log2;
 	lp4=-0.6194+0.198*log2bili+0.8815*logbilihigh-0.2336*logbilitoohigh
 	    -0.3139*logbilimuchtoohigh-0.0844*38.7;
 run; 
-
-
-proc sort data=log2; 
-	by bili; 
-run;
-
-
+proc sort data=log2;by bili; run;
 proc gplot data=log2;
-	plot (lp3 lp4)*log2bili/overlay haxis=axis1 vaxis=axis2;
+	plot (lp4 lp3)*log2bili/overlay haxis=axis1 vaxis=axis2 legend=legend1;
 	axis1 order=1 to 9 by 1 minor=none label=('log2(Se-bilirubin)');
 	axis2 order=-5 to 1 by 1 minor=none label=(a=90 'Linear predictor');
-	symbol1 v=circle i=join r=1 c=red;
+	symbol1 v=none i=join r=1 c=red;
 	symbol2 v=none i=join r=1 c=blue;
-run;
+	label lp4="Effect as linear spline";
+	label lp3="Linear effect";
+run;quit;
 
 
 
@@ -516,8 +498,6 @@ proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb log2bili / rl;
 run;
-
-
 * Poisson model;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
@@ -530,45 +510,32 @@ run;
 *--------------------- Table 2.8 -------------------------------;
 *---------------------------------------------------------------;
 
-* Cox models; 
 * Cox model 1; 
 proc phreg data=pbc3;
 	class tment (ref='0');
-	model days*status(0)=tment alb tment*alb log2bili/rl type3 (LR);
-	estimate 'alb, Z=0' alb 1;
-	estimate 'alb, Z=1' alb 1 tment*alb 1;
+	model days*status(0)=tment alb tment*alb log2bili /rl type3 (LR);
+	estimate 'alb, tment=0' alb 1;
+	estimate 'alb, tment=1' alb 1 tment*alb 1;
 run;
-
 * Cox model 2; 
 proc phreg data=pbc3;
 	class tment (ref='0');
 	model days*status(0)=tment alb log2bili tment*log2bili/rl  type3 (LR);
-	estimate 'log2bili, Z=0' log2bili 1;
-	estimate 'log2bili, Z=1' log2bili 1 tment*log2bili 1;
+	estimate 'log2bili, tment=0' log2bili 1;
+	estimate 'log2bili, tment=1' log2bili 1 tment*log2bili 1;
 run;
 
-
-* Poisson models;
 * Poisson model 1; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
-	model fail= interv tment alb log2bili alb*tment/ dist=poi offset=logrisk type3;
+	model fail= interv tment log2bili alb(tment) / dist=poi offset=logrisk type3;
+	contrast 'LRT' alb(tment) 1 -1;
 run;
-
-proc genmod data=pbc3mult;
-	class tment (ref='1') interv;
-	model fail= interv tment alb log2bili alb*tment/ dist=poi offset=logrisk type3;
-run;
-
 * Poisson model 2; 
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
-	model fail= interv tment alb log2bili log2bili*tment/ dist=poi offset=logrisk type3;
-run;
-
-proc genmod data=pbc3mult;
-	class tment (ref='1') interv;
-	model fail= interv tment alb log2bili log2bili*tment/ dist=poi offset=logrisk type3;
+	model fail= interv tment alb log2bili(tment)/ dist=poi offset=logrisk type3;
+	contrast 'LRT' log2bili(tment) 1 -1;
 run;
 
 
@@ -576,55 +543,50 @@ run;
 *--------------------- Table 2.9 -------------------------------;
 *---------------------------------------------------------------;
 
-
-* Column 1; 
+* Treatment; 
+* Estimates ;
+proc genmod data=pbc3mult;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment(interv) alb log2bili/ dist=poi offset=logrisk type3;
+run;
+* LRT ;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv(ref='1');
 	model fail= interv tment interv*tment alb log2bili/ dist=poi offset=logrisk type3;
 run;
 
+* Albumin;
+* Estimates ;
 proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='2');
-	model fail= interv tment interv*tment alb log2bili/ dist=poi offset=logrisk type3;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment log2bili alb(interv) / dist=poi offset=logrisk type3;
 run;
-
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='3');
-	model fail= interv tment interv*tment alb log2bili/ dist=poi offset=logrisk type3;
-run;
-
-
-* Column 2;
+* LRT ;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv(ref='1');
 	model fail= interv tment alb log2bili alb*interv/ dist=poi offset=logrisk type3;
 run;
 
+* Bilirubin;
+* Estimates ;
 proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='2');
-	model fail= interv tment alb log2bili alb*interv/ dist=poi offset=logrisk type3;
+	class tment (ref='0') interv(ref='1');
+	model fail= interv tment alb log2bili(interv)/ dist=poi offset=logrisk type3;
 run;
-
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='3');
-	model fail= interv tment alb log2bili alb*interv/ dist=poi offset=logrisk type3;
-run;
-
-
-* Column 3;
+* LRT ;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv(ref='1');
 	model fail= interv tment alb log2bili log2bili*interv/ dist=poi offset=logrisk type3;
 run;
 
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='2');
-	model fail= interv tment alb log2bili log2bili*interv/ dist=poi offset=logrisk type3;
-run;
 
-proc genmod data=pbc3mult;
-	class tment (ref='0') interv(ref='3');
-	model fail= interv tment alb log2bili log2bili*interv/ dist=poi offset=logrisk type3;
+*---------------------------------------------------------------;
+*--------In-text: stratified Cox model--------------------------;
+*---------------------------------------------------------------;
+
+proc phreg data=pbc3;
+	model days*status(0)= alb log2bili / rl;
+	strata tment;
 run;
 
 
@@ -633,34 +595,29 @@ run;
 *---------------------------------------------------------------;
 
 data covstr;
-alb=0; log2bili=0;
+	alb=0; log2bili=0;
 run;
-
 proc phreg data=pbc3;
 	model days*status(0)= alb log2bili/rl;
 	strata tment;
 	baseline out=breslowstr cumhaz=breslow covariates=covstr;
 run;
-
 data breslow0;
 	set breslowstr; 
 	if tment=0; 
-	a00=breslow; 
+  a00=breslow; 
 run;
-
 data breslow1; 
 	set breslowstr; 
 	if tment=1; 	
 	a01=breslow; 
 run;
-
 data breslow01; 
 	merge breslow0 breslow1; 
 	by days; 
 run;
-
 data breslowrev; 
-set breslow01;
+  set breslow01;
 	by days;
 	retain last1 last2;
 	if a00=. then cumhaz0=last1; if a00 ne . then cumhaz0=a00; 
@@ -668,12 +625,10 @@ set breslow01;
 	output;
 	last1=cumhaz0; last2=cumhaz1; 
 run;
-
 data breslowrev; 
-set breslowrev;
+	set breslowrev;
 	line=exp(-0.574)*cumhaz0;
 run;
-
 proc gplot data=breslowrev;
 	plot cumhaz1*cumhaz0 line*cumhaz0/haxis=axis1 vaxis=axis2 overlay;
 	axis1 order=0 to 1.5 by 0.5 minor=none label=('Cumulative baseline hazard: placebo');
@@ -681,7 +636,7 @@ proc gplot data=breslowrev;
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=rl c=blue;
 run;
-
+quit;
 
 
 
@@ -705,25 +660,28 @@ run;
 *--------------------- Table 2.11 ------------------------------;
 *---------------------------------------------------------------;
 
-
+* Only constant effect per year possible;
+* Create new variables;
 data pbc3add; 
-set pbc3mult;
-	time1=(interv=1)*risktime; 
-	time2=(interv=2)*risktime; 
-	time3=(interv=3)*risktime;
-	tment0=(tment=0)*risktime; 
-	tment1=(tment=1)*risktime;
-	albny=(alb-35)/100*risktime;
-	biliny=(bili-50)/1000*risktime;
+	set pbc3mult;
+	time1=(interv=1)*risktime/365.25; 
+	time2=(interv=2)*risktime/365.25; 
+	time3=(interv=3)*risktime/365.25;
+	tment0=(tment=0)*risktime/365.25; 
+	tment1=(tment=1)*risktime/365.25;
+	albny=(alb-35)*risktime/365.25;
+	biliny=(bili-50)*risktime/365.25;
 run;
 
-
+* link=id;
+* Constant effect of treatment per year;
 proc genmod data=pbc3add;
-model fail=time1 time2 time3 tment1/dist=poi link=id noint;
+	model fail=time1 time2 time3 tment1/dist=poi link=id noint;
 run;
 
+* Constant effects per year;
 proc genmod data=pbc3add;
-model fail=time1 time2 time3 tment1 albny biliny/dist=poi link=id noint;
+	model fail=time1 time2 time3 tment1 albny biliny/dist=poi link=id noint;
 run;
 
 

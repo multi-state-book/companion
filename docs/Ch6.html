@@ -292,7 +292,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
 <div class="cell" data-hash="Ch6_cache/html/read-pbc3_daaf2a130e8f7a048ca2078bc24e20e8">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>fail <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">with</span>(pbc3, status <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -310,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="figure-6.1">Figure 6.1</h3>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.1_ffccea223464fc2c008e8ccea2fa55e5">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -368,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="a">(a)</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.2a_80396e9c62dd635936abd6abe6cdfd5e">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>theme_general_1 <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>), </span>
@@ -410,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="b">(b)</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.2b_0302da1354ae0ecd0dbbc2cf4054a782">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At 2 years</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pseudo_t2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(pseudo_alltid, tpseudo <span class="sc">==</span> times[<span class="dv">2</span>])</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -443,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="c">(c)</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.2c_d1dd5d5c44a83642c701f5e90278d59b">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At 3 years</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pseudo_t3 <span class="ot">&lt;-</span> <span class="fu">subset</span>(pseudo_alltid, tpseudo <span class="sc">==</span> times[<span class="dv">3</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -480,7 +480,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="left">Left</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.3left_6136ea6cdb26e3d901ce004019cda355">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pseudodata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">tpseudo =</span> pseudo_t2<span class="sc">$</span>tpseudo <span class="sc">/</span> <span class="fl">365.25</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">days =</span> pseudo_t2<span class="sc">$</span>days,</span>
@@ -521,7 +521,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="right">Right</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.3right_8b7454b0063c24296ff0c048ac4eca07">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.3</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bili, <span class="at">y =</span> t_loesspred), <span class="at">data =</span> pseudodata) <span class="sc">+</span> </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Bilirubin"</span>) <span class="sc">+</span>  </span>
@@ -546,7 +546,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="left-1">Left</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.4left_ae236bff22f56c23825a3992c96cf86c">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loess for log2 bili</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>log2bili_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(pseudo <span class="sc">~</span> log2bili, <span class="at">data =</span> pseudodata, <span class="at">span =</span> <span class="fl">0.8</span>, <span class="at">degree =</span> <span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pseudodata<span class="sc">$</span>log2bili_loesspred <span class="ot">&lt;-</span> <span class="fu">predict</span>(log2bili_loess)</span>
@@ -576,7 +576,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="right-1">Right</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.4right_9903e359f5cffec493b7f442372771be">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.4</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> t_log2bili_loesspred), <span class="at">data =</span> pseudodata) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="fu">expression</span>(<span class="st">"log"</span> [<span class="dv">2</span>] <span class="sc">*</span> <span class="st">"(bilirubin)"</span>)) <span class="sc">+</span></span>
@@ -600,7 +600,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>TODO: SDs for the three time points model are not as in table in Book</p>
 <div class="cell" data-hash="Ch6_cache/html/table-6.1_f61e157415056e79f55ca36076cd0437">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>posumm<span class="ot">&lt;-</span><span class="cf">function</span>(pofit,<span class="at">d=</span><span class="dv">6</span>){ </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="fu">cbind</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Est =</span> pofit<span class="sc">$</span>beta, </span>
@@ -637,7 +637,7 @@ alb         -0.105069 0.034169 0.900263  0.841946  0.962618 0.002105
 log2bili     0.835723 0.140429 2.306480  1.751517  3.037282 0.000000</code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At time year c(1, 2, 3)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the pseudo-observations at times</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">366</span>, <span class="dv">743</span>, <span class="dv">1105</span>)</span>
@@ -687,7 +687,7 @@ as.factor(tpseudo)3.02532511978097  1.602682 0.167479</code></pre>
 <h3 class="anchored" data-anchor-id="figure-6.5">Figure 6.5</h3>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.5_9d96d28a4bdf09da5a5fa76587a7e094">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At time year c(1, 2, 3) </span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">-</span> pseudo) <span class="sc">~</span> <span class="fu">as.factor</span>(tpseudo) <span class="sc">+</span> log2bili <span class="sc">+</span> alb <span class="sc">+</span> tment <span class="sc">-</span> <span class="dv">1</span>, </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> <span class="fu">subset</span>(pseudodata_t, <span class="sc">!</span><span class="fu">is.na</span>(alb)), </span>
@@ -760,7 +760,7 @@ as.factor(tpseudo)3.02532511978097  1.602682 0.167479</code></pre>
 <h3 class="anchored" data-anchor-id="table-6.2">Table 6.2</h3>
 <div class="cell" data-hash="Ch6_cache/html/table-6.2_d25c1914c28f3c88790e9f3037cb204e">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At time year c(1, 2, 3) using log-link instead</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo <span class="sc">~</span> <span class="fu">as.factor</span>(tpseudo) <span class="sc">+</span> bili <span class="sc">+</span> alb <span class="sc">+</span> tment <span class="sc">-</span> <span class="dv">1</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> <span class="fu">subset</span>(pseudodata_t, <span class="sc">!</span><span class="fu">is.na</span>(alb)),</span>
@@ -807,7 +807,7 @@ Returned Error Value:    0
 Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## - log scale used as link in Table 6.2 (add "-" in front of all estimates)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># No default "-log(x)" link function in R</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -819,7 +819,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 <h4 class="anchored" data-anchor-id="left-2">Left</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.6left_9b16ea7e750bd981cf22878ab8c98b8b">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 6.6 (a) - done earlier</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.6</span>left <span class="ot">&lt;-</span> fig6<span class="fl">.3</span>left</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.6</span>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -833,7 +833,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 <h4 class="anchored" data-anchor-id="right-2">Right</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.6right_ce7f3b0592b0a3ce7291e47c9d7aa942">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same as earlier:</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bili_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(pseudo <span class="sc">~</span> bili, <span class="at">data =</span> pseudodata, <span class="at">span =</span> <span class="fl">0.8</span>, <span class="at">degree =</span> <span class="dv">1</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>pseudodata<span class="sc">$</span>loesspred <span class="ot">&lt;-</span> <span class="fu">predict</span>(bili_loess)</span>
@@ -863,7 +863,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-6.7">Figure 6.7</h3>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.7_76261a9e735839ce3f3999094107f848">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use regression estimates from fit2</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>pseudodata_t<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(pseudodata_t))</span>
@@ -943,7 +943,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 <h3 class="anchored" data-anchor-id="table-6.3">Table 6.3</h3>
 <div class="cell" data-hash="Ch6_cache/html/table-6.3_3adc1ee34d56cf8c7bdde811668c1cd0">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate pseudo-observations of the restricted mean for subjects</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>pseudo_allt <span class="ot">&lt;-</span> <span class="fu">pseudomean</span>(pbc3<span class="sc">$</span>days <span class="sc">/</span> <span class="fl">365.25</span>, pbc3<span class="sc">$</span>fail, <span class="at">tmax =</span> <span class="dv">3</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-arrange the data into a long data set</span></span>
@@ -970,7 +970,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 <h3 class="anchored" data-anchor-id="figure-6.8">Figure 6.8</h3>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.8_a5aa5fdc3388ede6c799e86350026cdb">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>pseudodata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">days =</span> outmean3<span class="sc">$</span>days,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pseudo =</span> outmean3<span class="sc">$</span>pseudo,</span>
@@ -998,7 +998,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 <h3 class="anchored" data-anchor-id="figure-6.9">Figure 6.9</h3>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.9_929e756797230f280f72c6192f68b455">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loess for log2 bili</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>log2bili_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(pseudo <span class="sc">~</span> log2bili, <span class="at">data =</span> outmean3, <span class="at">span =</span> <span class="fl">0.8</span>, <span class="at">degree =</span> <span class="dv">1</span>)</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>outmean3<span class="sc">$</span>log2bili_loesspred <span class="ot">&lt;-</span> <span class="fu">predict</span>(log2bili_loess)</span>
@@ -1113,7 +1113,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 <h3 class="anchored" data-anchor-id="table-6.6">Table 6.6</h3>
 <div class="cell" data-hash="Ch6_cache/html/table-6.6_96dedf7cd4d7d61c9b8dc0b89a7b2a0d">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lost years</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pseudolost <span class="ot">&lt;-</span> <span class="fu">pseudoyl</span>(<span class="at">time =</span> pbc3<span class="sc">$</span>days <span class="sc">/</span> <span class="fl">365.25</span>,</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">event =</span> <span class="fu">as.integer</span>(pbc3<span class="sc">$</span>status),</span>
@@ -1156,7 +1156,7 @@ Returned Error Value:    0
 Number of clusters:   349   Maximum cluster size: 1 </code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fityl2 <span class="ot">&lt;-</span> <span class="fu">geese</span>(pseudo <span class="sc">~</span> tment,</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> a2, <span class="at">id =</span> id, <span class="at">jack =</span> <span class="cn">TRUE</span>, <span class="at">family =</span> gaussian,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">corstr =</span> <span class="st">"independence"</span>, <span class="at">scale.fix =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1190,7 +1190,7 @@ Returned Error Value:    0
 Number of clusters:   349   Maximum cluster size: 1 </code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fityl1 <span class="ot">&lt;-</span> <span class="fu">geese</span>(pseudo <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> <span class="fu">log2</span>(bili),</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(a1,<span class="sc">!</span><span class="fu">is.na</span>(alb)), <span class="at">id =</span> id, <span class="at">jack =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">family =</span> gaussian,</span>
@@ -1228,7 +1228,7 @@ Returned Error Value:    0
 Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 </div>
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fityl2 <span class="ot">&lt;-</span> <span class="fu">geese</span>(pseudo <span class="sc">~</span> tment <span class="sc">+</span> alb <span class="sc">+</span> <span class="fu">log2</span>(bili),</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(a2,<span class="sc">!</span><span class="fu">is.na</span>(alb)), <span class="at">id =</span> id, <span class="at">jack =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">family =</span> gaussian,</span>
@@ -1273,7 +1273,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h4 class="anchored" data-anchor-id="left-3">left</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.11left_f0901dfee7e886f11757913add7b2072">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comp. end point t=2 smlg med IJ</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>nystatus<span class="ot">&lt;-</span><span class="fu">ifelse</span>(pbc3<span class="sc">$</span>status <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1314,7 +1314,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h4 class="anchored" data-anchor-id="left-4">left</h4>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.11right_45691729c2ea51578adbe5b787f4bb97">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pseudo, <span class="at">y =</span> IJpseudo <span class="sc">-</span> pseudo), <span class="at">data =</span> pdata) <span class="sc">+</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Difference"</span>) <span class="sc">+</span></span>
@@ -1340,7 +1340,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
 <div class="cell" data-hash="Ch6_cache/html/read-prova_6d0b88259c98498dd5a011f44ce7f56d">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment 2x2 factorial</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>prova<span class="sc">$</span>beh <span class="ot">&lt;-</span> <span class="fu">with</span>(prova, <span class="fu">as.factor</span>(scle <span class="sc">+</span> beta<span class="sc">*</span><span class="dv">2</span>))</span>
@@ -1368,7 +1368,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <p>TODO: get program to make data file <code>datafig610.csv</code></p>
 <div class="cell" data-hash="Ch6_cache/html/figure-6.10_34c7f2f5742147922cfa9e08d06ca8c2">
 <details>
-<summary>Code hide/show</summary>
+<summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table) <span class="co">#Faster aggregation of data</span></span>

@@ -10,7 +10,7 @@ This is the code companion website to our book published by [Chapman & Hall](htt
 
 R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
 
-Please note, that code often depends on previous code in the same chapter. 
+Please note, that code often depends on previous code in the same chapter including loading of required R packages
 
 Solution to the exercises is available at the end of each chapter using R for the practicals.
 

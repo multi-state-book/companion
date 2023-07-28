@@ -40,7 +40,7 @@ format:
     #code-block-border-left: "#6C6C6C"
     #code-fold: true
     code-fold: true
-    code-summary: "Code hide/show"
+    code-summary: "Code show/hide"
     #code-overflow: wrap
     fig-width: 11.69
     fig-height: 8.27
