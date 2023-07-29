@@ -785,12 +785,13 @@ summary(fityl2 <- geese(pseudo ~ tment + alb + log2(bili),
 #| out-width: 66%
  
 # comp. end point t=2 smlg med IJ
+library(pseudo)
+library(survival)
 pbc3$nystatus<-ifelse(pbc3$status > 0, 1, 0)
 
 pseudo <- pseudosurv(time = pbc3$days,
                      event = pbc3$nystatus,
                      tmax=2 * 365.25)
-
 fit <- survfit(Surv(days, status > 0) ~ 1, data = pbc3)
 
 IJpseudo <- pseudo(fit, times = 2 * 365.25, addNA = TRUE, data.frame = TRUE, minus1 = TRUE)

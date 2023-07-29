@@ -2,7 +2,6 @@
 
 In the book, examples of event history data are used to illustrate different methods, models and approaches. All the data sets, except the LEADER data, are available for download as CSV files and description of the variables is given below.
 
-
 ```{r downloadthis, echo=FALSE}
 library(downloadthis)
 download_dir(
@@ -19,7 +18,7 @@ download_dir(
 ## 1.1 PBC3 trial in liver cirrhosis (`pbc3.csv`)
 
 | Variable name | Description                                                           |
-|-------------------------|----------------------------------------------|
+|--------------------------|----------------------------------------------|
 | `id`          | patient id                                                            |
 | `unit`        | hospital                                                              |
 | `days`        | follow-up time in days                                                |
@@ -40,10 +39,9 @@ download_dir(
 | `fuptime`     | follow-up time (days)                                    |
 | `dead`        | 0 = alive, 1 = dead                                      |
 | `bcg`         | bcg vaccination status at initial visit: 0 = no, 1 = yes |
-| `dtp`         | no of dtp vaccinations at initial visit|
+| `dtp`         | no of dtp vaccinations at initial visit                  |
 | `sex`         | 0 = female, 1 = male                                     |
 | `age`         | age in days at initial visit                             |
-
 
 ## 1.3 Testis cancer incidence and maternal parity (`testis.csv`)
 
@@ -77,23 +75,23 @@ download_dir(
 
 ## 1.5 Recurrent episodes in affective disorders (`affective.csv`)
 
-| Variable name | Description |
-|---------------|-------------|
-| `id`          | patient id  |
-| `episode`     |             |
-| `state`       |             |
-| `start`       |             |
-| `stop`        |             |
-| `status`      |             |
-| `bip`         |             |
-| `sex`         | 0 = female, 1 = male             |
-| `age`         |             |
-| `year`        |             |
-| `wait`        |             |
+| Variable name | Description          |
+|---------------|----------------------|
+| `id`          | patient id           |
+| `episode`     |                      |
+| `state`       |                      |
+| `start`       |                      |
+| `stop`        |                      |
+| `status`      |                      |
+| `bip`         |                      |
+| `sex`         | 0 = female, 1 = male |
+| `age`         |                      |
+| `year`        |                      |
+| `wait`        |                      |
 
 ## 1.6 LEADER cardiovascular trial in type 2 Diabetes
 
-Data not available for download. 
+Data not available for download.
 
 | Variable name | Description |
 |---------------|-------------|
@@ -106,52 +104,50 @@ Data not available for download.
 | `eventno`     |             |
 | `treat`       |             |
 
-
 ## 1.7 Bone marrow transplantation in acute leukemia (`bmt.csv`)
 
-| Variable name | Description |
-|---------------|-------------|
-| `id`          | patient id  |
-| `team`        |             |
-| `timedeath`   |             |
-| `death`       |             |
-| `timerel`     |             |
-| `rel`         |             |
-| `timegvhd`    |             |
-| `gvhd`        |             |
-| `timeanc500`  |             |
-| `anc500`      |             |
-| `sex`         | 0 = female, 1 = male             |
-| `age`         |             |
-| `all`         |             |
-| `bmonly`      |             |
+| Variable name | Description          |
+|---------------|----------------------|
+| `id`          | patient id           |
+| `team`        |                      |
+| `timedeath`   |                      |
+| `death`       |                      |
+| `timerel`     |                      |
+| `rel`         |                      |
+| `timegvhd`    |                      |
+| `gvhd`        |                      |
+| `timeanc500`  |                      |
+| `anc500`      |                      |
+| `sex`         | 0 = female, 1 = male |
+| `age`         |                      |
+| `all`         |                      |
+| `bmonly`      |                      |
 
 ## 1.8 The Copenhagen Holter study (`cphholter.csv`)
 
-| Variable name | Description |
-|---------------|-------------|
-| `id`          | patient id  |
-| `timedeath`   |             |
-| `death`       |             |
-| `timeafib`    |             |
-| `afib`        |             |
-| `timestroke`  |             |
-| `stroke`      |             |
-| `sex`         | 0 = female, 1 = male             |
-| `age`         |             |
-| `smkoer`      |             |
-| `esvea`       |             |
-| `chol`        |             |
-| `diabet`      |             |
-| `bmi`         |             |
-| `aspirin`     |             |
-| `probnp`      |             |
-| `sbp`         |             |
+| Variable name | Description          |
+|---------------|----------------------|
+| `id`          | patient id           |
+| `timedeath`   |                      |
+| `death`       |                      |
+| `timeafib`    |                      |
+| `afib`        |                      |
+| `timestroke`  |                      |
+| `stroke`      |                      |
+| `sex`         | 0 = female, 1 = male |
+| `age`         |                      |
+| `smkoer`      |                      |
+| `esvea`       |                      |
+| `chol`        |                      |
+| `diabet`      |                      |
+| `bmi`         |                      |
+| `aspirin`     |                      |
+| `probnp`      |                      |
+| `sbp`         |                      |
 
 ## 1.9 Small set of survival data
 
 {{< include R/chapter1_simpledata.qmd >}}
-
 
 ## Exercises
 

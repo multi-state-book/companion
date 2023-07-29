@@ -153,11 +153,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
     </div>
       </div>
@@ -273,14 +268,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#in-text-stratified-cox-model-by-center" id="toc-in-text-stratified-cox-model-by-center" class="nav-link" data-scroll-target="#in-text-stratified-cox-model-by-center">In-text: stratified Cox model by center</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intensity models</span></h1>
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intensity models</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -299,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="guinea-bissau-childhood-vaccination-study">Guinea-Bissau childhood vaccination study</h2>
 <section id="read-data" class="level3">
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-bissau_4704984d65e903bedb6db66572bbbd00">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
@@ -312,7 +307,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="table-3.1" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.1">Table 3.1</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.1_c75c10b1c73ddab6324dd9d4062b1c24">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(bissau<span class="sc">$</span>bcg, bissau<span class="sc">$</span>dtp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -337,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="table-3.2" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.2">Table 3.2</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.2_c16a0ee13613e4d5caf4cf677dfd3634">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -409,7 +404,7 @@ n= 5274, number of events= 222 </code></pre>
 <h2 class="anchored" data-anchor-id="pbc3-trial-in-liver-cirrhosis">PBC3 trial in liver cirrhosis</h2>
 <section id="read-data-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="read-data-1">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-pbc3_482837a36b5e1f7842db442011126406">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
@@ -420,7 +415,7 @@ n= 5274, number of events= 222 </code></pre>
 </section>
 <section id="table-3.11" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="table-3.11">Table 3.11</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.11_631771ea8a9c8f3ccbf34bdf742a1784">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -620,7 +615,7 @@ n= 343, number of events= 88
 <h2 class="anchored" data-anchor-id="prova-trial-in-liver-cirrhosis">PROVA trial in liver cirrhosis</h2>
 <section id="read-data-2" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-2">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-prova_64f29bce51cd7fefeb1eec4fd6552814">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
@@ -641,7 +636,7 @@ n= 343, number of events= 88
 </section>
 <section id="table-3.3" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.3">Table 3.3</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.3_b23842efd6503399577a640760f42051">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -832,7 +827,7 @@ Model 2: Surv(d0time, dead0) ~ scle + sex + coag + log2bili + factor(varsize)
 </section>
 <section id="table-3.4" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.4">Table 3.4</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.4_1faf1104007f75a9ebdf31188303f8c2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Composite</span></span>
@@ -879,7 +874,7 @@ Model 2: Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize)
 </section>
 <section id="table-3.8" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.8">Table 3.8</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.8_a2179040f496ed2d7f55f8074e2ba571">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time since randomization (tsr)</span></span>
@@ -1199,7 +1194,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 </section>
 <section id="figure-3.2" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.2">Figure 3.2</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.2_7061bc40db363e3e55f24a674f84d208">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting style </span></span>
@@ -1249,7 +1244,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 </section>
 <section id="figure-3.3" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.3">Figure 3.3</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.3_744c761998021b7767c923bce316df5e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
@@ -1280,7 +1275,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 </section>
 <section id="table-3.9" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.9">Table 3.9</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.9_99d3ef2e99fdbf5716b510b325d8eda3">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All bleeds</span></span>
@@ -1329,7 +1324,7 @@ Model 2: Surv(wait, deadb != 0) ~ beh + sex + log2bili + tt(tsr)
 </section>
 <section id="table-3.10" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.10">Table 3.10</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.10_4a197e9f279b8d9df1529a0f70c2d7bf">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># part (a)</span></span>
@@ -1529,7 +1524,7 @@ Model 2: fail2 ~ offset(log(risktime2)) + beh + relevel(as.factor(wint),
 </section>
 <section id="table-3.13" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.13">Table 3.13</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.13_4f5b331c396d39dd2dc178e33addf185">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
@@ -1684,7 +1679,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="figure-3.9" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.9">Figure 3.9</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.9_931a5767622d106822114cd4059e3d69">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
@@ -1717,7 +1712,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="testis-cancer-incidence-and-maternal-parity">Testis cancer incidence and maternal parity</h2>
 <section id="read-data-3" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-3">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-testis_3e047e0850e9d3ce1cfbc4a6b1e31f02">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>testis <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/testis.csv"</span>))</span>
@@ -1729,7 +1724,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="figure-3.1" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.1">Figure 3.1</h3>
-<div class="cell" data-out.widt="66%" data-hash="Ch3_cache/html/figure-3.1_ac3c980399c65e3cc7a99a2119398916">
+<div class="cell" data-out.widt="66%">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frames</span></span>
@@ -1812,7 +1807,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="table-3.5" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.5">Table 3.5</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.5_e01ec4ce6196a94eb9289bf96e0cc6c3">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
@@ -2020,7 +2015,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 <h2 class="anchored" data-anchor-id="recurrent-episodes-in-affective-disorders">Recurrent episodes in affective disorders</h2>
 <section id="read-data-4" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-4">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-affective_336c76a332a94bdaaa35718072e899f0">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
@@ -2030,7 +2025,7 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 </section>
 <section id="table-3.6" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.6">Table 3.6</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.6_b22db2bcf36ef31dccc110f4987f4452">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -2129,7 +2124,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="table-3.7" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.7">Table 3.7</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.7_0f758696dfdfd2a17d7fc4ade6288a84">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip <span class="sc">+</span> <span class="fu">tt</span>(year),</span>
@@ -2169,7 +2164,7 @@ n= 626, number of events= 542 </code></pre>
 <h2 class="anchored" data-anchor-id="bone-marrow-transplantation-in-acute-leukemia">Bone marrow transplantation in acute leukemia</h2>
 <section id="read-data-5" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-5">Read data</h3>
-<div class="cell" data-hash="Ch3_cache/html/read-bmt_6052f2ef2561f9517630da7497eb6616">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>bmt <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bmt.csv"</span>))</span>
@@ -2184,7 +2179,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="figure-3.5" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.5">Figure 3.5</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.5_2ccb469d3eff5860bab77f31012e397b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General theme</span></span>
@@ -2220,7 +2215,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="figure-3.6" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.6">Figure 3.6</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.6_13ff574fd56dbf7748437b940400bd08">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reformatting</span></span>
@@ -2261,7 +2256,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="figure-3.7" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.7">Figure 3.7</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.7_c03e11e2049222e624583466cb3d66da">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to get the cumulative hazard estimates at the same time points</span></span>
@@ -2314,7 +2309,7 @@ n= 626, number of events= 542 </code></pre>
 <h3 class="anchored" data-anchor-id="in-text-gvhd-as-time-dependent-covariate">In-text: GvHD as time-dependent covariate</h3>
 <section id="relapse" class="level4">
 <h4 class="anchored" data-anchor-id="relapse">Relapse</h4>
-<div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-relapse_87db1869db401b8dd1c826d9008defc9">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
@@ -2350,7 +2345,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="death-in-remission" class="level4">
 <h4 class="anchored" data-anchor-id="death-in-remission">Death in remission</h4>
-<div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-death_eedff2b58e94b6730e223cace4ef7320">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb153"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb153-1"><a href="#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd), <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
@@ -2386,7 +2381,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="figure-3.8" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.8">Figure 3.8</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.8_820025365488e09d26a9188e99f07463">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate without GvHD </span></span>
@@ -2446,7 +2441,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="figure-3.4" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.4">Figure 3.4</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.4_bcaa08ad25f88d12dd87d93c3da11758">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death hazards wrt relapse; </span></span>
@@ -2498,7 +2493,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="table-3.12" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.12">Table 3.12</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.12_dc810ad2eeaad57a353de9a80af56df1">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relapse</span></span>
@@ -2619,7 +2614,7 @@ n= 2009, number of events= 505 </code></pre>
 </section>
 <section id="table-3.14" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.14">Table 3.14</h3>
-<div class="cell" data-hash="Ch3_cache/html/table 3.14_8a3738d98dc75138dd248fd2f3a3b49f">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
@@ -2764,7 +2759,7 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 </section>
 <section id="figure-3.10" class="level3">
 <h3 class="anchored" data-anchor-id="figure-3.10">Figure 3.10</h3>
-<div class="cell" data-hash="Ch3_cache/html/figure-3.10_b8fe03b561bb2a1c7b45aa0399c5722a">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
@@ -2793,7 +2788,7 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 </section>
 <section id="table-3.15" class="level3">
 <h3 class="anchored" data-anchor-id="table-3.15">Table 3.15</h3>
-<div class="cell" data-hash="Ch3_cache/html/table-3.15_50ba97e9a9fb8f826e862ccc8ed259ea">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
@@ -2843,7 +2838,7 @@ n= 2009, number of events= 764 </code></pre>
 </section>
 <section id="in-text-stratified-cox-model-by-center" class="level3">
 <h3 class="anchored" data-anchor-id="in-text-stratified-cox-model-by-center">In-text: stratified Cox model by center</h3>
-<div class="cell" data-hash="Ch3_cache/html/in-text-stratified_941f2de5660fd1123813bb224b26c0fa">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
@@ -2934,6 +2929,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,

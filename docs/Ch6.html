@@ -153,11 +153,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
     </div>
       </div>
@@ -264,14 +259,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#table-6.7" id="toc-table-6.7" class="nav-link" data-scroll-target="#table-6.7">Table 6.7</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pseudo-values</span></h1>
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Pseudo-values</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -290,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="pbc3-trial-in-liver-cirrhosis">PBC3 trial in liver cirrhosis</h2>
 <section id="read-data" class="level3">
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
-<div class="cell" data-hash="Ch6_cache/html/read-pbc3_daaf2a130e8f7a048ca2078bc24e20e8">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
@@ -308,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="figure-6.1" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.1">Figure 6.1</h3>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.1_ffccea223464fc2c008e8ccea2fa55e5">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style</span></span>
@@ -366,7 +361,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="figure-6.2">Figure 6.2</h3>
 <section id="a" class="level4">
 <h4 class="anchored" data-anchor-id="a">(a)</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.2a_80396e9c62dd635936abd6abe6cdfd5e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>theme_general_1 <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -408,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="b" class="level4">
 <h4 class="anchored" data-anchor-id="b">(b)</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.2b_0302da1354ae0ecd0dbbc2cf4054a782">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At 2 years</span></span>
@@ -441,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="c" class="level4">
 <h4 class="anchored" data-anchor-id="c">(c)</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.2c_d1dd5d5c44a83642c701f5e90278d59b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At 3 years</span></span>
@@ -478,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="figure-6.3">Figure 6.3</h3>
 <section id="left" class="level4">
 <h4 class="anchored" data-anchor-id="left">Left</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.3left_6136ea6cdb26e3d901ce004019cda355">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
@@ -519,7 +514,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="right" class="level4">
 <h4 class="anchored" data-anchor-id="right">Right</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.3right_8b7454b0063c24296ff0c048ac4eca07">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.3</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> bili, <span class="at">y =</span> t_loesspred), <span class="at">data =</span> pseudodata) <span class="sc">+</span> </span>
@@ -544,7 +539,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="figure-6.4">Figure 6.4</h3>
 <section id="left-1" class="level4">
 <h4 class="anchored" data-anchor-id="left-1">Left</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.4left_ae236bff22f56c23825a3992c96cf86c">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loess for log2 bili</span></span>
@@ -574,7 +569,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="right-1" class="level4">
 <h4 class="anchored" data-anchor-id="right-1">Right</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.4right_9903e359f5cffec493b7f442372771be">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.4</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> log2bili, <span class="at">y =</span> t_log2bili_loesspred), <span class="at">data =</span> pseudodata) <span class="sc">+</span></span>
@@ -598,7 +593,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="table-6.1" class="level3">
 <h3 class="anchored" data-anchor-id="table-6.1">Table 6.1</h3>
 <p>TODO: SDs for the three time points model are not as in table in Book</p>
-<div class="cell" data-hash="Ch6_cache/html/table-6.1_f61e157415056e79f55ca36076cd0437">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>posumm<span class="ot">&lt;-</span><span class="cf">function</span>(pofit,<span class="at">d=</span><span class="dv">6</span>){ </span>
@@ -685,7 +680,7 @@ as.factor(tpseudo)3.02532511978097  1.602682 0.167479</code></pre>
 </section>
 <section id="figure-6.5" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.5">Figure 6.5</h3>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.5_9d96d28a4bdf09da5a5fa76587a7e094">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At time year c(1, 2, 3) </span></span>
@@ -758,7 +753,7 @@ as.factor(tpseudo)3.02532511978097  1.602682 0.167479</code></pre>
 </section>
 <section id="table-6.2" class="level3">
 <h3 class="anchored" data-anchor-id="table-6.2">Table 6.2</h3>
-<div class="cell" data-hash="Ch6_cache/html/table-6.2_d25c1914c28f3c88790e9f3037cb204e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># At time year c(1, 2, 3) using log-link instead</span></span>
@@ -817,7 +812,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-6.6">Figure 6.6</h3>
 <section id="left-2" class="level4">
 <h4 class="anchored" data-anchor-id="left-2">Left</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.6left_9b16ea7e750bd981cf22878ab8c98b8b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 6.6 (a) - done earlier</span></span>
@@ -831,7 +826,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 </section>
 <section id="right-2" class="level4">
 <h4 class="anchored" data-anchor-id="right-2">Right</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.6right_ce7f3b0592b0a3ce7291e47c9d7aa942">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same as earlier:</span></span>
@@ -861,7 +856,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 </section>
 <section id="figure-6.7" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.7">Figure 6.7</h3>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.7_76261a9e735839ce3f3999094107f848">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use regression estimates from fit2</span></span>
@@ -941,7 +936,7 @@ Number of clusters:   1029   Maximum cluster size: 1 </code></pre>
 </section>
 <section id="table-6.3" class="level3">
 <h3 class="anchored" data-anchor-id="table-6.3">Table 6.3</h3>
-<div class="cell" data-hash="Ch6_cache/html/table-6.3_3adc1ee34d56cf8c7bdde811668c1cd0">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate pseudo-observations of the restricted mean for subjects</span></span>
@@ -968,7 +963,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 </section>
 <section id="figure-6.8" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.8">Figure 6.8</h3>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.8_a5aa5fdc3388ede6c799e86350026cdb">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
@@ -996,7 +991,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 </section>
 <section id="figure-6.9" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.9">Figure 6.9</h3>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.9_929e756797230f280f72c6192f68b455">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loess for log2 bili</span></span>
@@ -1111,7 +1106,7 @@ log2bili    -0.243093 0.031982 -0.305778 -0.180408 57.773091 0.000000</code></pr
 </section>
 <section id="table-6.6" class="level3">
 <h3 class="anchored" data-anchor-id="table-6.6">Table 6.6</h3>
-<div class="cell" data-hash="Ch6_cache/html/table-6.6_96dedf7cd4d7d61c9b8dc0b89a7b2a0d">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lost years</span></span>
@@ -1271,36 +1266,37 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h3 class="anchored" data-anchor-id="figure-6.11">Figure 6.11</h3>
 <section id="left-3" class="level4">
 <h4 class="anchored" data-anchor-id="left-3">left</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.11left_f0901dfee7e886f11757913add7b2072">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># comp. end point t=2 smlg med IJ</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>nystatus<span class="ot">&lt;-</span><span class="fu">ifelse</span>(pbc3<span class="sc">$</span>status <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">pseudosurv</span>(<span class="at">time =</span> pbc3<span class="sc">$</span>days,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">event =</span> pbc3<span class="sc">$</span>nystatus,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tmax=</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(days, status <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> pbc3)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>IJpseudo <span class="ot">&lt;-</span> <span class="fu">pseudo</span>(fit, <span class="at">times =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>, <span class="at">addNA =</span> <span class="cn">TRUE</span>, <span class="at">data.frame =</span> <span class="cn">TRUE</span>, <span class="at">minus1 =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">IJpseudo =</span> IJpseudo<span class="sc">$</span>pseudo,</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">pseudo =</span> pseudo<span class="sc">$</span>pseudo,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">diff =</span> IJpseudo<span class="sc">$</span>pseudo <span class="sc">-</span> pseudo<span class="sc">$</span>pseudo)</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>left <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pseudo, <span class="at">y =</span> IJpseudo), <span class="at">data =</span> pdata) <span class="sc">+</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"IJ pseudo-value"</span>) <span class="sc">+</span></span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Pseudo-value"</span>) <span class="sc">+</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>),</span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>),</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pseudo)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>nystatus<span class="ot">&lt;-</span><span class="fu">ifelse</span>(pbc3<span class="sc">$</span>status <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>pseudo <span class="ot">&lt;-</span> <span class="fu">pseudosurv</span>(<span class="at">time =</span> pbc3<span class="sc">$</span>days,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">event =</span> pbc3<span class="sc">$</span>nystatus,</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">tmax=</span><span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(days, status <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> pbc3)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>IJpseudo <span class="ot">&lt;-</span> <span class="fu">pseudo</span>(fit, <span class="at">times =</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fl">365.25</span>, <span class="at">addNA =</span> <span class="cn">TRUE</span>, <span class="at">data.frame =</span> <span class="cn">TRUE</span>, <span class="at">minus1 =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>pdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">IJpseudo =</span> IJpseudo<span class="sc">$</span>pseudo,</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">pseudo =</span> pseudo<span class="sc">$</span>pseudo,</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">diff =</span> IJpseudo<span class="sc">$</span>pseudo <span class="sc">-</span> pseudo<span class="sc">$</span>pseudo)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>left <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pseudo, <span class="at">y =</span> IJpseudo), <span class="at">data =</span> pdata) <span class="sc">+</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"IJ pseudo-value"</span>) <span class="sc">+</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Pseudo-value"</span>) <span class="sc">+</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>),</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>),</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>left</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch6_files/figure-html/figure-6.11left-1.png" class="img-fluid" style="width:66.0%"></p>
@@ -1312,7 +1308,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 </section>
 <section id="left-4" class="level4">
 <h4 class="anchored" data-anchor-id="left-4">left</h4>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.11right_45691729c2ea51578adbe5b787f4bb97">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fig6<span class="fl">.11</span>right <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pseudo, <span class="at">y =</span> IJpseudo <span class="sc">-</span> pseudo), <span class="at">data =</span> pdata) <span class="sc">+</span></span>
@@ -1338,7 +1334,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h2 class="anchored" data-anchor-id="prova-trial-in-liver-cirrhosis">PROVA trial in liver cirrhosis</h2>
 <section id="read-data-1" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
-<div class="cell" data-hash="Ch6_cache/html/read-prova_6d0b88259c98498dd5a011f44ce7f56d">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
@@ -1366,7 +1362,7 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <section id="figure-6.10" class="level3">
 <h3 class="anchored" data-anchor-id="figure-6.10">Figure 6.10</h3>
 <p>TODO: get program to make data file <code>datafig610.csv</code></p>
-<div class="cell" data-hash="Ch6_cache/html/figure-6.10_34c7f2f5742147922cfa9e08d06ca8c2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate)</span>
@@ -1489,6 +1485,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,

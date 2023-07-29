@@ -153,11 +153,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
     </div>
       </div>
@@ -271,14 +266,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#exercise-2.1" id="toc-exercise-2.1" class="nav-link" data-scroll-target="#exercise-2.1">Exercise 2.1</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intuition for intensity models</span></h1>
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Intuition for intensity models</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -301,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-pbc3-r_b7eeff877a6e22df60895939101f9c53">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
@@ -329,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-pbc3-sas_1a41079d202ee419605cd9fa944d1890">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>pbc3</span>
@@ -365,7 +360,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.1-r_360efa6da07898736d74158924396e3c">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
@@ -408,7 +403,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.1-sas_2971f8c0c71777b300aaf356d764f8e2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>pbc3; </span>
@@ -441,7 +436,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-Naa2-r_8957e34bc1b500f04af5b85fb869b3b5">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(<span class="fu">subset</span>(nadata, nadata<span class="sc">$</span>time <span class="sc">&lt;=</span> <span class="dv">2</span><span class="sc">*</span><span class="fl">365.25</span> <span class="sc">&amp;</span> nadata<span class="sc">$</span>tment <span class="sc">==</span> <span class="st">"tment=0"</span>),<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -461,7 +456,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-Naa2-sas_3ba7d701a4b5d9e867348f269518e9d4">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>proc print data<span class="ot">=</span>hazdat;</span>
@@ -479,7 +474,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.1-r_e93318fa26c35aaac27a16a5204129f5">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for Table 2.1</span></span>
@@ -513,7 +508,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.1-sas_532ea14a2121c9e86b1bce7686b92f7e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">*</span> prepare <span class="cf">for</span> poisson model <span class="sc">*</span><span class="er">/</span></span>
@@ -564,7 +559,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.2_cdfa8e9228fb317f206323bf02d03908">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rates + cuts from Table 2.1</span></span>
@@ -607,7 +602,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-sas-r_9a254cdd0ef9c95b35b8b9cc3d486ff1">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
@@ -644,7 +639,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 </div>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-sas_8c699fe1a7e47350d449274e3c205101">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ods output modelfit<span class="ot">=</span>full;</span>
@@ -693,7 +688,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-logrank-r_1200ddbd1adf582f7b5cfe917d161e5a">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -706,7 +701,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 </div>
 </div>
 <div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-logrank-sas_915b158c87a70e963a26ef60baeaa488">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>proc lifetest data<span class="ot">=</span>pbc3 notable; </span>
@@ -725,7 +720,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.3-r_751567ad599182622ec131bb16a04c3c">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># NA data from figure 2.1 model fit</span></span>
@@ -792,7 +787,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.3-sas_630690887820790495d5b62f7cc8d250">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data hazdat; </span>
@@ -831,7 +826,7 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-cox-r_49b5bf7baa1381473aab9d91bf8b8e29">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a Cox model using the pbc3 data with treatment as a covariate</span></span>
@@ -853,7 +848,7 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 <div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-cox-sas_862a605ae735994298683525997798b1">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>pbc3;</span>
@@ -871,7 +866,7 @@ n= 349, number of events= 90 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.5-r_16a3aeb8cec919a3577478e6a6d7cd24">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
@@ -902,7 +897,7 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 <div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.5-sas_eefed0823928383b5468cd62c47aa9ea">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data cov;</span>
@@ -934,7 +929,7 @@ n= 349, number of events= 90 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.3-r_0f48d152ab7a2f02efae28eaec43977b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Average covariate values of albumin and bilirubin per treatment </span></span>
@@ -956,7 +951,7 @@ n= 349, number of events= 90 </code></pre>
 </div>
 </div>
 <div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.3-sas_05dc43f40f5ca16c6dd150a02cf67066">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>proc means data<span class="ot">=</span>pbc3 mean;</span>
@@ -975,7 +970,7 @@ n= 349, number of events= 90 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-12-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-2" role="tab" aria-controls="tabset-12-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.4-r_4e76897f2f03e0a0d6a41302c6a9edc6">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model with treatment, albumin and bilirubin as covariates </span></span>
@@ -1001,7 +996,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-12-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-12-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.4-sas_fabf0e8577de83f199a4ed57d944e9ef">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>pbc3;</span>
@@ -1019,7 +1014,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-13-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-2" role="tab" aria-controls="tabset-13-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-poission-r_7ea7a8e0768910279cec879c0b0ec731">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
@@ -1040,7 +1035,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-13-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-13-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-poission-sas_2a178a339eef811147809ecf034ec4de">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>proc genmod data<span class="ot">=</span>pbc3mult;</span>
@@ -1060,7 +1055,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-14-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-2" role="tab" aria-controls="tabset-14-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.5-r_a809f1c1b4d51e401fc20db0fc0af17b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Poisson model with treatment, albumin and bilirubin as covariates</span></span>
@@ -1082,7 +1077,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.5-sas_5f995f13ea201a8318e3a91e3402bef0">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>proc genmod data<span class="ot">=</span>pbc3mult;</span>
@@ -1101,7 +1096,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-15-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-1" role="tab" aria-controls="tabset-15-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-15-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-15-2" role="tab" aria-controls="tabset-15-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-15-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-15-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.6-r_ec562be7415170777f8dd8c9d5e167ad">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
@@ -1562,7 +1557,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 <div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.6-sas_d218614093888a656349dae3aece98bb">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span> Cox models <span class="sc">**</span>;</span>
@@ -1730,7 +1725,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-16-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-1" role="tab" aria-controls="tabset-16-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-16-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-16-2" role="tab" aria-controls="tabset-16-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-16-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-16-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.6-r_8a65ce537abb98d2b486fab46021dff3">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
@@ -1775,7 +1770,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 <div id="tabset-16-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-16-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.6-sas_118cf5d77a131fed90f952b872c9a1ec">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Below is estimates from the following models collected; </span>
@@ -1825,7 +1820,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-17-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-1" role="tab" aria-controls="tabset-17-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-17-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-17-2" role="tab" aria-controls="tabset-17-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-17-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-17-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.7-r_c3d02d08c4083d4825f644b23dbbba1c">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bilirubin and the two last linear predictors</span></span>
@@ -1851,7 +1846,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 <div id="tabset-17-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-17-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.7-sas_d4552484aeeb2e5c84595d16acfc8b8d">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>proc sort data<span class="ot">=</span>lin2; by bili; run;</span>
@@ -1876,7 +1871,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-18-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-1" role="tab" aria-controls="tabset-18-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-18-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-18-2" role="tab" aria-controls="tabset-18-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-18-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-18-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.8-r_5caddf5615fa530dc0433e2b1e65fdea">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The below linear predictors include estimates from the following models</span></span>
@@ -1916,7 +1911,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 </div>
 </div>
 <div id="tabset-18-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-18-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.8-sas_81f4166736f68068e8c46a2e4398bfd5">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Linear predictors from the following models; </span>
@@ -1959,7 +1954,7 @@ Model 2: fail ~ timegroup + tment + alb + log2bili + offset(log(risktime))
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-19-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-1" role="tab" aria-controls="tabset-19-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-19-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-19-2" role="tab" aria-controls="tabset-19-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-19-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-19-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.7-r_aaad0e57fc453672eefbc4f5dc20e40e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model</span></span>
@@ -2002,7 +1997,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-19-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-19-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.7-sas_f6897f5edc08b5d5b2277f3391ab4662">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model; </span>
@@ -2027,7 +2022,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-20-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-1" role="tab" aria-controls="tabset-20-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-20-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-20-2" role="tab" aria-controls="tabset-20-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-20-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-20-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.8-r_84939f2f3f138d553db368250a7d29ab">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox models</span></span>
@@ -2182,7 +2177,7 @@ Model 2: fail ~ tment + alb + bili0 + bili1 + timegroup + offset(log(risktime))
 </div>
 </div>
 <div id="tabset-20-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-20-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.8-sas_bdcfbd3157ba12e7fd837e6a6543427b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model <span class="dv">1</span>; </span>
@@ -2224,7 +2219,7 @@ Model 2: fail ~ tment + alb + bili0 + bili1 + timegroup + offset(log(risktime))
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-21-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-1" role="tab" aria-controls="tabset-21-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-21-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-21-2" role="tab" aria-controls="tabset-21-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-21-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-21-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.9-r_08bbd9062127be8cee1d2d6b15a8b354">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>tment1 <span class="ot">&lt;-</span> (pbc3mult<span class="sc">$</span>timegroup<span class="sc">==</span><span class="dv">1</span>)<span class="sc">*</span>pbc3mult<span class="sc">$</span>tment</span>
@@ -2345,7 +2340,7 @@ Model 2: fail ~ tment + alb + bili1 + bili2 + bili3 + timegroup + offset(log(ris
 </div>
 </div>
 <div id="tabset-21-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-21-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.9-sas_dca834016e91d08d2e1fc983fcdf96ab">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Treatment; </span>
@@ -2395,7 +2390,7 @@ Model 2: fail ~ tment + alb + bili1 + bili2 + bili3 + timegroup + offset(log(ris
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-22-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-1" role="tab" aria-controls="tabset-22-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-22-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-22-2" role="tab" aria-controls="tabset-22-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-22-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-22-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-stratified-cox-r_2882679c537dd6c10f1a01e61f3002b3">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>coxmod_f29 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(tment) <span class="sc">+</span> alb <span class="sc">+</span> log2bili,</span>
@@ -2418,7 +2413,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-22-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-22-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-stratified-cox-sas_900c6cc584eadd9d7ecee7e883f8b137">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>pbc3;</span>
@@ -2437,7 +2432,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-23-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-1" role="tab" aria-controls="tabset-23-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-23-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-23-2" role="tab" aria-controls="tabset-23-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-23-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-23-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.10-r_487d47ea9c1b454b9477ecd00da228dc">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting cumulative baseline hazards per treatment</span></span>
@@ -2479,7 +2474,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-23-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-23-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.10-sas_044464c4b4f33ccf89b893bbf1fb7b22">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a>data covstr;</span>
@@ -2537,7 +2532,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-24-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-1" role="tab" aria-controls="tabset-24-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-24-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-24-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.11-r_5d185cc3c5fd86e59193584435cc7b56">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additive Aalen models - available with timereg</span></span>
@@ -2552,16 +2547,16 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          5.96               0.000
-tment                                1.60               0.714
+(Intercept)                          5.96               0.001
+tment                                1.60               0.745
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.107                       0.565
-tment                               0.136                       0.648
+(Intercept)                         0.107                       0.573
+tment                               0.136                       0.595
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                          7.62                       0.444
-tment                                4.54                       0.730
+(Intercept)                          7.62                       0.412
+tment                                4.54                       0.698
 
    
    
@@ -2629,7 +2624,7 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-25-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-25-1" role="tab" aria-controls="tabset-25-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-25-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-25-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.12-r_960c712aa5b6123cdb6fc9eb6b5ce054">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make Aalen model fit</span></span>
@@ -2706,7 +2701,7 @@ aalen(formula = Surv(days, status != 0) ~ tment, data = pbc3)</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-26-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-26-1" role="tab" aria-controls="tabset-26-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-26-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-26-2" role="tab" aria-controls="tabset-26-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-26-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-26-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.10-r_b59e726f884e44fe6809251a562efd0a">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
@@ -2726,15 +2721,15 @@ Test for nonparametric terms
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
 (Intercept)                          5.96               0.000
-tment                                1.60               0.736
+tment                                1.60               0.721
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.107                       0.571
-tment                               0.136                       0.649
+(Intercept)                         0.107                       0.564
+tment                               0.136                       0.587
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                          7.62                       0.434
-tment                                4.54                       0.741
+(Intercept)                          7.62                       0.431
+tment                                4.54                       0.679
 
    
    
@@ -2758,9 +2753,9 @@ Test for non-significant effects
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                        0.0914                       0.406
+(Intercept)                        0.0914                       0.396
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0136                       0.276
+(Intercept)                        0.0136                       0.272
 
 Parametric terms :     
                 Coef.    SE Robust SE     z P-val lower2.5% upper97.5%
@@ -2785,22 +2780,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.62               0.007
-tment                                2.66               0.128
-alb                                  3.82               0.005
+(Intercept)                          3.62               0.009
+tment                                2.66               0.129
+alb                                  3.82               0.004
 bili                                 4.83               0.000
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                       0.30300                       0.942
-tment                             0.12100                       0.705
-alb                               0.00666                       0.963
-bili                              0.00301                       0.175
+(Intercept)                       0.30300                       0.939
+tment                             0.12100                       0.697
+alb                               0.00666                       0.969
+bili                              0.00301                       0.183
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                      14.20000                       0.992
-tment                             3.29000                       0.797
-alb                               0.00826                       0.991
-bili                              0.00203                       0.316
+(Intercept)                      14.20000                       0.982
+tment                             3.29000                       0.798
+alb                               0.00826                       0.990
+bili                              0.00203                       0.335
 
    
    
@@ -2823,17 +2818,17 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          4.03               0.001
+(Intercept)                          4.03                   0
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.119                       0.179
+(Intercept)                         0.119                       0.175
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0263                       0.114
+(Intercept)                        0.0263                        0.09
 
 Parametric terms :     
                 Coef.       SE Robust SE     z    P-val lower2.5% upper97.5%
-const(tment) -0.04130 0.021600  0.020100 -2.05 4.02e-02  -0.08360    0.00104
+const(tment) -0.04130 0.021600  0.020100 -2.05 4.01e-02  -0.08360    0.00104
 const(alb)   -0.00842 0.002290  0.002230 -3.77 1.63e-04  -0.01290   -0.00393
 const(bili)   0.00230 0.000483  0.000384  5.98 2.17e-09   0.00135    0.00325
    
@@ -2856,19 +2851,19 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.60               0.002
-alb                                  3.80               0.001
+(Intercept)                          3.60               0.006
+alb                                  3.80               0.003
 bili                                 4.83               0.000
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                       0.28500                       0.949
-alb                               0.00954                       0.826
-bili                              0.00315                       0.161
+(Intercept)                       0.28500                       0.945
+alb                               0.00954                       0.799
+bili                              0.00315                       0.165
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                      3.16e-02                       0.995
-alb                              5.26e-05                       0.919
-bili                             6.52e-06                       0.281
+(Intercept)                      3.16e-02                       0.994
+alb                              5.26e-05                       0.903
+bili                             6.52e-06                       0.286
 
 Parametric terms :     
                Coef.     SE Robust SE     z P-val lower2.5% upper97.5%
@@ -2892,22 +2887,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
               Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                            3.23               0.019
+(Intercept)                            3.23               0.015
 I(alb/10)                              3.00               0.039
 I(bili/100)                            4.88               0.000
-I((alb/10)^2)                          2.77               0.084
+I((alb/10)^2)                          2.77               0.073
 
 Test for time invariant effects 
                     Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                           9.420                       0.250
-I(alb/10)                             4.950                       0.255
-I(bili/100)                           0.365                       0.071
-I((alb/10)^2)                         0.635                       0.258
+(Intercept)                           9.420                       0.219
+I(alb/10)                             4.950                       0.227
+I(bili/100)                           0.365                       0.077
+I((alb/10)^2)                         0.635                       0.232
                       Cramer von Mises test p-value H_0:constant effect
-(Intercept)                         83.6000                       0.367
-I(alb/10)                           24.4000                       0.355
-I(bili/100)                          0.0949                       0.179
-I((alb/10)^2)                        0.4160                       0.350
+(Intercept)                         83.6000                       0.317
+I(alb/10)                           24.4000                       0.311
+I(bili/100)                          0.0949                       0.167
+I((alb/10)^2)                        0.4160                       0.314
 
 Parametric terms :     
                Coef.     SE Robust SE     z  P-val lower2.5% upper97.5%
@@ -2931,22 +2926,22 @@ Test for nonparametric terms
 
 Test for non-significant effects 
                 Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                              3.82               0.001
-I(alb/10)                                4.02               0.001
-I(bili/100)                              3.85               0.001
-I((bili/100)^2)                          3.01               0.046
+(Intercept)                              3.82               0.006
+I(alb/10)                                4.02               0.005
+I(bili/100)                              3.85               0.003
+I((bili/100)^2)                          3.01               0.047
 
 Test for time invariant effects 
                       Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                             0.440                       0.674
-I(alb/10)                               0.117                       0.621
-I(bili/100)                             0.612                       0.446
-I((bili/100)^2)                         0.515                       0.162
+(Intercept)                             0.440                       0.667
+I(alb/10)                               0.117                       0.624
+I(bili/100)                             0.612                       0.455
+I((bili/100)^2)                         0.515                       0.183
                         Cramer von Mises test p-value H_0:constant effect
-(Intercept)                            0.1320                       0.742
-I(alb/10)                              0.0124                       0.609
-I(bili/100)                            0.4640                       0.326
-I((bili/100)^2)                        0.2880                       0.166
+(Intercept)                            0.1320                       0.751
+I(alb/10)                              0.0124                       0.613
+I(bili/100)                            0.4640                       0.342
+I((bili/100)^2)                        0.2880                       0.191
 
 Parametric terms :     
                Coef.     SE Robust SE     z  P-val lower2.5% upper97.5%
@@ -2974,9 +2969,9 @@ Test for non-significant effects
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                         0.123                       0.198
+(Intercept)                         0.123                        0.17
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0287                       0.125
+(Intercept)                        0.0287                       0.105
 
 Parametric terms :     
                        Coef.       SE Robust SE       z    P-val lower2.5%
@@ -3007,13 +3002,13 @@ Test for nonparametric terms
 
 Test for non-significant effects 
             Supremum-test of significance p-value H_0: B(t)=0
-(Intercept)                          3.06               0.004
+(Intercept)                          3.06               0.003
 
 Test for time invariant effects 
                   Kolmogorov-Smirnov test p-value H_0:constant effect
-(Intercept)                          0.12                        0.18
+(Intercept)                          0.12                       0.198
                     Cramer von Mises test p-value H_0:constant effect
-(Intercept)                        0.0265                       0.116
+(Intercept)                        0.0265                        0.13
 
 Parametric terms :     
                       Coef.       SE Robust SE       z    P-val lower2.5%
@@ -3034,7 +3029,7 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
 </div>
 </div>
 <div id="tabset-26-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-26-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.10-sas_e37674be5d0d2119e5c618f749498001">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Only constant effect per year possible;</span>
@@ -3072,7 +3067,7 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-27-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-27-1" role="tab" aria-controls="tabset-27-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-27-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-27-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.11-r_6e304e666305ffae1526cca7f625191e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co">#------------------------------------------------------------------#</span></span>
@@ -3154,7 +3149,7 @@ aalen(formula = Surv(days/365.25, status != 0) ~ const(tment) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-28-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-28-1" role="tab" aria-controls="tabset-28-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-28-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-28-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.13-r_082832bbb7420faf529a47471eb46867">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb168"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb168-1"><a href="#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death without transplantation</span></span>
@@ -3231,7 +3226,7 @@ n= 343, number of events= 88
 <h2 class="anchored" data-anchor-id="guinea-bissau-childhood-vaccination-study">Guinea-Bissau childhood vaccination study</h2>
 <section id="read-data-1" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
-<div class="cell" data-hash="Ch2_cache/html/read-bissau-x_576480e3a29c7e805587c49e2cf7ba16">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb174"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb174-1"><a href="#cb174-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
@@ -3242,7 +3237,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-29-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-1" role="tab" aria-controls="tabset-29-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-29-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-2" role="tab" aria-controls="tabset-29-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-29-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-29-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-bissau_0bbcbfc2f50c93936bebef06620e80e2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
@@ -3251,7 +3246,7 @@ n= 343, number of events= 88
 </div>
 </div>
 <div id="tabset-29-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-29-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-bissau-sas_88d1d801eca364e18fdcb640bafb2121">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>bissau</span>
@@ -3274,7 +3269,7 @@ n= 343, number of events= 88
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-30-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-1" role="tab" aria-controls="tabset-30-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-30-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-2" role="tab" aria-controls="tabset-30-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-30-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-30-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.12-r_5432dd9f07839e226d1562ab49c77004">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
@@ -3339,7 +3334,7 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-30-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-30-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.12-sas_7796b9042c3a10bc80dbba528a3db99e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
@@ -3369,7 +3364,7 @@ n= 5274, number of events= 222 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-31-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-1" role="tab" aria-controls="tabset-31-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-31-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-2" role="tab" aria-controls="tabset-31-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-31-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-31-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.13_522065a56f3f1f847787250366064fe8">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
@@ -3405,7 +3400,7 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-31-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-31-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.13--sas_7a980bc45b9cdf777de7197fda50d5dd">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit and get cumulative baseline hazard ; </span>
@@ -3447,7 +3442,7 @@ n= 5274, number of events= 222 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-32-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-32-1" role="tab" aria-controls="tabset-32-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-32-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-32-2" role="tab" aria-controls="tabset-32-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-32-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-32-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.14_28f0e8f79510f9589b514d78dd7ec67d">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
@@ -3471,7 +3466,7 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-32-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-32-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.14--sas_b8c7f170697cd22a904e1421da307095">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a>data cov2;</span>
@@ -3509,7 +3504,7 @@ n= 5274, number of events= 222 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-33-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-33-1" role="tab" aria-controls="tabset-33-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-33-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-33-2" role="tab" aria-controls="tabset-33-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-33-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-33-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-affective-r_313205d67d060fc8c4ad43e22019844c">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
@@ -3518,7 +3513,7 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-33-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-33-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-affective-sas_c71610ceb5159eb62b3e4d3d612414fe">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>affective</span>
@@ -3541,7 +3536,7 @@ n= 5274, number of events= 222 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-34-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-1" role="tab" aria-controls="tabset-34-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-34-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-34-2" role="tab" aria-controls="tabset-34-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-34-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-34-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.14-r_3a534108a2ab80a519b08dd7d9dff644">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Markov': Column 1</span></span>
@@ -3744,7 +3739,7 @@ n= 626, number of events= 542 </code></pre>
 </div>
 </div>
 <div id="tabset-34-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.14-sas_3f8910ca99dac7e5e7df3d12db7c862e">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb214"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a>proc sort data<span class="ot">=</span>affective out<span class="ot">=</span>state0;</span>
@@ -3796,7 +3791,7 @@ n= 626, number of events= 542 </code></pre>
 </section>
 <section id="leader-cardiovascular-trial-in-type-2-diabetes" class="level2">
 <h2 class="anchored" data-anchor-id="leader-cardiovascular-trial-in-type-2-diabetes">LEADER cardiovascular trial in type 2 Diabetes</h2>
-<div class="cell" data-hash="Ch2_cache/html/unnamed-chunk-65_82ebed57a80229760ec63b40d7ef42d9">
+<div class="cell">
 
 </div>
 <section id="read-data-3" class="level3">
@@ -3805,7 +3800,7 @@ n= 626, number of events= 542 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-35-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-35-1" role="tab" aria-controls="tabset-35-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-35-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-35-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/read-leader-r_94d7544bd4289865f823f189325ce62f">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assume that LEADER data is loaded in data set leader</span></span>
@@ -3824,7 +3819,7 @@ n= 626, number of events= 542 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-36-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-36-1" role="tab" aria-controls="tabset-36-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-36-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-36-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/Figure-2.15-r_dc9c11390fa2b7c4033eacf896951b2b">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -3874,7 +3869,7 @@ n= 626, number of events= 542 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-37-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-37-1" role="tab" aria-controls="tabset-37-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-37-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-37-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.15-r_f15eeba5cb316bb59e71003285fb7a62">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model first events</span></span>
@@ -4107,6 +4102,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,

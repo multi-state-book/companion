@@ -152,11 +152,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <a href="./">Models for Multi-State Survival Data</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/multi-state-book/companion" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
-  <div class="quarto-reader-toggle-btn">
-  <i class="bi"></i>
-  </div>
-</a>
 </div>
     </div>
       </div>
@@ -222,14 +217,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#table-8.1" id="toc-table-8.1" class="nav-link" data-scroll-target="#table-8.1">Table 8.1</a></li>
   </ul></li>
   </ul>
-</nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></h1>
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
 </div>
 
 
@@ -252,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-r_4ad91290faf7a58e27e692bfd4feaf13">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
@@ -261,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-sas_bdadbca559ee42c8f593a4edf6dad2a2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc import </span>
@@ -286,7 +281,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-hash="Ch7_cache/html/table-8.1-r_a441a507e3cf39353a78a9d98f60e0a0">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model - full cohort</span></span>
@@ -320,8 +315,8 @@ n= 5274, number of events= 222 </code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>    s
 dead    0    1
-   0 4420  632
-   1  195   27</code></pre>
+   0 4381  671
+   1  197   25</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
@@ -334,20 +329,20 @@ dead    0    1
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Case-cohort analysis,x$method, Prentice 
- with subcohort of 659 from cohort of 5274 
+ with subcohort of 696 from cohort of 5274 
 
 Call: cch(formula = Surv(fuptime, dead != 0) ~ factor(bcg) + factor(agem), 
     data = bis2, subcoh = bis2$s, id = bis2$id, cohort.size = nrow(bissau))
 
 Coefficients:
                 Coef    HR  (95%   CI)     p
-factor(bcg)1  -0.459 0.632 0.453 0.881 0.007
-factor(agem)1  0.042 1.043 0.622 1.752 0.872
-factor(agem)2 -0.141 0.868 0.492 1.534 0.627
-factor(agem)3  0.249 1.283 0.743 2.217 0.372
-factor(agem)4  0.549 1.731 0.999 2.999 0.050
-factor(agem)5  0.459 1.583 0.889 2.819 0.119
-factor(agem)6  0.159 1.172 0.536 2.563 0.690</code></pre>
+factor(bcg)1  -0.247 0.782 0.561 1.088 0.144
+factor(agem)1  0.260 1.296 0.776 2.166 0.322
+factor(agem)2 -0.219 0.803 0.458 1.408 0.444
+factor(agem)3  0.433 1.542 0.898 2.647 0.117
+factor(agem)4  0.434 1.543 0.899 2.650 0.116
+factor(agem)5  0.494 1.638 0.929 2.889 0.088
+factor(agem)6  0.040 1.041 0.481 2.251 0.919</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
@@ -372,35 +367,33 @@ coxph(formula = Surv(rep(1, 888L), Fail) ~ factor(bcg) + factor(agem),
 
   n= 888, number of events= 222 
 
-                  coef exp(coef) se(coef)      z Pr(&gt;|z|)   
-factor(bcg)1  -0.46553   0.62780  0.17947 -2.594  0.00949 **
-factor(agem)1  0.10845   1.11455  0.26846  0.404  0.68623   
-factor(agem)2 -0.08984   0.91407  0.29587 -0.304  0.76138   
-factor(agem)3  0.41139   1.50891  0.28798  1.429  0.15313   
-factor(agem)4  0.53956   1.71526  0.29036  1.858  0.06314 . 
-factor(agem)5  0.55564   1.74305  0.30871  1.800  0.07188 . 
-factor(agem)6  0.11164   1.11811  0.40294  0.277  0.78174   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+                   coef exp(coef)  se(coef)      z Pr(&gt;|z|)
+factor(bcg)1  -0.243276  0.784055  0.177263 -1.372    0.170
+factor(agem)1 -0.011194  0.988869  0.265945 -0.042    0.966
+factor(agem)2 -0.301578  0.739650  0.292378 -1.031    0.302
+factor(agem)3  0.321210  1.378795  0.287344  1.118    0.264
+factor(agem)4  0.255868  1.291583  0.287010  0.891    0.373
+factor(agem)5  0.435190  1.545256  0.305789  1.423    0.155
+factor(agem)6  0.003594  1.003601  0.400322  0.009    0.993
 
               exp(coef) exp(-coef) lower .95 upper .95
-factor(bcg)1     0.6278     1.5929    0.4416    0.8925
-factor(agem)1    1.1146     0.8972    0.6585    1.8863
-factor(agem)2    0.9141     1.0940    0.5118    1.6324
-factor(agem)3    1.5089     0.6627    0.8581    2.6533
-factor(agem)4    1.7153     0.5830    0.9709    3.0303
-factor(agem)5    1.7431     0.5737    0.9518    3.1922
-factor(agem)6    1.1181     0.8944    0.5076    2.4630
+factor(bcg)1     0.7841     1.2754    0.5539     1.110
+factor(agem)1    0.9889     1.0113    0.5872     1.665
+factor(agem)2    0.7397     1.3520    0.4170     1.312
+factor(agem)3    1.3788     0.7253    0.7851     2.422
+factor(agem)4    1.2916     0.7742    0.7359     2.267
+factor(agem)5    1.5453     0.6471    0.8486     2.814
+factor(agem)6    1.0036     0.9964    0.4579     2.199
 
-Concordance= 0.578  (se = 0.021 )
-Likelihood ratio test= 12.2  on 7 df,   p=0.09
-Wald test            = 11.85  on 7 df,   p=0.1
-Score (logrank) test = 12.04  on 7 df,   p=0.1</code></pre>
+Concordance= 0.563  (se = 0.022 )
+Likelihood ratio test= 8.79  on 7 df,   p=0.3
+Wald test            = 8.48  on 7 df,   p=0.3
+Score (logrank) test = 8.6  on 7 df,   p=0.3</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-hash="Ch7_cache/html/table-8.1-sas_6ddb38089d20ae1cf9f360aab7f2d9b2">
+<div class="cell">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span><span class="er">*</span> <span class="fl">1.</span><span class="sc">:</span> Fit Cox model <span class="sc">*</span><span class="er">/</span></span>
@@ -596,6 +589,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
