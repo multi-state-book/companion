@@ -3,18 +3,18 @@
 In the book, examples of event history data are used to illustrate different methods, models and approaches. All the data sets, except the LEADER data, are available for download as CSV files and description of the variables is given below.
 
 
-<!-- ```{r downloadthis, echo=FALSE} -->
-<!-- library(downloadthis) -->
-<!-- download_dir( -->
-<!--   path = "data", -->
-<!--   output_name = "DataFromMSB", -->
-<!--   button_label = "Download data sets", -->
-<!--   button_type = "success", -->
-<!--   has_icon = TRUE, -->
-<!--   icon = "fa fa-save", -->
-<!--   self_contained = FALSE -->
-<!-- ) -->
-<!-- ``` -->
+```{r downloadthis, echo=FALSE}
+library(downloadthis)
+download_dir(
+  path = "data",
+  output_name = "DataFromMSB",
+  button_label = "Download data sets",
+  button_type = "success",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
 
 ## 1.1 PBC3 trial in liver cirrhosis (`pbc3.csv`)
 

@@ -66,6 +66,21 @@ coxfit2
 #| eval: false 
 #| output: false
 
+proc phreg data=bissau;
+	model fuptime*dead(0)=bcg agem / rl;
+run;
+
+* Make age the time variable instead;
+data bissau; 
+	set bissau;
+	agein=age/(365.24/12);
+	ageout=agein+fuptime/(365.24/12);
+run;
+
+* Cox model fit - column 2; 
+proc phreg data=bissau;
+	model ageout*dead(0)=bcg / entry=agein rl;
+run;
 ```
 :::
 
@@ -102,7 +117,9 @@ fig2.13 <- ggplot(aes(x = time / (365.24/12), y = hazard), data = coxcumhaz) +
   theme_general
 
 fig2.13
+
 ```
+
 ## SAS
 ```{r}
 #| label: figure-2.13--sas
