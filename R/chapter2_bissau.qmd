@@ -1,15 +1,36 @@
 ### Read data
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: read-bissau
 bissau <- data.frame(read.csv("data/bissau.csv"))
 bissau$agem <- as.integer(bissau$age/30.44)
 ```
 
+## SAS
+```{r}
+#| label: read-bissau-sas
+#| eval: false 
+#| output: false
+
+proc import out=bissau
+	datafile="data/bissau.csv"
+	dbms=csv replace;
+run;
+data bissau; 
+	set bissau; 
+	agem = int(age/30.44); * Age in months; 
+run;
+```
+:::
+
 ### Table 2.12 
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-2.12
+#| label: table-2.12-r
 library(survival)
 # Cox model in column 1
 coxfit0 <- coxph(Surv(fuptime, dead) ~ bcg, 
@@ -32,10 +53,19 @@ coxfit2 <- coxph(Surv(agein, ageout, dead) ~ bcg,
                  data = bissau, method = "breslow",timefix=F)
 coxfit2
 ```
+## SAS
+```{r}
+#| label: table-2.12-sas
+#| eval: false 
+#| output: false
 
+```
+:::
 
 ### Figure 2.13 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-2.13
 #| out-width: 90%
@@ -51,16 +81,11 @@ theme_general <- theme_bw() +
         legend.key.size = unit(2,"line")) 
 
 
-# Extract cumulative baseline hazard
-coxcumhaz <- basehaz(coxfit1, centered = FALSE)
-# Collect data for plot
-coxdata <- data.frame(cumhaz = coxcumhaz$hazard, 
-                      time = coxcumhaz$time, 
-                      bcg = rep("1", nrow(coxcumhaz)), 
-                      type = rep("Breslow estimate", nrow(coxcumhaz)))
-
+# Extract cumulative baseline hazard for covariate pattern
+covdata<-data.frame(rbind(c(bcg=0, agem=3)))
+coxcumhaz <- basehaz(coxfit1, covdata)
 # Create figure
-fig2.13 <- ggplot(aes(x = time / (365.24/12), y = cumhaz), data = coxdata) + 
+fig2.13 <- ggplot(aes(x = time / (365.24/12), y = hazard), data = coxcumhaz) + 
   geom_step(size = 1) + 
   xlab("Follow-up time (months)") + 
   ylab("Cumulative hazard") + 
@@ -71,23 +96,53 @@ fig2.13 <- ggplot(aes(x = time / (365.24/12), y = cumhaz), data = coxdata) +
 
 fig2.13
 ```
+## SAS
+```{r}
+#| label: figure-2.13--sas
+#| eval: false 
+#| output: false
 
+* Cox model fit and get cumulative baseline hazard ; 
+proc phreg data=bissau;
+	model fuptime*dead(0)=bcg agem/rl;
+	baseline out=hazfuptime covariates=cov1 cumhaz=basefup;
+run;
+data hazfuptime_months; 
+	set hazfuptime; 
+	fuptime_m = fuptime / (365.24/12); 
+run;
+proc gplot data=hazfuptime_months;
+	plot basefup*fuptime_m/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 7 by 1 minor=none
+    label=('Follow-up time (months)');
+	axis2 order=0 to 0.06 by 0.01 minor=none
+    label=(a=90 'Cumulative hazard');
+	symbol1 v=none i=stepjl c=blue;
+run;
+quit;
+* or using proc sgplot;
+ods graphics on;
+proc sgplot data=hazfuptime_months;
+  step x=fuptime_m y=basefup / justify=left;
+	xaxis grid values=(0 to 7 by 1);
+	yaxis grid values=(0 to 0.06 by 0.01);
+	label fuptime_m="Follow-up time (months)";
+	label basefup="Cumulative hazard";
+run;
+```
+:::
 
 ### Figure 2.14 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-2.14
 #| out-width: 90%
+
 # Extract cumulative baseline hazard
 coxcumhaz <- basehaz(coxfit2, centered = FALSE)
-# Collect data for plot
-coxdata <- data.frame(cumhaz = coxcumhaz$hazard, 
-                      time = coxcumhaz$time, 
-                      bcg = rep("1", nrow(coxcumhaz)), 
-                      type = rep("Breslow estimate", nrow(coxcumhaz)))
-
-# Create figure
-fig2.14 <- ggplot(aes(x = time, y = cumhaz), data = coxdata) + 
+fig2.14 <- ggplot(aes(x = time, y = hazard), data = coxcumhaz) + 
   geom_step(size = 1) + 
   xlab("Age (months)") + 
   ylab("Cumulative hazard") + 
@@ -100,3 +155,30 @@ fig2.14 <- ggplot(aes(x = time, y = cumhaz), data = coxdata) +
 
 fig2.14
 ```
+## SAS
+```{r}
+#| label: figure-2.14--sas
+#| eval: false 
+#| output: false
+
+data cov2;
+input bcg;
+datalines;
+0
+;
+run;
+* Cox model fit and get cumulative baseline hazard ; 
+proc phreg data=bissau;
+	model ageout*dead(0)=bcg / entry=agein rl;
+	baseline out=hazage covariates=cov2 cumhaz=baseage;
+run;
+proc gplot data=hazage;
+	plot baseage*ageout/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 15 by 5 minor=none
+		label=('Age (months)');
+	axis2 order=0 to 0.15 by 0.05 minor=none 
+		label=(a=90 'Cumulative baseline hazard');
+	symbol1  v=none i=stepjl c=blue;
+run;
+```
+:::

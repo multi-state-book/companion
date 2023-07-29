@@ -3,14 +3,15 @@
 *------------------------------------------------------------------;
 
 * Load data; 
+options ps=200;
+
 proc import out=bissau
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bissau.csv"
+	datafile="data/bissau.csv"
 	dbms=csv replace;
 run;
-
-* Summarise data set; 
-proc contents 
-	data=bissau; 
+data bissau; 
+	set bissau; 
+	agem = int(age/30.44);
 run;
 
 *---------------------------------------------------------------;
@@ -18,10 +19,6 @@ run;
 *---------------------------------------------------------------;
 
 * Age in months; 
-data bissau; 
-	set bissau; 
-	agem = int(age/30.44);
-run;
 
 * Covariates; 
 data cov1;

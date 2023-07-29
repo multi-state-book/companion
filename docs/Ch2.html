@@ -3225,6 +3225,10 @@ n= 343, number of events= 88
 <h2 class="anchored" data-anchor-id="guinea-bissau-study">Guinea-Bissau study</h2>
 <section id="read-data-1" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-29-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-1" role="tab" aria-controls="tabset-29-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-29-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-29-2" role="tab" aria-controls="tabset-29-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-29-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-29-1-tab">
 <div class="cell" data-hash="Ch2_cache/html/read-bissau_0bbcbfc2f50c93936bebef06620e80e2">
 <details>
 <summary>Code show/hide</summary>
@@ -3232,17 +3236,39 @@ n= 343, number of events= 88
 <span id="cb174-2"><a href="#cb174-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.44</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</div>
+<div id="tabset-29-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-29-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/read-bissau-sas_88d1d801eca364e18fdcb640bafb2121">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a>proc import out<span class="ot">=</span>bissau</span>
+<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a>    datafile<span class="ot">=</span><span class="st">"data/bissau.csv"</span></span>
+<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a>    dbms<span class="ot">=</span>csv replace;</span>
+<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb175-5"><a href="#cb175-5" aria-hidden="true" tabindex="-1"></a>data bissau; </span>
+<span id="cb175-6"><a href="#cb175-6" aria-hidden="true" tabindex="-1"></a>    set bissau; </span>
+<span id="cb175-7"><a href="#cb175-7" aria-hidden="true" tabindex="-1"></a>    agem <span class="ot">=</span> <span class="fu">int</span>(age<span class="sc">/</span><span class="fl">30.44</span>); <span class="sc">*</span> Age <span class="cf">in</span> months; </span>
+<span id="cb175-8"><a href="#cb175-8" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="table-2.12" class="level3">
 <h3 class="anchored" data-anchor-id="table-2.12">Table 2.12</h3>
-<div class="cell" data-hash="Ch2_cache/html/table-2.12_7d7d0b9bb91a5a4746e81447759667de">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-30-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-1" role="tab" aria-controls="tabset-30-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-30-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-30-2" role="tab" aria-controls="tabset-30-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-30-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-30-1-tab">
+<div class="cell" data-hash="Ch2_cache/html/table-2.12-r_5432dd9f07839e226d1562ab49c77004">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb175"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb175-1"><a href="#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb175-2"><a href="#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 1</span></span>
-<span id="cb175-3"><a href="#cb175-3" aria-hidden="true" tabindex="-1"></a>coxfit0 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead) <span class="sc">~</span> bcg, </span>
-<span id="cb175-4"><a href="#cb175-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>)</span>
-<span id="cb175-5"><a href="#cb175-5" aria-hidden="true" tabindex="-1"></a>coxfit0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 1</span></span>
+<span id="cb176-3"><a href="#cb176-3" aria-hidden="true" tabindex="-1"></a>coxfit0 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead) <span class="sc">~</span> bcg, </span>
+<span id="cb176-4"><a href="#cb176-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb176-5"><a href="#cb176-5" aria-hidden="true" tabindex="-1"></a>coxfit0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3256,10 +3282,10 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 1</span></span>
-<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a>coxfit1 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead) <span class="sc">~</span> bcg <span class="sc">+</span> agem, </span>
-<span id="cb177-3"><a href="#cb177-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>)</span>
-<span id="cb177-4"><a href="#cb177-4" aria-hidden="true" tabindex="-1"></a>coxfit1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 1</span></span>
+<span id="cb178-2"><a href="#cb178-2" aria-hidden="true" tabindex="-1"></a>coxfit1 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead) <span class="sc">~</span> bcg <span class="sc">+</span> agem, </span>
+<span id="cb178-3"><a href="#cb178-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb178-4"><a href="#cb178-4" aria-hidden="true" tabindex="-1"></a>coxfit1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3275,16 +3301,16 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make age the time variable instead</span></span>
-<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agein <span class="ot">&lt;-</span> bissau<span class="sc">$</span>age<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>)</span>
-<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>ageout <span class="ot">&lt;-</span> bissau<span class="sc">$</span>agein <span class="sc">+</span> bissau<span class="sc">$</span>fuptime<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>)</span>
-<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb179-5"><a href="#cb179-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 2</span></span>
-<span id="cb179-6"><a href="#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="co"># option timefix=F aligns to SAS calculation</span></span>
-<span id="cb179-7"><a href="#cb179-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see vignette 'Roundoff error and tied times' for survival package</span></span>
-<span id="cb179-8"><a href="#cb179-8" aria-hidden="true" tabindex="-1"></a>coxfit2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(agein, ageout, dead) <span class="sc">~</span> bcg, </span>
-<span id="cb179-9"><a href="#cb179-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span>
-<span id="cb179-10"><a href="#cb179-10" aria-hidden="true" tabindex="-1"></a>coxfit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb180"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb180-1"><a href="#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make age the time variable instead</span></span>
+<span id="cb180-2"><a href="#cb180-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agein <span class="ot">&lt;-</span> bissau<span class="sc">$</span>age<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb180-3"><a href="#cb180-3" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>ageout <span class="ot">&lt;-</span> bissau<span class="sc">$</span>agein <span class="sc">+</span> bissau<span class="sc">$</span>fuptime<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb180-4"><a href="#cb180-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb180-5"><a href="#cb180-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model in column 2</span></span>
+<span id="cb180-6"><a href="#cb180-6" aria-hidden="true" tabindex="-1"></a><span class="co"># option timefix=F aligns to SAS calculation</span></span>
+<span id="cb180-7"><a href="#cb180-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see vignette 'Roundoff error and tied times' for survival package</span></span>
+<span id="cb180-8"><a href="#cb180-8" aria-hidden="true" tabindex="-1"></a>coxfit2 <span class="ot">&lt;-</span> <span class="fu">coxph</span>(<span class="fu">Surv</span>(agein, ageout, dead) <span class="sc">~</span> bcg, </span>
+<span id="cb180-9"><a href="#cb180-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> bissau, <span class="at">method =</span> <span class="st">"breslow"</span>,<span class="at">timefix=</span>F)</span>
+<span id="cb180-10"><a href="#cb180-10" aria-hidden="true" tabindex="-1"></a>coxfit2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3298,78 +3324,148 @@ Likelihood ratio test=6.28  on 1 df, p=0.01218
 n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
+</div>
+<div id="tabset-30-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-30-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/table-2.12-sas_cba5a00715cb1cdf3244c383b7bf9793">
+
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="figure-2.13" class="level3">
 <h3 class="anchored" data-anchor-id="figure-2.13">Figure 2.13</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.13_8478225521d5252a76a48a0a95fe67be">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-31-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-1" role="tab" aria-controls="tabset-31-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-31-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-31-2" role="tab" aria-controls="tabset-31-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-31-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-31-1-tab">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.13_762f0b72612cdafabf4c517deea58ece">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
-<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb181-4"><a href="#cb181-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
-<span id="cb181-5"><a href="#cb181-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
-<span id="cb181-6"><a href="#cb181-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb181-7"><a href="#cb181-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
-<span id="cb181-8"><a href="#cb181-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb181-9"><a href="#cb181-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb181-10"><a href="#cb181-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">2</span>,<span class="st">"line"</span>)) </span>
-<span id="cb181-11"><a href="#cb181-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-12"><a href="#cb181-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-13"><a href="#cb181-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
-<span id="cb181-14"><a href="#cb181-14" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit1, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb181-15"><a href="#cb181-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
-<span id="cb181-16"><a href="#cb181-16" aria-hidden="true" tabindex="-1"></a>coxdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> coxcumhaz<span class="sc">$</span>hazard, </span>
-<span id="cb181-17"><a href="#cb181-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> coxcumhaz<span class="sc">$</span>time, </span>
-<span id="cb181-18"><a href="#cb181-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">bcg =</span> <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="fu">nrow</span>(coxcumhaz)), </span>
-<span id="cb181-19"><a href="#cb181-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"Breslow estimate"</span>, <span class="fu">nrow</span>(coxcumhaz)))</span>
-<span id="cb181-20"><a href="#cb181-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-21"><a href="#cb181-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
-<span id="cb181-22"><a href="#cb181-22" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> (<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>), <span class="at">y =</span> cumhaz), <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
-<span id="cb181-23"><a href="#cb181-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb181-24"><a href="#cb181-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Follow-up time (months)"</span>) <span class="sc">+</span> </span>
-<span id="cb181-25"><a href="#cb181-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb181-26"><a href="#cb181-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb181-27"><a href="#cb181-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb181-28"><a href="#cb181-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb181-29"><a href="#cb181-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb181-30"><a href="#cb181-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb181-31"><a href="#cb181-31" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># General plotting style </span></span>
+<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>), </span>
+<span id="cb182-6"><a href="#cb182-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb182-7"><a href="#cb182-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>, </span>
+<span id="cb182-8"><a href="#cb182-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb182-9"><a href="#cb182-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb182-10"><a href="#cb182-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">2</span>,<span class="st">"line"</span>)) </span>
+<span id="cb182-11"><a href="#cb182-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-12"><a href="#cb182-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-13"><a href="#cb182-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard for covariate pattern</span></span>
+<span id="cb182-14"><a href="#cb182-14" aria-hidden="true" tabindex="-1"></a>covdata<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="fu">rbind</span>(<span class="fu">c</span>(<span class="at">bcg=</span><span class="dv">0</span>, <span class="at">agem=</span><span class="dv">3</span>)))</span>
+<span id="cb182-15"><a href="#cb182-15" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit1, covdata)</span>
+<span id="cb182-16"><a href="#cb182-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
+<span id="cb182-17"><a href="#cb182-17" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time <span class="sc">/</span> (<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>), <span class="at">y =</span> hazard), <span class="at">data =</span> coxcumhaz) <span class="sc">+</span> </span>
+<span id="cb182-18"><a href="#cb182-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb182-19"><a href="#cb182-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Follow-up time (months)"</span>) <span class="sc">+</span> </span>
+<span id="cb182-20"><a href="#cb182-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb182-21"><a href="#cb182-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb182-22"><a href="#cb182-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb182-23"><a href="#cb182-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb182-24"><a href="#cb182-24" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb182-25"><a href="#cb182-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb182-26"><a href="#cb182-26" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.13</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.13-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
 </div>
+</div>
+<div id="tabset-31-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-31-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.13--sas_7a980bc45b9cdf777de7197fda50d5dd">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit and get cumulative baseline hazard ; </span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a>    model fuptime<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg agem<span class="sc">/</span>rl;</span>
+<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>hazfuptime covariates<span class="ot">=</span>cov1 cumhaz<span class="ot">=</span>basefup;</span>
+<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb183-6"><a href="#cb183-6" aria-hidden="true" tabindex="-1"></a>data hazfuptime_months; </span>
+<span id="cb183-7"><a href="#cb183-7" aria-hidden="true" tabindex="-1"></a>    set hazfuptime; </span>
+<span id="cb183-8"><a href="#cb183-8" aria-hidden="true" tabindex="-1"></a>    fuptime_m <span class="ot">=</span> fuptime <span class="sc">/</span> (<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>); </span>
+<span id="cb183-9"><a href="#cb183-9" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb183-10"><a href="#cb183-10" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>hazfuptime_months;</span>
+<span id="cb183-11"><a href="#cb183-11" aria-hidden="true" tabindex="-1"></a>    plot basefup<span class="sc">*</span>fuptime_m<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
+<span id="cb183-12"><a href="#cb183-12" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">7</span> by <span class="dv">1</span> minor<span class="ot">=</span>none</span>
+<span id="cb183-13"><a href="#cb183-13" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="st">'Follow-up time (months)'</span>);</span>
+<span id="cb183-14"><a href="#cb183-14" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.06</span> by <span class="fl">0.01</span> minor<span class="ot">=</span>none</span>
+<span id="cb183-15"><a href="#cb183-15" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard'</span>);</span>
+<span id="cb183-16"><a href="#cb183-16" aria-hidden="true" tabindex="-1"></a>    symbol1 v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
+<span id="cb183-17"><a href="#cb183-17" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb183-18"><a href="#cb183-18" aria-hidden="true" tabindex="-1"></a>quit;</span>
+<span id="cb183-19"><a href="#cb183-19" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> or using proc sgplot;</span>
+<span id="cb183-20"><a href="#cb183-20" aria-hidden="true" tabindex="-1"></a>ods graphics on;</span>
+<span id="cb183-21"><a href="#cb183-21" aria-hidden="true" tabindex="-1"></a>proc sgplot data<span class="ot">=</span>hazfuptime_months;</span>
+<span id="cb183-22"><a href="#cb183-22" aria-hidden="true" tabindex="-1"></a>  step x<span class="ot">=</span>fuptime_m y<span class="ot">=</span>basefup <span class="sc">/</span> justify<span class="ot">=</span>left;</span>
+<span id="cb183-23"><a href="#cb183-23" aria-hidden="true" tabindex="-1"></a>    xaxis grid values<span class="ot">=</span>(<span class="dv">0</span> to <span class="dv">7</span> by <span class="dv">1</span>);</span>
+<span id="cb183-24"><a href="#cb183-24" aria-hidden="true" tabindex="-1"></a>    yaxis grid values<span class="ot">=</span>(<span class="dv">0</span> to <span class="fl">0.06</span> by <span class="fl">0.01</span>);</span>
+<span id="cb183-25"><a href="#cb183-25" aria-hidden="true" tabindex="-1"></a>    label fuptime_m<span class="ot">=</span><span class="st">"Follow-up time (months)"</span>;</span>
+<span id="cb183-26"><a href="#cb183-26" aria-hidden="true" tabindex="-1"></a>    label basefup<span class="ot">=</span><span class="st">"Cumulative hazard"</span>;</span>
+<span id="cb183-27"><a href="#cb183-27" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="figure-2.14" class="level3">
 <h3 class="anchored" data-anchor-id="figure-2.14">Figure 2.14</h3>
-<div class="cell" data-hash="Ch2_cache/html/figure-2.14_3c3a95fb93215c8a3aa7bddefd90aa4c">
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-32-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-32-1" role="tab" aria-controls="tabset-32-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-32-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-32-2" role="tab" aria-controls="tabset-32-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-32-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-32-1-tab">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.14_28f0e8f79510f9589b514d78dd7ec67d">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
-<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit2, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data for plot</span></span>
-<span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a>coxdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> coxcumhaz<span class="sc">$</span>hazard, </span>
-<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> coxcumhaz<span class="sc">$</span>time, </span>
-<span id="cb182-6"><a href="#cb182-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">bcg =</span> <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="fu">nrow</span>(coxcumhaz)), </span>
-<span id="cb182-7"><a href="#cb182-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">type =</span> <span class="fu">rep</span>(<span class="st">"Breslow estimate"</span>, <span class="fu">nrow</span>(coxcumhaz)))</span>
-<span id="cb182-8"><a href="#cb182-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb182-9"><a href="#cb182-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create figure</span></span>
-<span id="cb182-10"><a href="#cb182-10" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> coxdata) <span class="sc">+</span> </span>
-<span id="cb182-11"><a href="#cb182-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb182-12"><a href="#cb182-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Age (months)"</span>) <span class="sc">+</span> </span>
-<span id="cb182-13"><a href="#cb182-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb182-14"><a href="#cb182-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb182-15"><a href="#cb182-15" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb182-16"><a href="#cb182-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.1</span>)), </span>
-<span id="cb182-17"><a href="#cb182-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.15</span>, <span class="at">by =</span> <span class="fl">0.05</span>), </span>
-<span id="cb182-18"><a href="#cb182-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"0.05"</span>, <span class="st">"0.10"</span>, <span class="st">"0.15"</span>)) <span class="sc">+</span></span>
-<span id="cb182-19"><a href="#cb182-19" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb182-20"><a href="#cb182-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb182-21"><a href="#cb182-21" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative baseline hazard</span></span>
+<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>coxcumhaz <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(coxfit2, <span class="at">centered =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> hazard), <span class="at">data =</span> coxcumhaz) <span class="sc">+</span> </span>
+<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Age (months)"</span>) <span class="sc">+</span> </span>
+<span id="cb184-6"><a href="#cb184-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb184-7"><a href="#cb184-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb184-8"><a href="#cb184-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb184-9"><a href="#cb184-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.1</span>)), </span>
+<span id="cb184-10"><a href="#cb184-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.15</span>, <span class="at">by =</span> <span class="fl">0.05</span>), </span>
+<span id="cb184-11"><a href="#cb184-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"0.05"</span>, <span class="st">"0.10"</span>, <span class="st">"0.15"</span>)) <span class="sc">+</span></span>
+<span id="cb184-12"><a href="#cb184-12" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb184-13"><a href="#cb184-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-14"><a href="#cb184-14" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.14</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.14-1.png" class="img-fluid" style="width:90.0%"></p>
+</div>
+</div>
+</div>
+<div id="tabset-32-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-32-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.14--sas_2ad8fd76bf2d35cf1a750fa4d5ce487f">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a>data cov2;</span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a>input bcg;</span>
+<span id="cb185-3"><a href="#cb185-3" aria-hidden="true" tabindex="-1"></a>datalines;</span>
+<span id="cb185-4"><a href="#cb185-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span></span>
+<span id="cb185-5"><a href="#cb185-5" aria-hidden="true" tabindex="-1"></a>;</span>
+<span id="cb185-6"><a href="#cb185-6" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb185-7"><a href="#cb185-7" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit and get cumulative baseline hazard ; </span>
+<span id="cb185-8"><a href="#cb185-8" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
+<span id="cb185-9"><a href="#cb185-9" aria-hidden="true" tabindex="-1"></a>    model ageout<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg <span class="sc">/</span> entry<span class="ot">=</span>agein rl;</span>
+<span id="cb185-10"><a href="#cb185-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>hazage covariates<span class="ot">=</span>cov2 cumhaz<span class="ot">=</span>baseage;</span>
+<span id="cb185-11"><a href="#cb185-11" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb185-12"><a href="#cb185-12" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>hazage;</span>
+<span id="cb185-13"><a href="#cb185-13" aria-hidden="true" tabindex="-1"></a>    plot baseage<span class="sc">*</span>ageout<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
+<span id="cb185-14"><a href="#cb185-14" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">15</span> by <span class="dv">5</span> minor<span class="ot">=</span>none</span>
+<span id="cb185-15"><a href="#cb185-15" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Age (months)'</span>);</span>
+<span id="cb185-16"><a href="#cb185-16" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.15</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none </span>
+<span id="cb185-17"><a href="#cb185-17" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative baseline hazard'</span>);</span>
+<span id="cb185-18"><a href="#cb185-18" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
+<span id="cb185-19"><a href="#cb185-19" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -3381,8 +3477,8 @@ n= 5274, number of events= 222 </code></pre>
 <div class="cell" data-hash="Ch2_cache/html/read-affective_c4c57dae340b8ebfa52979c1abb6e2a0">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
-<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>wait <span class="ot">&lt;-</span> <span class="fu">with</span>(affective, stop <span class="sc">-</span> start)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a>affective <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>))</span>
+<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>affective<span class="sc">$</span>wait <span class="ot">&lt;-</span> <span class="fu">with</span>(affective, stop <span class="sc">-</span> start)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3391,10 +3487,10 @@ n= 5274, number of events= 222 </code></pre>
 <div class="cell" data-hash="Ch2_cache/html/table-2.14_ec3f8976090995d4585731c70f6a8035">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Markov': Column 1</span></span>
-<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb187"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb187-1"><a href="#cb187-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Markov': Column 1</span></span>
+<span id="cb187-2"><a href="#cb187-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb187-3"><a href="#cb187-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb187-4"><a href="#cb187-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3409,8 +3505,8 @@ n= 116, number of events= 99 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3425,8 +3521,8 @@ n= 91, number of events= 82 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3441,8 +3537,8 @@ n= 74, number of events= 62 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3457,9 +3553,9 @@ n= 56, number of events= 47 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Gap time': Column 2</span></span>
-<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb192-3"><a href="#cb192-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model for 1., 2., 3., 4. episode 'Gap time': Column 2</span></span>
+<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3474,8 +3570,8 @@ n= 116, number of events= 99 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3490,8 +3586,8 @@ n= 91, number of events= 82 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3506,8 +3602,8 @@ n= 74, number of events= 62 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> <span class="fu">subset</span>(affective, episode <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3522,9 +3618,9 @@ n= 56, number of events= 47 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AG cox model, total time</span></span>
-<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb200-3"><a href="#cb200-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AG cox model, total time</span></span>
+<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3539,9 +3635,9 @@ n= 626, number of events= 542 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AG cox model, gap time</span></span>
-<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AG cox model, gap time</span></span>
+<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3556,9 +3652,9 @@ n= 626, number of events= 542 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PWP cox model, total time</span></span>
-<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="fu">strata</span>(episode) <span class="sc">+</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb204-3"><a href="#cb204-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PWP cox model, total time</span></span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="fu">strata</span>(episode) <span class="sc">+</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3573,9 +3669,9 @@ n= 626, number of events= 542 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PWP cox model, gap time</span></span>
-<span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="fu">strata</span>(episode) <span class="sc">+</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>, </span>
-<span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PWP cox model, gap time</span></span>
+<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(wait, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> <span class="fu">strata</span>(episode) <span class="sc">+</span> bip, <span class="at">method =</span> <span class="st">"breslow"</span>, </span>
+<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> <span class="fu">subset</span>(affective, state <span class="sc">==</span> <span class="dv">0</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
