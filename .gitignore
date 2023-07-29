@@ -7,5 +7,7 @@
 /*_files
 /figures
 /.quarto/
+/R/*_files
+/R/*_cache
 /R/figures
 /SAS/figures
