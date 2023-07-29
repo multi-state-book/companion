@@ -1,4 +1,4 @@
 # Further topics
 
-## Guine-Bissau study
+## Guinea-Bissau childhood vaccination study
 {{< include R/chapter7_bissau.qmd >}}

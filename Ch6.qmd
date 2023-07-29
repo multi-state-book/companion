@@ -1,7 +1,7 @@
 # Pseudo-values
 
-## PBC3 trial
+## PBC3 trial in liver cirrhosis
 {{< include R/chapter6_pbc3.qmd >}}
 
-## Prova trial
+## PROVA trial in liver cirrhosis
 {{< include R/chapter6_prova.qmd >}}

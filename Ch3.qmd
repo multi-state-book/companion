@@ -1,15 +1,15 @@
 # Intensity models
 
-## Guinea-Bissau study
+## Guinea-Bissau childhood vaccination study
 {{< include R/chapter3_bissau.qmd >}}
 
-## PBC3 trial
+## PBC3 trial in liver cirrhosis
 {{< include R/chapter3_pbc3.qmd >}}
 
-## PROVA trial
+## PROVA trial in liver cirrhosis
 {{< include R/chapter3_prova.qmd >}}
 
-## Testis cancer
+## Testis cancer incidence and maternal parity
 {{< include R/chapter3_testis.qmd >}}
 
 ## Recurrent episodes in affective disorders

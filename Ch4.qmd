@@ -1,6 +1,6 @@
 # Intuition for marginal models
 
-## PBC3 trial
+## PBC3 trial in liver cirrhosis
 {{< include R/chapter4_pbc3.qmd >}}
 
 ## Bone marrow transplantation in acute leukemia
@@ -9,5 +9,5 @@
 <!-- ## Recurrent episodes in affective disorders -->
 <!-- {{< include R/chapter4_affective.qmd >}} -->
 
-## PROVA trial
+## PROVA trial in liver cirrhosis
 {{< include R/chapter4_prova.qmd >}}
