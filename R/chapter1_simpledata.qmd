@@ -1,4 +1,4 @@
-### Create data {.unnumbered}
+### Create data 
 
 ```{r}
 #| label: create-data
@@ -10,7 +10,7 @@ exitage <- age + times
 simpledata <- as.data.frame(cbind(id, times, event, age, exitage))
 ```
 
-### Figure 1.8 {.unnumbered} 
+### Figure 1.8  
 
 ```{r}
 #| label: figure-1.8
@@ -50,6 +50,8 @@ fig1.8a <- ggplot(aes(x = times, y = id), data = simpledata) +
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank())
 
+fig1.8a
+
 # Create Figure 1.8, part (b)
 fig1.8b <- ggplot(aes(x = exitage, y = id), data = simpledata) +
   geom_segment(aes(x = age, y = id, xend = exitage - 0.25, yend = id), size = 1) +
@@ -68,12 +70,11 @@ fig1.8b <- ggplot(aes(x = exitage, y = id), data = simpledata) +
         panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank())
 
-fig1.8a
 fig1.8b
 ```
 
 
-### Figure 1.9 {.unnumbered} 
+### Figure 1.9  
 
 ```{r}
 #| label: figure-1.9
@@ -100,6 +101,8 @@ fig1.9a <- ggplot(aes(x = time, y = surv), data = simpledata_km) +
                      limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
   theme_general_x
 
+fig1.9a
+
 # Kaplan-Meier age as time variable
 kmfit2 <- survfit(Surv(age, exitage, event) ~ 1)
 simpledata_km_age <- data.frame(surv = c(1, kmfit2$surv), 
@@ -116,11 +119,10 @@ fig1.9b <- ggplot(aes(x = time, y = surv), data = simpledata_km_age) +
                      limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
   theme_general_x
 
-fig1.9a
 fig1.9b
 ```
 
-### Figure 1.10 {.unnumbered} 
+### Figure 1.10  
 
 ```{r}
 #| label: figure-1.10
@@ -159,7 +161,7 @@ fig1.10 <- ggplot(mapping=aes(x = time, y = surv), data = simpledata_km) +
 fig1.10
 ```
 
-### Figure 1.13 {.unnumbered} 
+### Figure 1.13  
 
 ```{r}
 #| label: figure-1.13
@@ -193,6 +195,8 @@ fig1.13a <- ggplot(aes(x = time, y = n), data = p1) +
                      limits = c(0, 12), breaks = seq(0, 12, 1)) +
   theme_general_x
 
+fig1.13a
+
 # Y(t)
 sfit <- survfit(Surv(times, event) ~ 1)
 p1 <- data.frame(time = c(0, sfit$time, 26), 
@@ -216,6 +220,7 @@ fig1.13b <- ggplot(aes(x = time, y = risk), data = p1) +
                      limits = c(0, 12), breaks = seq(0, 12, 1)) +
   theme_general_x
 
+fig1.13b
 
 # N(age)
 asfit <- survfit(Surv(age, exitage, event) ~ 1)
@@ -239,6 +244,8 @@ fig1.13c <- ggplot(aes(x = time, y = n), data = p1) +
   scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
                      limits = c(0, 12), breaks = seq(0, 12, 1)) +
   theme_general_x 
+
+fig1.13c
 
 # Y(age)
 atriskage <- vector(length=25)
@@ -267,8 +274,5 @@ fig1.13d <- ggplot(aes(x = time, y = risk), data = p1) +
                      limits = c(0, 12), breaks = seq(0, 12, 1)) +
   theme_general_x
 
-fig1.13a
-fig1.13b
-fig1.13c
 fig1.13d
 ```
