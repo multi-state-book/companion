@@ -39,10 +39,10 @@ format:
     code-block-border-left: "#6C6C6C"
     code-block-bg: true
     code-fold: true
-    code-tools:
-      source: false
-      toggle: true
-      caption: "Code"
+    #code-tools:
+    #  source: false
+    #  toggle: true
+    #  caption: "Code"
     code-summary: "Code show/hide"
     fig-width: 11.69
     fig-height: 8.27
