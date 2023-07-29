@@ -1,72 +1,30 @@
-# Set working directory - location of data
-setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
+```{r}
+#| echo: false
+leader <- read.csv("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/leader_mi_3p.csv")
+```
 
-leader <- read.csv("data/leader_mi_3p.csv")
-# One data set per endpoint type
+### Read data
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: read-leader-r
+
+# Assume that LEADER data is loaded in data set leader
+# One data set per recurrent endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
 leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
+```
+:::
 
-#------------------------------------------------------------------#
-# Table 2.14 
-#------------------------------------------------------------------#
 
-# Cox model first events
-library(survival)
-coxph(Surv(start, stop, status == 1) ~ treat,
-      data = subset(leader_mi, eventno == 1), method = "breslow",)
-    
-# AG Cox type
-coxph(Surv(start, stop, status == 1) ~ treat, data = leader_mi,
-                   method = "breslow")
 
-# PWP 2. event
-coxph(Surv(start, stop, status == 1) ~ treat,
-                     method = "breslow", subset = (eventno == 2),
-                     data = leader_mi)
+### Figure 2.15
 
-# PWP 3. event
-coxph(Surv(start, stop, status == 1) ~ treat,
-                   method = "breslow", subset = (eventno == 3),
-                   data = leader_mi)
-
-# PWP 4. event
-coxph(Surv(start, stop, status == 1) ~ treat,
-                   method = "breslow", subset = (eventno == 4),
-                   data = leader_mi)
-
-# PWP 5. event
-coxph(Surv(start, stop, status == 1) ~ treat,
-                   method = "breslow", subset = (eventno == 5),
-                   data = leader_mi)
-
-# PWP all
-coxph(Surv(start, stop, status == 1) ~ treat + strata(eventno),
-                   method = "breslow",
-                   data = leader_mi)
-
-# AG piece-wise constant
-# Calculating cuts -> 5
-alltimes <- seq(0,max(leader_mi$stop),length=99)
-FunctionIntervalM <- function(a,b) {
-  seq(from=min(a), to = max(a), by = (max(a)-min(a))/b)
-}
-cuts <- FunctionIntervalM(a = alltimes, b = 5)
-
-# AG model, piece-wise constant hazards
-cut_data <- survSplit(Surv(start, stop, status == 1) ~ .,
-                      leader_mi,
-                      cut = cuts[-1],
-                      episode = "timegroup")
-
-coxph(Surv(start, stop, event) ~ treat + strata(timegroup), data = cut_data)
-
-#------------------------------------------------------------------#
-# Figure 2.14
-#------------------------------------------------------------------#
-
-#------------------------------------------------------------------#
-# Plotting style
-#------------------------------------------------------------------#
+::: {.panel-tabset}
+## R
+```{r}
+#| label: Figure-2.15-r
 
 library(ggplot2)
 theme_general <- theme_bw() +
@@ -79,6 +37,7 @@ theme_general <- theme_bw() +
         axis.text.y = element_text(size = 20)) 
 
 # Nelson-Aalen estimate of the cumulative hazard of MI
+library(survival)
 fit <- survfit(Surv(start, stop, status == 1) ~ treat, data = leader_mi,
                id = id, ctype = 1)
 
@@ -99,3 +58,64 @@ fig2.15 <- ggplot(aes(x = time * 1 / (365.25 / 12), y = cumhaz), data = plotdata
   theme_general
 
 fig2.15
+```
+:::
+
+### Table 2.15 
+
+::: {.panel-tabset}
+## R
+
+```{r}
+#| label: table-2.15-r
+
+# Cox model first events
+library(survival)
+coxph(Surv(start, stop, status == 1) ~ treat,
+      data = subset(leader_mi, eventno == 1), method = "breslow",)
+    
+# AG Cox type
+coxph(Surv(start, stop, status == 1) ~ treat, data = leader_mi,
+                   method = "breslow")
+
+# AG model, piece-wise constant hazards
+# Calculating cuts -> 5
+alltimes <- seq(0,max(leader_mi$stop),length=99)
+FunctionIntervalM <- function(a,b) {
+  seq(from=min(a), to = max(a), by = (max(a)-min(a))/b)
+}
+cuts <- FunctionIntervalM(a = alltimes, b = 5)
+cut_data <- survSplit(Surv(start, stop, status == 1) ~ .,
+                      leader_mi,
+                      cut = cuts[-1],
+                      episode = "timegroup")
+coxph(Surv(start, stop, event) ~ treat + strata(timegroup), data = cut_data)
+
+# PWP 2nd event
+coxph(Surv(start, stop, status == 1) ~ treat,
+                     method = "breslow", subset = (eventno == 2),
+                     data = leader_mi)
+
+# PWP 3rd event
+coxph(Surv(start, stop, status == 1) ~ treat,
+                   method = "breslow", subset = (eventno == 3),
+                   data = leader_mi)
+
+# PWP 4th event
+coxph(Surv(start, stop, status == 1) ~ treat,
+                   method = "breslow", subset = (eventno == 4),
+                   data = leader_mi)
+
+# PWP 5th event
+coxph(Surv(start, stop, status == 1) ~ treat,
+                   method = "breslow", subset = (eventno == 5),
+                   data = leader_mi)
+
+# PWP all
+coxph(Surv(start, stop, status == 1) ~ treat + strata(eventno),
+                   method = "breslow",
+                   data = leader_mi)
+
+
+```
+:::

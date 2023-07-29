@@ -1,15 +1,39 @@
 ### Read data
 
+::: {.panel-tabset}
+
+## R
+
 ```{r}
-#| label: read-affective
+#| label: read-affective-r
 affective <- data.frame(read.csv("data/affective.csv"))
 affective$wait <- with(affective, stop - start)
 ```
+## SAS
+```{r}
+#| label: read-affective-sas
+#| eval: false 
+#| output: false
+
+proc import out=affective
+	datafile="data/affective.csv"
+	dbms=csv replace;
+run;
+data affective; 
+	set affective; 
+	wait = stop - start; 
+run; 
+```
+:::
 
 ### Table 2.14
 
+::: {.panel-tabset}
+
+## R
+
 ```{r}
-#| label: table-2.14
+#| label: table-2.14-r
 # Cox model for 1., 2., 3., 4. episode 'Markov': Column 1
 library(survival)
 coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
@@ -53,3 +77,53 @@ coxph(Surv(start, stop, status == 1) ~ strata(episode) + bip, method = "breslow"
 coxph(Surv(wait, status == 1) ~ strata(episode) + bip, method = "breslow", 
                     data = subset(affective, state == 0)) 
 ```
+
+## SAS
+```{r}
+#| label: table-2.14-sas
+#| eval: false 
+#| output: false
+
+proc sort data=affective out=state0;
+  where state=0;
+  by state episode;
+run;
+
+* Cox model for 1., 2., 3., 4. episode 'Markov': Column 1; 
+proc phreg data=state0;
+  where episode<=4;
+	model stop*status (2 3)= bip / entry=start;
+	by episode;
+run;
+
+* AG model, no past; 
+proc phreg data=state0;
+	model stop*status (2 3)= bip / entry=start;
+run;
+
+* PWP model; 
+proc phreg data=state0;	
+	model stop*status (2 3)= bip / entry=start;
+	strata episode;
+run; 
+
+* Cox model for 1., 2., 3., 4. episode 'Gap time': Column 2; 
+proc phreg data=state0;
+  where episode<=4;
+	model wait*status (2 3)= bip;
+	by episode;
+run;
+
+* AG gap time model; 
+proc phreg data=state0;
+	model wait*status (2 3)= bip;
+run;
+
+* PWP gap time model; 
+proc phreg data=state0;
+	model wait*status (2 3)= bip;
+	strata episode;
+run;
+```
+:::
+

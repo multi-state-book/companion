@@ -9,6 +9,9 @@
 ## Recurrent episodes in affective disorders
 {{< include R/chapter2_affective.qmd >}}
 
+## LEADER trial
+{{< include R/chapter2_leader.qmd >}}
+
 ## Exercises
 
 ### Exercise 2.1
