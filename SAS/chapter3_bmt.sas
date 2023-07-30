@@ -131,6 +131,19 @@ proc phreg data=bmt;
 run;
 
 
+proc phreg data=bmt;
+	model intxrel*trm(0)= ttgvhd / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+run;
+
+* test ph;
+proc phreg data=bmt;
+	model intxrel*trm(0)= ttgvhd ttgvhdlogt / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+	ttgvhdlogt=ttgvhd*log(intxrel+1);
+run;
+
+
 *---------------------------------------------------------------;
 *--------------------- Figure 3.8 ------------------------------;
 *---------------------------------------------------------------;

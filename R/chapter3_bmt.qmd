@@ -341,6 +341,17 @@ tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
 #| eval: false 
 #| output: false
 
+proc phreg data=bmt;
+	model intxrel*trm(0)= ttgvhd / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+run;
+
+* test ph;
+proc phreg data=bmt;
+	model intxrel*trm(0)= ttgvhd ttgvhdlogt / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+	ttgvhdlogt=ttgvhd*log(intxrel+1);
+run;
 ```
 :::
 

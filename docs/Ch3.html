@@ -3434,8 +3434,21 @@ Terminal event:
 </div>
 </div>
 <div id="tabset-29-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-29-2-tab">
-<div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-death-sas_0659ace47ffcb071a4729af2445b22da">
-
+<div class="cell" data-hash="Ch3_cache/html/in-text-tGvHD-death-sas_b1c3ae43bf3f40f41f45a48e59889061">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span> ttgvhd <span class="sc">/</span> rl <span class="fu">type3</span>(lr);</span>
+<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a>    ttgvhd<span class="ot">=</span>(intxrel<span class="sc">-</span>tgvhd)<span class="sc">&gt;</span><span class="dv">0</span>;</span>
+<span id="cb189-4"><a href="#cb189-4" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb189-5"><a href="#cb189-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb189-6"><a href="#cb189-6" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> test ph;</span>
+<span id="cb189-7"><a href="#cb189-7" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb189-8"><a href="#cb189-8" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span> ttgvhd ttgvhdlogt <span class="sc">/</span> rl <span class="fu">type3</span>(lr);</span>
+<span id="cb189-9"><a href="#cb189-9" aria-hidden="true" tabindex="-1"></a>    ttgvhd<span class="ot">=</span>(intxrel<span class="sc">-</span>tgvhd)<span class="sc">&gt;</span><span class="dv">0</span>;</span>
+<span id="cb189-10"><a href="#cb189-10" aria-hidden="true" tabindex="-1"></a>    ttgvhdlogt<span class="ot">=</span>ttgvhd<span class="sc">*</span><span class="fu">log</span>(intxrel<span class="sc">+</span><span class="dv">1</span>);</span>
+<span id="cb189-11"><a href="#cb189-11" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </div>
 </div>
@@ -3451,55 +3464,55 @@ Terminal event:
 <div class="cell" data-hash="Ch3_cache/html/figure-3.8-r_b9e5b049f249bbd4053fb31ccb9846cb">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate without GvHD </span></span>
-<span id="cb189-2"><a href="#cb189-2" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(nyreltime, nytrm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
-<span id="cb189-3"><a href="#cb189-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-4"><a href="#cb189-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate with GvHD</span></span>
-<span id="cb189-5"><a href="#cb189-5" aria-hidden="true" tabindex="-1"></a>fit12 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(tgvhd, intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb189-6"><a href="#cb189-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> <span class="fu">subset</span>(bmt, gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;</span> intxrel))</span>
-<span id="cb189-7"><a href="#cb189-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-8"><a href="#cb189-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect plot data</span></span>
-<span id="cb189-9"><a href="#cb189-9" aria-hidden="true" tabindex="-1"></a>pdata11 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit11<span class="sc">$</span>cumhaz, </span>
-<span id="cb189-10"><a href="#cb189-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> fit11<span class="sc">$</span>time) </span>
-<span id="cb189-11"><a href="#cb189-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-12"><a href="#cb189-12" aria-hidden="true" tabindex="-1"></a>pdata12 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit12<span class="sc">$</span>cumhaz, </span>
-<span id="cb189-13"><a href="#cb189-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> fit12<span class="sc">$</span>time) </span>
-<span id="cb189-14"><a href="#cb189-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-15"><a href="#cb189-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-16"><a href="#cb189-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to get the cumulative hazard estimates at the same time points</span></span>
-<span id="cb189-17"><a href="#cb189-17" aria-hidden="true" tabindex="-1"></a><span class="co"># All times</span></span>
-<span id="cb189-18"><a href="#cb189-18" aria-hidden="true" tabindex="-1"></a>all_t <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">c</span>(<span class="fu">unique</span>(pdata11<span class="sc">$</span>time), <span class="fu">unique</span>(pdata12<span class="sc">$</span>time))))</span>
-<span id="cb189-19"><a href="#cb189-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-20"><a href="#cb189-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate each step function at these time points </span></span>
-<span id="cb189-21"><a href="#cb189-21" aria-hidden="true" tabindex="-1"></a>step11 <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="at">x =</span> pdata11<span class="sc">$</span>time, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, pdata11<span class="sc">$</span>cumhaz))</span>
-<span id="cb189-22"><a href="#cb189-22" aria-hidden="true" tabindex="-1"></a>step12 <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="at">x =</span> pdata12<span class="sc">$</span>time, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, pdata12<span class="sc">$</span>cumhaz))</span>
-<span id="cb189-23"><a href="#cb189-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-24"><a href="#cb189-24" aria-hidden="true" tabindex="-1"></a>pdata11_a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> all_t, </span>
-<span id="cb189-25"><a href="#cb189-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cumhaz =</span> <span class="fu">step11</span>(all_t))</span>
-<span id="cb189-26"><a href="#cb189-26" aria-hidden="true" tabindex="-1"></a>pdata12_a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> all_t, </span>
-<span id="cb189-27"><a href="#cb189-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cumhaz =</span> <span class="fu">step12</span>(all_t))</span>
-<span id="cb189-28"><a href="#cb189-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-29"><a href="#cb189-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
-<span id="cb189-30"><a href="#cb189-30" aria-hidden="true" tabindex="-1"></a>pdata_b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz1 =</span> pdata11_a<span class="sc">$</span>cumhaz, </span>
-<span id="cb189-31"><a href="#cb189-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cumhaz2 =</span> pdata12_a<span class="sc">$</span>cumhaz, </span>
-<span id="cb189-32"><a href="#cb189-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> all_t)</span>
-<span id="cb189-33"><a href="#cb189-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-34"><a href="#cb189-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.8</span></span>
-<span id="cb189-35"><a href="#cb189-35" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumhaz1, <span class="at">y =</span> cumhaz2), <span class="at">data =</span> pdata_b) <span class="sc">+</span> </span>
-<span id="cb189-36"><a href="#cb189-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb189-37"><a href="#cb189-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fl">3.113</span>), </span>
-<span id="cb189-38"><a href="#cb189-38" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb189-39"><a href="#cb189-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Cumulative death hazard: no GvHD"</span>) <span class="sc">+</span> </span>
-<span id="cb189-40"><a href="#cb189-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative death hazard: GvHD"</span>) <span class="sc">+</span> </span>
-<span id="cb189-41"><a href="#cb189-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb189-42"><a href="#cb189-42" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="at">by =</span> <span class="fl">0.05</span>),</span>
-<span id="cb189-43"><a href="#cb189-43" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> prettyZero) <span class="sc">+</span> </span>
-<span id="cb189-44"><a href="#cb189-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb189-45"><a href="#cb189-45" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="at">by =</span> <span class="fl">0.2</span>),</span>
-<span id="cb189-46"><a href="#cb189-46" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> prettyZero) <span class="sc">+</span></span>
-<span id="cb189-47"><a href="#cb189-47" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb189-48"><a href="#cb189-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb189-49"><a href="#cb189-49" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate without GvHD </span></span>
+<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(nyreltime, nytrm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
+<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate with GvHD</span></span>
+<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a>fit12 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(tgvhd, intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb190-6"><a href="#cb190-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> <span class="fu">subset</span>(bmt, gvhd <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> tgvhd <span class="sc">&lt;</span> intxrel))</span>
+<span id="cb190-7"><a href="#cb190-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-8"><a href="#cb190-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect plot data</span></span>
+<span id="cb190-9"><a href="#cb190-9" aria-hidden="true" tabindex="-1"></a>pdata11 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit11<span class="sc">$</span>cumhaz, </span>
+<span id="cb190-10"><a href="#cb190-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> fit11<span class="sc">$</span>time) </span>
+<span id="cb190-11"><a href="#cb190-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-12"><a href="#cb190-12" aria-hidden="true" tabindex="-1"></a>pdata12 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit12<span class="sc">$</span>cumhaz, </span>
+<span id="cb190-13"><a href="#cb190-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> fit12<span class="sc">$</span>time) </span>
+<span id="cb190-14"><a href="#cb190-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-15"><a href="#cb190-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-16"><a href="#cb190-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to get the cumulative hazard estimates at the same time points</span></span>
+<span id="cb190-17"><a href="#cb190-17" aria-hidden="true" tabindex="-1"></a><span class="co"># All times</span></span>
+<span id="cb190-18"><a href="#cb190-18" aria-hidden="true" tabindex="-1"></a>all_t <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(<span class="fu">c</span>(<span class="fu">unique</span>(pdata11<span class="sc">$</span>time), <span class="fu">unique</span>(pdata12<span class="sc">$</span>time))))</span>
+<span id="cb190-19"><a href="#cb190-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-20"><a href="#cb190-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate each step function at these time points </span></span>
+<span id="cb190-21"><a href="#cb190-21" aria-hidden="true" tabindex="-1"></a>step11 <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="at">x =</span> pdata11<span class="sc">$</span>time, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, pdata11<span class="sc">$</span>cumhaz))</span>
+<span id="cb190-22"><a href="#cb190-22" aria-hidden="true" tabindex="-1"></a>step12 <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="at">x =</span> pdata12<span class="sc">$</span>time, <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, pdata12<span class="sc">$</span>cumhaz))</span>
+<span id="cb190-23"><a href="#cb190-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-24"><a href="#cb190-24" aria-hidden="true" tabindex="-1"></a>pdata11_a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> all_t, </span>
+<span id="cb190-25"><a href="#cb190-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cumhaz =</span> <span class="fu">step11</span>(all_t))</span>
+<span id="cb190-26"><a href="#cb190-26" aria-hidden="true" tabindex="-1"></a>pdata12_a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> all_t, </span>
+<span id="cb190-27"><a href="#cb190-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">cumhaz =</span> <span class="fu">step12</span>(all_t))</span>
+<span id="cb190-28"><a href="#cb190-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-29"><a href="#cb190-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
+<span id="cb190-30"><a href="#cb190-30" aria-hidden="true" tabindex="-1"></a>pdata_b <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz1 =</span> pdata11_a<span class="sc">$</span>cumhaz, </span>
+<span id="cb190-31"><a href="#cb190-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cumhaz2 =</span> pdata12_a<span class="sc">$</span>cumhaz, </span>
+<span id="cb190-32"><a href="#cb190-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> all_t)</span>
+<span id="cb190-33"><a href="#cb190-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-34"><a href="#cb190-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.8</span></span>
+<span id="cb190-35"><a href="#cb190-35" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cumhaz1, <span class="at">y =</span> cumhaz2), <span class="at">data =</span> pdata_b) <span class="sc">+</span> </span>
+<span id="cb190-36"><a href="#cb190-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb190-37"><a href="#cb190-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="fl">3.113</span>), </span>
+<span id="cb190-38"><a href="#cb190-38" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb190-39"><a href="#cb190-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Cumulative death hazard: no GvHD"</span>) <span class="sc">+</span> </span>
+<span id="cb190-40"><a href="#cb190-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative death hazard: GvHD"</span>) <span class="sc">+</span> </span>
+<span id="cb190-41"><a href="#cb190-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb190-42"><a href="#cb190-42" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="at">by =</span> <span class="fl">0.05</span>),</span>
+<span id="cb190-43"><a href="#cb190-43" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> prettyZero) <span class="sc">+</span> </span>
+<span id="cb190-44"><a href="#cb190-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb190-45"><a href="#cb190-45" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.0</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">1.0</span>, <span class="at">by =</span> <span class="fl">0.2</span>),</span>
+<span id="cb190-46"><a href="#cb190-46" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> prettyZero) <span class="sc">+</span></span>
+<span id="cb190-47"><a href="#cb190-47" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb190-48"><a href="#cb190-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-49"><a href="#cb190-49" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch3_files/figure-html/figure-3.8-r-1.png" class="img-fluid" style="width:90.0%"></p>
@@ -3510,54 +3523,54 @@ Terminal event:
 <div class="cell" data-hash="Ch3_cache/html/figure-3.8-sas_461db951854d4faf46d7e26db40f3feb">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death rate without gvhd; </span>
-<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt; </span>
-<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a>    model nyreltime<span class="sc">*</span><span class="fu">nytrm</span>(<span class="dv">0</span>)<span class="ot">=</span>;</span>
-<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa0dead cumhaz<span class="ot">=</span>naa0dead;</span>
-<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-6"><a href="#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death rate with gvhd; </span>
-<span id="cb190-7"><a href="#cb190-7" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb190-8"><a href="#cb190-8" aria-hidden="true" tabindex="-1"></a>    where gvhd<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb190-9"><a href="#cb190-9" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span><span class="er">/</span>entry<span class="ot">=</span>tgvhd;</span>
-<span id="cb190-10"><a href="#cb190-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfagvhdead cumhaz<span class="ot">=</span>naagvhdead;</span>
-<span id="cb190-11"><a href="#cb190-11" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-12"><a href="#cb190-12" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Book<span class="sc">-</span>keeping <span class="cf">for</span> plot;</span>
-<span id="cb190-13"><a href="#cb190-13" aria-hidden="true" tabindex="-1"></a>data alfa0dead; </span>
-<span id="cb190-14"><a href="#cb190-14" aria-hidden="true" tabindex="-1"></a>    set alfa0dead; </span>
-<span id="cb190-15"><a href="#cb190-15" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>nyreltime; </span>
-<span id="cb190-16"><a href="#cb190-16" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-17"><a href="#cb190-17" aria-hidden="true" tabindex="-1"></a>data alfagvhdead; </span>
-<span id="cb190-18"><a href="#cb190-18" aria-hidden="true" tabindex="-1"></a>    set alfagvhdead; </span>
-<span id="cb190-19"><a href="#cb190-19" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxrel; </span>
-<span id="cb190-20"><a href="#cb190-20" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-21"><a href="#cb190-21" aria-hidden="true" tabindex="-1"></a>data dead; </span>
-<span id="cb190-22"><a href="#cb190-22" aria-hidden="true" tabindex="-1"></a>    merge alfa0dead alfagvhdead; </span>
-<span id="cb190-23"><a href="#cb190-23" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
-<span id="cb190-24"><a href="#cb190-24" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-25"><a href="#cb190-25" aria-hidden="true" tabindex="-1"></a>data deadrev; </span>
-<span id="cb190-26"><a href="#cb190-26" aria-hidden="true" tabindex="-1"></a>    set dead;</span>
-<span id="cb190-27"><a href="#cb190-27" aria-hidden="true" tabindex="-1"></a>    by deadtime;</span>
-<span id="cb190-28"><a href="#cb190-28" aria-hidden="true" tabindex="-1"></a>    retain last1 last2;</span>
-<span id="cb190-29"><a href="#cb190-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa0dead<span class="ot">=</span>. then a02<span class="ot">=</span>last1; <span class="cf">if</span> naa0dead ne . then a02<span class="ot">=</span>naa0dead; </span>
-<span id="cb190-30"><a href="#cb190-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naagvhdead<span class="ot">=</span>. then a13<span class="ot">=</span>last2; <span class="cf">if</span> naagvhdead ne . then a13<span class="ot">=</span>naagvhdead;</span>
-<span id="cb190-31"><a href="#cb190-31" aria-hidden="true" tabindex="-1"></a>    output;</span>
-<span id="cb190-32"><a href="#cb190-32" aria-hidden="true" tabindex="-1"></a>    last1<span class="ot">=</span>a02; last2<span class="ot">=</span>a13; </span>
-<span id="cb190-33"><a href="#cb190-33" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-34"><a href="#cb190-34" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Add coefficient; </span>
-<span id="cb190-35"><a href="#cb190-35" aria-hidden="true" tabindex="-1"></a>data deadrev; </span>
-<span id="cb190-36"><a href="#cb190-36" aria-hidden="true" tabindex="-1"></a>    set deadrev;</span>
-<span id="cb190-37"><a href="#cb190-37" aria-hidden="true" tabindex="-1"></a>    line<span class="ot">=</span><span class="fl">3.113</span><span class="sc">*</span>a02;</span>
-<span id="cb190-38"><a href="#cb190-38" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-39"><a href="#cb190-39" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>deadrev;</span>
-<span id="cb190-40"><a href="#cb190-40" aria-hidden="true" tabindex="-1"></a>    plot a13<span class="sc">*</span>a02 line<span class="sc">*</span>a02<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2 overlay;</span>
-<span id="cb190-41"><a href="#cb190-41" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.2</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none</span>
-<span id="cb190-42"><a href="#cb190-42" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="st">'Cumulative death hazard: no GvHD'</span>);</span>
-<span id="cb190-43"><a href="#cb190-43" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">1</span> by <span class="fl">0.2</span> minor<span class="ot">=</span>none</span>
-<span id="cb190-44"><a href="#cb190-44" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative death hazard: GvHD'</span>);</span>
-<span id="cb190-45"><a href="#cb190-45" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;</span>
-<span id="cb190-46"><a href="#cb190-46" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>rl c<span class="ot">=</span>blue;;</span>
-<span id="cb190-47"><a href="#cb190-47" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb190-48"><a href="#cb190-48" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death rate without gvhd; </span>
+<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt; </span>
+<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>    model nyreltime<span class="sc">*</span><span class="fu">nytrm</span>(<span class="dv">0</span>)<span class="ot">=</span>;</span>
+<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa0dead cumhaz<span class="ot">=</span>naa0dead;</span>
+<span id="cb191-5"><a href="#cb191-5" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-6"><a href="#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death rate with gvhd; </span>
+<span id="cb191-7"><a href="#cb191-7" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb191-8"><a href="#cb191-8" aria-hidden="true" tabindex="-1"></a>    where gvhd<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb191-9"><a href="#cb191-9" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span><span class="er">/</span>entry<span class="ot">=</span>tgvhd;</span>
+<span id="cb191-10"><a href="#cb191-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfagvhdead cumhaz<span class="ot">=</span>naagvhdead;</span>
+<span id="cb191-11"><a href="#cb191-11" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-12"><a href="#cb191-12" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Book<span class="sc">-</span>keeping <span class="cf">for</span> plot;</span>
+<span id="cb191-13"><a href="#cb191-13" aria-hidden="true" tabindex="-1"></a>data alfa0dead; </span>
+<span id="cb191-14"><a href="#cb191-14" aria-hidden="true" tabindex="-1"></a>    set alfa0dead; </span>
+<span id="cb191-15"><a href="#cb191-15" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>nyreltime; </span>
+<span id="cb191-16"><a href="#cb191-16" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-17"><a href="#cb191-17" aria-hidden="true" tabindex="-1"></a>data alfagvhdead; </span>
+<span id="cb191-18"><a href="#cb191-18" aria-hidden="true" tabindex="-1"></a>    set alfagvhdead; </span>
+<span id="cb191-19"><a href="#cb191-19" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxrel; </span>
+<span id="cb191-20"><a href="#cb191-20" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-21"><a href="#cb191-21" aria-hidden="true" tabindex="-1"></a>data dead; </span>
+<span id="cb191-22"><a href="#cb191-22" aria-hidden="true" tabindex="-1"></a>    merge alfa0dead alfagvhdead; </span>
+<span id="cb191-23"><a href="#cb191-23" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
+<span id="cb191-24"><a href="#cb191-24" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-25"><a href="#cb191-25" aria-hidden="true" tabindex="-1"></a>data deadrev; </span>
+<span id="cb191-26"><a href="#cb191-26" aria-hidden="true" tabindex="-1"></a>    set dead;</span>
+<span id="cb191-27"><a href="#cb191-27" aria-hidden="true" tabindex="-1"></a>    by deadtime;</span>
+<span id="cb191-28"><a href="#cb191-28" aria-hidden="true" tabindex="-1"></a>    retain last1 last2;</span>
+<span id="cb191-29"><a href="#cb191-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa0dead<span class="ot">=</span>. then a02<span class="ot">=</span>last1; <span class="cf">if</span> naa0dead ne . then a02<span class="ot">=</span>naa0dead; </span>
+<span id="cb191-30"><a href="#cb191-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naagvhdead<span class="ot">=</span>. then a13<span class="ot">=</span>last2; <span class="cf">if</span> naagvhdead ne . then a13<span class="ot">=</span>naagvhdead;</span>
+<span id="cb191-31"><a href="#cb191-31" aria-hidden="true" tabindex="-1"></a>    output;</span>
+<span id="cb191-32"><a href="#cb191-32" aria-hidden="true" tabindex="-1"></a>    last1<span class="ot">=</span>a02; last2<span class="ot">=</span>a13; </span>
+<span id="cb191-33"><a href="#cb191-33" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-34"><a href="#cb191-34" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Add coefficient; </span>
+<span id="cb191-35"><a href="#cb191-35" aria-hidden="true" tabindex="-1"></a>data deadrev; </span>
+<span id="cb191-36"><a href="#cb191-36" aria-hidden="true" tabindex="-1"></a>    set deadrev;</span>
+<span id="cb191-37"><a href="#cb191-37" aria-hidden="true" tabindex="-1"></a>    line<span class="ot">=</span><span class="fl">3.113</span><span class="sc">*</span>a02;</span>
+<span id="cb191-38"><a href="#cb191-38" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-39"><a href="#cb191-39" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>deadrev;</span>
+<span id="cb191-40"><a href="#cb191-40" aria-hidden="true" tabindex="-1"></a>    plot a13<span class="sc">*</span>a02 line<span class="sc">*</span>a02<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2 overlay;</span>
+<span id="cb191-41"><a href="#cb191-41" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.2</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none</span>
+<span id="cb191-42"><a href="#cb191-42" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="st">'Cumulative death hazard: no GvHD'</span>);</span>
+<span id="cb191-43"><a href="#cb191-43" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">1</span> by <span class="fl">0.2</span> minor<span class="ot">=</span>none</span>
+<span id="cb191-44"><a href="#cb191-44" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative death hazard: GvHD'</span>);</span>
+<span id="cb191-45"><a href="#cb191-45" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;</span>
+<span id="cb191-46"><a href="#cb191-46" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>rl c<span class="ot">=</span>blue;;</span>
+<span id="cb191-47"><a href="#cb191-47" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb191-48"><a href="#cb191-48" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3573,20 +3586,20 @@ Terminal event:
 <div class="cell" data-hash="Ch3_cache/html/figure-3.4-r_73f39d03045d2e87e31ecb9b15a35c0e">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death hazards wrt relapse; </span></span>
-<span id="cb191-2"><a href="#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate no relapse or GvHD</span></span>
-<span id="cb191-3"><a href="#cb191-3" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
-<span id="cb191-4"><a href="#cb191-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate after relapse</span></span>
-<span id="cb191-5"><a href="#cb191-5" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxsurv <span class="ot">&lt;-</span> <span class="fu">with</span>(bmt, <span class="fu">ifelse</span>(intxrel <span class="sc">==</span> intxsurv <span class="sc">&amp;</span> rel <span class="sc">==</span> <span class="dv">1</span>, intxsurv <span class="sc">+</span> <span class="fl">0.01</span>, intxsurv))</span>
-<span id="cb191-6"><a href="#cb191-6" aria-hidden="true" tabindex="-1"></a>fit12 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(intxrel, intxsurv, death <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> <span class="fu">subset</span>(bmt, rel <span class="sc">==</span> <span class="dv">1</span>))</span>
-<span id="cb191-7"><a href="#cb191-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate after GvHD</span></span>
-<span id="cb191-8"><a href="#cb191-8" aria-hidden="true" tabindex="-1"></a>fit13 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(tgvhd, intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> <span class="fu">subset</span>(bmt, gvhd <span class="sc">==</span> <span class="dv">1</span>))</span>
-<span id="cb191-9"><a href="#cb191-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect plot data</span></span>
-<span id="cb191-10"><a href="#cb191-10" aria-hidden="true" tabindex="-1"></a>pdata11 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit11<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit11<span class="sc">$</span>time) </span>
-<span id="cb191-11"><a href="#cb191-11" aria-hidden="true" tabindex="-1"></a>pdata12 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit12<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit12<span class="sc">$</span>time) </span>
-<span id="cb191-12"><a href="#cb191-12" aria-hidden="true" tabindex="-1"></a>pdata13 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit13<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit13<span class="sc">$</span>time) </span>
-<span id="cb191-13"><a href="#cb191-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb191-14"><a href="#cb191-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(pdata12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death hazards wrt relapse; </span></span>
+<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate no relapse or GvHD</span></span>
+<span id="cb192-3"><a href="#cb192-3" aria-hidden="true" tabindex="-1"></a>fit11 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> bmt)</span>
+<span id="cb192-4"><a href="#cb192-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate after relapse</span></span>
+<span id="cb192-5"><a href="#cb192-5" aria-hidden="true" tabindex="-1"></a>bmt<span class="sc">$</span>intxsurv <span class="ot">&lt;-</span> <span class="fu">with</span>(bmt, <span class="fu">ifelse</span>(intxrel <span class="sc">==</span> intxsurv <span class="sc">&amp;</span> rel <span class="sc">==</span> <span class="dv">1</span>, intxsurv <span class="sc">+</span> <span class="fl">0.01</span>, intxsurv))</span>
+<span id="cb192-6"><a href="#cb192-6" aria-hidden="true" tabindex="-1"></a>fit12 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(intxrel, intxsurv, death <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> <span class="fu">subset</span>(bmt, rel <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb192-7"><a href="#cb192-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative death rate after GvHD</span></span>
+<span id="cb192-8"><a href="#cb192-8" aria-hidden="true" tabindex="-1"></a>fit13 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(tgvhd, intxrel, trm <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> <span class="fu">subset</span>(bmt, gvhd <span class="sc">==</span> <span class="dv">1</span>))</span>
+<span id="cb192-9"><a href="#cb192-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect plot data</span></span>
+<span id="cb192-10"><a href="#cb192-10" aria-hidden="true" tabindex="-1"></a>pdata11 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit11<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit11<span class="sc">$</span>time) </span>
+<span id="cb192-11"><a href="#cb192-11" aria-hidden="true" tabindex="-1"></a>pdata12 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit12<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit12<span class="sc">$</span>time) </span>
+<span id="cb192-12"><a href="#cb192-12" aria-hidden="true" tabindex="-1"></a>pdata13 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> fit13<span class="sc">$</span>cumhaz, <span class="at">time =</span> fit13<span class="sc">$</span>time) </span>
+<span id="cb192-13"><a href="#cb192-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb192-14"><a href="#cb192-14" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(pdata12)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      cumhaz   time
@@ -3599,21 +3612,21 @@ Terminal event:
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.4</span></span>
-<span id="cb193-2"><a href="#cb193-2" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata11) <span class="sc">+</span> </span>
-<span id="cb193-3"><a href="#cb193-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb193-4"><a href="#cb193-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata12, </span>
-<span id="cb193-5"><a href="#cb193-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb193-6"><a href="#cb193-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata13, </span>
-<span id="cb193-7"><a href="#cb193-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span> </span>
-<span id="cb193-8"><a href="#cb193-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span> </span>
-<span id="cb193-9"><a href="#cb193-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard of death"</span>) <span class="sc">+</span> </span>
-<span id="cb193-10"><a href="#cb193-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb193-11"><a href="#cb193-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">156</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">12</span>)) <span class="sc">+</span> </span>
-<span id="cb193-12"><a href="#cb193-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb193-13"><a href="#cb193-13" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb193-14"><a href="#cb193-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb193-15"><a href="#cb193-15" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.4</span></span>
+<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata11) <span class="sc">+</span> </span>
+<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata12, </span>
+<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz), <span class="at">data =</span> pdata13, </span>
+<span id="cb194-7"><a href="#cb194-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>) <span class="sc">+</span> </span>
+<span id="cb194-8"><a href="#cb194-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span> </span>
+<span id="cb194-9"><a href="#cb194-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard of death"</span>) <span class="sc">+</span> </span>
+<span id="cb194-10"><a href="#cb194-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb194-11"><a href="#cb194-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">156</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">12</span>)) <span class="sc">+</span> </span>
+<span id="cb194-12"><a href="#cb194-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb194-13"><a href="#cb194-13" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb194-14"><a href="#cb194-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb194-15"><a href="#cb194-15" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch3_files/figure-html/figure-3.4-r-1.png" class="img-fluid" style="width:90.0%"></p>
@@ -3624,62 +3637,62 @@ Terminal event:
 <div class="cell" data-hash="Ch3_cache/html/figure-3.4-sas_0df606373e0a7b66f9012e85834de7e2">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death hazards wrt relapse ;</span>
-<span id="cb194-2"><a href="#cb194-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt; </span>
-<span id="cb194-3"><a href="#cb194-3" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>;</span>
-<span id="cb194-4"><a href="#cb194-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa02 cumhaz<span class="ot">=</span>naa02;</span>
-<span id="cb194-5"><a href="#cb194-5" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-6"><a href="#cb194-6" aria-hidden="true" tabindex="-1"></a>data bmt; </span>
-<span id="cb194-7"><a href="#cb194-7" aria-hidden="true" tabindex="-1"></a>    set bmt; </span>
-<span id="cb194-8"><a href="#cb194-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> intxrel eq intxsurv and rel eq <span class="dv">1</span> then intxsurv <span class="ot">=</span> intxsurv <span class="sc">+</span> <span class="fl">0.01</span>; </span>
-<span id="cb194-9"><a href="#cb194-9" aria-hidden="true" tabindex="-1"></a>run; </span>
-<span id="cb194-10"><a href="#cb194-10" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb194-11"><a href="#cb194-11" aria-hidden="true" tabindex="-1"></a>    where rel<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb194-12"><a href="#cb194-12" aria-hidden="true" tabindex="-1"></a>    model intxsurv<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span><span class="er">/</span>entry<span class="ot">=</span>intxrel;</span>
-<span id="cb194-13"><a href="#cb194-13" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa13 cumhaz<span class="ot">=</span>naa13;</span>
-<span id="cb194-14"><a href="#cb194-14" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-15"><a href="#cb194-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb194-16"><a href="#cb194-16" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Book<span class="sc">-</span>keeping; </span>
-<span id="cb194-17"><a href="#cb194-17" aria-hidden="true" tabindex="-1"></a>data alfa02; </span>
-<span id="cb194-18"><a href="#cb194-18" aria-hidden="true" tabindex="-1"></a>    set alfa02; </span>
-<span id="cb194-19"><a href="#cb194-19" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxrel; </span>
-<span id="cb194-20"><a href="#cb194-20" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-21"><a href="#cb194-21" aria-hidden="true" tabindex="-1"></a>data alfa13; </span>
-<span id="cb194-22"><a href="#cb194-22" aria-hidden="true" tabindex="-1"></a>    set alfa13; </span>
-<span id="cb194-23"><a href="#cb194-23" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxsurv; </span>
-<span id="cb194-24"><a href="#cb194-24" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-25"><a href="#cb194-25" aria-hidden="true" tabindex="-1"></a>data alfadead; </span>
-<span id="cb194-26"><a href="#cb194-26" aria-hidden="true" tabindex="-1"></a>    merge alfa02 alfa13; </span>
-<span id="cb194-27"><a href="#cb194-27" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
-<span id="cb194-28"><a href="#cb194-28" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-29"><a href="#cb194-29" aria-hidden="true" tabindex="-1"></a>data alfarev; set alfadead;</span>
-<span id="cb194-30"><a href="#cb194-30" aria-hidden="true" tabindex="-1"></a>    by deadtime;</span>
-<span id="cb194-31"><a href="#cb194-31" aria-hidden="true" tabindex="-1"></a>    retain last1 last2;</span>
-<span id="cb194-32"><a href="#cb194-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa02<span class="ot">=</span>. then a0rel<span class="ot">=</span>last1; <span class="cf">if</span> naa02 ne . then a0rel<span class="ot">=</span>naa02; </span>
-<span id="cb194-33"><a href="#cb194-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa13<span class="ot">=</span>. then arel<span class="ot">=</span>last2; <span class="cf">if</span> naa13 ne . then arel<span class="ot">=</span>naa13;</span>
-<span id="cb194-34"><a href="#cb194-34" aria-hidden="true" tabindex="-1"></a>    output;</span>
-<span id="cb194-35"><a href="#cb194-35" aria-hidden="true" tabindex="-1"></a>    last1<span class="ot">=</span>a0rel; last2<span class="ot">=</span>arel; </span>
-<span id="cb194-36"><a href="#cb194-36" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-37"><a href="#cb194-37" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> <span class="dv">3</span> mortality rates simultaneously;</span>
-<span id="cb194-38"><a href="#cb194-38" aria-hidden="true" tabindex="-1"></a>data alfa3dead; </span>
-<span id="cb194-39"><a href="#cb194-39" aria-hidden="true" tabindex="-1"></a>    merge deadrev alfarev; </span>
-<span id="cb194-40"><a href="#cb194-40" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
-<span id="cb194-41"><a href="#cb194-41" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-42"><a href="#cb194-42" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>alfa3dead;</span>
-<span id="cb194-43"><a href="#cb194-43" aria-hidden="true" tabindex="-1"></a>    plot arel<span class="sc">*</span>deadtime a02<span class="sc">*</span>deadtime a13<span class="sc">*</span>deadtime</span>
-<span id="cb194-44"><a href="#cb194-44" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">/</span> overlay haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2 legend<span class="ot">=</span>legend1;</span>
-<span id="cb194-45"><a href="#cb194-45" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">120</span> by <span class="dv">10</span> minor<span class="ot">=</span>none</span>
-<span id="cb194-46"><a href="#cb194-46" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Time since bone marrow transplantation (months)'</span>);</span>
-<span id="cb194-47"><a href="#cb194-47" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">9</span> by <span class="dv">1</span> minor<span class="ot">=</span>none</span>
-<span id="cb194-48"><a href="#cb194-48" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard of death'</span>);</span>
-<span id="cb194-49"><a href="#cb194-49" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
-<span id="cb194-50"><a href="#cb194-50" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;</span>
-<span id="cb194-51"><a href="#cb194-51" aria-hidden="true" tabindex="-1"></a>    symbol3  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>black;</span>
-<span id="cb194-52"><a href="#cb194-52" aria-hidden="true" tabindex="-1"></a>    label arel<span class="ot">=</span><span class="st">"After relapse"</span>;</span>
-<span id="cb194-53"><a href="#cb194-53" aria-hidden="true" tabindex="-1"></a>    label a02<span class="ot">=</span><span class="st">"No relapse and no GvHD"</span>;</span>
-<span id="cb194-54"><a href="#cb194-54" aria-hidden="true" tabindex="-1"></a>    label a13<span class="ot">=</span><span class="st">"After GvHD"</span>;</span>
-<span id="cb194-55"><a href="#cb194-55" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb194-56"><a href="#cb194-56" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cumulative death hazards wrt relapse ;</span>
+<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt; </span>
+<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>;</span>
+<span id="cb195-4"><a href="#cb195-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa02 cumhaz<span class="ot">=</span>naa02;</span>
+<span id="cb195-5"><a href="#cb195-5" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-6"><a href="#cb195-6" aria-hidden="true" tabindex="-1"></a>data bmt; </span>
+<span id="cb195-7"><a href="#cb195-7" aria-hidden="true" tabindex="-1"></a>    set bmt; </span>
+<span id="cb195-8"><a href="#cb195-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> intxrel eq intxsurv and rel eq <span class="dv">1</span> then intxsurv <span class="ot">=</span> intxsurv <span class="sc">+</span> <span class="fl">0.01</span>; </span>
+<span id="cb195-9"><a href="#cb195-9" aria-hidden="true" tabindex="-1"></a>run; </span>
+<span id="cb195-10"><a href="#cb195-10" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb195-11"><a href="#cb195-11" aria-hidden="true" tabindex="-1"></a>    where rel<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb195-12"><a href="#cb195-12" aria-hidden="true" tabindex="-1"></a>    model intxsurv<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span><span class="er">/</span>entry<span class="ot">=</span>intxrel;</span>
+<span id="cb195-13"><a href="#cb195-13" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>alfa13 cumhaz<span class="ot">=</span>naa13;</span>
+<span id="cb195-14"><a href="#cb195-14" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-15"><a href="#cb195-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb195-16"><a href="#cb195-16" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Book<span class="sc">-</span>keeping; </span>
+<span id="cb195-17"><a href="#cb195-17" aria-hidden="true" tabindex="-1"></a>data alfa02; </span>
+<span id="cb195-18"><a href="#cb195-18" aria-hidden="true" tabindex="-1"></a>    set alfa02; </span>
+<span id="cb195-19"><a href="#cb195-19" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxrel; </span>
+<span id="cb195-20"><a href="#cb195-20" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-21"><a href="#cb195-21" aria-hidden="true" tabindex="-1"></a>data alfa13; </span>
+<span id="cb195-22"><a href="#cb195-22" aria-hidden="true" tabindex="-1"></a>    set alfa13; </span>
+<span id="cb195-23"><a href="#cb195-23" aria-hidden="true" tabindex="-1"></a>    deadtime<span class="ot">=</span>intxsurv; </span>
+<span id="cb195-24"><a href="#cb195-24" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-25"><a href="#cb195-25" aria-hidden="true" tabindex="-1"></a>data alfadead; </span>
+<span id="cb195-26"><a href="#cb195-26" aria-hidden="true" tabindex="-1"></a>    merge alfa02 alfa13; </span>
+<span id="cb195-27"><a href="#cb195-27" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
+<span id="cb195-28"><a href="#cb195-28" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-29"><a href="#cb195-29" aria-hidden="true" tabindex="-1"></a>data alfarev; set alfadead;</span>
+<span id="cb195-30"><a href="#cb195-30" aria-hidden="true" tabindex="-1"></a>    by deadtime;</span>
+<span id="cb195-31"><a href="#cb195-31" aria-hidden="true" tabindex="-1"></a>    retain last1 last2;</span>
+<span id="cb195-32"><a href="#cb195-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa02<span class="ot">=</span>. then a0rel<span class="ot">=</span>last1; <span class="cf">if</span> naa02 ne . then a0rel<span class="ot">=</span>naa02; </span>
+<span id="cb195-33"><a href="#cb195-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> naa13<span class="ot">=</span>. then arel<span class="ot">=</span>last2; <span class="cf">if</span> naa13 ne . then arel<span class="ot">=</span>naa13;</span>
+<span id="cb195-34"><a href="#cb195-34" aria-hidden="true" tabindex="-1"></a>    output;</span>
+<span id="cb195-35"><a href="#cb195-35" aria-hidden="true" tabindex="-1"></a>    last1<span class="ot">=</span>a0rel; last2<span class="ot">=</span>arel; </span>
+<span id="cb195-36"><a href="#cb195-36" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-37"><a href="#cb195-37" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> <span class="dv">3</span> mortality rates simultaneously;</span>
+<span id="cb195-38"><a href="#cb195-38" aria-hidden="true" tabindex="-1"></a>data alfa3dead; </span>
+<span id="cb195-39"><a href="#cb195-39" aria-hidden="true" tabindex="-1"></a>    merge deadrev alfarev; </span>
+<span id="cb195-40"><a href="#cb195-40" aria-hidden="true" tabindex="-1"></a>    by deadtime; </span>
+<span id="cb195-41"><a href="#cb195-41" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-42"><a href="#cb195-42" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>alfa3dead;</span>
+<span id="cb195-43"><a href="#cb195-43" aria-hidden="true" tabindex="-1"></a>    plot arel<span class="sc">*</span>deadtime a02<span class="sc">*</span>deadtime a13<span class="sc">*</span>deadtime</span>
+<span id="cb195-44"><a href="#cb195-44" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">/</span> overlay haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2 legend<span class="ot">=</span>legend1;</span>
+<span id="cb195-45"><a href="#cb195-45" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">120</span> by <span class="dv">10</span> minor<span class="ot">=</span>none</span>
+<span id="cb195-46"><a href="#cb195-46" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Time since bone marrow transplantation (months)'</span>);</span>
+<span id="cb195-47"><a href="#cb195-47" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">9</span> by <span class="dv">1</span> minor<span class="ot">=</span>none</span>
+<span id="cb195-48"><a href="#cb195-48" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard of death'</span>);</span>
+<span id="cb195-49"><a href="#cb195-49" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
+<span id="cb195-50"><a href="#cb195-50" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;</span>
+<span id="cb195-51"><a href="#cb195-51" aria-hidden="true" tabindex="-1"></a>    symbol3  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>black;</span>
+<span id="cb195-52"><a href="#cb195-52" aria-hidden="true" tabindex="-1"></a>    label arel<span class="ot">=</span><span class="st">"After relapse"</span>;</span>
+<span id="cb195-53"><a href="#cb195-53" aria-hidden="true" tabindex="-1"></a>    label a02<span class="ot">=</span><span class="st">"No relapse and no GvHD"</span>;</span>
+<span id="cb195-54"><a href="#cb195-54" aria-hidden="true" tabindex="-1"></a>    label a13<span class="ot">=</span><span class="st">"After GvHD"</span>;</span>
+<span id="cb195-55"><a href="#cb195-55" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb195-56"><a href="#cb195-56" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3695,14 +3708,14 @@ Terminal event:
 <div class="cell" data-hash="Ch3_cache/html/table-3.12-r_ffe7c72f5196a32047eaa1ac6f377523">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relapse</span></span>
-<span id="cb195-2"><a href="#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
-<span id="cb195-3"><a href="#cb195-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
-<span id="cb195-4"><a href="#cb195-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
-<span id="cb195-5"><a href="#cb195-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
-<span id="cb195-6"><a href="#cb195-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
-<span id="cb195-7"><a href="#cb195-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
-<span id="cb195-8"><a href="#cb195-8" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb196"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb196-1"><a href="#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Relapse</span></span>
+<span id="cb196-2"><a href="#cb196-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
+<span id="cb196-3"><a href="#cb196-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
+<span id="cb196-4"><a href="#cb196-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
+<span id="cb196-5"><a href="#cb196-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb196-6"><a href="#cb196-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb196-7"><a href="#cb196-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
+<span id="cb196-8"><a href="#cb196-8" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3724,13 +3737,13 @@ n= 2009, number of events= 259 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
-<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
-<span id="cb197-3"><a href="#cb197-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
-<span id="cb197-4"><a href="#cb197-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
-<span id="cb197-5"><a href="#cb197-5" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
-<span id="cb197-6"><a href="#cb197-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
-<span id="cb197-7"><a href="#cb197-7" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb198"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb198-1"><a href="#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
+<span id="cb198-2"><a href="#cb198-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,rel<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
+<span id="cb198-3"><a href="#cb198-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
+<span id="cb198-4"><a href="#cb198-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb198-5"><a href="#cb198-5" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb198-6"><a href="#cb198-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
+<span id="cb198-7"><a href="#cb198-7" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3753,14 +3766,14 @@ n= 2009, number of events= 259 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death in remission</span></span>
-<span id="cb199-2"><a href="#cb199-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
-<span id="cb199-3"><a href="#cb199-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
-<span id="cb199-4"><a href="#cb199-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
-<span id="cb199-5"><a href="#cb199-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
-<span id="cb199-6"><a href="#cb199-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
-<span id="cb199-7"><a href="#cb199-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
-<span id="cb199-8"><a href="#cb199-8" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Death in remission</span></span>
+<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
+<span id="cb200-3"><a href="#cb200-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span> <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all,</span>
+<span id="cb200-4"><a href="#cb200-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
+<span id="cb200-5"><a href="#cb200-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb200-6"><a href="#cb200-6" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb200-7"><a href="#cb200-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
+<span id="cb200-8"><a href="#cb200-8" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3782,13 +3795,13 @@ n= 2009, number of events= 505 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
-<span id="cb201-2"><a href="#cb201-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
-<span id="cb201-3"><a href="#cb201-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
-<span id="cb201-4"><a href="#cb201-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
-<span id="cb201-5"><a href="#cb201-5" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
-<span id="cb201-6"><a href="#cb201-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
-<span id="cb201-7"><a href="#cb201-7" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb202"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb202-1"><a href="#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 2</span></span>
+<span id="cb202-2"><a href="#cb202-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel,trm<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">~</span>  <span class="fu">tt</span>(tgvhd) <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">/</span><span class="dv">10</span>) <span class="sc">+</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> <span class="fu">tt</span>(tanc500),</span>
+<span id="cb202-3"><a href="#cb202-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> bmt, <span class="at">ties=</span><span class="st">"breslow"</span>,</span>
+<span id="cb202-4"><a href="#cb202-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">tt=</span><span class="cf">function</span>(x, t, ...) {</span>
+<span id="cb202-5"><a href="#cb202-5" aria-hidden="true" tabindex="-1"></a>        dt <span class="ot">&lt;-</span> t<span class="sc">-</span>x</span>
+<span id="cb202-6"><a href="#cb202-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cbind</span>(<span class="at">tdcgvhd=</span><span class="dv">1</span><span class="sc">*</span>(dt<span class="sc">&gt;</span><span class="dv">0</span>))</span>
+<span id="cb202-7"><a href="#cb202-7" aria-hidden="true" tabindex="-1"></a>      })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3815,43 +3828,43 @@ n= 2009, number of events= 505 </code></pre>
 <div class="cell" data-hash="Ch3_cache/html/table-3.12-sas_4d6f64f9bd0f122fbc64a25b09a35c0f">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span> Relapse <span class="sc">**</span>; </span>
-<span id="cb203-2"><a href="#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">1</span>;</span>
-<span id="cb203-3"><a href="#cb203-3" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb203-4"><a href="#cb203-4" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
-<span id="cb203-5"><a href="#cb203-5" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">rel</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd age bmonly all<span class="sc">/</span>rl;</span>
-<span id="cb203-6"><a href="#cb203-6" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-7"><a href="#cb203-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-8"><a href="#cb203-8" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb203-9"><a href="#cb203-9" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">2</span>;</span>
-<span id="cb203-10"><a href="#cb203-10" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb203-11"><a href="#cb203-11" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
-<span id="cb203-12"><a href="#cb203-12" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">rel</span>(<span class="dv">0</span>)<span class="ot">=</span> tdcgvhd age bmonly all  tdcanc500<span class="sc">/</span>rl;</span>
-<span id="cb203-13"><a href="#cb203-13" aria-hidden="true" tabindex="-1"></a>    tdcanc500<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-14"><a href="#cb203-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> anc500<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>timeanc500 then tdcanc500<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-15"><a href="#cb203-15" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-16"><a href="#cb203-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-17"><a href="#cb203-17" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb203-18"><a href="#cb203-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb203-19"><a href="#cb203-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb203-20"><a href="#cb203-20" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span> Death <span class="cf">in</span> remission <span class="sc">**</span>;</span>
-<span id="cb203-21"><a href="#cb203-21" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">1</span>; </span>
-<span id="cb203-22"><a href="#cb203-22" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb203-23"><a href="#cb203-23" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
-<span id="cb203-24"><a href="#cb203-24" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd age bmonly all<span class="sc">/</span>rl;</span>
-<span id="cb203-25"><a href="#cb203-25" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-26"><a href="#cb203-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-27"><a href="#cb203-27" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb203-28"><a href="#cb203-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb203-29"><a href="#cb203-29" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">2</span>;</span>
-<span id="cb203-30"><a href="#cb203-30" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb203-31"><a href="#cb203-31" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
-<span id="cb203-32"><a href="#cb203-32" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd  age bmonly all tdcanc500 <span class="sc">/</span>rl;</span>
-<span id="cb203-33"><a href="#cb203-33" aria-hidden="true" tabindex="-1"></a>    tdcanc500<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-34"><a href="#cb203-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> anc500<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>timeanc500 then tdcanc500<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-35"><a href="#cb203-35" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb203-36"><a href="#cb203-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
-<span id="cb203-37"><a href="#cb203-37" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span> Relapse <span class="sc">**</span>; </span>
+<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">1</span>;</span>
+<span id="cb204-3"><a href="#cb204-3" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb204-4"><a href="#cb204-4" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
+<span id="cb204-5"><a href="#cb204-5" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">rel</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd age bmonly all<span class="sc">/</span>rl;</span>
+<span id="cb204-6"><a href="#cb204-6" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-7"><a href="#cb204-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-8"><a href="#cb204-8" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb204-9"><a href="#cb204-9" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">2</span>;</span>
+<span id="cb204-10"><a href="#cb204-10" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb204-11"><a href="#cb204-11" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
+<span id="cb204-12"><a href="#cb204-12" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">rel</span>(<span class="dv">0</span>)<span class="ot">=</span> tdcgvhd age bmonly all  tdcanc500<span class="sc">/</span>rl;</span>
+<span id="cb204-13"><a href="#cb204-13" aria-hidden="true" tabindex="-1"></a>    tdcanc500<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-14"><a href="#cb204-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> anc500<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>timeanc500 then tdcanc500<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-15"><a href="#cb204-15" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-16"><a href="#cb204-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-17"><a href="#cb204-17" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb204-18"><a href="#cb204-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-19"><a href="#cb204-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-20"><a href="#cb204-20" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span> Death <span class="cf">in</span> remission <span class="sc">**</span>;</span>
+<span id="cb204-21"><a href="#cb204-21" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">1</span>; </span>
+<span id="cb204-22"><a href="#cb204-22" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb204-23"><a href="#cb204-23" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
+<span id="cb204-24"><a href="#cb204-24" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd age bmonly all<span class="sc">/</span>rl;</span>
+<span id="cb204-25"><a href="#cb204-25" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-26"><a href="#cb204-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-27"><a href="#cb204-27" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb204-28"><a href="#cb204-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb204-29"><a href="#cb204-29" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">2</span>;</span>
+<span id="cb204-30"><a href="#cb204-30" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb204-31"><a href="#cb204-31" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>);</span>
+<span id="cb204-32"><a href="#cb204-32" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">trm</span>(<span class="dv">0</span>)<span class="ot">=</span>tdcgvhd  age bmonly all tdcanc500 <span class="sc">/</span>rl;</span>
+<span id="cb204-33"><a href="#cb204-33" aria-hidden="true" tabindex="-1"></a>    tdcanc500<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-34"><a href="#cb204-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> anc500<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>timeanc500 then tdcanc500<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-35"><a href="#cb204-35" aria-hidden="true" tabindex="-1"></a>    tdcgvhd<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb204-36"><a href="#cb204-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> and intxrel<span class="sc">&gt;</span>tgvhd then tdcgvhd<span class="ot">=</span><span class="dv">1</span>;</span>
+<span id="cb204-37"><a href="#cb204-37" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3867,44 +3880,44 @@ n= 2009, number of events= 505 </code></pre>
 <div class="cell" data-hash="Ch3_cache/html/table-3.14-r_cb6d5de87a50bf3a5e654bd10d9bbb7b">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
-<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb204-3"><a href="#cb204-3" aria-hidden="true" tabindex="-1"></a>bmtext <span class="ot">&lt;-</span> bmt <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">nygsource =</span> bmonly, </span>
-<span id="cb204-4"><a href="#cb204-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nydisease =</span> all, </span>
-<span id="cb204-5"><a href="#cb204-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">age10 =</span> age<span class="sc">/</span><span class="dv">10</span>,</span>
-<span id="cb204-6"><a href="#cb204-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">time =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>, tgvhd, intxrel), </span>
-<span id="cb204-7"><a href="#cb204-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">status =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, trm),</span>
-<span id="cb204-8"><a href="#cb204-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">entry =</span> <span class="dv">0</span>,</span>
-<span id="cb204-9"><a href="#cb204-9" aria-hidden="true" tabindex="-1"></a>                         ) </span>
-<span id="cb204-10"><a href="#cb204-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-11"><a href="#cb204-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-12"><a href="#cb204-12" aria-hidden="true" tabindex="-1"></a>double1 <span class="ot">&lt;-</span> bmtext  <span class="sc">%&gt;%</span> </span>
-<span id="cb204-13"><a href="#cb204-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age1 =</span> age10, </span>
-<span id="cb204-14"><a href="#cb204-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> <span class="dv">0</span>,</span>
-<span id="cb204-15"><a href="#cb204-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource1 =</span> nygsource, </span>
-<span id="cb204-16"><a href="#cb204-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource2 =</span> <span class="dv">0</span>,</span>
-<span id="cb204-17"><a href="#cb204-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease1 =</span> nydisease,</span>
-<span id="cb204-18"><a href="#cb204-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease2 =</span> <span class="dv">0</span>, </span>
-<span id="cb204-19"><a href="#cb204-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">stratum =</span> <span class="dv">1</span>)</span>
-<span id="cb204-20"><a href="#cb204-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-21"><a href="#cb204-21" aria-hidden="true" tabindex="-1"></a>double2 <span class="ot">&lt;-</span> bmtext <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb204-22"><a href="#cb204-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> intxrel, </span>
-<span id="cb204-23"><a href="#cb204-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> trm,  </span>
-<span id="cb204-24"><a href="#cb204-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> tgvhd,</span>
-<span id="cb204-25"><a href="#cb204-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">age1 =</span> <span class="dv">0</span>, </span>
-<span id="cb204-26"><a href="#cb204-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> age10,</span>
-<span id="cb204-27"><a href="#cb204-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource1 =</span> <span class="dv">0</span>, </span>
-<span id="cb204-28"><a href="#cb204-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource2 =</span> nygsource,</span>
-<span id="cb204-29"><a href="#cb204-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease1 =</span> <span class="dv">0</span>,</span>
-<span id="cb204-30"><a href="#cb204-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease2 =</span> nydisease, </span>
-<span id="cb204-31"><a href="#cb204-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">stratum =</span> <span class="dv">2</span>)</span>
-<span id="cb204-32"><a href="#cb204-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-33"><a href="#cb204-33" aria-hidden="true" tabindex="-1"></a>doubledod <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(double1, double2))</span>
-<span id="cb204-34"><a href="#cb204-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb204-35"><a href="#cb204-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 1</span></span>
-<span id="cb204-36"><a href="#cb204-36" aria-hidden="true" tabindex="-1"></a>r1<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(stratum) <span class="sc">+</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2, </span>
-<span id="cb204-37"><a href="#cb204-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
-<span id="cb204-38"><a href="#cb204-38" aria-hidden="true" tabindex="-1"></a>r1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data set for analysis - double</span></span>
+<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a>bmtext <span class="ot">&lt;-</span> bmt <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">nygsource =</span> bmonly, </span>
+<span id="cb205-4"><a href="#cb205-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">nydisease =</span> all, </span>
+<span id="cb205-5"><a href="#cb205-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">age10 =</span> age<span class="sc">/</span><span class="dv">10</span>,</span>
+<span id="cb205-6"><a href="#cb205-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">time =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>, tgvhd, intxrel), </span>
+<span id="cb205-7"><a href="#cb205-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">status =</span> <span class="fu">ifelse</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, trm),</span>
+<span id="cb205-8"><a href="#cb205-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">entry =</span> <span class="dv">0</span>,</span>
+<span id="cb205-9"><a href="#cb205-9" aria-hidden="true" tabindex="-1"></a>                         ) </span>
+<span id="cb205-10"><a href="#cb205-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-11"><a href="#cb205-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-12"><a href="#cb205-12" aria-hidden="true" tabindex="-1"></a>double1 <span class="ot">&lt;-</span> bmtext  <span class="sc">%&gt;%</span> </span>
+<span id="cb205-13"><a href="#cb205-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age1 =</span> age10, </span>
+<span id="cb205-14"><a href="#cb205-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> <span class="dv">0</span>,</span>
+<span id="cb205-15"><a href="#cb205-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource1 =</span> nygsource, </span>
+<span id="cb205-16"><a href="#cb205-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource2 =</span> <span class="dv">0</span>,</span>
+<span id="cb205-17"><a href="#cb205-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease1 =</span> nydisease,</span>
+<span id="cb205-18"><a href="#cb205-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease2 =</span> <span class="dv">0</span>, </span>
+<span id="cb205-19"><a href="#cb205-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">stratum =</span> <span class="dv">1</span>)</span>
+<span id="cb205-20"><a href="#cb205-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-21"><a href="#cb205-21" aria-hidden="true" tabindex="-1"></a>double2 <span class="ot">&lt;-</span> bmtext <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gvhd <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb205-22"><a href="#cb205-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> intxrel, </span>
+<span id="cb205-23"><a href="#cb205-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">status =</span> trm,  </span>
+<span id="cb205-24"><a href="#cb205-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">entry =</span> tgvhd,</span>
+<span id="cb205-25"><a href="#cb205-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">age1 =</span> <span class="dv">0</span>, </span>
+<span id="cb205-26"><a href="#cb205-26" aria-hidden="true" tabindex="-1"></a>         <span class="at">age2 =</span> age10,</span>
+<span id="cb205-27"><a href="#cb205-27" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource1 =</span> <span class="dv">0</span>, </span>
+<span id="cb205-28"><a href="#cb205-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">gsource2 =</span> nygsource,</span>
+<span id="cb205-29"><a href="#cb205-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease1 =</span> <span class="dv">0</span>,</span>
+<span id="cb205-30"><a href="#cb205-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">disease2 =</span> nydisease, </span>
+<span id="cb205-31"><a href="#cb205-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">stratum =</span> <span class="dv">2</span>)</span>
+<span id="cb205-32"><a href="#cb205-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-33"><a href="#cb205-33" aria-hidden="true" tabindex="-1"></a>doubledod <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(double1, double2))</span>
+<span id="cb205-34"><a href="#cb205-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb205-35"><a href="#cb205-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 1</span></span>
+<span id="cb205-36"><a href="#cb205-36" aria-hidden="true" tabindex="-1"></a>r1<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">strata</span>(stratum) <span class="sc">+</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2, </span>
+<span id="cb205-37"><a href="#cb205-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb205-38"><a href="#cb205-38" aria-hidden="true" tabindex="-1"></a>r1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3923,11 +3936,11 @@ n= 2983, number of events= 505
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 2</span></span>
-<span id="cb206-2"><a href="#cb206-2" aria-hidden="true" tabindex="-1"></a>doubledod<span class="sc">$</span>type <span class="ot">&lt;-</span> doubledod<span class="sc">$</span>stratum <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb206-3"><a href="#cb206-3" aria-hidden="true" tabindex="-1"></a>r2<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type, </span>
-<span id="cb206-4"><a href="#cb206-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
-<span id="cb206-5"><a href="#cb206-5" aria-hidden="true" tabindex="-1"></a>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 2</span></span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>doubledod<span class="sc">$</span>type <span class="ot">&lt;-</span> doubledod<span class="sc">$</span>stratum <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>r2<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type, </span>
+<span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a>r2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3947,16 +3960,16 @@ n= 2983, number of events= 505
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb208"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" aria-hidden="true" tabindex="-1"></a>r2t<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type</span>
-<span id="cb208-2"><a href="#cb208-2" aria-hidden="true" tabindex="-1"></a>           <span class="sc">+</span><span class="fu">tt</span>(type), </span>
-<span id="cb208-3"><a href="#cb208-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
-<span id="cb208-4"><a href="#cb208-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...){</span>
-<span id="cb208-5"><a href="#cb208-5" aria-hidden="true" tabindex="-1"></a>             gvhdt <span class="ot">=</span> x<span class="sc">*</span><span class="fu">log</span>(t)</span>
-<span id="cb208-6"><a href="#cb208-6" aria-hidden="true" tabindex="-1"></a>           })</span>
-<span id="cb208-7"><a href="#cb208-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb208-8"><a href="#cb208-8" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT proportionality</span></span>
-<span id="cb208-9"><a href="#cb208-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb208-10"><a href="#cb208-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(r2, r2t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb209"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb209-1"><a href="#cb209-1" aria-hidden="true" tabindex="-1"></a>r2t<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> disease1 <span class="sc">+</span> disease2 <span class="sc">+</span> age1 <span class="sc">+</span> age2 <span class="sc">+</span> type</span>
+<span id="cb209-2"><a href="#cb209-2" aria-hidden="true" tabindex="-1"></a>           <span class="sc">+</span><span class="fu">tt</span>(type), </span>
+<span id="cb209-3"><a href="#cb209-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>,</span>
+<span id="cb209-4"><a href="#cb209-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">tt =</span> <span class="cf">function</span>(x,t, ...){</span>
+<span id="cb209-5"><a href="#cb209-5" aria-hidden="true" tabindex="-1"></a>             gvhdt <span class="ot">=</span> x<span class="sc">*</span><span class="fu">log</span>(t)</span>
+<span id="cb209-6"><a href="#cb209-6" aria-hidden="true" tabindex="-1"></a>           })</span>
+<span id="cb209-7"><a href="#cb209-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb209-8"><a href="#cb209-8" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT proportionality</span></span>
+<span id="cb209-9"><a href="#cb209-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb209-10"><a href="#cb209-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(r2, r2t)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Likelihood ratio test
@@ -3971,10 +3984,10 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 3</span></span>
-<span id="cb210-2"><a href="#cb210-2" aria-hidden="true" tabindex="-1"></a>r3<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> nydisease <span class="sc">+</span> age10 <span class="sc">+</span> type, </span>
-<span id="cb210-3"><a href="#cb210-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
-<span id="cb210-4"><a href="#cb210-4" aria-hidden="true" tabindex="-1"></a>r3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb211"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb211-1"><a href="#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row 3</span></span>
+<span id="cb211-2"><a href="#cb211-2" aria-hidden="true" tabindex="-1"></a>r3<span class="ot">&lt;-</span><span class="fu">coxph</span>(<span class="fu">Surv</span>(entry, time, status <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> nydisease <span class="sc">+</span> age10 <span class="sc">+</span> type, </span>
+<span id="cb211-3"><a href="#cb211-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> doubledod, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span>
+<span id="cb211-4"><a href="#cb211-4" aria-hidden="true" tabindex="-1"></a>r3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -3992,8 +4005,8 @@ n= 2983, number of events= 505
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb212"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb212-1"><a href="#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT common coefficients</span></span>
-<span id="cb212-2"><a href="#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(r3,r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb213"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb213-1"><a href="#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-text: LRT common coefficients</span></span>
+<span id="cb213-2"><a href="#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(r3,r2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Likelihood ratio test
@@ -4011,74 +4024,74 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <div class="cell" data-hash="Ch3_cache/html/table-3.14-sas_a632495a0fb92ab5eea33bc88b56a3c6">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb214"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb214-1"><a href="#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Make <span class="st">"double"</span> data set; </span>
-<span id="cb214-2"><a href="#cb214-2" aria-hidden="true" tabindex="-1"></a>data doubledod; </span>
-<span id="cb214-3"><a href="#cb214-3" aria-hidden="true" tabindex="-1"></a>    set bmt; </span>
-<span id="cb214-4"><a href="#cb214-4" aria-hidden="true" tabindex="-1"></a>    nygsource<span class="ot">=</span>bmonly; </span>
-<span id="cb214-5"><a href="#cb214-5" aria-hidden="true" tabindex="-1"></a>    nydisease<span class="ot">=</span>all; </span>
-<span id="cb214-6"><a href="#cb214-6" aria-hidden="true" tabindex="-1"></a>    age10<span class="ot">=</span>age<span class="sc">/</span><span class="dv">10</span>;</span>
-<span id="cb214-7"><a href="#cb214-7" aria-hidden="true" tabindex="-1"></a>    time<span class="ot">=</span>intxrel; </span>
-<span id="cb214-8"><a href="#cb214-8" aria-hidden="true" tabindex="-1"></a>    status<span class="ot">=</span>trm; </span>
-<span id="cb214-9"><a href="#cb214-9" aria-hidden="true" tabindex="-1"></a>    entry<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb214-10"><a href="#cb214-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-11"><a href="#cb214-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> then do; </span>
-<span id="cb214-12"><a href="#cb214-12" aria-hidden="true" tabindex="-1"></a>        time<span class="ot">=</span>tgvhd; </span>
-<span id="cb214-13"><a href="#cb214-13" aria-hidden="true" tabindex="-1"></a>        status<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-14"><a href="#cb214-14" aria-hidden="true" tabindex="-1"></a>    end;</span>
-<span id="cb214-15"><a href="#cb214-15" aria-hidden="true" tabindex="-1"></a>    age1<span class="ot">=</span>age10; </span>
-<span id="cb214-16"><a href="#cb214-16" aria-hidden="true" tabindex="-1"></a>    age2<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-17"><a href="#cb214-17" aria-hidden="true" tabindex="-1"></a>    gsource1<span class="ot">=</span>nygsource; </span>
-<span id="cb214-18"><a href="#cb214-18" aria-hidden="true" tabindex="-1"></a>    gsource2<span class="ot">=</span><span class="dv">0</span>;</span>
-<span id="cb214-19"><a href="#cb214-19" aria-hidden="true" tabindex="-1"></a>    disease1<span class="ot">=</span>nydisease; </span>
-<span id="cb214-20"><a href="#cb214-20" aria-hidden="true" tabindex="-1"></a>    disease2<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-21"><a href="#cb214-21" aria-hidden="true" tabindex="-1"></a>    stratum<span class="ot">=</span><span class="dv">1</span>; </span>
-<span id="cb214-22"><a href="#cb214-22" aria-hidden="true" tabindex="-1"></a>    output;</span>
-<span id="cb214-23"><a href="#cb214-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-24"><a href="#cb214-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> then do;</span>
-<span id="cb214-25"><a href="#cb214-25" aria-hidden="true" tabindex="-1"></a>        time<span class="ot">=</span>intxrel; </span>
-<span id="cb214-26"><a href="#cb214-26" aria-hidden="true" tabindex="-1"></a>        status<span class="ot">=</span>trm; </span>
-<span id="cb214-27"><a href="#cb214-27" aria-hidden="true" tabindex="-1"></a>        entry<span class="ot">=</span>tgvhd;</span>
-<span id="cb214-28"><a href="#cb214-28" aria-hidden="true" tabindex="-1"></a>        age1<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-29"><a href="#cb214-29" aria-hidden="true" tabindex="-1"></a>        age2<span class="ot">=</span>age10; </span>
-<span id="cb214-30"><a href="#cb214-30" aria-hidden="true" tabindex="-1"></a>        gsource1<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-31"><a href="#cb214-31" aria-hidden="true" tabindex="-1"></a>        gsource2<span class="ot">=</span>nygsource;</span>
-<span id="cb214-32"><a href="#cb214-32" aria-hidden="true" tabindex="-1"></a>        disease1<span class="ot">=</span><span class="dv">0</span>; </span>
-<span id="cb214-33"><a href="#cb214-33" aria-hidden="true" tabindex="-1"></a>        disease2<span class="ot">=</span>nydisease; </span>
-<span id="cb214-34"><a href="#cb214-34" aria-hidden="true" tabindex="-1"></a>        stratum<span class="ot">=</span><span class="dv">2</span>; </span>
-<span id="cb214-35"><a href="#cb214-35" aria-hidden="true" tabindex="-1"></a>        output; </span>
-<span id="cb214-36"><a href="#cb214-36" aria-hidden="true" tabindex="-1"></a>    end;</span>
-<span id="cb214-37"><a href="#cb214-37" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb214-38"><a href="#cb214-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-39"><a href="#cb214-39" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">1</span>; </span>
-<span id="cb214-40"><a href="#cb214-40" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
-<span id="cb214-41"><a href="#cb214-41" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
-<span id="cb214-42"><a href="#cb214-42" aria-hidden="true" tabindex="-1"></a>    age1 age2 <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
-<span id="cb214-43"><a href="#cb214-43" aria-hidden="true" tabindex="-1"></a>    strata stratum;</span>
-<span id="cb214-44"><a href="#cb214-44" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb214-45"><a href="#cb214-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-46"><a href="#cb214-46" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">2</span>; </span>
-<span id="cb214-47"><a href="#cb214-47" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
-<span id="cb214-48"><a href="#cb214-48" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
-<span id="cb214-49"><a href="#cb214-49" aria-hidden="true" tabindex="-1"></a>    age1 age2 type <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
-<span id="cb214-50"><a href="#cb214-50" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
-<span id="cb214-51"><a href="#cb214-51" aria-hidden="true" tabindex="-1"></a>    test age1<span class="ot">=</span>age2, disease1<span class="ot">=</span>disease2; <span class="sc">/</span><span class="er">*</span> Wald test instead of LRT <span class="sc">*</span><span class="er">/</span></span>
-<span id="cb214-52"><a href="#cb214-52" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb214-53"><a href="#cb214-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-54"><a href="#cb214-54" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> In<span class="sc">-</span>text<span class="sc">:</span> LRT proportionality variable <span class="st">'typelogt'</span>;</span>
-<span id="cb214-55"><a href="#cb214-55" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
-<span id="cb214-56"><a href="#cb214-56" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
-<span id="cb214-57"><a href="#cb214-57" aria-hidden="true" tabindex="-1"></a>    age1 age2 type typelogt  <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
-<span id="cb214-58"><a href="#cb214-58" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
-<span id="cb214-59"><a href="#cb214-59" aria-hidden="true" tabindex="-1"></a>    typelogt<span class="ot">=</span>type<span class="sc">*</span><span class="fu">log</span>(time);</span>
-<span id="cb214-60"><a href="#cb214-60" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb214-61"><a href="#cb214-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-62"><a href="#cb214-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb214-63"><a href="#cb214-63" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">3</span>; </span>
-<span id="cb214-64"><a href="#cb214-64" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
-<span id="cb214-65"><a href="#cb214-65" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">stratum</span> (<span class="at">ref=</span><span class="st">'1'</span>) <span class="fu">nydisease</span> (<span class="at">ref=</span><span class="st">'0'</span>);</span>
-<span id="cb214-66"><a href="#cb214-66" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>nydisease age10 type <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
-<span id="cb214-67"><a href="#cb214-67" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
-<span id="cb214-68"><a href="#cb214-68" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Make <span class="st">"double"</span> data set; </span>
+<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a>data doubledod; </span>
+<span id="cb215-3"><a href="#cb215-3" aria-hidden="true" tabindex="-1"></a>    set bmt; </span>
+<span id="cb215-4"><a href="#cb215-4" aria-hidden="true" tabindex="-1"></a>    nygsource<span class="ot">=</span>bmonly; </span>
+<span id="cb215-5"><a href="#cb215-5" aria-hidden="true" tabindex="-1"></a>    nydisease<span class="ot">=</span>all; </span>
+<span id="cb215-6"><a href="#cb215-6" aria-hidden="true" tabindex="-1"></a>    age10<span class="ot">=</span>age<span class="sc">/</span><span class="dv">10</span>;</span>
+<span id="cb215-7"><a href="#cb215-7" aria-hidden="true" tabindex="-1"></a>    time<span class="ot">=</span>intxrel; </span>
+<span id="cb215-8"><a href="#cb215-8" aria-hidden="true" tabindex="-1"></a>    status<span class="ot">=</span>trm; </span>
+<span id="cb215-9"><a href="#cb215-9" aria-hidden="true" tabindex="-1"></a>    entry<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb215-10"><a href="#cb215-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-11"><a href="#cb215-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> then do; </span>
+<span id="cb215-12"><a href="#cb215-12" aria-hidden="true" tabindex="-1"></a>        time<span class="ot">=</span>tgvhd; </span>
+<span id="cb215-13"><a href="#cb215-13" aria-hidden="true" tabindex="-1"></a>        status<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-14"><a href="#cb215-14" aria-hidden="true" tabindex="-1"></a>    end;</span>
+<span id="cb215-15"><a href="#cb215-15" aria-hidden="true" tabindex="-1"></a>    age1<span class="ot">=</span>age10; </span>
+<span id="cb215-16"><a href="#cb215-16" aria-hidden="true" tabindex="-1"></a>    age2<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-17"><a href="#cb215-17" aria-hidden="true" tabindex="-1"></a>    gsource1<span class="ot">=</span>nygsource; </span>
+<span id="cb215-18"><a href="#cb215-18" aria-hidden="true" tabindex="-1"></a>    gsource2<span class="ot">=</span><span class="dv">0</span>;</span>
+<span id="cb215-19"><a href="#cb215-19" aria-hidden="true" tabindex="-1"></a>    disease1<span class="ot">=</span>nydisease; </span>
+<span id="cb215-20"><a href="#cb215-20" aria-hidden="true" tabindex="-1"></a>    disease2<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-21"><a href="#cb215-21" aria-hidden="true" tabindex="-1"></a>    stratum<span class="ot">=</span><span class="dv">1</span>; </span>
+<span id="cb215-22"><a href="#cb215-22" aria-hidden="true" tabindex="-1"></a>    output;</span>
+<span id="cb215-23"><a href="#cb215-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-24"><a href="#cb215-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> gvhd<span class="ot">=</span><span class="dv">1</span> then do;</span>
+<span id="cb215-25"><a href="#cb215-25" aria-hidden="true" tabindex="-1"></a>        time<span class="ot">=</span>intxrel; </span>
+<span id="cb215-26"><a href="#cb215-26" aria-hidden="true" tabindex="-1"></a>        status<span class="ot">=</span>trm; </span>
+<span id="cb215-27"><a href="#cb215-27" aria-hidden="true" tabindex="-1"></a>        entry<span class="ot">=</span>tgvhd;</span>
+<span id="cb215-28"><a href="#cb215-28" aria-hidden="true" tabindex="-1"></a>        age1<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-29"><a href="#cb215-29" aria-hidden="true" tabindex="-1"></a>        age2<span class="ot">=</span>age10; </span>
+<span id="cb215-30"><a href="#cb215-30" aria-hidden="true" tabindex="-1"></a>        gsource1<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-31"><a href="#cb215-31" aria-hidden="true" tabindex="-1"></a>        gsource2<span class="ot">=</span>nygsource;</span>
+<span id="cb215-32"><a href="#cb215-32" aria-hidden="true" tabindex="-1"></a>        disease1<span class="ot">=</span><span class="dv">0</span>; </span>
+<span id="cb215-33"><a href="#cb215-33" aria-hidden="true" tabindex="-1"></a>        disease2<span class="ot">=</span>nydisease; </span>
+<span id="cb215-34"><a href="#cb215-34" aria-hidden="true" tabindex="-1"></a>        stratum<span class="ot">=</span><span class="dv">2</span>; </span>
+<span id="cb215-35"><a href="#cb215-35" aria-hidden="true" tabindex="-1"></a>        output; </span>
+<span id="cb215-36"><a href="#cb215-36" aria-hidden="true" tabindex="-1"></a>    end;</span>
+<span id="cb215-37"><a href="#cb215-37" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb215-38"><a href="#cb215-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-39"><a href="#cb215-39" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">1</span>; </span>
+<span id="cb215-40"><a href="#cb215-40" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
+<span id="cb215-41"><a href="#cb215-41" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
+<span id="cb215-42"><a href="#cb215-42" aria-hidden="true" tabindex="-1"></a>    age1 age2 <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
+<span id="cb215-43"><a href="#cb215-43" aria-hidden="true" tabindex="-1"></a>    strata stratum;</span>
+<span id="cb215-44"><a href="#cb215-44" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb215-45"><a href="#cb215-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-46"><a href="#cb215-46" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">2</span>; </span>
+<span id="cb215-47"><a href="#cb215-47" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
+<span id="cb215-48"><a href="#cb215-48" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
+<span id="cb215-49"><a href="#cb215-49" aria-hidden="true" tabindex="-1"></a>    age1 age2 type <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
+<span id="cb215-50"><a href="#cb215-50" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
+<span id="cb215-51"><a href="#cb215-51" aria-hidden="true" tabindex="-1"></a>    test age1<span class="ot">=</span>age2, disease1<span class="ot">=</span>disease2; <span class="sc">/</span><span class="er">*</span> Wald test instead of LRT <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb215-52"><a href="#cb215-52" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb215-53"><a href="#cb215-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-54"><a href="#cb215-54" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> In<span class="sc">-</span>text<span class="sc">:</span> LRT proportionality variable <span class="st">'typelogt'</span>;</span>
+<span id="cb215-55"><a href="#cb215-55" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
+<span id="cb215-56"><a href="#cb215-56" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 </span>
+<span id="cb215-57"><a href="#cb215-57" aria-hidden="true" tabindex="-1"></a>    age1 age2 type typelogt  <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
+<span id="cb215-58"><a href="#cb215-58" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
+<span id="cb215-59"><a href="#cb215-59" aria-hidden="true" tabindex="-1"></a>    typelogt<span class="ot">=</span>type<span class="sc">*</span><span class="fu">log</span>(time);</span>
+<span id="cb215-60"><a href="#cb215-60" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb215-61"><a href="#cb215-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-62"><a href="#cb215-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-63"><a href="#cb215-63" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Row <span class="dv">3</span>; </span>
+<span id="cb215-64"><a href="#cb215-64" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
+<span id="cb215-65"><a href="#cb215-65" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">stratum</span> (<span class="at">ref=</span><span class="st">'1'</span>) <span class="fu">nydisease</span> (<span class="at">ref=</span><span class="st">'0'</span>);</span>
+<span id="cb215-66"><a href="#cb215-66" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>nydisease age10 type <span class="sc">/</span>entry<span class="ot">=</span>entry <span class="fu">type3</span>(lr);</span>
+<span id="cb215-67"><a href="#cb215-67" aria-hidden="true" tabindex="-1"></a>    type<span class="ot">=</span>stratum<span class="dv">-1</span>;</span>
+<span id="cb215-68"><a href="#cb215-68" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4094,24 +4107,24 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <div class="cell" data-hash="Ch3_cache/html/figure-3.10-r_6b46595046c4900e7195881afa868106">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb215"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb215-1"><a href="#cb215-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
-<span id="cb215-2"><a href="#cb215-2" aria-hidden="true" tabindex="-1"></a>survr1 <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(r1, <span class="at">center =</span> F)</span>
-<span id="cb215-3"><a href="#cb215-3" aria-hidden="true" tabindex="-1"></a>pcumhaz <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> survr1<span class="sc">$</span>hazard, </span>
-<span id="cb215-4"><a href="#cb215-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> survr1<span class="sc">$</span>time, </span>
-<span id="cb215-5"><a href="#cb215-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">strata =</span> survr1<span class="sc">$</span>strata) </span>
-<span id="cb215-6"><a href="#cb215-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-7"><a href="#cb215-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.10</span></span>
-<span id="cb215-8"><a href="#cb215-8" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> strata), <span class="at">data =</span> pcumhaz) <span class="sc">+</span> </span>
-<span id="cb215-9"><a href="#cb215-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb215-10"><a href="#cb215-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span> </span>
-<span id="cb215-11"><a href="#cb215-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
-<span id="cb215-12"><a href="#cb215-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb215-13"><a href="#cb215-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">156</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">12</span>)) <span class="sc">+</span> </span>
-<span id="cb215-14"><a href="#cb215-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
-<span id="cb215-15"><a href="#cb215-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Stratum"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="sc">+</span> </span>
-<span id="cb215-16"><a href="#cb215-16" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb215-17"><a href="#cb215-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb215-18"><a href="#cb215-18" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract cumulative hazard from r1 </span></span>
+<span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a>survr1 <span class="ot">&lt;-</span> <span class="fu">basehaz</span>(r1, <span class="at">center =</span> F)</span>
+<span id="cb216-3"><a href="#cb216-3" aria-hidden="true" tabindex="-1"></a>pcumhaz <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">cumhaz =</span> survr1<span class="sc">$</span>hazard, </span>
+<span id="cb216-4"><a href="#cb216-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">time =</span> survr1<span class="sc">$</span>time, </span>
+<span id="cb216-5"><a href="#cb216-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">strata =</span> survr1<span class="sc">$</span>strata) </span>
+<span id="cb216-6"><a href="#cb216-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-7"><a href="#cb216-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 3.10</span></span>
+<span id="cb216-8"><a href="#cb216-8" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.10</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> cumhaz, <span class="at">linetype =</span> strata), <span class="at">data =</span> pcumhaz) <span class="sc">+</span> </span>
+<span id="cb216-9"><a href="#cb216-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb216-10"><a href="#cb216-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since bone marrow transplantation (months)"</span>) <span class="sc">+</span> </span>
+<span id="cb216-11"><a href="#cb216-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Cumulative hazard"</span>) <span class="sc">+</span> </span>
+<span id="cb216-12"><a href="#cb216-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb216-13"><a href="#cb216-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">156</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">156</span>, <span class="at">by =</span> <span class="dv">12</span>)) <span class="sc">+</span> </span>
+<span id="cb216-14"><a href="#cb216-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>))) <span class="sc">+</span></span>
+<span id="cb216-15"><a href="#cb216-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Stratum"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>)) <span class="sc">+</span> </span>
+<span id="cb216-16"><a href="#cb216-16" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb216-17"><a href="#cb216-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb216-18"><a href="#cb216-18" aria-hidden="true" tabindex="-1"></a>fig3<span class="fl">.10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch3_files/figure-html/figure-3.10-r-1.png" class="img-fluid" style="width:90.0%"></p>
@@ -4122,27 +4135,27 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <div class="cell" data-hash="Ch3_cache/html/figure-3.10-sas_7677215235c964411bcd7d2d4430201a">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a>data covar; </span>
-<span id="cb216-2"><a href="#cb216-2" aria-hidden="true" tabindex="-1"></a>    input disease1 disease2 age1 age2; </span>
-<span id="cb216-3"><a href="#cb216-3" aria-hidden="true" tabindex="-1"></a>    datalines; </span>
-<span id="cb216-4"><a href="#cb216-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
-<span id="cb216-5"><a href="#cb216-5" aria-hidden="true" tabindex="-1"></a>; </span>
-<span id="cb216-6"><a href="#cb216-6" aria-hidden="true" tabindex="-1"></a>run; </span>
-<span id="cb216-7"><a href="#cb216-7" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
-<span id="cb216-8"><a href="#cb216-8" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 age1 age2 <span class="sc">/</span> entry<span class="ot">=</span>entry ;</span>
-<span id="cb216-9"><a href="#cb216-9" aria-hidden="true" tabindex="-1"></a>    strata stratum;</span>
-<span id="cb216-10"><a href="#cb216-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>trm cumhaz<span class="ot">=</span>breslow covariates<span class="ot">=</span>covar;</span>
-<span id="cb216-11"><a href="#cb216-11" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb216-12"><a href="#cb216-12" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>trm;</span>
-<span id="cb216-13"><a href="#cb216-13" aria-hidden="true" tabindex="-1"></a>    plot breslow<span class="sc">*</span>time<span class="ot">=</span>stratum<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
-<span id="cb216-14"><a href="#cb216-14" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">156</span> by <span class="dv">12</span> minor<span class="ot">=</span>none</span>
-<span id="cb216-15"><a href="#cb216-15" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Time since bone marrow transplantation (months)'</span>);</span>
-<span id="cb216-16"><a href="#cb216-16" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.3</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none</span>
-<span id="cb216-17"><a href="#cb216-17" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard of death in remission'</span>);</span>
-<span id="cb216-18"><a href="#cb216-18" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
-<span id="cb216-19"><a href="#cb216-19" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;;</span>
-<span id="cb216-20"><a href="#cb216-20" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb216-21"><a href="#cb216-21" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a>data covar; </span>
+<span id="cb217-2"><a href="#cb217-2" aria-hidden="true" tabindex="-1"></a>    input disease1 disease2 age1 age2; </span>
+<span id="cb217-3"><a href="#cb217-3" aria-hidden="true" tabindex="-1"></a>    datalines; </span>
+<span id="cb217-4"><a href="#cb217-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span> <span class="dv">0</span></span>
+<span id="cb217-5"><a href="#cb217-5" aria-hidden="true" tabindex="-1"></a>; </span>
+<span id="cb217-6"><a href="#cb217-6" aria-hidden="true" tabindex="-1"></a>run; </span>
+<span id="cb217-7"><a href="#cb217-7" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>doubledod; </span>
+<span id="cb217-8"><a href="#cb217-8" aria-hidden="true" tabindex="-1"></a>    model time<span class="sc">*</span><span class="fu">status</span>(<span class="dv">0</span>)<span class="ot">=</span>disease1 disease2 age1 age2 <span class="sc">/</span> entry<span class="ot">=</span>entry ;</span>
+<span id="cb217-9"><a href="#cb217-9" aria-hidden="true" tabindex="-1"></a>    strata stratum;</span>
+<span id="cb217-10"><a href="#cb217-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>trm cumhaz<span class="ot">=</span>breslow covariates<span class="ot">=</span>covar;</span>
+<span id="cb217-11"><a href="#cb217-11" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb217-12"><a href="#cb217-12" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>trm;</span>
+<span id="cb217-13"><a href="#cb217-13" aria-hidden="true" tabindex="-1"></a>    plot breslow<span class="sc">*</span>time<span class="ot">=</span>stratum<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
+<span id="cb217-14"><a href="#cb217-14" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">156</span> by <span class="dv">12</span> minor<span class="ot">=</span>none</span>
+<span id="cb217-15"><a href="#cb217-15" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Time since bone marrow transplantation (months)'</span>);</span>
+<span id="cb217-16"><a href="#cb217-16" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.3</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none</span>
+<span id="cb217-17"><a href="#cb217-17" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard of death in remission'</span>);</span>
+<span id="cb217-18"><a href="#cb217-18" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
+<span id="cb217-19"><a href="#cb217-19" aria-hidden="true" tabindex="-1"></a>    symbol2  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>red;;</span>
+<span id="cb217-20"><a href="#cb217-20" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb217-21"><a href="#cb217-21" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4158,8 +4171,8 @@ Model 2: Surv(entry, time, status != 0) ~ disease1 + disease2 + age1 +
 <div class="cell" data-hash="Ch3_cache/html/table-3.15-r_90af78ac6817b591778f53df44ad8490">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb217"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb217-1"><a href="#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
-<span id="cb217-2"><a href="#cb217-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gamma</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb218"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb218-1"><a href="#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
+<span id="cb218-2"><a href="#cb218-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gamma</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -4180,8 +4193,8 @@ n= 2009, number of events= 764 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb219"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb219-1"><a href="#cb219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age</span>
-<span id="cb219-2"><a href="#cb219-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gaussian</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>, <span class="at">sparse=</span>F), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age</span>
+<span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">frailty.gaussian</span>(team, <span class="at">eps =</span> <span class="fl">1e-09</span>, <span class="at">sparse=</span>F), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -4207,19 +4220,19 @@ n= 2009, number of events= 764 </code></pre>
 <div class="cell" data-hash="Ch3_cache/html/table-3.15-sas_f31c499249dac677cc9e8219c1f24af5">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb221"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb221-1"><a href="#cb221-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Gamma; </span>
-<span id="cb221-2"><a href="#cb221-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb221-3"><a href="#cb221-3" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
-<span id="cb221-4"><a href="#cb221-4" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
-<span id="cb221-5"><a href="#cb221-5" aria-hidden="true" tabindex="-1"></a>    random team<span class="sc">/</span>dist<span class="ot">=</span>gamma;</span>
-<span id="cb221-6"><a href="#cb221-6" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb221-7"><a href="#cb221-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb221-8"><a href="#cb221-8" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Log<span class="sc">-</span>normal; </span>
-<span id="cb221-9"><a href="#cb221-9" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb221-10"><a href="#cb221-10" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
-<span id="cb221-11"><a href="#cb221-11" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
-<span id="cb221-12"><a href="#cb221-12" aria-hidden="true" tabindex="-1"></a>    random team;</span>
-<span id="cb221-13"><a href="#cb221-13" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Gamma; </span>
+<span id="cb222-2"><a href="#cb222-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb222-3"><a href="#cb222-3" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
+<span id="cb222-4"><a href="#cb222-4" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
+<span id="cb222-5"><a href="#cb222-5" aria-hidden="true" tabindex="-1"></a>    random team<span class="sc">/</span>dist<span class="ot">=</span>gamma;</span>
+<span id="cb222-6"><a href="#cb222-6" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb222-7"><a href="#cb222-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb222-8"><a href="#cb222-8" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Log<span class="sc">-</span>normal; </span>
+<span id="cb222-9"><a href="#cb222-9" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb222-10"><a href="#cb222-10" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
+<span id="cb222-11"><a href="#cb222-11" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
+<span id="cb222-12"><a href="#cb222-12" aria-hidden="true" tabindex="-1"></a>    random team;</span>
+<span id="cb222-13"><a href="#cb222-13" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4235,8 +4248,8 @@ n= 2009, number of events= 764 </code></pre>
 <div class="cell" data-hash="Ch3_cache/html/in-text-stratified-r_8b9c8d1a8df4ff206b0985ec0b411b7c">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb222"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb222-1"><a href="#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
-<span id="cb222-2"><a href="#cb222-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">strata</span>(team), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb223"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb223-1"><a href="#cb223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(intxrel, state0 <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> bmonly <span class="sc">+</span> all <span class="sc">+</span> age </span>
+<span id="cb223-2"><a href="#cb223-2" aria-hidden="true" tabindex="-1"></a>      <span class="sc">+</span> <span class="fu">strata</span>(team), <span class="at">data =</span> bmt, <span class="at">ties =</span> <span class="st">"breslow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -4257,11 +4270,11 @@ n= 2009, number of events= 764 </code></pre>
 <div class="cell" data-hash="Ch3_cache/html/in-text-stratified-sas_f9ec1118b1901a41757360ad08d3f1f2">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb224"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb224-1"><a href="#cb224-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
-<span id="cb224-2"><a href="#cb224-2" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
-<span id="cb224-3"><a href="#cb224-3" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
-<span id="cb224-4"><a href="#cb224-4" aria-hidden="true" tabindex="-1"></a>    strata team;</span>
-<span id="cb224-5"><a href="#cb224-5" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb225"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb225-1"><a href="#cb225-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bmt;</span>
+<span id="cb225-2"><a href="#cb225-2" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">bmonly</span>(<span class="at">ref=</span><span class="st">"0"</span>) <span class="fu">all</span>(<span class="at">ref=</span><span class="st">"0"</span>) team;</span>
+<span id="cb225-3"><a href="#cb225-3" aria-hidden="true" tabindex="-1"></a>    model intxrel<span class="sc">*</span><span class="fu">state0</span>(<span class="dv">0</span>)<span class="ot">=</span>bmonly all age<span class="sc">/</span>rl;</span>
+<span id="cb225-4"><a href="#cb225-4" aria-hidden="true" tabindex="-1"></a>    strata team;</span>
+<span id="cb225-5"><a href="#cb225-5" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
