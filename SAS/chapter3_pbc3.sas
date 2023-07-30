@@ -4,23 +4,19 @@
 
 * Load pbc data; 
 proc import out=pbc3
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/pbc3.csv"
+	datafile="data/pbc3.csv"
 	dbms=csv replace;
 run;
-
-* Summarise data set; 
-proc contents 
-	data=pbc3; 
-run;
-
 data pbc3; 
 	set pbc3;
 	albnorm=(alb-35)*(alb>35);
-	alb10=alb/10; alb2=alb10*alb10;
+	alb10=alb/10;
+	alb2=alb*alb;
 	bilihigh=(bili-17.1)*(bili>17.1);
 	bilitoohigh=(bili-34.2)*(bili>34.2);
 	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-	bili100=bili/100; bili2=bili100*bili100;
+	bili100=bili/100;
+	bili2=bili*bili;
 	log2bili=log2(bili);
 	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
 	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
@@ -29,7 +25,7 @@ data pbc3;
 run;
 
 *---------------------------------------------------------------;
-*--------------------- Table 3.10 ------------------------------;
+*--------------------- Table 3.11 ------------------------------;
 *---------------------------------------------------------------;
 
 * Treatment; 

@@ -36,7 +36,6 @@ proc import out=pbc3
 	datafile="data/pbc3.csv"
 	dbms=csv replace;
 run;
-	
 data pbc3; 
 	set pbc3;
 	albnorm=(alb-35)*(alb>35);

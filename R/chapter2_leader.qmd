@@ -5,24 +5,26 @@ leader <- read.csv("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/ju
 
 ### Read data
 
-::: {.panel-tabset}
+::: panel-tabset
+
 ## R
+
+Assume that the LEADER data set is loaded in data set `leader`.
+
 ```{r}
 #| label: read-leader-r
 
-# Assume that LEADER data is loaded in data set leader
 # One data set per recurrent endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
 leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
 ```
 :::
 
-
-
 ### Figure 2.15
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: Figure-2.15-r
 
@@ -61,9 +63,9 @@ fig2.15
 ```
 :::
 
-### Table 2.15 
+### Table 2.15
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
 
 ```{r}

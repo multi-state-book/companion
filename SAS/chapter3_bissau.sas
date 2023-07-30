@@ -4,15 +4,8 @@
 
 * Load data; 
 proc import 
-datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bissau.csv"
-	out=bissau
-	dbms = csv
-	replace;
-run;
-
-* Summarise data set; 
-proc contents 
-	data=bissau; 
+	datafile="data/bissau.csv" out=bissau
+	dbms = csv replace;
 run;
 
 *---------------------------------------------------------------;
@@ -24,8 +17,7 @@ data bissau;
 	dtpany=(dtp>0);
 	drop var1; 
 run; 
-
-proc freq;
+proc freq data=bissau;
 	tables bcg*dtp bcg*dtpany/ nocol nopercent;
 run;
 
@@ -36,26 +28,19 @@ run;
 
 data bissau; 
 	set bissau;
-	age12=age/(365.24/12);
-	ageout=age12+fuptime/(365.24/12);
+	agein=age/(365.24/12);
+	ageout=agein+fuptime/(365.24/12);
 run;
 
 proc phreg data=bissau;
-	class bcg(ref="0");
-	model ageout*dead(0)=bcg/entry=age12 rl;
+	model ageout*dead(0) = bcg / entry=agein rl;
 run;
-
 proc phreg data=bissau;
-	class bcg(ref="0");
-	model ageout*dead(0)=dtpany/entry=age12 rl;
+	model ageout*dead(0) = dtpany / entry=agein rl;
 run;
-
 proc phreg data=bissau;
-	class bcg(ref="0");
-	model ageout*dead(0)=bcg dtpany/entry=age12 rl;
+	model ageout*dead(0) = bcg dtpany / entry=agein rl;
 run;
-
 proc phreg data=bissau;
-	class bcg(ref="0");
-	model ageout*dead(0)=bcg dtpany bcg*dtpany/entry=age12 rl;
+	model ageout*dead(0) = bcg dtpany bcg*dtpany / entry=agein rl;
 run;

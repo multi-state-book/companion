@@ -1,7 +1,10 @@
 ### Read data
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: read-bmt
+#| label: read-bmt-r
 bmt <- data.frame(read.csv("data/bmt.csv"))
 bmt$intxsurv<- bmt$timedeath
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
@@ -10,11 +13,34 @@ bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
 bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
 bmt$state0  <- bmt$rel + 2*bmt$trm
 ```
+## SAS
+```{r}
+#| label: read-bmt-sas
+#| eval: false 
+#| output: false
+
+proc import out=bmt
+	datafile="data/bmt.csv"
+	dbms=csv replace;
+run;
+data bmt; 
+	set bmt;
+	intxsurv=timedeath; dead=death;
+	if rel=1 then intxrel=timerel; if rel=0 then intxrel=timedeath;
+	trm=0; if rel=0 and death=1 then trm=1;
+	state0=rel+2*trm;
+	if gvhd=1 then tgvhd=timegvhd; if gvhd=0 then tgvhd=intxrel;
+run;
+```
+:::
 
 ### Figure 3.5
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.5
+#| label: figure-3.5-r
 #| out-width: 90%
 # General theme
 library(ggplot2)
@@ -43,10 +69,35 @@ fig3.5 <- ggplot(aes(x = time, y = cumhaz), data = pdata1) +
 fig3.5
 ```
 
+## SAS
+```{r}
+#| label: figure-3.5-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=bmt;
+	model tgvhd*gvhd(0)=;
+	baseline out=alfagvh cumhaz=naagvh;
+run;
+proc gplot data=alfagvh;
+	plot naagvh*tgvhd/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 156 by 12 minor=none
+    label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.8 by 0.1 minor=none
+    label=(a=90 'Cumulative GvHD hazard');
+	symbol1  v=none i=stepjl c=blue;
+run;
+quit;
+```
+:::
+
 ### Figure 3.6
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.6
+#| label: figure-3.6-r
 #| out-width: 90%
 # Reformatting
 bmt$nyreltime <- with(bmt, ifelse(tgvhd < intxrel, tgvhd, intxrel))
@@ -80,10 +131,77 @@ fig3.6 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
 fig3.6
 ```
 
+## SAS
+```{r}
+#| label: figure-3.6-sas
+#| eval: false 
+#| output: false
+
+* Reformatting; 
+data bmt; 
+set bmt; /* Censor at GvHD */
+	if tgvhd<intxrel then do;
+	nyreltime=tgvhd; nyrel=0; nytrm=0; end;
+	if tgvhd=intxrel then do;
+	nyreltime=intxrel; nyrel=rel; nytrm=trm; end;
+run;
+
+* Cumulative relapse rate without gvhd; 
+proc phreg data=bmt;
+	model nyreltime*nyrel(0)=;
+	baseline out=alfa0rel cumhaz=naa0rel;
+run;
+
+* Cumulative relapse rate after gvhd; 
+proc phreg data=bmt;
+	where gvhd=1;
+	model intxrel*rel(0)=/entry=tgvhd;
+	baseline out=alfagvhrel cumhaz=naagvhrel;
+run;
+data alfa0rel; 
+	set alfa0rel; 
+	reltime=nyreltime; 
+run;
+data alfagvhrel; 
+	set alfagvhrel; 
+	reltime=intxrel; 
+run;
+data rel; 
+	merge alfa0rel alfagvhrel; 
+	by reltime; 
+run;
+data relrev; 
+	set rel;
+	by reltime;
+	retain last1 last2;
+	if naa0rel=. then a02=last1; if naa0rel ne . then a02=naa0rel; 
+	if naagvhrel=. then a13=last2; if naagvhrel ne . then a13=naagvhrel;
+	output;
+	last1=a02; last2=a13; 
+run;
+legend1 label=none;
+proc gplot data=relrev;
+	plot a02*reltime a13*reltime/haxis=axis1 vaxis=axis2 overlay legend=legend1;
+	axis1 order=0 to 156 by 12 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.2 by 0.1 minor=none
+		label=(a=90 'Cumulative relapse hazard');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=stepjl c=blue;
+	label a02="No GvHD";
+	label a13="After GvHD";
+run;
+quit;
+```
+:::
+
 ### Figure 3.7
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.7
+#| label: figure-3.7-r
 #| out-width: 90%
 # Need to get the cumulative hazard estimates at the same time points
 # All times
@@ -127,12 +245,39 @@ fig3.7 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) +
 fig3.7
 ```
 
+## SAS
+```{r}
+#| label: figure-3.7-sas
+#| eval: false 
+#| output: false
+
+data relrev; 
+	set relrev;
+	line=0.858*a02;
+run;
+proc gplot data=relrev;
+	plot a13*a02 line*a02/haxis=axis1 vaxis=axis2 overlay;
+	axis1 order=0 to 0.2 by 0.05 minor=none 
+    label=('Cumulative relapse hazard: no GvHD');
+	axis2 order=0 to 0.2 by 0.05 minor=none 
+    label=(a=90 'Cumulative relapse hazard: GvHD');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=rl c=blue;
+run;
+quit;
+```
+:::
+
 ### In-text: GvHD as time-dependent covariate
 
 #### Relapse
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-tGvHD-relapse
+#| label: in-text-tGvHD-relapse-r
+
 library(broom)
 tidy(coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
       tt=function(x, t, ...) {
@@ -148,11 +293,33 @@ tidy(coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
       }),exp=T, conf.int = T)
 
 ```
+## SAS
+```{r}
+#| label: in-text-tGvHD-relapse-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=bmt;
+	model intxrel*rel(0)= ttgvhd / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+run;
+
+* test ph;
+proc phreg data=bmt;
+	model intxrel*rel(0)= ttgvhd ttgvhdlogt / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+	ttgvhdlogt=ttgvhd*log(intxrel+1);
+run;
+```
+:::
 
 #### Death in remission
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-tGvHD-death
+#| label: in-text-tGvHD-death-r
 tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
       tt=function(x, t, ...) {
         dt <- t-x
@@ -167,11 +334,24 @@ tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
       }), exp=T, conf.int = T)
 
 ```
+
+## SAS
+```{r}
+#| label: in-text-tGvHD-death-sas
+#| eval: false 
+#| output: false
+
+```
+:::
+
       
 ### Figure 3.8
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.8
+#| label: figure-3.8-r
 #| out-width: 90%
 # Cumulative death rate without GvHD 
 fit11 <- survfit(Surv(nyreltime, nytrm != 0) ~ 1, data = bmt)
@@ -224,10 +404,71 @@ fig3.8 <- ggplot(aes(x = cumhaz1, y = cumhaz2), data = pdata_b) +
 fig3.8
 ```
 
+## SAS
+```{r}
+#| label: figure-3.8-sas
+#| eval: false 
+#| output: false
+
+* Cumulative death rate without gvhd; 
+proc phreg data=bmt; 
+	model nyreltime*nytrm(0)=;
+	baseline out=alfa0dead cumhaz=naa0dead;
+run;
+* Cumulative death rate with gvhd; 
+proc phreg data=bmt;
+	where gvhd=1;
+	model intxrel*trm(0)=/entry=tgvhd;
+	baseline out=alfagvhdead cumhaz=naagvhdead;
+run;
+* Book-keeping for plot;
+data alfa0dead; 
+	set alfa0dead; 
+	deadtime=nyreltime; 
+run;
+data alfagvhdead; 
+	set alfagvhdead; 
+	deadtime=intxrel; 
+run;
+data dead; 
+	merge alfa0dead alfagvhdead; 
+	by deadtime; 
+run;
+data deadrev; 
+	set dead;
+	by deadtime;
+	retain last1 last2;
+	if naa0dead=. then a02=last1; if naa0dead ne . then a02=naa0dead; 
+	if naagvhdead=. then a13=last2; if naagvhdead ne . then a13=naagvhdead;
+	output;
+	last1=a02; last2=a13; 
+run;
+* Add coefficient; 
+data deadrev; 
+	set deadrev;
+	line=3.113*a02;
+run;
+proc gplot data=deadrev;
+	plot a13*a02 line*a02/haxis=axis1 vaxis=axis2 overlay;
+	axis1 order=0 to 0.2 by 0.05 minor=none
+    label=('Cumulative death hazard: no GvHD');
+	axis2 order=0 to 1 by 0.2 minor=none
+    label=(a=90 'Cumulative death hazard: GvHD');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=rl c=blue;;
+run;
+quit;
+```
+:::
+
+
 ### Figure 3.4
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.4
+#| label: figure-3.4-r
 #| out-width: 90%
 # Cumulative death hazards wrt relapse; 
 # Cumulative death rate no relapse or GvHD
@@ -261,10 +502,78 @@ fig3.4 <- ggplot(aes(x = time, y = cumhaz), data = pdata11) +
 fig3.4
 ```
 
+## SAS
+```{r}
+#| label: figure-3.4-sas
+#| eval: false 
+#| output: false
+
+* Cumulative death hazards wrt relapse ;
+proc phreg data=bmt; 
+	model intxrel*trm(0)=;
+	baseline out=alfa02 cumhaz=naa02;
+run;
+data bmt; 
+	set bmt; 
+	if intxrel eq intxsurv and rel eq 1 then intxsurv = intxsurv + 0.01; 
+run; 
+proc phreg data=bmt;
+	where rel=1;
+	model intxsurv*dead(0)=/entry=intxrel;
+	baseline out=alfa13 cumhaz=naa13;
+run;
+
+* Book-keeping; 
+data alfa02; 
+	set alfa02; 
+	deadtime=intxrel; 
+run;
+data alfa13; 
+	set alfa13; 
+	deadtime=intxsurv; 
+run;
+data alfadead; 
+	merge alfa02 alfa13; 
+	by deadtime; 
+run;
+data alfarev; set alfadead;
+	by deadtime;
+	retain last1 last2;
+	if naa02=. then a0rel=last1; if naa02 ne . then a0rel=naa02; 
+	if naa13=. then arel=last2; if naa13 ne . then arel=naa13;
+	output;
+	last1=a0rel; last2=arel; 
+run;
+* 3 mortality rates simultaneously;
+data alfa3dead; 
+	merge deadrev alfarev; 
+	by deadtime; 
+run;
+proc gplot data=alfa3dead;
+	plot arel*deadtime a02*deadtime a13*deadtime
+	                 / overlay haxis=axis1 vaxis=axis2 legend=legend1;
+	axis1 order=0 to 120 by 10 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 9 by 1 minor=none
+		label=(a=90 'Cumulative hazard of death');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;
+	symbol3  v=none i=stepjl c=black;
+	label arel="After relapse";
+	label a02="No relapse and no GvHD";
+	label a13="After GvHD";
+run;
+quit;
+```
+:::
+
 ### Table 3.12
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.12
+#| label: table-3.12-r
 # Relapse
 # Column 1
 coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd) + I(age/10) + bmonly + all,
@@ -302,10 +611,59 @@ coxph(Surv(intxrel,trm!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500)
       })
 ```
 
+## SAS
+```{r}
+#| label: table-3.12-sas
+#| eval: false 
+#| output: false
+
+** Relapse **; 
+* Column 1;
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0");
+	model intxrel*rel(0)=tdcgvhd age bmonly all/rl;
+	tdcgvhd=0;
+	if gvhd=1 and intxrel>tgvhd then tdcgvhd=1;
+run;
+* Column 2;
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0");
+	model intxrel*rel(0)= tdcgvhd age bmonly all  tdcanc500/rl;
+	tdcanc500=0;
+	if anc500=1 and intxrel>timeanc500 then tdcanc500=1;
+	tdcgvhd=0;
+	if gvhd=1 and intxrel>tgvhd then tdcgvhd=1;
+run;
+
+
+** Death in remission **;
+* Column 1; 
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0");
+	model intxrel*trm(0)=tdcgvhd age bmonly all/rl;
+	tdcgvhd=0;
+	if gvhd=1 and intxrel>tgvhd then tdcgvhd=1;
+run;
+
+* Column 2;
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0");
+	model intxrel*trm(0)=tdcgvhd  age bmonly all tdcanc500 /rl;
+	tdcanc500=0;
+	if anc500=1 and intxrel>timeanc500 then tdcanc500=1;
+	tdcgvhd=0;
+	if gvhd=1 and intxrel>tgvhd then tdcgvhd=1;
+run;
+```
+:::
+
 ### Table 3.14
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table 3.14
+#| label: table-3.14-r
 # Prepare data set for analysis - double
 library(tidyverse)
 bmtext <- bmt %>% mutate(nygsource = bmonly, 
@@ -369,11 +727,90 @@ lrtest(r3,r2)
 
 ```
 
+## SAS
+```{r}
+#| label:  table-3.14-sas
+#| eval: false 
+#| output: false
+
+* Make "double" data set; 
+data doubledod; 
+	set bmt; 
+	nygsource=bmonly; 
+	nydisease=all; 
+	age10=age/10;
+	time=intxrel; 
+	status=trm; 
+	entry=0;
+
+	if gvhd=1 then do; 
+		time=tgvhd; 
+		status=0; 
+	end;
+	age1=age10; 
+	age2=0; 
+	gsource1=nygsource; 
+	gsource2=0;
+	disease1=nydisease; 
+	disease2=0; 
+	stratum=1; 
+	output;
+
+	if gvhd=1 then do;
+		time=intxrel; 
+		status=trm; 
+		entry=tgvhd;
+		age1=0; 
+		age2=age10; 
+		gsource1=0; 
+		gsource2=nygsource;
+		disease1=0; 
+		disease2=nydisease; 
+		stratum=2; 
+		output; 
+	end;
+run;
+
+* Row 1; 
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 
+	age1 age2 /entry=entry type3(lr);
+	strata stratum;
+run;
+
+* Row 2; 
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 
+	age1 age2 type /entry=entry type3(lr);
+	type=stratum-1;
+	test age1=age2, disease1=disease2; /* Wald test instead of LRT */
+run;
+
+* In-text: LRT proportionality variable 'typelogt';
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 
+	age1 age2 type typelogt  /entry=entry type3(lr);
+	type=stratum-1;
+	typelogt=type*log(time);
+run;
+
+
+* Row 3; 
+proc phreg data=doubledod; 
+	class stratum (ref='1') nydisease (ref='0');
+	model time*status(0)=nydisease age10 type /entry=entry type3(lr);
+	type=stratum-1;
+run;
+```
+:::
 
 ### Figure 3.10
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.10
+#| label: figure-3.10-r
 #| out-width: 90%
 # Extract cumulative hazard from r1 
 survr1 <- basehaz(r1, center = F)
@@ -395,21 +832,92 @@ fig3.10 <- ggplot(aes(x = time, y = cumhaz, linetype = strata), data = pcumhaz) 
 fig3.10
 ```
 
+## SAS
+```{r}
+#| label: figure-3.10-sas
+#| eval: false 
+#| output: false
+
+data covar; 
+	input disease1 disease2 age1 age2; 
+	datalines; 
+	0 0 0 0
+; 
+run; 
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 age1 age2 / entry=entry ;
+	strata stratum;
+	baseline out=trm cumhaz=breslow covariates=covar;
+run;
+proc gplot data=trm;
+	plot breslow*time=stratum/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 156 by 12 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.3 by 0.05 minor=none
+		label=(a=90 'Cumulative hazard of death in remission');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;;
+run;
+quit;
+```
+:::
 
 ### Table 3.15
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.15
+#| label: table-3.15-r
 coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age 
       + frailty.gamma(team, eps = 1e-09), data = bmt, ties = "breslow")
 coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age
       + frailty.gaussian(team, eps = 1e-09, sparse=F), data = bmt, ties = "breslow")
 ```
 
+## SAS
+```{r}
+#| label: table-3.15-sas
+#| eval: false 
+#| output: false
+
+* Gamma; 
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0") team;
+	model intxrel*state0(0)=bmonly all age/rl;
+	random team/dist=gamma;
+run;
+
+* Log-normal; 
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0") team;
+	model intxrel*state0(0)=bmonly all age/rl;
+	random team;
+run;
+```
+:::
+
 ### In-text: stratified Cox model by center
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: in-text-stratified
+#| label: in-text-stratified-r
 coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age 
       + strata(team), data = bmt, ties = "breslow")
 ```
+
+## SAS
+```{r}
+#| label: in-text-stratified-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0") team;
+	model intxrel*state0(0)=bmonly all age/rl;
+	strata team;
+run;
+```
+:::

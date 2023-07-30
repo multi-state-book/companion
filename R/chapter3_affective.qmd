@@ -1,15 +1,39 @@
 ### Read data 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
 #| label: read-affective
 affective <- data.frame(read.csv("data/affective.csv"))
 affective$wait <- with(affective, stop - start)
-
 ```
 
-### Table 3.6 
+## SAS
 ```{r}
-#| label: table-3.6
+#| label: read-affective-sas
+#| eval: false 
+#| output: false
+
+proc import out=affective
+	datafile="data/affective.csv"
+	dbms=csv replace;
+run;
+data affective; 
+	set affective; 
+	wait = stop - start; 
+run; 
+```
+:::
+
+
+### Table 3.6 
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| label: table-3.6-r
 library(survival)
 coxph(Surv(start, stop, status == 1) ~ bip,
       data = subset(affective, state == 0), ties = "breslow")
@@ -20,12 +44,50 @@ coxph(Surv(start, stop, status == 1) ~ bip + episode,
 coxph(Surv(start, stop, status == 1) ~ bip + episode + I(episode*episode),
       data = subset(affective, state == 0), ties = "breslow")
 
-affective$epi<-with(affective, ifelse(episode<25,episode,25))
+# Episode as categorical
+affective$epi<-with(affective, ifelse(episode<10,episode,10))
 coxph(Surv(start, stop, status == 1) ~ bip + factor(epi),
       data = subset(affective, state == 0), ties = "breslow")
 ```
 
+## SAS
+```{r}
+#| label: table-3.6-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=affective;
+	where state=0; 
+	model stop*status(2 3)= bip / entry=start rl type3(lr);
+run;
+
+proc phreg data=affective;
+	where state=0; 
+	model stop*status(2 3)= bip episode / entry=start rl type3(lr);
+run;
+
+* Episode as categorical;
+data affective2;
+  set affective;
+	if episode>10 the episode=10;
+proc phreg data=affective2;
+	where state=0; 
+	class episode(ref="1");
+	model stop*status(2 3)= bip episode / entry=start rl type3(lr);
+run;
+
+proc phreg data=affective;
+	where state=0; 
+	model stop*status(2 3)= bip episode episode*episode / entry=start rl type3(lr);
+run;
+```
+:::
+
 ### Table 3.7 
+
+::: {.panel-tabset}
+
+## R
 ```{r}
 #| label: table-3.7
 coxph(Surv(start, stop, status == 1) ~ bip + tt(year),
@@ -37,3 +99,22 @@ coxph(Surv(start, stop, status == 1) ~ bip + tt(year),
                period3=1*(76<=per & per<81),
                period4=1*(81<=per))})
 ```
+
+## SAS
+```{r}
+#| label: table-3.7-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=affective;
+	where state=0; 
+	model stop*status(2 3)= bip period1 period2 period3 period4 / entry=start rl type3(lr);
+	period=year+0.5+stop/12;
+	period1=0; period2=0; period3=0; period4=0;
+	if 71>period>=66 then period1=1;
+	if 76>period>=71 then period2=1;
+	if 81>period>=76 then period3=1;
+	if period>=81 then period4=1;
+run
+```
+:::

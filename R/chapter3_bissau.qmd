@@ -1,5 +1,8 @@
 ### Read data 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
 #| label: read-bissau
 bissau <- data.frame(read.csv("data/bissau.csv"))
@@ -8,19 +11,53 @@ bissau$agein  <- with(bissau, age/(365.24/12))
 bissau$ageout <- with(bissau, agein+fuptime/(365.24/12))
 bissau$dtpany <- 1*with(bissau, dtp>0)
 ```
+## SAS
+```{r}
+#| label: read-bissau-sas
+#| eval: false 
+#| output: false
+
+proc import 
+	datafile="data/bissau.csv" out=bissau
+	dbms = csv replace;
+run;
+data bissau; 
+	set bissau;
+	agein=age/(365.24/12);
+	ageout=agein+fuptime/(365.24/12);
+	dtpany=(dtp>0);
+run; 
+```
+:::
 
 ### Table 3.1  
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-3.1
+#| label: table-3.1-r
 table(bissau$bcg, bissau$dtp)
 100*table(bissau$bcg, bissau$dtp) / rowSums(table(bissau$bcg, bissau$dtp))
 ```
 
+## SAS
+```{r}
+#| label: table-3.1-sas
+#| eval: false 
+#| output: false
+
+proc freq data=bissau;
+	tables bcg*dtp bcg*dtpany/ nocol nopercent;
+run;
+```
+:::
+
 ### Table 3.2  
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: table-3.2
+#| label: table-3.2-r
 library(survival)
 coxph(Surv(agein,ageout,dead!=0)~bcg,data=bissau,method="breslow",timefix=F)
 coxph(Surv(agein,ageout,dead!=0)~dtpany,data=bissau,method="breslow",timefix=F)
@@ -28,4 +65,24 @@ coxph(Surv(agein,ageout,dead!=0)~bcg+dtpany,data=bissau,method="breslow",timefix
 coxph(Surv(agein,ageout,dead!=0)~bcg*dtpany,data=bissau,method="breslow",timefix=F)
 ```
 
+## SAS
+```{r}
+#| label: table-3.2-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=bissau;
+	model ageout*dead(0) = bcg / entry=agein rl;
+run;
+proc phreg data=bissau;
+	model ageout*dead(0) = dtpany / entry=agein rl;
+run;
+proc phreg data=bissau;
+	model ageout*dead(0) = bcg dtpany / entry=agein rl;
+run;
+proc phreg data=bissau;
+	model ageout*dead(0) = bcg dtpany bcg*dtpany / entry=agein rl;
+run;
+```
+:::
 

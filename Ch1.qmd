@@ -89,7 +89,7 @@ download_dir(
 | `year`        |                      |
 | `wait`        |                      |
 
-## 1.6 LEADER cardiovascular trial in type 2 Diabetes
+## 1.6 LEADER cardiovascular trial in type 2 diabetes
 
 Data not available for download.
 

@@ -4,18 +4,11 @@
 
 * Load data; 
 proc import out=bmt
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bmt.csv"
+	datafile="data/bmt.csv"
 	dbms=csv replace;
 run;
-
-* Summarise data set; 
-proc contents 
-	data=bmt; 
-run;
-
-* Extra variables; 
 data bmt; 
-set bmt;
+	set bmt;
 	intxsurv=timedeath; dead=death;
 	if rel=1 then intxrel=timerel; if rel=0 then intxrel=timedeath;
 	trm=0; if rel=0 and death=1 then trm=1;
@@ -27,20 +20,19 @@ run;
 *--------------------- Figure 3.5 ------------------------------;
 *---------------------------------------------------------------;
 
-* Model fit; 
 proc phreg data=bmt;
 	model tgvhd*gvhd(0)=;
 	baseline out=alfagvh cumhaz=naagvh;
 run;
-
-* Make plot; 
 proc gplot data=alfagvh;
 	plot naagvh*tgvhd/haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 156 by 12 minor=none label=('Months');
-	axis2 order=0 to 0.8 by 0.1 minor=none label=(a=90 'Cumulative GvHD hazard');
+	axis1 order=0 to 156 by 12 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.8 by 0.1 minor=none
+		label=(a=90 'Cumulative GvHD hazard');
 	symbol1  v=none i=stepjl c=blue;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 3.6 ------------------------------;
@@ -67,22 +59,18 @@ proc phreg data=bmt;
 	model intxrel*rel(0)=/entry=tgvhd;
 	baseline out=alfagvhrel cumhaz=naagvhrel;
 run;
-
 data alfa0rel; 
 	set alfa0rel; 
 	reltime=nyreltime; 
 run;
-
 data alfagvhrel; 
 	set alfagvhrel; 
 	reltime=intxrel; 
 run;
-
 data rel; 
 	merge alfa0rel alfagvhrel; 
 	by reltime; 
 run;
-
 data relrev; 
 	set rel;
 	by reltime;
@@ -92,14 +80,19 @@ data relrev;
 	output;
 	last1=a02; last2=a13; 
 run;
-
+legend1 label=none;
 proc gplot data=relrev;
-	plot a02*reltime a13*reltime/haxis=axis1 vaxis=axis2 overlay;
-	axis1 order=0 to 156 by 12 minor=none label=('Months');
-	axis2 order=0 to 0.2 by 0.1 minor=none label=(a=90 'Cumulative relapse hazard');
+	plot a02*reltime a13*reltime/haxis=axis1 vaxis=axis2 overlay legend=legend1;
+	axis1 order=0 to 156 by 12 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.2 by 0.1 minor=none
+		label=(a=90 'Cumulative relapse hazard');
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
+	label a02="No GvHD";
+	label a13="After GvHD";
 run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 3.7 ------------------------------;
@@ -109,15 +102,34 @@ data relrev;
 	set relrev;
 	line=0.858*a02;
 run;
-
-
 proc gplot data=relrev;
 	plot a13*a02 line*a02/haxis=axis1 vaxis=axis2 overlay;
-	axis1 order=0 to 0.2 by 0.05 minor=none label=('Cumulative relapse hazard: no GvHD');
-	axis2 order=0 to 0.2 by 0.05 minor=none label=(a=90 'Cumulative relapse hazard: GvHD');
+	axis1 order=0 to 0.2 by 0.05 minor=none 
+		label=('Cumulative relapse hazard: no GvHD');
+	axis2 order=0 to 0.2 by 0.05 minor=none
+		label=(a=90 'Cumulative relapse hazard: GvHD');
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=rl c=blue;
 run;
+quit;
+
+
+*---------------------------------------------------------------;
+*----- In-text: GvHD as time-dependent covariate  --------------;
+*---------------------------------------------------------------;
+ 
+proc phreg data=bmt;
+	model intxrel*rel(0)= ttgvhd / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+run;
+
+* test ph;
+proc phreg data=bmt;
+	model intxrel*rel(0)= ttgvhd ttgvhdlogt / rl type3(lr);
+	ttgvhd=(intxrel-tgvhd)>0;
+	ttgvhdlogt=ttgvhd*log(intxrel+1);
+run;
+
 
 *---------------------------------------------------------------;
 *--------------------- Figure 3.8 ------------------------------;
@@ -128,30 +140,25 @@ proc phreg data=bmt;
 	model nyreltime*nytrm(0)=;
 	baseline out=alfa0dead cumhaz=naa0dead;
 run;
-
 * Cumulative death rate with gvhd; 
 proc phreg data=bmt;
 	where gvhd=1;
 	model intxrel*trm(0)=/entry=tgvhd;
 	baseline out=alfagvhdead cumhaz=naagvhdead;
 run;
-
 * Book-keeping for plot;
 data alfa0dead; 
 	set alfa0dead; 
 	deadtime=nyreltime; 
 run;
-
 data alfagvhdead; 
 	set alfagvhdead; 
 	deadtime=intxrel; 
 run;
-
 data dead; 
 	merge alfa0dead alfagvhdead; 
 	by deadtime; 
 run;
-
 data deadrev; 
 	set dead;
 	by deadtime;
@@ -161,21 +168,21 @@ data deadrev;
 	output;
 	last1=a02; last2=a13; 
 run;
-
 * Add coefficient; 
 data deadrev; 
 	set deadrev;
 	line=3.113*a02;
 run;
-
-* Make plot; 
 proc gplot data=deadrev;
 	plot a13*a02 line*a02/haxis=axis1 vaxis=axis2 overlay;
-	axis1 order=0 to 0.2 by 0.05 minor=none label=('Cumulative death hazard: no GvHD');
-	axis2 order=0 to 1 by 0.2 minor=none label=(a=90 'Cumulative death hazard: GvHD');
+	axis1 order=0 to 0.2 by 0.05 minor=none
+		label=('Cumulative death hazard: no GvHD');
+	axis2 order=0 to 1 by 0.2 minor=none
+		label=(a=90 'Cumulative death hazard: GvHD');
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=rl c=blue;;
 run;
+quit;
 
 
 *---------------------------------------------------------------;
@@ -187,12 +194,10 @@ proc phreg data=bmt;
 	model intxrel*trm(0)=;
 	baseline out=alfa02 cumhaz=naa02;
 run;
-
 data bmt; 
 	set bmt; 
 	if intxrel eq intxsurv and rel eq 1 then intxsurv = intxsurv + 0.01; 
 run; 
-
 proc phreg data=bmt;
 	where rel=1;
 	model intxsurv*dead(0)=/entry=intxrel;
@@ -204,17 +209,14 @@ data alfa02;
 	set alfa02; 
 	deadtime=intxrel; 
 run;
-
 data alfa13; 
 	set alfa13; 
 	deadtime=intxsurv; 
 run;
-
 data alfadead; 
 	merge alfa02 alfa13; 
 	by deadtime; 
 run;
-
 data alfarev; set alfadead;
 	by deadtime;
 	retain last1 last2;
@@ -223,27 +225,30 @@ data alfarev; set alfadead;
 	output;
 	last1=a0rel; last2=arel; 
 run;
-
 * 3 mortality rates simultaneously;
 data alfa3dead; 
 	merge deadrev alfarev; 
 	by deadtime; 
 run;
-
-* Make plot;
 proc gplot data=alfa3dead;
-plot arel*deadtime a02*deadtime a13*deadtime
-                 / overlay haxis=axis1 vaxis=axis2;
-axis1 order=0 to 120 by 10 minor=none label=('Months');
-axis2 order=0 to 9 by 1 minor=none label=(a=90 'Cumulative hazard of death');
-symbol1  v=none i=stepjl c=blue;
-symbol2  v=none i=stepjl c=red;
-symbol3  v=none i=stepjl c=black;
+	plot arel*deadtime a02*deadtime a13*deadtime
+	                 / overlay haxis=axis1 vaxis=axis2 legend=legend1;
+	axis1 order=0 to 120 by 10 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 9 by 1 minor=none
+		label=(a=90 'Cumulative hazard of death');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;
+	symbol3  v=none i=stepjl c=black;
+	label arel="After relapse";
+	label a02="No relapse and no GvHD";
+	label a13="After GvHD";
 run;
+quit;
 
 
 *---------------------------------------------------------------;
-*--------------------- Table 3.11 ------------------------------;
+*--------------------- Table 3.12 ------------------------------;
 *---------------------------------------------------------------;
 
 ** Relapse **; 
@@ -254,11 +259,10 @@ proc phreg data=bmt;
 	tdcgvhd=0;
 	if gvhd=1 and intxrel>tgvhd then tdcgvhd=1;
 run;
-
 * Column 2;
 proc phreg data=bmt;
 	class bmonly(ref="0") all(ref="0");
-	model intxrel*rel(0)=tdcanc500 age bmonly all tdcgvhd/rl;
+	model intxrel*rel(0)= tdcgvhd age bmonly all  tdcanc500/rl;
 	tdcanc500=0;
 	if anc500=1 and intxrel>timeanc500 then tdcanc500=1;
 	tdcgvhd=0;
@@ -278,7 +282,7 @@ run;
 * Column 2;
 proc phreg data=bmt;
 	class bmonly(ref="0") all(ref="0");
-	model intxrel*trm(0)=tdcanc500 age bmonly all tdcgvhd/rl;
+	model intxrel*trm(0)=tdcgvhd  age bmonly all tdcanc500 /rl;
 	tdcanc500=0;
 	if anc500=1 and intxrel>timeanc500 then tdcanc500=1;
 	tdcgvhd=0;
@@ -288,7 +292,7 @@ run;
 
 
 *---------------------------------------------------------------;
-*--------------------- Table 3.13 ------------------------------;
+*--------------------- Table 3.14 ------------------------------;
 *---------------------------------------------------------------;
 
 * Make "double" data set; 
@@ -301,10 +305,10 @@ data doubledod;
 	status=trm; 
 	entry=0;
 
-if gvhd=1 then do; 
-	time=tgvhd; 
-	status=0; 
-end;
+	if gvhd=1 then do; 
+		time=tgvhd; 
+		status=0; 
+	end;
 	age1=age10; 
 	age2=0; 
 	gsource1=nygsource; 
@@ -312,47 +316,51 @@ end;
 	disease1=nydisease; 
 	disease2=0; 
 	stratum=1; 
-output;
+	output;
 
-if gvhd=1 then do;
-	time=intxrel; 
-	status=trm; 
-	entry=tgvhd;
-	age1=0; 
-	age2=age10; 
-	gsource1=0; 
-	gsource2=nygsource;
-	disease1=0; 
-	disease2=nydisease; 
-	stratum=2; 
-	output; end;
+	if gvhd=1 then do;
+		time=intxrel; 
+		status=trm; 
+		entry=tgvhd;
+		age1=0; 
+		age2=age10; 
+		gsource1=0; 
+		gsource2=nygsource;
+		disease1=0; 
+		disease2=nydisease; 
+		stratum=2; 
+		output; 
+	end;
 run;
 
 * Row 1; 
-data covar; 
-	input disease1 disease2 age1 age2; 
-	datalines; 
-	0 0 0 0
-; 
-run; 
 proc phreg data=doubledod; 
 	model time*status(0)=disease1 disease2 
-	age1 age2/entry=entry;
+	age1 age2 /entry=entry type3(lr);
 	strata stratum;
-	baseline out=trm cumhaz=breslow covariates=covar;
 run;
 
 * Row 2; 
 proc phreg data=doubledod; 
 	model time*status(0)=disease1 disease2 
-	age1 age2 type/entry=entry;
+	age1 age2 type /entry=entry type3(lr);
 	type=stratum-1;
+	test age1=age2, disease1=disease2; /* Wald test instead of LRT */
 run;
+
+* In-text: LRT proportionality variable 'typelogt';
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 
+	age1 age2 type typelogt  /entry=entry type3(lr);
+	type=stratum-1;
+	typelogt=type*log(time);
+run;
+
 
 * Row 3; 
 proc phreg data=doubledod; 
 	class stratum (ref='1') nydisease (ref='0');
-	model time*status(0)=nydisease age10 type/entry=entry;
+	model time*status(0)=nydisease age10 type /entry=entry type3(lr);
 	type=stratum-1;
 run;
 
@@ -361,17 +369,39 @@ run;
 *--------------------- Figure 3.10 -----------------------------;
 *---------------------------------------------------------------;
 
+data covar; 
+	input disease1 disease2 age1 age2; 
+	datalines; 
+	0 0 0 0
+; 
+run; 
+proc phreg data=doubledod; 
+	model time*status(0)=disease1 disease2 age1 age2 / entry=entry ;
+	strata stratum;
+	baseline out=trm cumhaz=breslow covariates=covar;
+run;
 proc gplot data=trm;
 	plot breslow*time=stratum/haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 140 by 10 minor=none label=('Months');
-	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative hazard of death in remission');
+	axis1 order=0 to 156 by 12 minor=none
+		label=('Time since bone marrow transplantation (months)');
+	axis2 order=0 to 0.3 by 0.05 minor=none
+		label=(a=90 'Cumulative hazard of death in remission');
 	symbol1  v=none i=stepjl c=blue;
 	symbol2  v=none i=stepjl c=red;;
 run;
+quit;
+
 
 *---------------------------------------------------------------;
-*--------------------- Table 3.14 ------------------------------;
+*--------------------- Table 3.15 ------------------------------;
 *---------------------------------------------------------------;
+
+* Gamma; 
+proc phreg data=bmt;
+	class bmonly(ref="0") all(ref="0") team;
+	model intxrel*state0(0)=bmonly all age/rl;
+	random team/dist=gamma;
+run;
 
 * Log-normal; 
 proc phreg data=bmt;
@@ -380,9 +410,9 @@ proc phreg data=bmt;
 	random team;
 run;
 
-* Gamma; 
+* in-text: stratified Cox model by center;
 proc phreg data=bmt;
 	class bmonly(ref="0") all(ref="0") team;
 	model intxrel*state0(0)=bmonly all age/rl;
-	random team/dist=gamma;
+	strata team;
 run;

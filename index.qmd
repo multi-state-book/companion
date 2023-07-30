@@ -8,7 +8,7 @@ source("_common.R")
 
 This is the code companion website to our book published by [Chapman & Hall](https://www.routledge.com/Models-for-Multi-State-Survival-Data-Rates-Risks-and-Pseudo-Values/Andersen-Ravn/p/book/9780367140021# "go to the book at the publisher").
 
-R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
+R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places SAS code is not available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
 
 Please note, that code often depends on previous code in the same chapter including loading of required R packages
 

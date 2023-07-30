@@ -30,7 +30,7 @@ book:
 execute: 
   warning: false
   message: false
-  #cache: true
+  cache: true
 
 format:
   html:

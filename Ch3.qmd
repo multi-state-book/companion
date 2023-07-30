@@ -1,19 +1,22 @@
 # Intensity models
 
-## Guinea-Bissau childhood vaccination study
-{{< include R/chapter3_bissau.qmd >}}
-
 ## PBC3 trial in liver cirrhosis
 {{< include R/chapter3_pbc3.qmd >}}
 
-## PROVA trial in liver cirrhosis
-{{< include R/chapter3_prova.qmd >}}
+## Guinea-Bissau childhood vaccination study
+{{< include R/chapter3_bissau.qmd >}}
 
 ## Testis cancer incidence and maternal parity
 {{< include R/chapter3_testis.qmd >}}
 
+## PROVA trial in liver cirrhosis
+{{< include R/chapter3_prova.qmd >}}
+
 ## Recurrent episodes in affective disorders
 {{< include R/chapter3_affective.qmd >}}
+
+## LEADER cardiovascular trial in type 2 diabetes
+{{< include R/chapter3_leader.qmd >}}
 
 ## Bone marrow transplantation in acute leukemia
 {{< include R/chapter3_bmt.qmd >}}

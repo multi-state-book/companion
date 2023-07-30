@@ -1,5 +1,7 @@
-### Read data {.unnumbered}
+### Read data 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: read-pbc3
 pbc3 <- data.frame(read.csv("data/pbc3.csv"))
@@ -7,10 +9,28 @@ pbc3$log2bili <- with(pbc3, log2(bili))
 pbc3$years <- with(pbc3, days/365.25)
 ```
 
-### Table 3.11 {.unnumbered}
-
+## SAS
 ```{r}
-#| label: table-3.11
+#| label: read-pbc3-sas
+#| eval: false 
+#| output: false
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+data pbc3; 
+	set pbc3;
+	log2bili=log2(bili);
+run;
+```
+:::
+
+### Table 3.11 
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-3.11-r
 library(survival)
 # Treatment 
 coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(tment), 
@@ -37,3 +57,66 @@ coxph(Surv(years, status != 0) ~ tment + alb + log2bili + tt(log2bili),
       data = pbc3,  tt = function(x,t, ...) (x)*(t>2), method = "breslow")
 ```
 
+## SAS
+```{r}
+#| label: table-3.11-sas
+#| eval: false 
+#| output: false
+* Treatment; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili tmenttime/rl;
+	tmenttime=(tment=1)*days;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili tmentlogtime/rl;
+	tmentlogtime=(tment=1)*log(days);
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili tmentt0/rl;
+	tmentt0=(tment=1)*(days>2*365.25);
+run;
+
+* Log bilirubin;
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili bilitime/rl;
+	bilitime=log2bili*days;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili bililogtime/rl;
+	bililogtime=log2bili*log(days);
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili bilit0/rl;
+	bilit0=log2bili*(days>2*365.25);
+run;
+
+* Albumin; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili albtime/rl;
+	albtime=alb*days;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili alblogtime/rl;
+	alblogtime=alb*log(days);
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili albt0/rl;
+	albt0=alb*(days>2*365.25);
+run;
+```
+:::

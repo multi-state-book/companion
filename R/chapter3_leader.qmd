@@ -1,42 +1,33 @@
-#------------------------------------------------------------------#
-#------- Chapter 3, R code, LEADER data ---------------------------#
-#------------------------------------------------------------------#
+```{r}
+#| echo: false
+leader <- read.csv("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/leader_mi_3p.csv")
+```
 
-# Set working directory - location of data
-setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
+### Read data
 
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-require(mets)
+::: {.panel-tabset}
 
+## R
 
-leader <- read.csv("data/leader_mi_3p.csv")
+Assume that the LEADER data set is loaded in data set `leader`.
 
-# One data set per endpoint type
+```{r}
+#| label: read-leader-r
+# One data set per recurrent endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
 leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
+```
+:::
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------# 
-#------------------------------------------------------------------#
+### Table 3.15
 
-# General theme
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom", 
-        text = element_text(size = 20), 
-        axis.text.x = element_text(size = 20), 
-        axis.text.y = element_text(size = 20)) 
-
-theme_general
-
-#------------------------------------------------------------------#
-#---------------- Table 3.15 --------------------------------------#
-#------------------------------------------------------------------#
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table3.15-r
 
 # Cox model, frailty
+library(survival)
 coxfrail <- coxph(Surv(start, stop, status == 1) ~ treat + frailty(id), 
                   method = "breslow", 
                   data = leader_mi)
@@ -53,7 +44,6 @@ FunctionIntervalM <- function(a,b) {
 cuts <- FunctionIntervalM(a = alltimes, b = 5)
 cuts
 
-
 # AG model, piecewise constant hazards 
 cut_data <- survSplit(Surv(start, stop, status == 1) ~ ., 
                       leader_mi,
@@ -63,11 +53,10 @@ cut_data <- survSplit(Surv(start, stop, status == 1) ~ .,
 pwch_frail <- coxph(Surv(start, stop, event) ~ 
                     treat + strata(timegroup) + frailty(id), 
                                data = cut_data)
-
 summary(pwch_frail)
 
 # Joint frailty model, piecewise constant hazards
-require(frailtypack)
+library(frailtypack)
 leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
 jointfrail_pc_eq_mi <- frailtyPenal(Surv(start, stop, status == 1) ~
                                       cluster(id) + treat + terminal(death),
@@ -77,3 +66,5 @@ jointfrail_pc_eq_mi <- frailtyPenal(Surv(start, stop, status == 1) ~
                                     recurrentAG = TRUE)
 jointfrail_pc_eq_mi
 summary(jointfrail_pc_eq_mi)
+```
+:::

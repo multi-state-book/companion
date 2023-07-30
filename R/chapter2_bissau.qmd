@@ -1,12 +1,5 @@
 ### Read data
 
-```{r}
-#| label: read-bissau-x
-bissau <- data.frame(read.csv("data/bissau.csv"))
-bissau$agem <- as.integer(bissau$age/30.44)
-```
-
-
 ::: {.panel-tabset}
 ## R
 ```{r}

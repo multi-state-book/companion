@@ -1,20 +1,45 @@
 ### Read data 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: read-testis
+#| label: read-testis-r
+
 testis <- data.frame(read.csv("data/testis.csv"))
 # Add extra variables
 testis$lpyrs <- log(testis$pyrs)
 testis$par2 <- as.numeric(testis$parity < 2)
 ```
+## SAS
+```{r}
+#| label: read-testis-sas
+#| eval: false 
+#| output: false
+
+proc import out=testis
+	datafile="data/testis.csv"
+	dbms=csv replace;
+run;
+data testis; 
+	set testis; 
+	lpyrs = log(pyrs); 
+	par2 = (parity>=2); 
+run;
+```
+:::
 
 ### Figure 3.1 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.1
+#| label: figure-3.1-r
 #| fig-height: 8.27
 #| fig-width: 8.27
 #| out-widt: 66%
+
 # Data frames
 df1 <- data.frame(x1 = 1900 + c(50, 58, 63, 68, 73), 
                   y1 = rep(0, 5), 
@@ -88,11 +113,15 @@ fig3.1 <- ggplot(df1) +
 
 fig3.1
 ```
+:::
 
 ### Table 3.5 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.5
+#| label: table-3.5-r
 library(broom)
 library(lmtest)
 
@@ -130,8 +159,51 @@ lrtest(poisfull,poisinteract)
 tidy(glm(semi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
          data = testis, family = poisson),
      exponentiate = T, conf.int = T)
-# HAr for non-seminomas
+# HR for non-seminomas
 tidy(glm(nonsemi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
          data = testis, family = poisson),
      exponentiate = T, conf.int = T)
 ```
+
+## SAS
+```{r}
+#| label: table-3.5-sas
+#| eval: false 
+#| output: false
+
+* Column 1; 
+proc genmod;
+	class age (ref='20') par2 (ref='1');
+	model cases=par2 age/dist=poi offset=lpyrs type3;
+	estimate 'RR' par2 1 -1/exp;
+run;
+
+* Column 2; 
+proc genmod;
+	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
+	model cases=par2 age motherage cohort/dist=poi offset=lpyrs type3;
+	estimate 'RR' par2 1 -1/exp;
+run;
+
+
+* In-text interaction test; 
+proc genmod;
+	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
+	model cases=par2 age motherage cohort par2*age/dist=poi offset=lpyrs type3;
+run;
+
+* seminomas;
+proc genmod;
+	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
+	model semi=par2 age motherage cohort/dist=poi offset=lpyrs type3;
+	estimate 'RR' par2 1 -1/exp;
+run;
+
+* non-seminomas;
+proc genmod;
+	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
+	model nonsemi=par2 age motherage cohort/dist=poi offset=lpyrs type3;
+	estimate 'RR' par2 1 -1/exp;
+run;
+```
+:::

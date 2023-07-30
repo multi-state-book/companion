@@ -1,7 +1,3 @@
-# Set working directory - location of Novo data
-setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
-
-leader <- read.csv("data/leader_mi_3p.csv")
 # One data set per endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
 leader_3p <- subset(leader, type == "recurrent_comb")

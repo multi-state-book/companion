@@ -1,7 +1,10 @@
 ### Read data 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: read-prova
+#| label: read-prova-r
 prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
 # Treatment 2x2 factorial
 prova$beh <- with(prova, as.factor(scle + beta*2))
@@ -17,27 +20,65 @@ provany$deadb    <- ifelse(provany$bleed == 1, provany$death, NA)
 provany$wait     <- ifelse(provany$bleed == 1, provany$bdtime - provany$timebleed, NA)
 ```
 
+## SAS
+```{r}
+#| label: read-prova-sas
+#| eval: false 
+#| output: false
+
+proc import out=prova
+	datafile="data/prova.csv"
+	dbms=csv replace;
+run;
+data prova; 
+	set prova; 
+	beh = scle + beta*2; 
+	log2bili = log2(bili);
+	if bleed = 1 then wait = timedeath - timebleed;
+run; 
+data provany; 
+	set prova;
+	if bleed=1 then do; btime=timebleed; d0time=timebleed; dead0=0; outof0=1; 
+	bdtime=timedeath; deadb=death; wait=bdtime-timebleed; 
+	end;
+	if bleed=0 then do; btime=timedeath; d0time=timedeath; dead0=death; outof0=death; 
+	bdtime=.; deadb=.; wait=.; end;
+	log2bili=log2(bili);
+run;
+```
+:::
+
 ### Table 3.3  
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.3
+#| label: table-3.3-r
 library(survival)
 options(contrasts=c("contr.treatment", "contr.poly"))
 
 ## Column 1
 # Variceal bleeding
 coxph(Surv(btime, bleed) ~ beh, data = provany, ties = "breslow")
-# Death without bleeding
-coxph(Surv(d0time, dead0) ~ beh, data = provany, ties = "breslow")
-
 # logrank test: Variceal bleeding
 lr<-survdiff(Surv(btime, bleed) ~ beh, data = provany)
 c(lr$chisq,lr$pvalue)
 
+# Death without bleeding
+cox1<-coxph(Surv(d0time, dead0) ~ beh, data = provany, ties = "breslow")
 # logrank test: Death without bleeding
 lr<-survdiff(Surv(d0time, dead0) ~ beh, data = provany)
 c(lr$chisq,lr$pvalue)
 
+# Death without bleeding - additive model
+cox2<-coxph(Surv(d0time, dead0) ~ scle + beta, data = provany, ties = "breslow")
+library(lmtest)
+# Death without bleeding - remove propranolol
+lrtest(cox2,cox1)
+cox3<-coxph(Surv(d0time, dead0) ~ scle, data = provany, ties = "breslow")
+lrtest(cox3,cox2)
+cox3
 
 ## Column 2
 # Variceal bleeding
@@ -45,31 +86,65 @@ coxph(Surv(btime, bleed) ~ beh + sex + coag + log2bili + factor(varsize),
       data = provany, ties = "breslow")
 
 # Death without bleeding
-cox1<-coxph(Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize),
+coxph(Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize),
                     data = provany, ties = "breslow")
-cox1
-
-# Death without bleeding - reduced model
-cox2<-coxph(Surv(d0time, dead0) ~ scle + beta + sex + coag + log2bili + factor(varsize),
-                    data = provany, ties = "breslow")
-cox2
-
-# LRT reduced model
-library(lmtest)
-lrtest(cox1,cox2)
-
-# Death without bleeding - 'final model'
-cox3<-coxph(Surv(d0time, dead0) ~ scle + sex + coag + log2bili + factor(varsize),
-      data = provany, ties = "breslow")
-
-cox3
-lrtest(cox2,cox3)
 ```
+
+## SAS
+```{r}
+#| label: table-3.3-sas
+#| eval: false 
+#| output: false
+
+* Table 3.3 column 1;
+* Variceal bleeding; 
+* logrank test is the score test;
+proc phreg data=provany;
+	class beh (ref='0');
+	model btime*bleed(0)=beh  / type3(lr);
+run;
+
+* Death without bleeding; 
+* logrank test is the score test;
+proc phreg data=provany;
+	class beh (ref='0');
+	model d0time*dead0(0)=beh / type3(lr);
+run;
+* Death without bleeding - in text LRT for additive model; 
+proc phreg data=provany;
+	model d0time*dead0(0)=scle|beta / type3(lr);
+	estimate 'both' scle 1 beta 1 scle*beta 1;
+run;
+proc phreg data=provany;
+	model d0time*dead0(0)=scle beta / type3(lr);
+run;
+* Death without bleeding - remove propranolol;
+proc phreg data=provany;
+	model d0time*dead0(0)=scle / type3(lr);
+run;
+
+* Table 3.3 column 2;
+* Variceal bleeding;
+proc phreg data=provany;
+	class beh (ref='0') varsize (ref='1');
+	model btime*bleed(0)=beh sex coag log2bili varsize / type3(lr);
+run;
+
+* Death without bleeding; 
+proc phreg data=provany;
+	class beh (ref='0') varsize (ref='1');
+	model d0time*dead0(0)=beh sex coag log2bili varsize / type3(lr);
+run;
+```
+:::
 
 ### Table 3.4 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.4
+#| label: table-3.4-r
 # Composite
 cox<-coxph(Surv(btime, outof0) ~ beh + sex + coag + log2bili + factor(varsize),
       data = provany, ties = "breslow")
@@ -77,13 +152,29 @@ cox
 # LRT for treatment
 coxreduced<-coxph(Surv(btime, outof0) ~ sex + coag + log2bili + factor(varsize),
       data = provany, ties = "breslow")
-lrtest(cox,coxreduced)
+lrtest(coxreduced,cox)
 ```
+
+## SAS
+```{r}
+#| label: table-3.4-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=provany;
+	class beh (ref='0') varsize (ref='1');
+	model btime*outof0(0)=beh sex coag log2bili varsize  / type3(lr);
+run;
+```
+:::
 
 ### Table 3.8 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.8
+#| label: table-3.8-r
 # Time since randomization (tsr)
 # Column 1
 coxtsr<-coxph(Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili, 
@@ -101,8 +192,7 @@ lrtest(coxtsr,coxtsr0)
 coxnoint<-coxph(Surv(btime, bdtime, deadb != 0) ~ scle + beta  + sex + log2bili, 
               data = provany, ties = "breslow")
 # LRT interaction
-lrtest(coxtsr,coxnoint)
-
+lrtest(coxnoint,coxtsr)
 
 # Column 2
 provany$tsb<-provany$btime
@@ -114,23 +204,22 @@ coxtsr_tt<-coxph(Surv(btime, bdtime, deadb != 0) ~ beh + sex + log2bili+tt(tsb),
       })
 coxtsr_tt
 # LRT for time-dependent covariates
-lrtest(coxtsr,coxtsr_tt)
+lrtest(coxtsr_tt,coxtsr)
 
-# or as mentioned in text, model linear effect of time-dependent covariate
-coxph(Surv(btime, bdtime, deadb != 0) ~ beh+sex + log2bili+tt(tsb), 
-      data = provany, ties = "breslow",
-      tt=function(x, t, ...){t-x})
-
-
+# LRT for beh
 coxtsr_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb), 
                  data = provany, ties = "breslow",
                  tt=function(x, t, ...) {
                    dt <- t-x
                    cbind(dt1=1*(dt<5), dt2=1*(dt>=5 & dt<10))
                  })
-coxtsr_tt_reduced
-# LRT for beh
-lrtest(coxtsr_tt,coxtsr_tt_reduced)
+lrtest(coxtsr_tt_reduced,coxtsr_tt)
+
+# In text, model linear effect of time-dependent covariate
+coxph(Surv(btime, bdtime, deadb != 0) ~ beh+sex + log2bili+tt(tsb), 
+      data = provany, ties = "breslow",
+      tt=function(x, t, ...){t-x})
+
 
 # Duration
 # Column 1
@@ -163,10 +252,68 @@ coxdur_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb
                          })
 ```
 
+## SAS
+```{r}
+#| label: table-3.8-sas
+#| eval: false 
+#| output: false
+
+* Time since randomisation;
+* Column 1; 
+proc phreg data=provany atrisk;
+	class beh (ref='0');
+	model bdtime*deadb(0)=beh sex log2bili / entry=btime rl type3(lr);
+run;
+* LRT interaction scle*beta;
+proc phreg data=provany atrisk;
+	class beh (ref='0');
+	model bdtime*deadb(0)=scle|beta sex log2bili / entry=btime rl type3(lr);
+run;
+* Column 2; 
+proc phreg  data=provany;
+	class beh (ref='0');
+	model bdtime*deadb(0)=beh sex log2bili wait1 wait2 / entry=btime rl type3(lr);
+	wait1=0; wait2=0;
+	if (bdtime-btime<5) then wait1=1;
+	if (5<=bdtime-btime<10) then wait2=1;
+	duration: test wait1=0, wait2=0;
+run;
+
+* In text: Linear effect of time-dependent covariate;
+proc phreg  data=provany;
+	class beh (ref='0');
+	model bdtime*deadb(0)=beh sex log2bili lin / entry=btime rl type3(lr);
+	lin=bdtime-btime;
+run;
+
+
+* Duration; 
+* Column 1; 
+proc phreg data=provany;
+	class beh (ref='0');
+	model wait*deadb(0)=beh sex log2bili / type3(lr);
+	baseline out=cumhazwait cumhaz=breslowwait covariates=covar;
+run;
+
+* Column 2;
+proc phreg data=provany;
+	class beh (ref='0');
+	model wait*deadb(0)=beh sex log2bili time1 time2 / type3(lr);
+	time1=0; time2=0;
+	if (btime+wait<365.25) then time1=1;
+	if (365.25<=btime+wait<2*365.25) then time2=1;
+	timeeff: test time1=0, time2=0;
+run;
+```
+:::
+
 ### Figure 3.2 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.2
+#| label: figure-3.2-r
 #| out-width: 90%
 # Plotting style 
 library(ggplot2)
@@ -209,11 +356,45 @@ fig3.2 <- ggplot(aes(x = time / 365.25, y = cumhaz), data = coxdata) +
 fig3.2
 ```
 
+## SAS
+```{r}
+#| label: figure-3.2-sas
+#| eval: false 
+#| output: false
+
+data covar; 
+	input beh sex log2bili; 
+	datalines; 
+	0 0 0
+; 
+run; 
+proc phreg data=provany atrisk;
+	class beh (ref='0');
+	model bdtime*deadb(0)=beh sex log2bili/entry=btime rl type3(lr);
+	baseline out=cumhaztime cumhaz=breslowtime covariates=covar;
+run;
+data cumhaztime;
+	set cumhaztime; 
+	bdtimeyears = bdtime / 365.25; 
+run;
+proc gplot data=cumhaztime;
+	plot breslowtime*bdtimeyears/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 4 by 1 minor=none 
+	      label=('Time since randomization (Years)');
+	axis2 order=0 to 1.1 by 0.1 minor=none label=(a=90 'Cumulative hazard');
+	symbol1  v=none i=stepjl c=blue;
+run;
+quit;
+```
+:::
 
 ### Figure 3.3 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.3
+#| label: figure-3.3-r
 #| out-width: 90%
 # Extract cumulative baseline hazard
 coxcumhaz <- survfit(coxdur, 
@@ -237,10 +418,46 @@ fig3.3 <- ggplot(aes(x = time / 365.25, y = cumhaz), data = coxdata) +
 fig3.3
 ```
 
+## SAS
+```{r}
+#| label: figure-3.3-sas
+#| eval: false 
+#| output: false
+
+* Duration; 
+data covar; 
+	input beh sex log2bili; 
+	datalines; 
+	0 0 0
+; 
+run; 
+proc phreg data=provany;
+	class beh (ref='0');
+	model wait*deadb(0)=beh sex log2bili / type3(lr);
+	baseline out=cumhazwait cumhaz=breslowwait covariates=covar;
+run;
+data cumhazwait;
+	set cumhazwait; 
+	waityears = wait / 365.25; 
+run;
+proc gplot data=cumhazwait;
+	plot breslowwait*waityears/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 4 by 1 minor=none label=('Duration (Years)');
+	axis2 order=0 to 0.2 by 0.05 minor=none label=(a=90 'Cumulative hazard');
+	symbol1  v=none i=stepjl c=blue;
+run;
+quit;
+```
+:::
+
+
 ### Table 3.9 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.9
+#| label: table-3.9-r
 # All bleeds
 provasplit11 <- subset(provany, bleed == 1)
 # Split by duration
@@ -272,10 +489,68 @@ aggregate(cbind(fail2, risktimeys2) ~ tint + wint, provasplit2,
                               sum = sum(x)))
 ```
 
+## SAS
+```{r}
+#| label: table-3.9-sas
+#| eval: false 
+#| output: false
+
+data provasplit1;
+	set provany;
+	where bleed=1;
+	fail=(wait<5)*(deadb ne 0);
+	risktime=min(5,wait);
+	logrisk=log(risktime); wint=1; 
+	start=btime; slut=btime+min(5,wait); output;  
+	if wait>=5 then do;
+	fail=(wait<10)*(deadb ne 0);
+	risktime=min(5,wait-5);
+	logrisk=log(risktime); wint=2; 
+	start=btime+5; slut=btime+min(10,wait); output; end;
+	if wait>10 then do;
+	fail=deadb ne 0; 
+	risktime=wait-10;
+	logrisk=log(risktime); wint=3; 
+	start=btime+10; slut=btime+wait; output; end;
+run;
+
+data provasplit2; 
+	set provasplit1;
+	if start<365.25 then do; risktime2=min(slut,365.25)-start;
+	fail2=fail*(slut<365.25); logrisk2=log(risktime2); tint=1; output;
+	if slut>365.25 then do; risktime2=min(slut,2*365.25)-365.25; logrisk2=log(risktime2);
+	fail2=fail*(slut<2*365.25); tint=2; output; end;
+	if slut>2*365.25 then do; risktime2=slut-2*365.25; logrisk2=log(risktime2);
+	fail2=fail; tint=3; output; end;
+	end;
+	if 365.25<=start<2*365.25 then do; risktime2=min(slut,2*365.25)-start;
+	fail2=fail*(slut<2*365.25); logrisk2=log(risktime2); tint=2; output;
+	if slut>2*365.25 then do; risktime2=slut-2*365.25; logrisk2=log(risktime2);
+	fail2=fail; tint=3; output; end;
+	end;
+	if start>=2*365.25 then do; risktime2=slut-start; logrisk2=log(risktime2);
+	fail2=fail; tint=3; output; 
+end;
+run;
+data provasplit2; 
+	set provasplit2;
+	risktime2ys=risktime2/365.25;
+run;
+proc means data=provasplit2 sum; 
+	class wint tint;
+	var fail2 risktime2ys;
+run;
+```
+:::
+
+
 ### Table 3.10 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.10
+#| label: table-3.10-r
 # part (a)
 summary(glm(fail ~ offset(log(risktime)) + beh + relevel(as.factor(wint), ref = "3") + 
               sex + log2bili, data = provasplit1, family = poisson))
@@ -309,15 +584,50 @@ glmtint<-glm(fail2 ~ offset(log(risktime2)) + beh +
                relevel(as.factor(tint), ref = "3") +
                sex + log2bili, data = provasplit2, family = poisson)
 # LRT effect of duration since bleeding
-lrtest(glmboth,glmtint)
+lrtest(glmtint,glmboth)
 # LRT effect of time since randomization
-lrtest(glmboth,glmwint)
+lrtest(glmwint,glmboth)
 ```
+
+## SAS
+```{r}
+#| label: table-3.10-sas
+#| eval: false 
+#| output: false
+
+* part (a);
+proc genmod data=provasplit1;
+	class beh (ref='0') wint;
+	model fail=beh wint sex log2bili/dist=poi offset=logrisk type3;
+run;
+
+* part (b);
+proc genmod data=provasplit2;
+	class beh (ref='0') tint;
+	model fail2=beh tint sex log2bili/dist=poi offset=logrisk2 type3;
+run;
+
+* part (c);
+proc genmod data=provasplit2;
+	class beh (ref='0') wint tint;
+	model fail2=beh wint tint sex log2bili/dist=poi offset=logrisk2 type3;
+run;
+
+* Interaction model, in-text;
+proc genmod data=provasplit2;
+	class beh (ref='0') wint tint;
+	model fail2=beh wint tint wint*tint sex log2bili/dist=poi offset=logrisk2 type3;
+run;
+```
+:::
 
 ### Table 3.13 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: table-3.13
+#| label: table-3.13-r
 # Prepare data set for analysis - double
 double1 <- provany %>% mutate(time = d0time, 
                               status = dead0, 
@@ -354,12 +664,12 @@ Table3.13b <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex 
 Table3.13b
 
 # LRT sex
-lrtest(Table3.13a, Table3.13b)
+lrtest(Table3.13b,Table3.13a)
 
 # In-text: LRT log2(bilirubin)
 Table3.13bx <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex1 + sex2 + log2bili, 
                      data = double, ties = "breslow")
-lrtest(Table3.13a, Table3.13bx)
+lrtest(Table3.13bx,Table3.13a)
 
 # part (c)
 Table3.13c <- coxph(Surv(entrytime, time, status != 0) ~ strata(bleeding) + sex + bili1, 
@@ -379,10 +689,77 @@ pht<-coxph(Surv(entrytime, time, status != 0) ~ bleeding + tt(bleeding)
 lrtest(ph, pht)
 ```
 
+## SAS
+```{r}
+#| label: table-3.13-sas
+#| eval: false 
+#| output: false
+
+* Prepare data set for analysis - double; 
+data double; 
+	set provany; 
+	time=d0time; 
+	status=dead0; 
+	entrytime=0; 
+	sex1=sex; 
+	sex2=0;
+	age1=age; 
+	age2=0; 
+	bili1=log2bili; 
+	bili2=log2bili*0; 
+	bleeding=1; 
+	output;
+
+	if bleed=1 then do;
+		time=bdtime; 
+		status=deadb; 
+		entrytime=btime; 
+		sex1=0; 
+		sex2=sex;
+		age1=0; 
+		age2=age; 
+		bili1=log2bili*0; 
+		bili2=log2bili; 
+		bleeding=2; 
+		output; 
+	end;
+run;
+
+* part (a);
+proc phreg data=double;
+	model time*status(0)=sex1 sex2 bili1 bili2 /entry=entrytime type3(lr);
+	strata bleeding;
+	test sex1=sex2; /* wald tests instead of LRT */
+	test bili1=bili2;
+run;
+
+* part (b);
+proc phreg data=double; 
+	model time*status(0)=sex bili1 bili2 /entry=entrytime type3(lr);
+	strata bleeding;
+run;
+
+* part (c);
+proc phreg data=double; 
+	model time*status(0)=sex bili1 /entry=entrytime type3(lr);
+	strata bleeding;
+run;
+
+* In-text: LRT proportionality;
+proc phreg data=double; 
+  bleedinglogt=bleeding*log(time);
+	model time*status(0)=sex bili1 bleeding bleedinglogt /entry=entrytime type3(lr);
+run;
+```
+:::
+
 ### Figure 3.9 
 
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: figure-3.9
+#| label: figure-3.9-r
 #| out-width: 90%
 # Extract cumulative hazard from r1 
 survr1 <- basehaz(Table3.13a, center = F)
@@ -404,3 +781,37 @@ fig3.9 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = strata), data = p
 
 fig3.9
 ```
+
+## SAS
+```{r}
+#| label: figure-3.9-sas
+#| eval: false 
+#| output: false
+
+data covar; 
+	input sex1 sex2 bili1 bili2; 
+	datalines; 
+	0 0 0 0
+; 
+run; 
+* part (a);
+proc phreg data=double;
+	model time*status(0)=sex1 sex2 bili1 bili2 /entry=entrytime type3(lr);
+	strata bleeding;
+	baseline out=mort cumhaz=breslow covariates=covar;
+run;
+data mort; 
+	set mort; 
+	timeyears = time /365.25; 
+run;
+proc gplot data=mort; 
+	plot breslow*timeyears=bleeding/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 4 by 1 minor=none 
+	      label=('Time since randomization (Years)');
+	axis2 order=0 to 4 by 1 minor=none label=(a=90 'Cumulative hazard');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;
+run;
+quit;
+```
+:::

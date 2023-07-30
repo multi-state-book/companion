@@ -9,7 +9,7 @@
 ## Recurrent episodes in affective disorders
 {{< include R/chapter2_affective.qmd >}}
 
-## LEADER cardiovascular trial in type 2 Diabetes
+## LEADER cardiovascular trial in type 2 diabetes
 {{< include R/chapter2_leader.qmd >}}
 
 ## Exercises
