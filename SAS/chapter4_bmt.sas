@@ -1,10 +1,10 @@
-*------------------------------------------------------------------;
+*------------------------	------------------------------------------;
 *------- Chapter 4, bmt data, SAS code ----------------------------;
 *------------------------------------------------------------------;
 
 * Load data; 
 proc import out=bmt
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bmt.csv"
+	datafile="data/bmt.csv"
 	dbms=csv replace;
 run;
 
@@ -78,6 +78,7 @@ proc gplot data=allrev;
 	symbol1  v=none i=stepjl c=blue;
 	symbol2  v=none i=stepjl c=red;
 run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 4.9 -------------------------------;

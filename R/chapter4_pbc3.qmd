@@ -131,14 +131,19 @@ run;
 
 ### In-text: Kaplan-Meier estimates at 2 years
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: in-text-KM2yr
 # 95 c.i. uses conf.type="log-log" - see above
 summary(kmfit,times=2*365.25)
 ```
+:::
 
 ### Figure 4.4
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.4
 #| out-width: 90%
@@ -232,9 +237,13 @@ fig4.4 <- ggplot(aes(x = time / 365.25, y = surv, linetype = type),
   theme_general
 fig4.4
 ```
+:::
 
 ### Figure 4.5
 
+
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.5
 #| out-width: 90%
@@ -270,8 +279,12 @@ fig4.5 <- ggplot(aes(x = days / 365.25, y = preds, linetype = as.factor(tment)),
   theme_general 
 fig4.5
 ```
+:::
+
 ### Figure 4.6
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.6
 #| out-width: 90%
@@ -293,10 +306,13 @@ fig4.6 <- ggplot(aes(x = days / 365.25, y = logminlogsurv, linetype = as.factor(
 
 fig4.6
 ```
+:::
 
 
 ### Figure 4.7
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.7
 #| out-width: 90%
@@ -349,10 +365,13 @@ fig4.7 <- ggplot(aes(x = time / 365.25, y = average_pred, linetype = as.factor(t
 
 fig4.7
 ```
+:::
 
 
 ### In-text: Cox and g-formula
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: in-text-cox-gform
 library(riskRegression)
@@ -378,9 +397,12 @@ library(mets)
 cfitmets <- phreg(Surv(days, fail) ~ tment + alb + log2bili, data = subpbc)
 summary(survivalG(cfitmets, subpbc, time = 2*365.25))
 ```
+:::
 
 ### Figure 4.8
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.8
 #| out-width: 90%
@@ -420,9 +442,12 @@ fig4.8 <- ggplot(aes(x = time / 365.25, y = surv, linetype = as.factor(tment)),
 
 fig4.8
 ```
+:::
 
 ### Table 4.1
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.1
 # Non-parametric, Kaplan Meier
@@ -680,8 +705,13 @@ apply(cox2reso, 2, sd)/365.25
 apply(coxgreso, 2, mean)/365.25
 apply(coxgreso, 2, sd)/365.25
 ```
+:::
+
+
 ### Table 4.1 mets non-parametric version
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.1-mets
 # non-parametric could also be done using mets package
@@ -700,10 +730,12 @@ out<-resmeanIPCW(Event(days/365.25,fail)~-1+factor(tment),data=pbc3,time=3,model
 estimate(out)
 
 ```
-
+:::
 
 ### Figure 4.10
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.10
 #| out-width: 90%
@@ -767,10 +799,13 @@ fig4.10 <- ggplot(aes(x = time / 365.25, y = cif, linetype = type),
 
 fig4.10
 ```
+:::
 
 
 ### Figure 4.11
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.11
 #| out-width: 90%
@@ -829,10 +864,13 @@ fig4.11 <- ggplot(aes(x = time / 365.25, y = cif_w, linetype = type),
         legend.key.width = unit(1, "cm"))
 fig4.11
 ```
+:::
 
 
 ### Figure 4.12 (a)
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.12a
 #| out-width: 90%
@@ -913,9 +951,13 @@ fig4.12a <- ggplot(aes(x = time / 365.25, y = cif_w, linetype = type),
 
 fig4.12a
 ```
+:::
+
 
 ### Figure 4.12 (b)
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.12b
 #| out-width: 90%
@@ -980,9 +1022,13 @@ fig4.12b <- ggplot(aes(x = time / 365.25, y = cif_w, linetype = type),
 
 fig4.12b
 ```
+:::
+
 
 ### Figure 4.12 (c)
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.12c
 #| out-width: 90%
@@ -1048,8 +1094,13 @@ fig4.12c <- ggplot(aes(x = time / 365.25, y = cif_w, linetype = type),
 
 fig4.12c
 ```
+:::
+
+
 ### Table 4.2
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.2
 library("survRM2")
@@ -1269,6 +1320,7 @@ resmeanIPCW(Event(days/365.25,status)~1, cause=2,
 resmeanIPCW(Event(days/365.25,status)~1, cause=2,
             data=subset(pbc3,tment==1),time=3,model="linear")
 ```
+:::
 
 ### Table 4.4
 
@@ -1288,6 +1340,18 @@ x <- cbind(alb, logbili)
 rmst2(time, status, arm, tau=3, covariates=x)
 ```
 
+#### Now using package mets 
+
+```{r}
+#| label: table-4.4mets
+# using mets package gives a bit different model???
+library(mets)
+options(contrasts=c("contr.treatment", "contr.poly"))
+summary(resmeanIPCW(Event(days/365.25,fail)~factor(tment)+alb+log2bili,
+                 data=subset(pbc3,!is.na(alb)),time=3,model="linear", 
+                 cens.model = ~strata(tment)))
+```
+
 ## SAS
 ```{r}
 #| eval: false 
@@ -1302,17 +1366,6 @@ proc rmstreg data=pbc3 tau=3;
 run;
 ```
 
-## mets 
-
-```{r}
-#| label: table-4.4mets
-# using mets package gives a bit different model???
-library(mets)
-options(contrasts=c("contr.treatment", "contr.poly"))
-summary(resmeanIPCW(Event(days/365.25,fail)~factor(tment)+alb+log2bili,
-                 data=subset(pbc3,!is.na(alb)),time=3,model="linear", 
-                 cens.model = ~strata(tment)))
-```
 :::
 
 ### Table 4.5
@@ -1391,6 +1444,8 @@ run;
 
 ### In-text: Fine-Gray and g-formula
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: in-text-fg-gform
 # Fine-Gray models using package mets
@@ -1414,10 +1469,13 @@ summary(survivalG(fgtrans, subpbc, 2*365.25))
 # Death w/o transplant
 summary(survivalG(fgdeath, subpbc, 2*365.25))
 ```
+:::
 
 
 ### Figure 4.17 (a)
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.17a
 #| out-width: 90%
@@ -1462,9 +1520,12 @@ fig4.17a <- ggplot(aes(x = time / 365.25, y = cif, linetype = tment),
 
 fig4.17a
 ```
+:::
 
 ### Figure 4.17 (b)
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.17b
 #| out-width: 90%
@@ -1505,10 +1566,12 @@ fig4.17b <- ggplot(aes(x = time / 365.25, y = cif, linetype = tment),
 
 fig4.17b
 ```
-
-
+:::
 
 ### Table 4.6 - mets?
+
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.6-mets
 library(mets)
@@ -1532,6 +1595,7 @@ resmeanIPCW(Event(days/365.25,status)~factor(tment)+alb+log2bili+sex+age,cause=2
             data=subset(pbc3,!is.na(alb)), time=3, model="linear",
             cens.model=~strata(tment))
 ```
+:::
 
 <!-- ```{r} -->
 <!-- #| label: table-4.6 -->
@@ -1718,6 +1782,8 @@ resmeanIPCW(Event(days/365.25,status)~factor(tment)+alb+log2bili+sex+age,cause=2
 
 ### Figure 4.21 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.23
 #| out-width: 90%
@@ -1754,9 +1820,12 @@ fig4.21 <- ggplot(aes(x = time / 365.25, y = surv, linetype = type),
 
 fig4.21
 ```
+:::
 
 ### In-text: Cox for censoring 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: in-text-cox-cens
 #| out-width: 90%
@@ -1765,3 +1834,4 @@ tidy(coxph(Surv(days, status == 0) ~ tment, data = pbc3, method = "breslow"))
 tidy(coxph(Surv(days, status == 0) ~ alb, data = pbc3, method = "breslow"))
 tidy(coxph(Surv(days, status == 0) ~ bili, data = pbc3, method = "breslow"))
 ```
+:::

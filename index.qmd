@@ -1,4 +1,4 @@
-# Preface {.unnumbered}
+# WORK IN PROGRESS {.unnumbered}
 
 ```{r}
 #| label: _common.R
@@ -6,16 +6,18 @@
 source("_common.R")
 ```
 
-This is the code companion website to our book published by [Chapman & Hall](https://www.routledge.com/Models-for-Multi-State-Survival-Data-Rates-Risks-and-Pseudo-Values/Andersen-Ravn/p/book/9780367140021# "go to the book at the publisher").
+Here the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher") will become available in October when the book is published.
 
-R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places SAS code is not available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
+<!-- This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher"). -->
 
-Please note, that code often depends on previous code in the same chapter including loading of required R packages
+<!-- R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places SAS code is not available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used. -->
 
-Solution to the exercises is available at the end of each chapter using R for the practicals.
+<!-- Please note, that code often depends on previous code in the same chapter including loading of required R packages -->
 
-This code and output was created using R version 4.3.1 and SAS/Stat version 15.1.
+<!-- Solution to the exercises is available at the end of each chapter using R for the practicals. -->
 
-## Acknowledgements {.unnumbered}
+<!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
 
-Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples.
+<!-- ## Acknowledgements {.unnumbered} -->
+
+<!-- Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples. -->

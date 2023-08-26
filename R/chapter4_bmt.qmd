@@ -1,5 +1,8 @@
 ### Read data
 
+::: {.panel-tabset}
+
+## R
 ```{r}
 #| label: read-bmt
 bmt <- data.frame(read.csv("data/bmt.csv"))
@@ -11,9 +14,12 @@ bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
 bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
 bmt$state0  <- bmt$rel + 2*bmt$trm
 ```
+:::
 
 ### Figure 4.15
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.15
 #| out-width: 90%
@@ -87,17 +93,25 @@ fig4.15 <- ggplot(aes(x = time, y = prob, linetype = type), data = plotdata) +
 
 fig4.15
 ```
+:::
+
 
 ### In-text: $Q_q(t)$ etc - where???
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: in-text-Q
 
 print("where is?")
 ```
+:::
+
 
 ### Table 4.8
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.8
 
@@ -125,6 +139,8 @@ summary(coxph(Surv(intxsurv, dead != 0) ~ bmonly + all + age + cluster(team),
       data = bmt, 
       ties = "breslow"))
 ```
+:::
+
 
 ### Table 4.11
 
@@ -133,6 +149,8 @@ Still missing to make double data set etc...
 :::
 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.11
 # Relapse-free survival 
@@ -149,3 +167,4 @@ bmt1$gvhdny <- ifelse(bmt1$dead == 1, 1, bmt1$gvhdny)
 # gvhd free survival
 coxph(Surv(nytgvhd, gvhdny != 0) ~ bmonly + all + age10, data=bmt1, ties="breslow")
 ```
+:::

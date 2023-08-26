@@ -1,5 +1,7 @@
 ### Read data 
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: read-prova
 prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
@@ -9,9 +11,13 @@ prova$beh <- with(prova, as.factor(scle + beta*2))
 provany <- prova
 provany$log2bili <- with(provany, log2(bili))
 ```
+:::
+
 
 ### Figure 4.22
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: figure-4.2
 #| out-width: 90%
@@ -52,10 +58,14 @@ fig4.22 <- ggplot(aes(x = time / 365.25, y = surv),
 
 fig4.22
 ```
+:::
+
 
 
 ### Table 4.12
 
+::: {.panel-tabset}
+## R
 ```{r}
 #| label: table-4.12
 library(survival)
@@ -73,3 +83,4 @@ coxph(Surv(time, death == 0) ~ log2bili, data = provany)
 # age
 coxph(Surv(time, death == 0) ~ age, data = provany)
 ```
+:::

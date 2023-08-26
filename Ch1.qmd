@@ -18,7 +18,7 @@ download_dir(
 ## 1.1 PBC3 trial in liver cirrhosis (`pbc3.csv`)
 
 | Variable name | Description                                                           |
-|--------------------------|----------------------------------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id                                                            |
 | `unit`        | hospital                                                              |
 | `days`        | follow-up time in days                                                |
@@ -33,7 +33,7 @@ download_dir(
 ## 1.2 Guinea-Bissau childhood vaccination study (`bissau.csv`)
 
 | Variable name | Description                                              |
-|---------------|----------------------------------------------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | child id                                                 |
 | `cluster`     | cluster id                                               |
 | `fuptime`     | follow-up time (days)                                    |
@@ -46,7 +46,7 @@ download_dir(
 ## 1.3 Testis cancer incidence and maternal parity (`testis.csv`)
 
 | Variable name | Description |
-|---------------|-------------|
+|:-----------|:----------------------------------------------------------------------|
 | `age`         |             |
 | `pyrs`        |             |
 | `cases`       |             |
@@ -59,7 +59,7 @@ download_dir(
 ## 1.4 PROVA trial in liver cirrhosis (`prova.csv`)
 
 | Variable name | Description          |
-|---------------|----------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `timedeath`   |                      |
 | `death`       |                      |
@@ -76,7 +76,7 @@ download_dir(
 ## 1.5 Recurrent episodes in affective disorders (`affective.csv`)
 
 | Variable name | Description          |
-|---------------|----------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `episode`     |                      |
 | `state`       |                      |
@@ -94,7 +94,7 @@ download_dir(
 Data not available for download.
 
 | Variable name | Description |
-|---------------|-------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id  |
 | `start`       |             |
 | `stop`        |             |
@@ -107,7 +107,7 @@ Data not available for download.
 ## 1.7 Bone marrow transplantation in acute leukemia (`bmt.csv`)
 
 | Variable name | Description          |
-|---------------|----------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `team`        |                      |
 | `timedeath`   |                      |
@@ -126,7 +126,7 @@ Data not available for download.
 ## 1.8 The Copenhagen Holter study (`cphholter.csv`)
 
 | Variable name | Description          |
-|---------------|----------------------|
+|:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `timedeath`   |                      |
 | `death`       |                      |

@@ -19,13 +19,13 @@ book:
   repo-url: https://github.com/multi-state-book/companion
   chapters: 
     - index.qmd
-    - Ch1.qmd
-    - Ch2.qmd
-    - Ch3.qmd
-    - Ch4.qmd
-    - Ch5.qmd
-    - Ch6.qmd
-    - Ch7.qmd
+    #- Ch1.qmd
+    #- Ch2.qmd
+    #- Ch3.qmd
+    #- Ch4.qmd
+    #- Ch5.qmd
+    #- Ch6.qmd
+    #- Ch7.qmd
     
 execute: 
   warning: false
