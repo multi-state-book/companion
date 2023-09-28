@@ -1,3 +1,8 @@
+```{r}
+#| echo: false
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+```
+
 # One data set per endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
 leader_3p <- subset(leader, type == "recurrent_comb")

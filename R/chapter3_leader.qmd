@@ -1,6 +1,6 @@
 ```{r}
 #| echo: false
-leader <- read.csv("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/leader_mi_3p.csv")
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
 ```
 
 ### Read data

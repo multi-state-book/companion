@@ -19,13 +19,13 @@ book:
   repo-url: https://github.com/multi-state-book/companion
   chapters: 
     - index.qmd
-    #- Ch1.qmd
-    #- Ch2.qmd
-    #- Ch3.qmd
-    #- Ch4.qmd
-    #- Ch5.qmd
-    #- Ch6.qmd
-    #- Ch7.qmd
+    - Ch1.qmd
+    - Ch2.qmd
+    - Ch3.qmd
+    - Ch4.qmd
+    - Ch5.qmd
+    - Ch6.qmd
+    - Ch7.qmd
     
 execute: 
   warning: false
@@ -40,12 +40,12 @@ format:
     code-tools:
       source: false
       toggle: true
-      caption: "Code"
+      caption: "Show/hide all code"
     code-summary: "Code show/hide"
     fig-width: 11.69
     fig-height: 8.27
     number-depth: 0
-    toc-depth: 4
+    toc-depth: 5
     theme:
       - cosmo
       - msb.scss

@@ -1,9 +1,11 @@
+```{r}
+#| echo: false
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+```
+
 #------------------------------------------------------------------#
 #------- Chapter 5, R code, LEADER data ---------------------------#
 #------------------------------------------------------------------#
-
-# Set working directory - location of data
-setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
 
 # Load required packages (should be installed if not already)
 require(survival)

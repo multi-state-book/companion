@@ -1,6 +1,6 @@
 ```{r}
 #| echo: false
-leader <- read.csv("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/leader_mi_3p.csv")
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
 ```
 
 ### Read data
@@ -48,7 +48,7 @@ plotdata <- data.frame(cumhaz = fit$cumhaz, time = fit$time,
                                  rep("Liraglutide", fit$strata[[2]])))
 
 fig2.15 <- ggplot(aes(x = time * 1 / (365.25 / 12), y = cumhaz), data = plotdata) +
-  geom_step(aes(linetype = treat), size = 1) +
+  geom_step(aes(linetype = treat), linewidth = 1) +
   scale_linetype_discrete("Treatment") +
   ylab("Cumulative hazard") +
   xlab("Time since randomization (months)") +

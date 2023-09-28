@@ -4,7 +4,7 @@
 ## R
 ```{r}
 #| label: read-pbc3-r
-pbc3 <- data.frame(read.csv("data/pbc3.csv"))
+pbc3 <- read.csv("data/pbc3.csv")
 pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
 pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
 

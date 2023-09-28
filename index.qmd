@@ -1,4 +1,4 @@
-# WORK IN PROGRESS {.unnumbered}
+# Preface {.unnumbered}
 
 ```{r}
 #| label: _common.R
@@ -6,18 +6,18 @@
 source("_common.R")
 ```
 
-Here the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher") will become available in October when the book is published.
+<!-- Here the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher") will become available in October when the book is published. -->
 
-<!-- This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher"). -->
+This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher").
 
-<!-- R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places SAS code is not available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used. -->
+R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places only R or SAS code is available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
 
-<!-- Please note, that code often depends on previous code in the same chapter including loading of required R packages -->
+Please note, that code often depends on previous code in the same chapter including loading of required R packages.
 
-<!-- Solution to the exercises is available at the end of each chapter using R for the practicals. -->
+Solution to the exercises is available at the end of each chapter using R for the practical exercises.
 
-<!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
+This code and output was created using R version 4.3.1 and SAS/Stat version 15.1.
 
-<!-- ## Acknowledgements {.unnumbered} -->
+## Acknowledgements {.unnumbered}
 
-<!-- Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples. -->
+Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples.
