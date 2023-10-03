@@ -205,6 +205,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Ch7.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errata.html" class="sidebar-item-text sidebar-link">Errata</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -324,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;">age (years)</td>
+<td style="text-align: left;">age in years</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>bili</code></td>
@@ -406,35 +411,91 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">age of son</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = 0-14 years</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">15 = 15-19 years</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">20 = 20-24 years</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">25 = 25-29 years</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">30 = 30+ years</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"><code>pyrs</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">person years at risk</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"><code>cases</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">number of testis cancer</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"><code>semi</code></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>nonsemi</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">number of seminomas cases</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>parity</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>nonsemi</code></td>
+<td style="text-align: left;">number of non-seminomas cases</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;"><code>parity</code></td>
+<td style="text-align: left;">parity of mother at birth of son</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;"><code>cohort</code></td>
+<td style="text-align: left;">son cohort (year of birth)</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
+<td style="text-align: left;">1950 = 1950-1957</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1958 = 1958-1962</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1963 = 1963-1967</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1968 = 1968-1972</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1973 = 1973-1992</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>motherage</code></td>
+<td style="text-align: left;">mother’s age at birth of son</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
+<td style="text-align: left;">12 = 12-19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">20 = 20-24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">25 = 25-29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">30 = 30+</td>
 </tr>
 </tbody>
 </table>
@@ -459,27 +520,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>timedeath</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">followup time (days)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>death</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = alive, 1 = dead</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>timebleed</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to bleeding (days); missing if <code>bleed</code> = 0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>bleed</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no bleeding, 1 = bleeding</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>beta</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no propranolol, 1 = propranolol</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>scle</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no sclerotherapy, 1 = sclerotherapy</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>sex</code></td>
@@ -487,19 +548,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">age (years)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>bili</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">bilirubin (micromoles/L)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>coag</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">coagulation factors (% of normal)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>varsize</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">variceal size: 1 = small, 2 = medium, 3 = large</td>
 </tr>
 </tbody>
 </table>
@@ -524,27 +585,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>episode</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">number of affective episodes</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>state</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no current affective episode, 1 = current affective episode</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>start</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">start time in state (months)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>stop</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">last time seen in state (months)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>status</code></td>
+<td style="text-align: left;">status at time stop:</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
+<td style="text-align: left;">0 = transition to state 0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1 = transition to state 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2 = transition to death</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">3 = censoring</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>bip</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = unipolar, 1 = bipolar</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>sex</code></td>
@@ -552,15 +629,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">age (years)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>year</code></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>wait</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">year of initial episode</td>
 </tr>
 </tbody>
 </table>
@@ -635,39 +708,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>team</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">team id</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>timedeath</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">followup time (months)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>death</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = alive, 1 = dead</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>timerel</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to relapse (months); missing if <code>rel</code> = 0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>rel</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no replase, 1 = relapse</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>timegvhd</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to GvHD (months); missing if <code>gvhd</code> = 0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>gvhd</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no GvHD, 1 = GvHD</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>timeanc500</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to absolute neutrophil count (ANC) above 500 cells per <span class="math inline">\(\mu\)</span>L; missing if <code>anc500</code> = 0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>anc500</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = ANC below 500, 1 = ANC above 500</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>sex</code></td>
@@ -675,15 +748,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">age (years)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>all</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = acute myelogenous leukemia (AML)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>bmonly</code></td>
 <td style="text-align: left;"></td>
+<td style="text-align: left;">1 = acute lymphoblastic leukemia (ALL)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>bmonly</code></td>
+<td style="text-align: left;">0 = peripheral blood/bone marrow, 1 = only bone marrow</td>
 </tr>
 </tbody>
 </table>
@@ -708,27 +785,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>timedeath</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">followup time (days)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>death</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = alive, 1 = dead</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>timeafib</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to atrial fibrillation (days); missing if <code>afib</code> = 0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>afib</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no atrial fibrillation, 1 = atrial fibrillation</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>timestroke</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">time to stroke (days); missing if <code>stroke</code> = 0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>stroke</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">0 = no stroke, 1 = stroke</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>sex</code></td>
@@ -736,39 +813,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>age</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">age (years)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>smkoer</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;"><code>smoker</code></td>
+<td style="text-align: left;">current smoker: 0 = no, 1 = yes</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>esvea</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">excessive supra-ventricular ectopic activity: 0 = no, 1 = yes</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>chol</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">cholesterol (mmol/L)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>diabet</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">diabets mellitus: 0 = no, 1 = yes</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>bmi</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">body mass index (kg/m<span class="math inline">\(^2\)</span>)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>aspirin</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">aspirin use: 0 = no, 1 = yes</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>probnp</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">NT-proBNP (pmol/L)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>sbp</code></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">systolic blood pressure (mmHg)</td>
 </tr>
 </tbody>
 </table>
@@ -1461,7 +1538,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values</div>   
-    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a></div>
+    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a>, R v4.3.1, and SAS 15.1</div>
   </div>
 </footer>
 

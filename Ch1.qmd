@@ -25,7 +25,7 @@ download_dir(
 | `status`      | 0 = censoring, 1 = transplantation, 2 = death without transplantation |
 | `tment`       | 0 = placebo, 1 = CyA                                                  |
 | `sex`         | 0 = female, 1 = male                                                  |
-| `age`         | age (years)                                                           |
+| `age`         | age in years                                                           |
 | `bili`        | bilirubin (micromoles/L)                                              |
 | `alb`         | albumin (g/L)                                                         |
 | `stage`       | disease stage: 2 = I-II, 3 = III, 4 = IV                              |
@@ -47,47 +47,64 @@ download_dir(
 
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
-| `age`         |             |
-| `pyrs`        |             |
-| `cases`       |             |
-| `semi`        |             |
-| `nonsemi`     |             |
-| `parity`      |             |
-| `cohort`      |             |
-| `motherage`   |             |
+| `age`         | age of son |
+||  0 = 0-14 years |
+|| 15 = 15-19 years|
+|| 20 = 20-24 years|
+|| 25 = 25-29 years|
+|| 30 = 30+ years  |
+| `pyrs`        | person years at risk      |
+| `cases`       | number of testis cancer            |
+| `semi`        | number of seminomas cases            |
+| `nonsemi`     | number of non-seminomas cases            |
+| `parity`      | parity of mother at birth of son            |
+| `cohort`      | son cohort (year of birth)
+||1950 = 1950-1957|
+||1958 = 1958-1962|
+||1963 = 1963-1967|
+||1968 = 1968-1972|
+||1973 = 1973-1992|
+| `motherage`   | mother's age at birth of son |
+||12 = 12-19|
+||20 = 20-24|
+||25 = 25-29|
+||30 = 30+|
 
 ## 1.4 PROVA trial in liver cirrhosis (`prova.csv`)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
-| `timedeath`   |                      |
-| `death`       |                      |
-| `timebleed`   |                      |
-| `bleed`       |                      |
-| `beta`        |                      |
-| `scle`        |                      |
+| `timedeath`   | followup time (days) |
+| `death`       | 0 = alive, 1 = dead                    |
+| `timebleed`   | time to bleeding (days); missing if `bleed` = 0   |
+| `bleed`       | 0 = no bleeding, 1 = bleeding  |
+| `beta`        | 0 = no propranolol, 1 = propranolol |
+| `scle`        | 0 = no sclerotherapy, 1 = sclerotherapy   |
 | `sex`         | 0 = female, 1 = male |
-| `age`         |                      |
-| `bili`        |                      |
-| `coag`        |                      |
-| `varsize`     |                      |
+| `age`         | age (years)                     |
+| `bili`        | bilirubin (micromoles/L) |
+| `coag`        | coagulation factors (% of normal)  |
+| `varsize`     | variceal size: 1 = small, 2 = medium, 3 = large |
 
 ## 1.5 Recurrent episodes in affective disorders (`affective.csv`)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
-| `episode`     |                      |
-| `state`       |                      |
-| `start`       |                      |
-| `stop`        |                      |
-| `status`      |                      |
-| `bip`         |                      |
+| `episode`     | number of affective episodes                     |
+| `state`       | 0 = no current affective episode, 1 = current affective episode |
+| `start`       | start time in state (months)                    |
+| `stop`        | last time seen in state (months)                   |
+| `status`      | status at time stop:|
+||                0 = transition to state 0 |
+||                1 = transition to state 1 |
+||                2 = transition to death   |
+||                3 = censoring             |
+| `bip`         | 0 = unipolar, 1 = bipolar |
 | `sex`         | 0 = female, 1 = male |
-| `age`         |                      |
-| `year`        |                      |
-| `wait`        |                      |
+| `age`         | age (years)          |
+| `year`        | year of initial episode  |
 
 ## 1.6 LEADER cardiovascular trial in type 2 diabetes
 
@@ -109,41 +126,42 @@ Data not available for download.
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
-| `team`        |                      |
-| `timedeath`   |                      |
-| `death`       |                      |
-| `timerel`     |                      |
-| `rel`         |                      |
-| `timegvhd`    |                      |
-| `gvhd`        |                      |
-| `timeanc500`  |                      |
-| `anc500`      |                      |
+| `team`        | team id                     |
+| `timedeath`   | followup time (months) |
+| `death`       | 0 = alive, 1 = dead                      |
+| `timerel`     | time to relapse (months); missing if `rel` = 0                     |
+| `rel`         | 0 = no replase, 1 = relapse        |
+| `timegvhd`    | time to GvHD (months); missing if `gvhd` = 0                     |
+| `gvhd`        | 0 = no GvHD, 1 = GvHD                      |
+| `timeanc500`  | time to absolute neutrophil count (ANC) above 500 cells per $\mu$L; missing if `anc500` = 0 |
+| `anc500`      | 0 = ANC below 500, 1 = ANC above 500                      |
 | `sex`         | 0 = female, 1 = male |
-| `age`         |                      |
-| `all`         |                      |
-| `bmonly`      |                      |
+| `age`         | age (years)                     |
+| `all`         | 0 = acute myelogenous leukemia (AML)|
+||                1 = acute lymphoblastic leukemia (ALL)                    |
+| `bmonly`      | 0 = peripheral blood/bone marrow, 1 = only bone marrow  |
 
 ## 1.8 The Copenhagen Holter study (`cphholter.csv`)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
-| `timedeath`   |                      |
-| `death`       |                      |
-| `timeafib`    |                      |
-| `afib`        |                      |
-| `timestroke`  |                      |
-| `stroke`      |                      |
+| `timedeath`   | followup time (days)                     |
+| `death`       | 0 = alive, 1 = dead                       |
+| `timeafib`    | time to atrial fibrillation (days); missing if `afib` = 0    |
+| `afib`        | 0 = no atrial fibrillation, 1 = atrial fibrillation                     |
+| `timestroke`  | time to stroke (days); missing if `stroke` = 0                     |
+| `stroke`      | 0 = no stroke, 1 = stroke                     |
 | `sex`         | 0 = female, 1 = male |
-| `age`         |                      |
-| `smkoer`      |                      |
-| `esvea`       |                      |
-| `chol`        |                      |
-| `diabet`      |                      |
-| `bmi`         |                      |
-| `aspirin`     |                      |
-| `probnp`      |                      |
-| `sbp`         |                      |
+| `age`         | age (years)                     |
+| `smoker`      | current smoker: 0 = no, 1 = yes                     |
+| `esvea`       | excessive supra-ventricular ectopic activity: 0 = no, 1 = yes  |
+| `chol`        | cholesterol (mmol/L)                     |
+| `diabet`      | diabets mellitus: 0 = no, 1 = yes                     |
+| `bmi`         | body mass index (kg/m$^2$)                     |
+| `aspirin`     | aspirin use: 0 = no, 1 = yes                     |
+| `probnp`      | NT-proBNP (pmol/L)                     |
+| `sbp`         | systolic blood pressure (mmHg)                     |
 
 ## 1.9 Small set of survival data
 

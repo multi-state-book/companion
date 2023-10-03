@@ -1,7 +1,8 @@
 ### Read data
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: read-pbc3-r
 pbc3 <- read.csv("data/pbc3.csv")
@@ -28,7 +29,8 @@ pbc3$logbilimuchtoohigh <- with(pbc3, (log2bili-log2(51.3))*(bili>51.3))
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: read-pbc3-sas
 #| eval: false 
 #| output: false
@@ -56,11 +58,11 @@ run;
 ```
 :::
 
+### Figure 2.1
 
-### Figure 2.1 
-
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.1-r
 #| out-width: 90%
@@ -100,7 +102,8 @@ fig2.1
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.1-sas
 #| eval: false 
 #| output: false
@@ -123,14 +126,13 @@ proc gplot data=hazdat;
 	symbol2  v=none i=stepjl c=blue;
 run;
 ```
-
 :::
 
 ### In-text: Nelson-Aalen estimates at 2 years
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: in-text-Naa2-r
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=0"),1)
@@ -138,7 +140,8 @@ tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=1"),1)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: in-text-Naa2-sas
 #| eval: false 
 #| output: false
@@ -148,11 +151,11 @@ run;
 ```
 :::
 
-### Table 2.1 
+### Table 2.1
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.1-r
 # Data for Table 2.1
@@ -176,7 +179,8 @@ data.frame(pcwdata)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.1-sas
 #| eval: false 
 #| output: false
@@ -217,14 +221,13 @@ proc genmod data=pbc3mult;
 	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
 run;
 ```
-::: 
+:::
 
+### Figure 2.2
 
-### Figure 2.2 
-
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.2
 #| out-width: 90%
@@ -256,11 +259,11 @@ fig2.2
 ```
 :::
 
-### In-text: LRT test piece-wise exponential model  
+### In-text: LRT test piece-wise exponential model
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: in-text-lrt-pcw-sas-r
 library(stats)
@@ -273,9 +276,10 @@ anova(poisred,poisfull,test="LRT")
 library(lmtest)
 lrtest(poisred,poisfull)
 ```
+
 ## SAS
 
-```{r}
+```{sas}
 #| label: in-text-lrt-pcw-sas
 #| eval: false 
 #| output: false
@@ -316,11 +320,11 @@ run;
 ```
 :::
 
-### In-text: Logrank test and p-value                       
+### In-text: Logrank test and p-value
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: in-text-logrank-r
 library(survival)
@@ -329,7 +333,8 @@ c(lr$chisq,lr$pvalue)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: in-text-logrank-sas
 #| eval: false 
 #| output: false
@@ -340,11 +345,11 @@ run;
 ```
 :::
 
-### Figure 2.3 
+### Figure 2.3
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.3-r
 #| out-width: 90%
@@ -408,7 +413,8 @@ fig2.3
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.3-sas
 #| eval: false 
 #| output: false
@@ -440,12 +446,11 @@ run;
 ```
 :::
 
+### In-text: Cox model with treatment only
 
-### In-text: Cox model with treatment only 
-
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: in-text-cox-r
 # Fit a Cox model using the pbc3 data with treatment as a covariate
@@ -455,7 +460,8 @@ coxfit
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: in-text-cox-sas
 #| eval: false 
 #| output: false
@@ -465,11 +471,11 @@ run;
 ```
 :::
 
-### Figure 2.5 
+### Figure 2.5
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.5-r
 #| out-width: 90%
@@ -497,7 +503,8 @@ fig2.5
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.5-sas
 #| eval: false 
 #| output: false
@@ -521,11 +528,11 @@ run;
 ```
 :::
 
+### Table 2.3
 
-### Table 2.3 
-
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.3-r
 # Average covariate values of albumin and bilirubin per treatment 
@@ -541,7 +548,8 @@ data.frame(tabledata)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.3-sas
 #| eval: false 
 #| output: false
@@ -554,8 +562,9 @@ run;
 
 ### Table 2.4
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.4-r
 # Cox model with treatment, albumin and bilirubin as covariates 
@@ -566,7 +575,8 @@ coxfit
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.4-sas
 #| eval: false 
 #| output: false
@@ -576,36 +586,44 @@ run;
 ```
 :::
 
-### In-text: Poisson model with treatment only (and time) 
+### In-text: Poisson model with treatment only (and time) {#sec-ch2-pbc3-poisson}
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
-#| label: in-text-poission-r
+#| label: in-text-poisson-r
+#| results: hold
 library(stats)
-library(broom) # For using tidy() function to get exp(beta)
-poism <- glm(fail ~ tment + timegroup-1 +
+library(jtools) # For using summ() function to get exp(beta)
+options(contrasts=c("contr.treatment", "contr.poly"))
+poism <- glm(fail ~ -1 +tment + timegroup +
                offset(log(risktime/365.25)), data = pbc3mult,family = poisson)
-tidy(poism, exponentiate = T, conf.int = T)
+summ(poism, exp = T,digits = 3, model.info = F, model.fit = F)
 ```
 
 ## SAS
-```{r}
-#| label: in-text-poission-sas
+
+```{sas}
+#| label: in-text-poisson-sas
 #| eval: false 
 #| output: false
 proc genmod data=pbc3mult;
-	class interv tment;
-	model fail = interv tment / dist=poi offset=logrisk;
-	estimate 'CyA  vs placebo' tment -1 1 / exp;
+  class tment(ref="0") interv ;
+  model fail = tment interv / dist=poi offset=logrisk;
+	estimate 'CyA  vs placebo' tment 1 -1 / exp;
+  estimate '0-2 years' intercept 1 tment 0 1 interv 1 0 0 / exp;
+  estimate '2-4 years' intercept 1 tment 0 1 interv 0 1 0 / exp;
+  estimate '4+ years'  intercept 1 tment 0 1 interv 0 0 1 / exp;
 run;
 ```
 :::
 
-### Table 2.5 
+### Table 2.5
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.5-r
 # Poisson model with treatment, albumin and bilirubin as covariates
@@ -615,7 +633,8 @@ tidy(poismod_t25)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.5-sas
 #| eval: false 
 #| output: false
@@ -628,8 +647,9 @@ run;
 
 ### Table 2.6
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.6-r
 #------------------------------------------------------------------#
@@ -739,7 +759,8 @@ lrtest(poismod_t26_q3, base_poismod_log)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.6-sas
 #| eval: false 
 #| output: false
@@ -900,11 +921,11 @@ run;
 ```
 :::
 
+### Figure 2.6
 
-### Figure 2.6 
-
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.6-r
 #| out-width: 90%
@@ -946,7 +967,8 @@ fig2.6
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.6-sas
 #| eval: false 
 #| output: false
@@ -988,10 +1010,11 @@ quit;
 ```
 :::
 
-### Figure 2.7 
+### Figure 2.7
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.7-r
 #| out-width: 90%
@@ -1014,7 +1037,8 @@ fig2.7
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.7-sas
 #| eval: false 
 #| output: false
@@ -1032,10 +1056,11 @@ run;quit;
 ```
 :::
 
-### Figure 2.8 
+### Figure 2.8
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.8-r
 #| out-width: 90%
@@ -1072,7 +1097,8 @@ fig2.8
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.8-sas
 #| eval: false 
 #| output: false
@@ -1108,10 +1134,11 @@ run;quit;
 ```
 :::
 
-### Table 2.7 
+### Table 2.7
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.7-r
 # Cox model
@@ -1126,7 +1153,8 @@ tidy(poismod_t27)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.7-sas
 #| eval: false 
 #| output: false
@@ -1144,10 +1172,11 @@ run;
 ```
 :::
 
-### Table 2.8 
+### Table 2.8
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.8-r
 # Cox models
@@ -1193,7 +1222,8 @@ lrtest(poismod_t28_base, poismod_t28_2)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.8-sas
 #| eval: false 
 #| output: false
@@ -1227,10 +1257,11 @@ run;
 ```
 :::
 
-### Table 2.9 
+### Table 2.9
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.9-r
 pbc3mult$tment1 <- (pbc3mult$timegroup==1)*pbc3mult$tment
@@ -1270,7 +1301,8 @@ lrtest(poismod_t29_base, poismod_t29_bili)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.9-sas
 #| eval: false 
 #| output: false
@@ -1313,10 +1345,11 @@ run;
 ```
 :::
 
-### In-text: stratified Cox model 
+### In-text: stratified Cox model
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: in-text-stratified-cox-r
 coxmod_f29 <- coxph(Surv(days, status != 0) ~ strata(tment) + alb + log2bili,
@@ -1325,7 +1358,8 @@ coxmod_f29
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: in-text-stratified-cox-sas
 #| eval: false 
 #| output: false
@@ -1337,10 +1371,11 @@ run;
 ```
 :::
 
-### Figure 2.10 
+### Figure 2.10
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.10-r
 #| out-width: 90%
@@ -1379,7 +1414,8 @@ fig2.10
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: figure-2.10-sas
 #| eval: false 
 #| output: false
@@ -1430,10 +1466,11 @@ quit;
 ```
 :::
 
-### Figure 2.11 
+### Figure 2.11
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.11-r
 #| out-width: 90%
@@ -1483,10 +1520,11 @@ fig2.11.right
 ```
 :::
 
-### Figure 2.12 
+### Figure 2.12
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: figure-2.12-r
 #| out-width: 90%
@@ -1538,13 +1576,13 @@ fig2.12.1
 fig2.12.2
 fig2.12.3
 ```
-
 :::
 
-### Table 2.10 
+### Table 2.10
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.10-r
 #------------------------------------------------------------------#
@@ -1600,7 +1638,8 @@ summary(nonparmod52)
 ```
 
 ## SAS
-```{r}
+
+```{sas}
 #| label: table-2.10-sas
 #| eval: false 
 #| output: false
@@ -1631,10 +1670,11 @@ run;
 ```
 :::
 
-### Table 2.11 
+### Table 2.11
 
-::: {.panel-tabset}
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.11-r
 #------------------------------------------------------------------#
@@ -1670,14 +1710,13 @@ additive_pcw2.11 <- glm(fail ~ time1 + time2 + time3 + tment1 + albny + biliny -
                         family = poisson(link = "identity"))
 tidy(additive_pcw2.11)
 ```
-
 :::
 
-### Table 2.13 
+### Table 2.13
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
+
 ```{r}
 #| label: table-2.13-r
 

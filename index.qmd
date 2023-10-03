@@ -8,15 +8,26 @@ source("_common.R")
 
 <!-- Here the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher") will become available in October when the book is published. -->
 
+::: {.callout-note appearance="simple"}
+## Work in progress
+
+We are in the progress of finalizing the companion and not all code is yet available.
+:::
+
 This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher").
 
-R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places only R or SAS code is available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used.
+
+R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given, and a few places only R or SAS code is available. When using bootstrap small deviations from the book will occur as no fixed seeds have been used. 
 
 Please note, that code often depends on previous code in the same chapter including loading of required R packages.
 
-Solution to the exercises is available at the end of each chapter using R for the practical exercises.
+Solutions to the exercises are available at the end of each chapter.
 
-This code and output was created using R version 4.3.1 and SAS/Stat version 15.1.
+## Errata {.unnumbered}
+
+A [chapter](Errata.html#sec-errata) with errata is also provided.
+
+<!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
 
 ## Acknowledgements {.unnumbered}
 

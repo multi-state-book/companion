@@ -67,15 +67,15 @@ data pbc3mult;
 	set pbc3;
 	fail=(days<=2 * 365.25)*(status ne 0);
 	risktime=min(2 * 365.25, days);
-	logrisk=log(risktime); interv=1; output;  
+	logrisk=log(risktime/365.25); interv=1; output;  
 	if days>2 * 365.25 then do;
 	fail=(days<=4 * 365.25)*(status ne 0);
 	risktime=min(2 * 365.25 ,days-2 * 365.25);
-	logrisk=log(risktime); interv=2; output; end;
+	logrisk=log(risktime/365.25); interv=2; output; end;
 	if days>4 * 365.25  then do;
 	fail=status ne 0; 
 	risktime=days-4 * 365.25;
-	logrisk=log(risktime); interv=3; output; end;
+	logrisk=log(risktime/365.25); interv=3; output; end;
 run;
 
 
@@ -220,11 +220,13 @@ run;
 *---------------------------------------------------------------;
 * --In-text: Poisson model with treatment only (and time)-------;
 *---------------------------------------------------------------;
-
 proc genmod data=pbc3mult;
-	class interv tment;
-	model fail = interv tment / dist=poi offset=logrisk;
-	estimate 'CyA  vs placebo' tment -1 1 / exp;
+	class tment(ref="0") interv ;
+	model fail = tment interv / dist=poi offset=logrisk;
+	estimate 'CyA  vs placebo' tment 1 -1 / exp;
+  estimate '0-2 years' intercept 1 tment 0 1 interv 1 0 0 / exp;
+	estimate '2-4 years' intercept 1 tment 0 1 interv 0 1 0 / exp;
+	estimate '4+ years'  intercept 1 tment 0 1 interv 0 0 1 / exp;
 run;
 
 *---------------------------------------------------------------;

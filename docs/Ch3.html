@@ -203,6 +203,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./Ch7.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Further topics</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errata.html" class="sidebar-item-text sidebar-link">Errata</a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -908,16 +913,17 @@ n= 5274, number of events= 222 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
-<div class="cell" data-hash="Ch3_cache/html/table-3.5-r_96009ea4ff78234830a2e061eaa62ec6">
+<div class="cell" data-hash="Ch3_cache/html/table-3.5-r_713d9b220f9cb4f48eb5af1bdd19d5d3">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Column 1</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>age)</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>age, <span class="at">ref =</span> <span class="st">"20"</span>)</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age, <span class="at">data =</span> testis, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(testis<span class="sc">$</span>age)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>testis<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">relevel</span>(testis<span class="sc">$</span>age, <span class="at">ref =</span> <span class="st">'20'</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(cases <span class="sc">~</span> <span class="fu">offset</span>(lpyrs) <span class="sc">+</span> par2 <span class="sc">+</span> age, <span class="at">data =</span> testis, <span class="at">family =</span> poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -926,13 +932,13 @@ glm(formula = cases ~ offset(lpyrs) + par2 + age, family = poisson,
     data = testis)
 
 Coefficients:
-            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -8.29172    0.13180 -62.913  &lt; 2e-16 ***
-par2         0.21663    0.08405   2.577  0.00996 ** 
-age20       -0.75263    0.13272  -5.671 1.42e-08 ***
-age0        -4.78347    0.23098 -20.709  &lt; 2e-16 ***
-age15       -1.92358    0.15112 -12.729  &lt; 2e-16 ***
-age25       -0.19301    0.13430  -1.437  0.15067    
+            Estimate Std. Error  z value Pr(&gt;|z|)    
+(Intercept) -9.04435    0.08393 -107.757  &lt; 2e-16 ***
+par2         0.21663    0.08405    2.577  0.00996 ** 
+age0        -4.03084    0.21105  -19.099  &lt; 2e-16 ***
+age15       -1.17094    0.11886   -9.851  &lt; 2e-16 ***
+age25        0.55962    0.09802    5.709 1.14e-08 ***
+age30        0.75263    0.13272    5.671 1.42e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -962,19 +968,19 @@ glm(formula = cases ~ offset(lpyrs) + par2 + age + motherage +
 
 Coefficients:
             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept) -8.14616    0.20084 -40.560  &lt; 2e-16 ***
+(Intercept) -9.11684    0.29271 -31.146  &lt; 2e-16 ***
 par2         0.22967    0.09112   2.521   0.0117 *  
-age20       -0.95356    0.15378  -6.201 5.62e-10 ***
-age0        -4.95753    0.27208 -18.221  &lt; 2e-16 ***
-age15       -2.12008    0.17777 -11.926  &lt; 2e-16 ***
-age25       -0.33646    0.14536  -2.315   0.0206 *  
-motherage30  0.11663    0.22510   0.518   0.6044    
-motherage12  0.14589    0.14128   1.033   0.3018    
-motherage20  0.17459    0.11100   1.573   0.1157    
-cohort1973  -0.13376    0.23600  -0.567   0.5709    
-cohort1950  -0.49651    0.20586  -2.412   0.0159 *  
-cohort1958  -0.21407    0.14626  -1.464   0.1433    
-cohort1963  -0.01030    0.12882  -0.080   0.9363    
+age0        -4.00398    0.23905 -16.749  &lt; 2e-16 ***
+age15       -1.16652    0.12522  -9.316  &lt; 2e-16 ***
+age25        0.61710    0.10445   5.908 3.46e-09 ***
+age30        0.95356    0.15378   6.201 5.62e-10 ***
+motherage12  0.02926    0.24121   0.121   0.9034    
+motherage20  0.05796    0.22233   0.261   0.7943    
+motherage25 -0.11663    0.22510  -0.518   0.6044    
+cohort1950  -0.36275    0.28800  -1.260   0.2078    
+cohort1958  -0.08031    0.24838  -0.323   0.7464    
+cohort1963   0.12346    0.23712   0.521   0.6026    
+cohort1968   0.13376    0.23600   0.567   0.5709    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -992,21 +998,21 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 7
-   term        estimate std.error statistic  p.value conf.low conf.high
-   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
- 1 (Intercept) 0.000290    0.201   -40.6    0        0.000195  0.000428
- 2 par2        1.26        0.0911    2.52   1.17e- 2 1.05      1.51    
- 3 age20       0.385       0.154    -6.20   5.62e-10 0.286     0.523   
- 4 age0        0.00703     0.272   -18.2    3.51e-74 0.00406   0.0118  
- 5 age15       0.120       0.178   -11.9    8.63e-33 0.0847    0.170   
- 6 age25       0.714       0.145    -2.31   2.06e- 2 0.539     0.954   
- 7 motherage30 1.12        0.225     0.518  6.04e- 1 0.708     1.72    
- 8 motherage12 1.16        0.141     1.03   3.02e- 1 0.877     1.53    
- 9 motherage20 1.19        0.111     1.57   1.16e- 1 0.960     1.48    
-10 cohort1973  0.875       0.236    -0.567  5.71e- 1 0.543     1.37    
-11 cohort1950  0.609       0.206    -2.41   1.59e- 2 0.404     0.907   
-12 cohort1958  0.807       0.146    -1.46   1.43e- 1 0.607     1.08    
-13 cohort1963  0.990       0.129    -0.0799 9.36e- 1 0.771     1.28    </code></pre>
+   term        estimate std.error statistic   p.value  conf.low conf.high
+   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.000110    0.293    -31.1   5.74e-213 0.0000605  0.000191
+ 2 par2        1.26        0.0911     2.52  1.17e-  2 1.05       1.51    
+ 3 age0        0.0182      0.239    -16.7   5.72e- 63 0.0112     0.0286  
+ 4 age15       0.311       0.125     -9.32  1.21e- 20 0.243      0.397   
+ 5 age25       1.85        0.104      5.91  3.46e-  9 1.51       2.28    
+ 6 age30       2.59        0.154      6.20  5.62e- 10 1.91       3.50    
+ 7 motherage12 1.03        0.241      0.121 9.03e-  1 0.652      1.68    
+ 8 motherage20 1.06        0.222      0.261 7.94e-  1 0.698      1.68    
+ 9 motherage25 0.890       0.225     -0.518 6.04e-  1 0.583      1.41    
+10 cohort1950  0.696       0.288     -1.26  2.08e-  1 0.398      1.23    
+11 cohort1958  0.923       0.248     -0.323 7.46e-  1 0.574      1.52    
+12 cohort1963  1.13        0.237      0.521 6.03e-  1 0.720      1.83    
+13 cohort1968  1.14        0.236      0.567 5.71e-  1 0.729      1.84    </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
@@ -1068,21 +1074,21 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 7
-   term        estimate std.error statistic   p.value  conf.low conf.high
-   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 (Intercept) 0.000167     0.409   -21.2   4.29e-100 0.0000726  0.000364
- 2 par2        1.23         0.171     1.23  2.19e-  1 0.886      1.73    
- 3 age20       0.151        0.245    -7.71  1.30e- 14 0.0927     0.243   
- 4 age0        0.000448     1.14     -6.77  1.30e- 11 0.0000220  0.00277 
- 5 age15       0.0143       0.470    -9.03  1.69e- 19 0.00516    0.0334  
- 6 age25       0.450        0.203    -3.94  8.19e-  5 0.302      0.671   
- 7 motherage30 0.812        0.617    -0.338 7.35e-  1 0.191      2.34    
- 8 motherage12 0.730        0.263    -1.20  2.32e-  1 0.436      1.22    
- 9 motherage20 0.794        0.211    -1.10  2.73e-  1 0.529      1.21    
-10 cohort1973  1.45         0.879     0.421 6.74e-  1 0.193      7.13    
-11 cohort1950  1.06         0.425     0.133 8.94e-  1 0.466      2.49    
-12 cohort1958  1.40         0.363     0.925 3.55e-  1 0.706      2.96    
-13 cohort1963  1.25         0.343     0.644 5.20e-  1 0.656      2.54    </code></pre>
+   term         estimate std.error statistic  p.value   conf.low conf.high
+   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.0000297     1.00   -10.4    1.98e-25 0.00000314  0.000178
+ 2 par2        1.23          0.171    1.23   2.19e- 1 0.886       1.73    
+ 3 age0        0.00297       1.13    -5.17   2.38e- 7 0.000147    0.0176  
+ 4 age15       0.0949        0.443   -5.32   1.03e- 7 0.0357      0.209   
+ 5 age25       2.98          0.200    5.47   4.55e- 8 2.03        4.44    
+ 6 age30       6.62          0.245    7.71   1.30e-14 4.11       10.8     
+ 7 motherage12 0.900         0.640   -0.164  8.69e- 1 0.295       3.94    
+ 8 motherage20 0.978         0.618   -0.0360 9.71e- 1 0.339       4.15    
+ 9 motherage25 1.23          0.617    0.338  7.35e- 1 0.427       5.22    
+10 cohort1950  0.731         0.907   -0.345  7.30e- 1 0.140       5.71    
+11 cohort1958  0.966         0.879   -0.0389 9.69e- 1 0.198       7.26    
+12 cohort1963  0.862         0.869   -0.171  8.64e- 1 0.180       6.39    
+13 cohort1968  0.691         0.879   -0.421  6.74e- 1 0.140       5.18    </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
@@ -1093,62 +1099,57 @@ Model 2: cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2 *
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 7
-   term        estimate std.error statistic   p.value  conf.low conf.high
-   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
- 1 (Intercept) 0.000100     0.271   -34.0   1.43e-253 0.0000581  0.000168
- 2 par2        1.27         0.108     2.19  2.88e-  2 1.03       1.56    
- 3 age20       0.824        0.229    -0.846 3.97e-  1 0.533      1.31    
- 4 age0        0.0184       0.323   -12.4   4.29e- 35 0.00970    0.0346  
- 5 age15       0.304        0.246    -4.85  1.25e-  6 0.190      0.499   
- 6 age25       1.23         0.225     0.925 3.55e-  1 0.804      1.95    
- 7 motherage30 1.24         0.244     0.892 3.72e-  1 0.753      1.97    
- 8 motherage12 1.36         0.167     1.84  6.59e-  2 0.979      1.89    
- 9 motherage20 1.36         0.131     2.37  1.79e-  2 1.06       1.77    
-10 cohort1973  0.838        0.245    -0.722 4.70e-  1 0.510      1.34    
-11 cohort1950  0.535        0.254    -2.46  1.40e-  2 0.320      0.869   
-12 cohort1958  0.694        0.164    -2.23  2.58e-  2 0.503      0.958   
-13 cohort1963  0.960        0.140    -0.292 7.70e-  1 0.732      1.27    </code></pre>
+   term         estimate std.error statistic   p.value  conf.low conf.high
+   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 (Intercept) 0.0000860     0.308   -30.4   7.09e-203 0.0000459  0.000154
+ 2 par2        1.27          0.108     2.19  2.88e-  2 1.03       1.56    
+ 3 age0        0.0223        0.246   -15.4   9.35e- 54 0.0135     0.0355  
+ 4 age15       0.369         0.133    -7.48  7.32e- 14 0.283      0.478   
+ 5 age25       1.49          0.125     3.21  1.35e-  3 1.17       1.91    
+ 6 age30       1.21          0.229     0.846 3.97e-  1 0.762      1.88    
+ 7 motherage12 1.09          0.264     0.341 7.33e-  1 0.662      1.87    
+ 8 motherage20 1.10          0.239     0.382 7.03e-  1 0.700      1.79    
+ 9 motherage25 0.804         0.244    -0.892 3.72e-  1 0.508      1.33    
+10 cohort1950  0.639         0.328    -1.37  1.72e-  1 0.335      1.22    
+11 cohort1958  0.828         0.264    -0.718 4.73e-  1 0.499      1.41    
+12 cohort1963  1.15          0.247     0.550 5.82e-  1 0.715      1.89    
+13 cohort1968  1.19          0.245     0.722 4.70e-  1 0.748      1.96    </code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
-<div class="cell" data-hash="Ch3_cache/html/table-3.5-sas_6026c737c934a27e13ed86b54182ebbb">
+<div class="cell" data-hash="Ch3_cache/html/table-3.5-sas_55fe41dafc59f2f47890273972b378b6">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">1</span>; </span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>proc genmod;</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">age</span> (<span class="at">ref=</span><span class="st">'20'</span>) <span class="fu">par2</span> (<span class="at">ref=</span><span class="st">'1'</span>);</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    model cases<span class="ot">=</span>par2 age<span class="sc">/</span>dist<span class="ot">=</span>poi offset<span class="ot">=</span>lpyrs type3;</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>exp;</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Column <span class="dv">2</span>; </span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>proc genmod;</span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">age</span> (<span class="at">ref=</span><span class="st">'20'</span>) <span class="fu">motherage</span>(<span class="at">ref=</span><span class="st">'30'</span>) <span class="fu">cohort</span>(<span class="at">ref=</span><span class="st">'1973'</span>) <span class="fu">par2</span> (<span class="at">ref=</span><span class="st">'1'</span>);</span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>    model cases<span class="ot">=</span>par2 age motherage cohort<span class="sc">/</span>dist<span class="ot">=</span>poi offset<span class="ot">=</span>lpyrs type3;</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>exp;</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> In<span class="sc">-</span>text interaction test; </span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>proc genmod;</span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">age</span> (<span class="at">ref=</span><span class="st">'20'</span>) <span class="fu">motherage</span>(<span class="at">ref=</span><span class="st">'30'</span>) <span class="fu">cohort</span>(<span class="at">ref=</span><span class="st">'1973'</span>) <span class="fu">par2</span> (<span class="at">ref=</span><span class="st">'1'</span>);</span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>    model cases<span class="ot">=</span>par2 age motherage cohort par2<span class="sc">*</span>age<span class="sc">/</span>dist<span class="ot">=</span>poi offset<span class="ot">=</span>lpyrs type3;</span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> seminomas;</span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>proc genmod;</span>
-<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">age</span> (<span class="at">ref=</span><span class="st">'20'</span>) <span class="fu">motherage</span>(<span class="at">ref=</span><span class="st">'30'</span>) <span class="fu">cohort</span>(<span class="at">ref=</span><span class="st">'1973'</span>) <span class="fu">par2</span> (<span class="at">ref=</span><span class="st">'1'</span>);</span>
-<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>    model semi<span class="ot">=</span>par2 age motherage cohort<span class="sc">/</span>dist<span class="ot">=</span>poi offset<span class="ot">=</span>lpyrs type3;</span>
-<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>exp;</span>
-<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> non<span class="sc">-</span>seminomas;</span>
-<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>proc genmod;</span>
-<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>    class <span class="fu">age</span> (<span class="at">ref=</span><span class="st">'20'</span>) <span class="fu">motherage</span>(<span class="at">ref=</span><span class="st">'30'</span>) <span class="fu">cohort</span>(<span class="at">ref=</span><span class="st">'1973'</span>) <span class="fu">par2</span> (<span class="at">ref=</span><span class="st">'1'</span>);</span>
-<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>    model nonsemi<span class="ot">=</span>par2 age motherage cohort<span class="sc">/</span>dist<span class="ot">=</span>poi offset<span class="ot">=</span>lpyrs type3;</span>
-<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>exp;</span>
-<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">* Column 1;</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod;</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    class age (ref=<span class="st">'20'</span>) par2 (ref=<span class="st">'1'</span>);</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> cases=par2 age/dist=poi offset=lpyrs type3;</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> -<span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co">* Column 2;</span> </span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod;</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>    class age (ref=<span class="st">'20'</span>) motherage(ref=<span class="st">'30'</span>) cohort(ref=<span class="st">'1973'</span>) par2 (ref=<span class="st">'1'</span>);</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> cases=par2 age motherage cohort/dist=poi offset=lpyrs type3;</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> -<span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="co">* In-text interaction test;</span> </span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod;</span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>    class age (ref=<span class="st">'20'</span>) motherage(ref=<span class="st">'30'</span>) cohort(ref=<span class="st">'1973'</span>) par2 (ref=<span class="st">'1'</span>);</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> cases=par2 age motherage cohort par2*age/dist=poi offset=lpyrs type3;</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="co">* seminomas;</span></span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod;</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>    class age (ref=<span class="st">'20'</span>) motherage(ref=<span class="st">'30'</span>) cohort(ref=<span class="st">'1973'</span>) par2 (ref=<span class="st">'1'</span>);</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> semi=par2 age motherage cohort/dist=poi offset=lpyrs type3;</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> -<span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a><span class="co">* non-seminomas;</span></span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod;</span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>    class age (ref=<span class="st">'20'</span>) motherage(ref=<span class="st">'30'</span>) cohort(ref=<span class="st">'1973'</span>) par2 (ref=<span class="st">'1'</span>);</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> nonsemi=par2 age motherage cohort/dist=poi offset=lpyrs type3;</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'RR'</span> par2 <span class="dv">1</span> -<span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4486,7 +4487,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values</div>   
-    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a></div>
+    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a>, R v4.3.1, and SAS 15.1</div>
   </div>
 </footer>
 
