@@ -25,7 +25,8 @@ Solutions to the exercises are available at the end of each chapter.
 
 ## Errata {.unnumbered}
 
-A [chapter](Errata.html#sec-errata) with errata is also provided.
+<!-- A [chapter](Errata.html#sec-errata) with errata is also provided. -->
+A chapter with errata is also provided.
 
 <!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
 
