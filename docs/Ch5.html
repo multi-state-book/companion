@@ -125,6 +125,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -240,6 +241,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#figure-5.3" id="toc-figure-5.3" class="nav-link" data-scroll-target="#figure-5.3">Figure 5.3</a></li>
   </ul></li>
   <li><a href="#missing-tab-5.5-and-figs-5.10-5.11" id="toc-missing-tab-5.5-and-figs-5.10-5.11" class="nav-link" data-scroll-target="#missing-tab-5.5-and-figs-5.10-5.11">MISSING: Tab 5.5 and Figs 5.10-5.11</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul>
+  <li><a href="#exercise-5.1" id="toc-exercise-5.1" class="nav-link" data-scroll-target="#exercise-5.1">Exercise 5.1 (*)</a></li>
+  <li><a href="#exercise-5.2" id="toc-exercise-5.2" class="nav-link" data-scroll-target="#exercise-5.2">Exercise 5.2 (*)</a></li>
+  <li><a href="#exercise-5.3" id="toc-exercise-5.3" class="nav-link" data-scroll-target="#exercise-5.3">Exercise 5.3 (*)</a>
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2.</a></li>
+  </ul></li>
+  <li><a href="#exercise-5.4" id="toc-exercise-5.4" class="nav-link" data-scroll-target="#exercise-5.4">Exercise 5.4 (*)</a></li>
+  <li><a href="#exercise-5.5" id="toc-exercise-5.5" class="nav-link" data-scroll-target="#exercise-5.5">Exercise 5.5 (*)</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -1346,8 +1359,70 @@ Score (logrank) test = 348.8  on 8 df,   p=&lt;2e-16,   Robust = 56.74  p=2e-09
 <section id="missing-tab-5.5-and-figs-5.10-5.11" class="level2">
 <h2 class="anchored" data-anchor-id="missing-tab-5.5-and-figs-5.10-5.11">MISSING: Tab 5.5 and Figs 5.10-5.11</h2>
 <p>TODO: run HNRV’s adapted chapter5_bmt_Eva.qmd (made frome Eva’s bmt230217.R)</p>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercise-5.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.1">Exercise 5.1 (*)</h3>
+<p><em>Consider the two-state reversible Markov model, set up the <span class="math inline">\(\mathbf{A}(t)\)</span> and <span class="math inline">\(\mathbf{P}(s,t)\)</span> matrices, and express, using the Kolmogorov forward differential equations, the transition probabilities in terms of the transition intensities.</em></p>
+<p>The intensity matrix is: <span class="math display">\[{\bf A}(t)=\left( \begin{array}{cc}
+-A_{01}(t)&amp;A_{01}(t)\\
+A_{10}(t)&amp;-A_{10}(t)\\
+\end{array} \right).
+\]</span> and the transition probability matrix: <span class="math display">\[{\bf P}(s,t)=\left( \begin{array}{cc}
+P_{00}(s,t)&amp;1-P_{00}(s,t)\\
+1-P_{11}(s,t)&amp;P_{11}(s,t)\\
+\end{array} \right)
+\]</span> or, equivalently <span class="math display">\[{\bf P}(s,t)=\left( \begin{array}{cc}
+1-P_{01}(s,t)&amp;P_{01}(s,t)\\
+P_{10}(s,t)&amp;1-P_{10}(s,t)\\
+\end{array} \right).
+\]</span> This leads to the Kolmogorov forward differential equations <span class="math display">\[\frac{\partial}{\partial t}P_{01}(s,t)+(\alpha_{01}(t)+\alpha_{10}(t))P_{01}(s,t)=\alpha_{01}(t)\]</span> and <span class="math display">\[\frac{\partial}{\partial t}P_{10}(s,t)+(\alpha_{01}(t)+\alpha_{10}(t))P_{10}(s,t)=\alpha_{10}(t).\]</span> These are linear first order differential equations, i.e., of the form <span class="math display">\[f^{\prime}(t)+g(t)f(t)=h(t)\]</span> which are known to have the solution <span class="math display">\[f(t)=v(t)\exp(-G(t))+c\exp(-G(t))\]</span> with <span class="math inline">\(G^{\prime}(t)=g(t)\)</span> and <span class="math inline">\(v^{\prime}(t)=\exp(G(t))h(t)\)</span>, and the constants <span class="math inline">\(c\)</span> are determined such that <span class="math inline">\(P_{01}(s,s)=0\)</span> and <span class="math inline">\(P_{10}(s,s)=0\)</span>. For <span class="math inline">\(s=0\)</span>, the solution is <span class="math display">\[P_{01}(0,t)=\int_0^t\exp(-\int_u^t(\alpha_{01}(x)+\alpha_{10}(x))dx)\alpha_{01}(u)du\]</span> (the constant <span class="math inline">\(c=0\)</span>) and, for a general <span class="math inline">\(s\)</span>: <span class="math display">\[P_{01}(s,t)=\int_s^t\exp(-\int_u^t(\alpha_{01}(x)+\alpha_{10}(x))dx)\alpha_{01}(u)du.\]</span> The expression for <span class="math inline">\(P_{10}(s,t)\)</span> is similar.</p>
+</section>
+<section id="exercise-5.2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.2">Exercise 5.2 (*)</h3>
+<p><em>Consider the four-state model for the bone marrow transplantation study, set up the <span class="math inline">\(\mathbf{A}(t)\)</span> and <span class="math inline">\(\mathbf{P}(s,t)\)</span> matrices, and express, using the Kolmogorov forward differential equations, the transition probabilities in terms of the transition intensities.</em></p>
+<p>The intensity matrix is <span class="math display">\[{\bf A}(t)=\left( \begin{array}{cccc}
+-A_{01}(t)-A_{02}(t)-A_{03}(t)&amp;A_{01}(t)&amp;A_{02}(t)&amp;A_{03}(t)\\
+0&amp;-A_{12}(t)-A_{13}(t)&amp;A_{12}(t)&amp;A_{13}(t)\\
+0&amp;0&amp;-A_{23}(t)&amp;A_{23}(t)\\
+0&amp;0&amp;0&amp;0\\
+\end{array} \right),
+\]</span> and the transition probability matrix <span class="math display">\[{\bf P}(s,t)=\left( \begin{array}{cccc}
+P_{00}(s,t)&amp;P_{01}(s,t)&amp;P_{02}(s,t)&amp;P_{03}(s,t)\\
+0&amp;P_{11}(s,t)&amp;P_{12}(s,t)&amp;P_{13}(s,t)\\
+0&amp;0&amp;P_{22}(s,t)&amp;P_{23}(s,t)\\
+0&amp;0&amp;0&amp;1\\
+\end{array} \right),
+\]</span> with <span class="math inline">\(P_{00}=1-P_{01}-P_{02}-P_{03}\)</span>, <span class="math inline">\(P_{11}=1-P_{12}-P_{13}\)</span>, and <span class="math inline">\(P_{22}=1-P_{23}\)</span>. The Kolmogorov forward equations are <span class="math display">\[\frac{\partial}{\partial t}P_{00}(s,t)=-P_{00}(s,t)(\alpha_{01}(t)+\alpha_{02}(t)+\alpha_{03}(t)),\]</span> <span class="math display">\[\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)(\alpha_{12}(t)+\alpha_{13}(t)),\]</span> <span class="math display">\[\frac{\partial}{\partial t}P_{02}(s,t)=P_{00}(s,t)\alpha_{02}(t)+P_{01}(s,t)\alpha_{12}(t)-P_{02}(s,t)\alpha_{23}(t),\]</span> <span class="math display">\[\frac{\partial}{\partial t}P_{11}(s,t)=-P_{11}(s,t)(\alpha_{12}(t)+\alpha_{13}(t)),\]</span> <span class="math display">\[\frac{\partial}{\partial t}P_{12}(s,t)=P_{11}(s,t)\alpha_{12}(t)-P_{22}(s,t)\alpha_{23}(t),\]</span> <span class="math display">\[\frac{\partial}{\partial t}P_{22}(s,t)=-P_{22}(s,t)\alpha_{23}(t).\]</span> For <span class="math inline">\(P_{hh}, h=0,1,2,\)</span> the solutions are the well-known <span class="math display">\[P_{hh}(s,t)=\exp(-\int_s^t\alpha_{h\cdot}(u)du),\]</span> where <span class="math inline">\(\alpha_{h\cdot}(u)\)</span> is the total transition intensity out of state <span class="math inline">\(h\)</span>. For both <span class="math inline">\(P_{01}\)</span> and <span class="math inline">\(P_{21}\)</span>, the equation has the same form as that for the Markov illness-death model (Section 5.1.3, except for a misprint there where the r.h.s. of the equation for <span class="math inline">\(P_{01}\)</span> should read <span class="math inline">\(P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)\)</span>) and the solutions are, respectively, <span class="math display">\[P_{01}(s,t)=\int_s^tP_{00}(s,u)\alpha_{01}(u)P_{11}(u,t)du, \quad
+P_{12}(s,t)=\int_s^tP_{11}(s,u)\alpha_{12}(u)P_{22}(u,t)du.\]</span> These results may be verified by direct differentiation or by referring to the fact that the differential equation is linear, as utilized in Exercise 5.1.</p>
+<p>The equation for <span class="math inline">\(P_{02}(s,t)=f(t)\)</span> is also linear, <span class="math inline">\(f^{\prime}(t)+g(t)f(t)=h(t)\)</span>, with <span class="math inline">\(g(t)=\alpha_{23}(t)\)</span> and <span class="math inline">\(h(t)=P_{00}(s,t)\alpha_{02}(t)+P_{01}(s,t)\alpha_{12}(t)\)</span>. As a consequence, the solution (as shown in Section 5.1.5) has two terms <span class="math display">\[P_{02}^{(a)}(s,t)=\int_s^tP_{00}(s,u)\alpha_{02}(u)P_{22}(u,t)du\]</span> corresponding to the probability of a direct <span class="math inline">\(0\rightarrow 2\)</span> transition, and <span class="math display">\[P_{02}^{(b)}(s,t)=\int_s^tP_{01}(s,u)\alpha_{12}(u)P_{22}(u,t)du\]</span> corresponding to transition via state 1.</p>
+</section>
+<section id="exercise-5.3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.3">Exercise 5.3 (*)</h3>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section">1.</h4>
+<p><em>Consider the competing risks model and show that the ratio between the cause <span class="math inline">\(h\)</span> sub-distribution hazard and the corresponding cause-specific hazard is <span class="math display">\[\frac{\widetilde{\alpha}_h(t)}{\alpha_h(t)}=\frac{S(t)}{1-F_h(t)}.\]</span></em></p>
+<p>Let <span class="math inline">\(T_h=\inf\{t:V(t)=h\}\)</span> be the improper variable denoting time of transition into state <span class="math inline">\(h\)</span>. Then <span class="math inline">\(P(t\leq T_h&lt;t+dt)=\alpha_{0h}(t)P(V(t)=0)dt\)</span>. The cause-specific hazard is the conditional probability of this event given <span class="math inline">\(V(t)=0\)</span>, and the conditioning event has probability <span class="math inline">\(S(t)=P(V(t)=0)\)</span>. For the sub-distribution hazard the conditioning event is <span class="math inline">\(T_h&gt;t\)</span> with probability <span class="math inline">\(1-F_h(t)\)</span>, so, the ratio between the two is <span class="math inline">\(S(t)/(1-F_1(t))\)</span>.</p>
+</section>
+<section id="section-1" class="level4">
+<h4 class="anchored" data-anchor-id="section-1">2.</h4>
+<p><em>Show that, thereby, proportional sub-distribution hazards and proportional cause-specific hazards are incompatible.</em></p>
+<p>For a two-sample situation with proportional cause-specific hazards, i.e., <span class="math inline">\(\alpha_{h1}(t)=\theta\alpha_{h0}(t)\)</span>, the ratio between the corresponding sub-distribution hazards is, therefore, <span class="math display">\[\frac{\widetilde{\alpha}_{h1}(t)}{\widetilde{\alpha}_{h0}(t)}=\frac{S_1(t)/(1-F_{h1}(t))}{S_0(t)/(1-F_{h0}(t))}\]</span> <span class="math display">\[=\frac{\exp(-A_h(t)(\theta-1))}{\theta\int_0^tS_1(u)\alpha_h(u)du/\int_0^tS_0(u)\alpha_h(u)du}\]</span> which is constant in <span class="math inline">\(t\)</span> only if <span class="math inline">\(\theta=1\)</span>. A similar argument shows that proportional sub-distribution hazards leads to non-proportional cause-specific hazards.</p>
+</section>
+</section>
+<section id="exercise-5.4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.4">Exercise 5.4 (*)</h3>
+<p><em>Consider the competing risks model and direct binomial regression for <span class="math inline">\(Q_h(t_0)\)</span>, the cause-<span class="math inline">\(h\)</span> cumulative incidence at time <span class="math inline">\(t_0\)</span>. The estimating equation (5.18) is</em> <span class="math display">\[\sum_iD_i(t_0)\widehat{W}_i(t_0)\mathbf{A}(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigl(N_{hi}(t_0)-Q_h(t_0\mid \mathbf{Z}_1)\bigr)\]</span> <em>with <span class="math inline">\(D_i(t_0)\)</span> the indicator <span class="math inline">\(I(T_i\wedge t_0\leq C_i)\)</span> of observing the state occupied at <span class="math inline">\(t_0\)</span> and <span class="math inline">\(\widehat{W}_i(t_0)=1/\widehat{G}((t_0\wedge X_i)-)\)</span> the estimated inverse probability of no censoring (strictly) before the minimum of <span class="math inline">\(t_0\)</span> and the observation time <span class="math inline">\(X_i\)</span> for subject <span class="math inline">\(i\)</span>. The alternative estimating equation (5.32) is</em> <span class="math display">\[\sum_i\mathbf{A}(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigl(N_{hi}(t_0)D_i(t_0)\widehat{W}_i(t_0)-Q_h(t_0\mid \mathbf{Z}_i)\bigr).\]</span> <em>Show that, replacing <span class="math inline">\(\widehat{G}\)</span> by the true <span class="math inline">\(G\)</span>, both estimating equations are unbiased.</em></p>
+<p>Note that <span class="math inline">\(D_i(t_0)/G(t_0\wedge X_i)=D_i(t_0)/G(t_0\wedge T_i)\)</span> and that, hence, <span class="math display">\[E(D_i(t_0)/G(t_0\wedge X_i)\mid T_i)=1.\]</span> Note, further, that the observed indicator <span class="math inline">\(N_{hi}(t_0)=I(X_i\leq t_0, D_i=h)\)</span> in both sets of equations, <span class="math inline">\(\mathbf{U}=\mathbf{0}\)</span>, may be replaced by <span class="math inline">\(I(T_i\leq t_0, D_i=h)\)</span>. This is because <span class="math display">\[\widehat{W}_i(t_0)N_{hi}(t_0)=\widehat{W}_i(t_0)I(T_i\leq t_0, D_i=h).\]</span> With these remarks in place, unbiasedness of both sets of estimating equations follows by writing the expectation as <span class="math display">\[E(\mathbf{U})=E_T(E(\mathbf{U}\mid T)).\]</span></p>
+</section>
+<section id="exercise-5.5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5.5">Exercise 5.5 (*)</h3>
+<p><em>Derive the estimating equations for the landmark model (5.11).</em></p>
+<p>The pseudo-likelihood contribution from a single landmark is <span class="math display">\[\sum_{i=1}^n\int_{s_j}^{t_{hor}(s_j)}Y_i(s_j)\log\bigl(\frac{\exp(\mbox{LP}_{s_j,i})}{\sum_kY_k(t)\exp(\mbox{LP}_{s_j,k})}\bigr)dN_i(t),\]</span> however, in contrast to model (5.10), the same regression coefficient appears at all landmarks, so, the resulting pseudo-likelihood is obtained by adding over landmarks, <span class="math inline">\(j\)</span> <span class="math display">\[\sum_{j=1}^L\sum_{i=1}^n\int_{s_j}^{t_{hor}(s_j)}Y_i(s_j)\log\bigl(\frac{\exp(\mbox{LP}_{s_j,i})}{\sum_kY_k(t)\exp(\mbox{LP}_{s_j,k})}\bigr)dN_i(t).\]</span> There is a baseline hazard for each landmark, and estimation is based on events observed between <span class="math inline">\(s_j\)</span> and <span class="math inline">\(t_{hor}(s_j)\)</span>, i.e., the Breslow-type estimator <span class="math display">\[\widehat{A}_{0s_j}(t)=\int_{s_j}^t\frac{\sum_iY_i(s_j)dN_i(u)}{\sum_iY_i(u)\exp(\widehat{\mbox{LP}}_{s_j,i})}.\]</span></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

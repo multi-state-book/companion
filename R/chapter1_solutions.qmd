@@ -12,7 +12,10 @@ The average of the 7 uncensored observations: $$\frac{5+7+8+13+15+16+23}{7}=\fra
 
 *Consider the following records mimicking the Copenhagen Holter study (Example 1.1.8) in wide format and transform them into long format, i.e., create one data set for each of the possible six transitions in Figure 1.7.*
 
-Data can be converted to long format using the **msprep** function from the **mstate** package. However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. Furthermore, we have to fill in **timeafib**, **timestroke** and **timedeath** for all subjects, such that they correspond to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.
+Data can (partly) be converted to long format using the **msprep** function from the **mstate** package. 
+However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. 
+Furthermore, we have to fill in **timeafib**, **timestroke** and **timedeath** for all subjects, such that they correspond 
+to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.
 
 ```{r packages, warning = FALSE, message=FALSE}
 chs_data <- read.csv("data/cphholter.csv")
@@ -43,7 +46,7 @@ timeafib <- ifelse(is.na(timeafib), timestroke, timeafib)
 wide_data <- as.data.frame(cbind(id, timeafib, timestroke, 
                                  timedeath, afib, stroke, death))
 
-# Creating the transition matrix
+# Creating the transition matrix without the Stroke to AF transition
 tmat <- matrix(NA,4,4)
 tmat[1, 2:4] <- 1:3
 tmat[2, 3:4] <- 4:5
@@ -57,6 +60,25 @@ long_data <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
                     status = c(NA, "afib", "stroke", "death"),
                     trans = tmat, data = wide_data) 
 long_data
+
+# Now, the Stroke to AF transition is added manually
+
+stroketoaf<-subset(wide_data,stroke==1)
+
+stroketoaf$from <- 3
+stroketoaf$to <- 2
+stroketoaf$trans <- 7
+stroketoaf$Tstart <- stroketoaf$timestroke
+stroketoaf$Tstop <- ifelse(stroketoaf$timeafib>stroketoaf$timestroke,timeafib,timedeath)
+stroketoaf$status <- ifelse(stroketoaf$timeafib>stroketoaf$timestroke,1,0)
+stroketoaf$time <- stroketoaf$Tstop - stroketoaf$Tstart
+stroketoaf_long <- subset(stroketoaf, select = c(id,from,to,trans,Tstart,Tstop,time,status)) 
+
+# and added to the data set created my msprep
+
+finaldata <- rbind(long_data,stroketoaf_long)
+
+finaldata
 ```
 
 #### 2.
@@ -75,6 +97,22 @@ chs_data$timeafib <- ifelse(is.na(chs_data$timeafib),
 chs_long <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
                    status = c(NA, "afib", "stroke", "death"),
                    trans = tmat, data = chs_data)
+
+chs_stroketoaf<-subset(chs_data,stroke==1)
+
+chs_stroketoaf$from <- 3
+chs_stroketoaf$to <- 2
+chs_stroketoaf$trans <- 7
+chs_stroketoaf$Tstart <- chs_stroketoaf$timestroke
+chs_stroketoaf$Tstop <- ifelse(chs_stroketoaf$timeafib>chs_stroketoaf$timestroke,chs_stroketoaf$timeafib,chs_stroketoaf$timedeath)
+chs_stroketoaf$status <- ifelse(chs_stroketoaf$timeafib>chs_stroketoaf$timestroke,1,0)
+chs_stroketoaf$time <- chs_stroketoaf$Tstop - chs_stroketoaf$Tstart
+chs_stroketoaf_long <- subset(chs_stroketoaf, select = c(id,from,to,trans,Tstart,Tstop,time,status)) 
+
+
+chs_finaldata <- rbind(chs_long,chs_stroketoaf_long)
+
+chs_finaldata
 ```
 
 NB: We get a warning because 5 subjects have two events on the same day. This will be handled if necessary for further analyses.

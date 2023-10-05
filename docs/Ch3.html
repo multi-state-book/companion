@@ -125,6 +125,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -276,6 +277,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#figure-3.10" id="toc-figure-3.10" class="nav-link" data-scroll-target="#figure-3.10">Figure 3.10</a></li>
   <li><a href="#table-3.15-1" id="toc-table-3.15-1" class="nav-link" data-scroll-target="#table-3.15-1">Table 3.15</a></li>
   <li><a href="#in-text-stratified-cox-model-by-center" id="toc-in-text-stratified-cox-model-by-center" class="nav-link" data-scroll-target="#in-text-stratified-cox-model-by-center">In-text: stratified Cox model by center</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul>
+  <li><a href="#exercise-3.1" id="toc-exercise-3.1" class="nav-link" data-scroll-target="#exercise-3.1">Exercise 3.1 (*)</a></li>
+  <li><a href="#exercise-3.2" id="toc-exercise-3.2" class="nav-link" data-scroll-target="#exercise-3.2">Exercise 3.2 (*)</a></li>
+  <li><a href="#exercise-3.3" id="toc-exercise-3.3" class="nav-link" data-scroll-target="#exercise-3.3">Exercise 3.3 (*)</a></li>
+  <li><a href="#exercise-3.4" id="toc-exercise-3.4" class="nav-link" data-scroll-target="#exercise-3.4">Exercise 3.4 (*)</a></li>
+  <li><a href="#exercise-3.5" id="toc-exercise-3.5" class="nav-link" data-scroll-target="#exercise-3.5">Exercise 3.5 (*)</a></li>
+  <li><a href="#exercise-3.6" id="toc-exercise-3.6" class="nav-link" data-scroll-target="#exercise-3.6">Exercise 3.6 (*)</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -4281,6 +4291,46 @@ n= 2009, number of events= 764 </code></pre>
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercise-3.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.1">Exercise 3.1 (*)</h3>
+<p><em>Show that, under the null hypothesis <span class="math inline">\(H_0 : A_0(t) = A_1(t)\)</span>, the test statistic</em> <span class="math inline">\(\int_0^t K(u)\left( d\widehat{A}_1(u)-d\widehat{A}_0(u)\right)\)</span> <em>is a martingale (Section 3.2.2).</em></p>
+<p>The counting processes can be decomposed as <span class="math inline">\(N_h(t)=\int_0^tY_h(u)\alpha_h(u)du + M_h(t), h=0,1\)</span>, so under <span class="math inline">\(H_0\)</span>, <span class="math display">\[d\widehat{A}_h(u)=\frac{dN_h(u)}{Y_h(u)}=\alpha(u)du+\frac{dM_h(u)}{Y_h(u)},\]</span> and the test statistic reduces to the martingale integral <span class="math display">\[\int_0^tK(u)\left(\frac{dM_1(u)}{Y_1(u)}-\frac{dM_0(u)}{Y_0(u)}\right),\]</span> which is itself a martingale.</p>
+</section>
+<section id="exercise-3.2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.2">Exercise 3.2 (*)</h3>
+<p><em>Show that, when evaluated at the true parameter vector</em> <span class="math inline">\(\mathbf{\beta}_0\)</span><em>, the Cox partial likelihood score</em> <span class="math display">\[
+\int_0^t\sum_i \bigl(\mathbf{Z}_i-\frac{\sum_jY_j(u)\mathbf{Z}_j\exp(\mathbf{\beta}_0^{\sf T}\mathbf{Z}_j)}{\sum_jY_j(u)\exp(\mathbf{\beta}_0^{\sf T}\mathbf{Z}_j)}\bigr)dN_i(u)
+\]</span> <em>is a martingale (Section 3.3).</em></p>
+<p>Each individual counting process can be decomposed as <span class="math display">\[N_i(t)=\int_0^t \alpha_0(u)Y_i(u)\exp(\mathbf{\beta}_0^{\sf T}\mathbf{Z}_i)du + M_i(t)\]</span> and with <span class="math inline">\(S_0(\mathbf{\beta},t)=\sum_iY_i(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\)</span>, <span class="math inline">\(\mathbf{S}_1(\mathbf{\beta},t)=\sum_iY_i(t)\mathbf{Z}_i\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\)</span>, the integrand in the Cox score becomes <span class="math display">\[\sum_i \bigl(\mathbf{Z}_i-\frac{\mathbf{S}_1(\mathbf{\beta},u)}{S_0(\mathbf{\beta},u)}\bigr)(\alpha_0(u)Y_i(u)\exp(\mathbf{\beta}_0^{\sf T}\mathbf{Z}_i)du + dM_i(u))
+\]</span> <span class="math display">\[=\alpha_0(u)\bigl(\mathbf{S}_1(\mathbf{\beta},u)-\frac{\mathbf{S}_1(\mathbf{\beta},u)}{{S}_0(\mathbf{\beta},u)}{S}_0({\beta},u)\bigr)du
++ \sum_i(\mathbf{Z}_i-\frac{\mathbf{S}_1(\mathbf{\beta},u)}{S_0(\mathbf{\beta},u)}\bigr)dM_i(u)\]</span> and the Cox score is then the martingale integral <span class="math display">\[\int_0^t \sum_i(\mathbf{Z}_i-\frac{\mathbf{S}_1(\mathbf{\beta},u)}{S_0(\mathbf{\beta},u)}\bigr)dM_i(u).\]</span></p>
+</section>
+<section id="exercise-3.3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.3">Exercise 3.3 (*)</h3>
+<p><em>Show that, for a Cox model with a single binary covariate, the score test for the hypothesis</em> <span class="math inline">\(\beta=0\)</span> <em>based on the first and second derivative of</em> <span class="math inline">\(\log\mbox{PL}(\beta)\)</span> <em>(Equation (3.16)) is equal to the logrank test.</em>}</p>
+<p>With a single binary covariate <span class="math inline">\(Z_i=I(i\mbox{ is in group 1})\)</span>, the Cox score <span class="math display">\[\sum_i \int_0^t\left(Z_i-\frac{S_1(\beta,u)}{S_0(\beta,u)}\right)dN_i(u)\]</span> (with <span class="math inline">\(S_0, S_1\)</span> defined in Exercise 3.2) reduces to <span class="math display">\[N_1(\infty)-\int_0^{\infty}\frac{Y_1(u)}{Y_0(u)+Y_1(u)}d(N_0+N_1)(u)\]</span> when <span class="math inline">\(\beta=0\)</span> and <span class="math inline">\(t=\infty\)</span>. This is the numerator in the logrank test, <span class="math inline">\(\mbox{LR}(\infty)\)</span>, Section 3.2.2. With <span class="math inline">\(S_2(\beta,t)=\sum_jZ_j^2Y_j(t)\exp(\beta Z_j)\)</span>, minus the derivative of the Cox score is <span class="math display">\[\sum_i\int_0^t\frac{S_0(\beta,u)S_2(\beta,u)-S_1(\beta,u)^2}{S_0(\beta,u)^2}dN_i(u)\]</span> which for <span class="math inline">\(\beta=0\)</span> and <span class="math inline">\(t=\infty\)</span> (when there are no ties) reduces to the hypergeometric variance, <span class="math inline">\(v\)</span> (Section 3.2.2) <span class="math display">\[\int_0^{\infty}\frac{Y_0(u)Y_1(u)}{(Y_0(u)+Y_1(u))^2}d(N_0+N_1)(u)\]</span> and the resulting score test is the logrank test.</p>
+</section>
+<section id="exercise-3.4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.4">Exercise 3.4 (*)</h3>
+<p><em>Show that, for the stratified Cox model (3.20), the profile likelihood is given by (3.21) and the resulting Breslow estimator by (3.22).</em></p>
+<p>The log-likelihood for the stratified Cox model based on the Jacod formula is <span class="math display">\[\sum_j\sum_{i\in S_j}\left(\int_0^{\infty}\log\bigl(Y_i(t)\alpha_{0j}(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigr)dN_i(t)-\int_0^{\infty}Y_i(t)\alpha_{0j}(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)\]</span> (Section 3.3). Taking derivative with respect to a single <span class="math inline">\(\alpha_{0j}(t)\)</span>, we get <span class="math display">\[\sum_{i \in S_j}\left(\frac{1}{\alpha_{0j}(t)}dN_i(t)-Y_i(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right),\]</span> and equating to 0 and solving leads to <span class="math display">\[\widehat{\alpha_{0j}(t)dt}=\frac{\sum_{i\in S_j}dN_i(t)}{\sum_{i \in S_j}Y_i(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)},\]</span> the jump in the Breslow estimator (3.22).</p>
+<p>Inserting this into the Jacod formula leads to the profile likelihood <span class="math display">\[\prod_j\prod_{i\in S_j}\exp\left(-\int_0^{\infty}Y_i(t)\frac{\sum_{\ell\in S_j}dN_\ell(t)}{\sum_{\ell \in S_j}Y_\ell(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_\ell)}\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)\]</span> <span class="math display">\[\times \prod_j\prod_{i\in S_j}\prod_t \left(Y_i(t)\frac{\sum_{\ell\in S_j}dN_\ell(t)}{\sum_{\ell \in S_j}Y_\ell(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_\ell)}\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\right)^{dN_i(t)},\]</span> where, in the first line, factors depending on <span class="math inline">\(\mathbf{\beta}\)</span> cancel, and the remaining factors depending on <span class="math inline">\(\mathbf{\beta}\)</span> are exactly (3.21).</p>
+</section>
+<section id="exercise-3.5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.5">Exercise 3.5 (*)</h3>
+<p><em>Consider the situation in Section 3.4 with categorical covariates and show that the likelihood is given by</em> <span class="math display">\[
+\prod_{\ell=1}^L\prod_{\mathbf{c}\in {\cal C}}(\alpha_{0\ell}\theta_{\mathbf{c}})^{N_{\ell \mathbf{c}}}\exp(-\alpha_{0\ell}\theta_{\mathbf{c}} Y_{\ell \mathbf{c}}).
+\]</span></p>
+<p>The starting point is the Jacod formula where factor <span class="math inline">\(i\)</span> is <span class="math display">\[\prod_t (Y_i(t)\alpha_i(t))^{dN_i(t)}\exp(-\int_0^{\infty}Y_i(t)\alpha_i(t)dt),\]</span> and when <span class="math inline">\(\alpha_i(t)=\alpha_{0\ell}\mathbf{\theta}_{\mathbf{c}}\)</span> if <span class="math inline">\(t\in [s_{\ell -1},s_{\ell})\)</span> and <span class="math inline">\(i\)</span> has covariates in category <span class="math inline">\(\mathbf{c}\)</span>, this is proportional to <span class="math display">\[\prod_{\ell=1}^L(\alpha_{0\ell}\mathbf{\theta}_{\mathbf{c}})^{N_{\ell\mathbf{c}}^i}\exp(-\sum_{\ell=1}^LY_{\ell\mathbf{c}}^i\mathbf{\theta}_{\mathbf{c}}),\]</span> where <span class="math inline">\(N_{\ell\mathbf{c}}^i\)</span> is the number of events for subject <span class="math inline">\(i\)</span> in <span class="math inline">\([s_{\ell -1},s_{\ell})\)</span> and <span class="math inline">\(Y_{\ell\mathbf{c}}^i\)</span> the time spent by subject <span class="math inline">\(i\)</span> in <span class="math inline">\([s_{\ell -1},s_{\ell})\)</span>. Collecting factors from all subjects with covariates in category <span class="math inline">\(\mathbf{c}\)</span>, the joint likelihood contribution from those subjects is <span class="math display">\[\prod_{\ell=1}^L(\alpha_{0\ell}\mathbf{\theta}_{\mathbf{c}})^{N_{\ell\mathbf{c}}}\exp(-\sum_{\ell=1}^LY_{\ell\mathbf{c}}\mathbf{\theta}_{\mathbf{c}}),\]</span> where <span class="math inline">\(N_{\ell\mathbf{c}}\)</span> and <span class="math inline">\(Y_{\ell\mathbf{c}}\)</span> are the sums over those subjects of the individual values of <span class="math inline">\(N_{\ell\mathbf{c}}^i\)</span> and <span class="math inline">\(Y_{\ell\mathbf{c}}^i\)</span>, respectively. The total likelihood is now the product over all categories <span class="math inline">\(\mathbf{c}\)</span>.</p>
+</section>
+<section id="exercise-3.6" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3.6">Exercise 3.6 (*)</h3>
+<p><em>Derive the estimating equations for the model studied in Section 3.8.4</em></p>
+<p>The arguments are, in fact, identical to those used for the stratified Cox model in Exercise 3.4. The only difference appears due to the fact that the likelihood does not factorize over types, <span class="math inline">\(\nu\)</span>.</p>
 
 
 </section>

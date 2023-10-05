@@ -5,3 +5,8 @@
 
 ## PROVA trial in liver cirrhosis
 {{< include R/chapter6_prova.qmd >}}
+
+## Exercises
+
+{{< include R/chapter6_solutions.qmd >}}
+

@@ -20,3 +20,7 @@
 
 ## Bone marrow transplantation in acute leukemia
 {{< include R/chapter3_bmt.qmd >}}
+
+## Exercises
+
+{{< include R/chapter3_solutions.qmd >}}

@@ -1,0 +1,116 @@
+### Exercise 5.1 (\*)
+
+*Consider the two-state reversible Markov model, set up the $\mathbf{A}(t)$ and $\mathbf{P}(s,t)$ matrices, and express, using the Kolmogorov forward differential equations, the transition probabilities in terms of the transition intensities.*
+
+The intensity matrix is:
+$${\bf A}(t)=\left( \begin{array}{cc}
+-A_{01}(t)&A_{01}(t)\\
+A_{10}(t)&-A_{10}(t)\\
+\end{array} \right).
+$$
+and the transition probability matrix:
+$${\bf P}(s,t)=\left( \begin{array}{cc}
+P_{00}(s,t)&1-P_{00}(s,t)\\
+1-P_{11}(s,t)&P_{11}(s,t)\\
+\end{array} \right)
+$$
+or, equivalently
+$${\bf P}(s,t)=\left( \begin{array}{cc}
+1-P_{01}(s,t)&P_{01}(s,t)\\
+P_{10}(s,t)&1-P_{10}(s,t)\\
+\end{array} \right).
+$$
+This leads to the Kolmogorov forward differential equations
+$$\frac{\partial}{\partial t}P_{01}(s,t)+(\alpha_{01}(t)+\alpha_{10}(t))P_{01}(s,t)=\alpha_{01}(t)$$
+and
+$$\frac{\partial}{\partial t}P_{10}(s,t)+(\alpha_{01}(t)+\alpha_{10}(t))P_{10}(s,t)=\alpha_{10}(t).$$
+These are linear first order differential equations, i.e., of the form
+$$f^{\prime}(t)+g(t)f(t)=h(t)$$
+which are known to have the solution
+$$f(t)=v(t)\exp(-G(t))+c\exp(-G(t))$$
+with $G^{\prime}(t)=g(t)$ and $v^{\prime}(t)=\exp(G(t))h(t)$, and the constants $c$ are determined such that $P_{01}(s,s)=0$ and $P_{10}(s,s)=0$. For $s=0$, the solution is
+$$P_{01}(0,t)=\int_0^t\exp(-\int_u^t(\alpha_{01}(x)+\alpha_{10}(x))dx)\alpha_{01}(u)du$$
+(the constant $c=0$) and, for a general $s$:
+$$P_{01}(s,t)=\int_s^t\exp(-\int_u^t(\alpha_{01}(x)+\alpha_{10}(x))dx)\alpha_{01}(u)du.$$
+The expression for $P_{10}(s,t)$ is similar.
+
+
+### Exercise 5.2 (\*)
+*Consider the four-state model for the bone marrow transplantation study, set up the $\mathbf{A}(t)$ and $\mathbf{P}(s,t)$ matrices, and express, using the Kolmogorov forward differential equations, the transition probabilities in terms of the transition intensities.*
+
+The intensity matrix is
+$${\bf A}(t)=\left( \begin{array}{cccc}
+-A_{01}(t)-A_{02}(t)-A_{03}(t)&A_{01}(t)&A_{02}(t)&A_{03}(t)\\
+0&-A_{12}(t)-A_{13}(t)&A_{12}(t)&A_{13}(t)\\
+0&0&-A_{23}(t)&A_{23}(t)\\
+0&0&0&0\\
+\end{array} \right),
+$$
+and the transition probability matrix
+$${\bf P}(s,t)=\left( \begin{array}{cccc}
+P_{00}(s,t)&P_{01}(s,t)&P_{02}(s,t)&P_{03}(s,t)\\
+0&P_{11}(s,t)&P_{12}(s,t)&P_{13}(s,t)\\
+0&0&P_{22}(s,t)&P_{23}(s,t)\\
+0&0&0&1\\
+\end{array} \right),
+$$
+with $P_{00}=1-P_{01}-P_{02}-P_{03}$, $P_{11}=1-P_{12}-P_{13}$, and $P_{22}=1-P_{23}$. The Kolmogorov forward equations are
+$$\frac{\partial}{\partial t}P_{00}(s,t)=-P_{00}(s,t)(\alpha_{01}(t)+\alpha_{02}(t)+\alpha_{03}(t)),$$
+$$\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)(\alpha_{12}(t)+\alpha_{13}(t)),$$
+$$\frac{\partial}{\partial t}P_{02}(s,t)=P_{00}(s,t)\alpha_{02}(t)+P_{01}(s,t)\alpha_{12}(t)-P_{02}(s,t)\alpha_{23}(t),$$
+$$\frac{\partial}{\partial t}P_{11}(s,t)=-P_{11}(s,t)(\alpha_{12}(t)+\alpha_{13}(t)),$$
+$$\frac{\partial}{\partial t}P_{12}(s,t)=P_{11}(s,t)\alpha_{12}(t)-P_{22}(s,t)\alpha_{23}(t),$$
+$$\frac{\partial}{\partial t}P_{22}(s,t)=-P_{22}(s,t)\alpha_{23}(t).$$
+For $P_{hh}, h=0,1,2,$ the solutions are the well-known
+$$P_{hh}(s,t)=\exp(-\int_s^t\alpha_{h\cdot}(u)du),$$
+where $\alpha_{h\cdot}(u)$ is the total transition intensity out of state $h$. For both $P_{01}$ and $P_{21}$, the equation has the same form as that for the Markov illness-death model (Section 5.1.3, except for a misprint there where the r.h.s. of the equation for $P_{01}$ should read $P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)$) and the solutions are, respectively,
+$$P_{01}(s,t)=\int_s^tP_{00}(s,u)\alpha_{01}(u)P_{11}(u,t)du, \quad
+P_{12}(s,t)=\int_s^tP_{11}(s,u)\alpha_{12}(u)P_{22}(u,t)du.$$
+These results may be verified by direct differentiation or by referring to the fact that the differential equation is linear, as utilized in Exercise 5.1.
+
+The equation for $P_{02}(s,t)=f(t)$ is also linear, $f^{\prime}(t)+g(t)f(t)=h(t)$, with $g(t)=\alpha_{23}(t)$ and $h(t)=P_{00}(s,t)\alpha_{02}(t)+P_{01}(s,t)\alpha_{12}(t)$. As a consequence, the solution (as shown in Section 5.1.5) has two terms
+$$P_{02}^{(a)}(s,t)=\int_s^tP_{00}(s,u)\alpha_{02}(u)P_{22}(u,t)du$$
+corresponding to the probability of a direct $0\rightarrow 2$ transition, and
+$$P_{02}^{(b)}(s,t)=\int_s^tP_{01}(s,u)\alpha_{12}(u)P_{22}(u,t)du$$
+corresponding to transition via state 1.
+
+
+### Exercise 5.3 (\*)
+#### 1.
+*Consider the competing risks model and show that the ratio between the cause $h$ sub-distribution hazard  and the corresponding cause-specific hazard is $$\frac{\widetilde{\alpha}_h(t)}{\alpha_h(t)}=\frac{S(t)}{1-F_h(t)}.$$*
+
+Let $T_h=\inf\{t:V(t)=h\}$ be the improper variable denoting time of transition into state $h$. Then
+$P(t\leq T_h<t+dt)=\alpha_{0h}(t)P(V(t)=0)dt$. The cause-specific hazard is the conditional probability of this event given $V(t)=0$, and the conditioning event has probability $S(t)=P(V(t)=0)$. For the sub-distribution hazard the conditioning event is $T_h>t$ with probability $1-F_h(t)$, so, the ratio between the two is $S(t)/(1-F_1(t))$.
+
+
+#### 2.
+*Show that, thereby, proportional sub-distribution hazards and proportional cause-specific hazards are incompatible.*
+
+For a two-sample situation with proportional cause-specific hazards, i.e., $\alpha_{h1}(t)=\theta\alpha_{h0}(t)$, the ratio between the corresponding sub-distribution hazards is, therefore,
+$$\frac{\widetilde{\alpha}_{h1}(t)}{\widetilde{\alpha}_{h0}(t)}=\frac{S_1(t)/(1-F_{h1}(t))}{S_0(t)/(1-F_{h0}(t))}$$
+$$=\frac{\exp(-A_h(t)(\theta-1))}{\theta\int_0^tS_1(u)\alpha_h(u)du/\int_0^tS_0(u)\alpha_h(u)du}$$
+which is constant in $t$ only if $\theta=1$. A similar argument shows that proportional sub-distribution hazards leads to non-proportional cause-specific hazards.
+
+### Exercise 5.4 (\*)
+*Consider the competing risks model and direct binomial regression for $Q_h(t_0)$, the cause-$h$ cumulative incidence at time $t_0$. The estimating equation (5.18) is* $$\sum_iD_i(t_0)\widehat{W}_i(t_0)\mathbf{A}(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigl(N_{hi}(t_0)-Q_h(t_0\mid \mathbf{Z}_1)\bigr)$$
+*with $D_i(t_0)$ the indicator $I(T_i\wedge t_0\leq C_i)$ of observing the state occupied at $t_0$ and $\widehat{W}_i(t_0)=1/\widehat{G}((t_0\wedge X_i)-)$ the estimated inverse probability of no censoring (strictly) before the minimum of $t_0$ and the observation time $X_i$ for subject $i$. The alternative estimating equation (5.32) is*
+$$\sum_i\mathbf{A}(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigl(N_{hi}(t_0)D_i(t_0)\widehat{W}_i(t_0)-Q_h(t_0\mid \mathbf{Z}_i)\bigr).$$
+*Show that, replacing $\widehat{G}$ by the true $G$, both estimating equations are unbiased.*
+
+Note that $D_i(t_0)/G(t_0\wedge X_i)=D_i(t_0)/G(t_0\wedge T_i)$ and that, hence,
+$$E(D_i(t_0)/G(t_0\wedge X_i)\mid T_i)=1.$$
+Note, further, that the observed indicator $N_{hi}(t_0)=I(X_i\leq t_0, D_i=h)$ in both sets of equations, $\mathbf{U}=\mathbf{0}$, may be replaced by $I(T_i\leq t_0, D_i=h)$. This is because
+$$\widehat{W}_i(t_0)N_{hi}(t_0)=\widehat{W}_i(t_0)I(T_i\leq t_0, D_i=h).$$
+With these remarks in place, unbiasedness of both sets of estimating equations follows by writing the expectation as
+$$E(\mathbf{U})=E_T(E(\mathbf{U}\mid T)).$$
+
+
+### Exercise 5.5 (\*)
+*Derive the estimating equations for the landmark model (5.11).*
+
+The pseudo-likelihood contribution from a single landmark is
+$$\sum_{i=1}^n\int_{s_j}^{t_{hor}(s_j)}Y_i(s_j)\log\bigl(\frac{\exp(\mbox{LP}_{s_j,i})}{\sum_kY_k(t)\exp(\mbox{LP}_{s_j,k})}\bigr)dN_i(t),$$
+however, in contrast to model (5.10), the same regression coefficient appears at all landmarks, so, the resulting pseudo-likelihood is obtained by adding over landmarks, $j$
+$$\sum_{j=1}^L\sum_{i=1}^n\int_{s_j}^{t_{hor}(s_j)}Y_i(s_j)\log\bigl(\frac{\exp(\mbox{LP}_{s_j,i})}{\sum_kY_k(t)\exp(\mbox{LP}_{s_j,k})}\bigr)dN_i(t).$$
+There is a baseline hazard for each landmark, and estimation is based on events observed between $s_j$ and $t_{hor}(s_j)$, i.e., the Breslow-type estimator
+$$\widehat{A}_{0s_j}(t)=\int_{s_j}^t\frac{\sum_iY_i(s_j)dN_i(u)}{\sum_iY_i(u)\exp(\widehat{\mbox{LP}}_{s_j,i})}.$$

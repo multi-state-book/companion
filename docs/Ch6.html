@@ -125,6 +125,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -262,6 +263,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#read-data-1" id="toc-read-data-1" class="nav-link" data-scroll-target="#read-data-1">Read data</a></li>
   <li><a href="#figure-6.10" id="toc-figure-6.10" class="nav-link" data-scroll-target="#figure-6.10">Figure 6.10</a></li>
   <li><a href="#table-6.7" id="toc-table-6.7" class="nav-link" data-scroll-target="#table-6.7">Table 6.7</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
+  <ul>
+  <li><a href="#exercise-6.1" id="toc-exercise-6.1" class="nav-link" data-scroll-target="#exercise-6.1">Exercise 6.1 (*)</a>
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2.</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">3.</a></li>
+  </ul></li>
+  <li><a href="#exercise-6.2" id="toc-exercise-6.2" class="nav-link" data-scroll-target="#exercise-6.2">Exercise 6.2 (*)</a>
+  <ul>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">1.</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">2.</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/multi-state-book/companion/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -1419,8 +1434,45 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <section id="table-6.7" class="level3">
 <h3 class="anchored" data-anchor-id="table-6.7">Table 6.7</h3>
 <p>No code available - results are from: Andersen, P. K., Wandall, E. N. S., Pohar Perme, M. (2022). Inference for transition probabilities in non-Markov multi-state models. <em>Lifetime Data Analysis</em>, 28:585–604.</p>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="exercise-6.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6.1">Exercise 6.1 (*)</h3>
+<p><em>The influence function for the survival function <span class="math inline">\(S(t)\)</span> is</em> <span class="math display">\[\dot{\phi}(X_i^*)=-S(t)\int_0^t\frac{dM_i(u)}{S(u)G(u)}\]</span> <em>with <span class="math inline">\(M_i(u)=N_i(u)-\int_0^uY_i(s)dA(s)\)</span> being the martingale for the failure counting process for subject <span class="math inline">\(i\)</span> (Overgaard et al.&nbsp;2017). The corresponding `plug-in’ approximation is then</em> <span class="math display">\[\widehat{\dot{\phi}}(X_i^*)=-\widehat{S}(t)\left(\frac{N_i(t)}{Y(t\wedge X_i)/n}-\int_0^{t\wedge X_i}\frac{dN(u)}{Y(u)^2/n}\right).\]</span></p>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section">1.</h4>
+<p><em>Show that, writing the estimator in the</em> `<span class="math inline">\(\exp(-\mbox{Nelson-Aalen})\)</span>’ <em>form</em> <span class="math inline">\(\widehat{S}^w(t)=\exp(-\int_0^t(\sum_iw_idN_i(u)/\sum_iw_iY_i(u)))\)</span><em>, this expression is obtained as</em> <span class="math display">\[\dot{\widehat{\phi}}(X_i^*)=\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}.\]</span> The derivative <span class="math inline">\(\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}\)</span> is <span class="math display">\[-\widehat{S}(t)\int_0^t\frac{(Y(u)/n)dN_i(u)-Y_i(u)dN(u)/n}{(Y(u)/n)^2}\]</span> <span class="math display">\[=-\widehat{S}(t)(\int_0^t\frac{dN_i(u)}{Y(u)/n}-\int_0^tY_i(u)\frac{dN(u)}{Y(u)^2/n}),\]</span> which equals the desired expression.</p>
+</section>
+<section id="section-1" class="level4">
+<h4 class="anchored" data-anchor-id="section-1">2.</h4>
+<p><em>Show that for the standard Kaplan-Meier estimator</em> <span class="math display">\[\widehat{S}^w(t)=\prod_{[0,t]}(1-\sum_iw_idN_i(u)/\sum_iw_iY(u))\]</span> <em>it holds that</em> <span class="math display">\[\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}=
+-n\widehat{S}(t)\left(\frac{N_i(t)}{Y(t\wedge X_i)-dN(t\wedge X_i)}-\int_0^{t\wedge X_i}\frac{dN(u)}{Y(u)(Y(u)-dN(u))}\right).\]</span></p>
+<p>Note that the factor <span class="math inline">\(n\)</span> is missing in the exercise text in the book.</p>
+<p>The Kaplan-Meier estimator is a product, say <span class="math inline">\(f(\mathbf{w})=\prod_jf_j(\mathbf{w})\)</span>, with a factor for each observation time <span class="math inline">\(u=X_j\)</span> and with derivative <span class="math display">\[f^{\prime}(\mathbf{w})=\sum_jf_j^{\prime}(\mathbf{w})\prod_{k\neq j}f_k(\mathbf{w})=f(\mathbf{w})\sum_j\frac{f_j^{\prime}(\mathbf{w})}{f_j(\mathbf{w})}.\]</span> The <span class="math inline">\(j\)</span>th factor is <span class="math inline">\(f_j(\mathbf{w})=1-\frac{\sum_iw_idN_i(u)}{\sum_iw_iY(u)}\)</span> with <span class="math inline">\(i\)</span>th derivative, when <span class="math inline">\(\mathbf{w}=1/n\)</span>, <span class="math display">\[-\frac{(Y(u)/n)dN_i(u)-(dN(u)/n)Y_i(u)}{(Y(u)/n)^2}\]</span> and, hence, <span class="math display">\[\frac{f_j^{\prime}(\mathbf{w})}{f_j(\mathbf{w})}=-\frac{Y(u)dN_i(u)-dN(u)Y_i(u)}{(Y(u)-dN(u))Y(u)/n}.\]</span> Summing (integrating) over all observation times, the desired expression is obtained.</p>
+</section>
+<section id="section-2" class="level4">
+<h4 class="anchored" data-anchor-id="section-2">3.</h4>
+<p><em>Show that, in the case of no censoring, the influence function reduces to</em> <span class="math display">\[\dot{\phi}(X_i^*)=I(T_i&gt;t)-S(t).\]</span></p>
+<p>Using the infinitesimal jackknife approach on the complete data estimator <span class="math inline">\(\widehat{S}^w(t)={\sum_iw_iI(T_i&gt;t)}/{\sum_iw_i}\)</span>, the <span class="math inline">\(i\)</span>th derivative is, when <span class="math inline">\(\mathbf{w}=1/n\)</span>, <span class="math display">\[I(T_i&gt;t)-\sum_jI(T_j&gt;t)/n=I(T_i&gt;t)-\widehat{S}(t).\]</span> Alternatively, evaluating the expression for <span class="math inline">\(\dot{\phi}(X_i^*)\)</span> for uncensored data (<span class="math inline">\(G(u)=1\)</span>), we get <span class="math display">\[-S(t)\int_0^t(dN_i(u)-\alpha(u)Y_i(u))/S(u)du=-S(t)(\frac{N_i(t)}{S(t\wedge T_i)}-\int_0^tY_i(u)\alpha(u)/S(u)du,\]</span> where the latter integral (using that the density <span class="math inline">\(\alpha(u)S(u)\)</span> is minus the derivative of <span class="math inline">\(S(u)\)</span>) can be evaluated as <span class="math inline">\(1-1/S(t\wedge T_i)\)</span>. All in all, we get <span class="math inline">\(-S(t)\)</span> for <span class="math inline">\(T_i\leq t\)</span> and <span class="math inline">\(1-S(t)\)</span> for <span class="math inline">\(T_i&gt;t\)</span>, i.e., <span class="math inline">\(I(T_i&gt;t)-S(t)\)</span>.</p>
+</section>
+</section>
+<section id="exercise-6.2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6.2">Exercise 6.2 (*)</h3>
+<section id="section-3" class="level4">
+<h4 class="anchored" data-anchor-id="section-3">1.</h4>
+<p><em>Show that, for the Aalen-Johansen estimator, the calculation</em> <span class="math display">\[\dot{\widehat{\phi}}(X_i^*)=\frac{\partial \widehat{F}^w_h(t)}{\partial w_i}\vert_{\mathbf{w}=1/n},\]</span> with <span class="math inline">\(\widehat{F}^w_h(t)\)</span> <em>given by (6.11), leads to the pseudo-value approximation obtained by plugging-in estimators into (6.10).</em></p>
+<p>The <span class="math inline">\(i\)</span>th derivative of <span class="math inline">\(\widehat{F}^w_h(t)\)</span> when <span class="math inline">\(\mathbf{w}=1/n\)</span> is <span class="math display">\[\int_0^t(-\widehat{S}(u-)(\sum_j\int_0^u\frac{(Y(s)/n)dN_{ji}(s)-(dN_j(s)/n)Y_i(s)}{(Y(s)/n)^2}d\widehat{A}_h(u))\]</span> <span class="math display">\[+\widehat{S}(u-)(\frac{(Y(u)/n)dN_{hi}(u)-(dN_h(u)/n)Y_i(u)}{(Y(s)/n)^2})).\]</span> Using the relation <span class="math inline">\(\widehat{S}(u-)\widehat{G}(u-)=Y(u)/n\)</span>, the second line reduces to <span class="math display">\[\int_0^t\frac{dN_{hi}(u)}{\widehat{G}(u-)}-\int_0^tY_i(u)\frac{d\widehat{A}_h(u)}{\widehat{G}(u-)}\]</span> which is the estimate for the first term in (6.10) because <span class="math inline">\(M_{hi}(t)=N_{hi}(t)-\int_0^tY_i(u)dA_h(u)\)</span>. Using the same relation for the first line, this reduces to <span class="math display">\[-\int_0^t\widehat{S}(u-)\left(\int_0^u\sum_h(\frac{dN_{ji}(s)}{\widehat{S}(s-)\widehat{G}(s-)}-
+Y_i(s)\frac{dN_h(s)}{\widehat{S}(s-)\widehat{G}(s-)Y(s)})\right)\]</span> which is the estimate of the second term in (6.10) because <span class="math display">\[M_{i}(t)=\sum_j (N_{ji}(t)-\int_0^tY_i(u)dA_j(u)).\]</span></p>
+</section>
+<section id="section-4" class="level4">
+<h4 class="anchored" data-anchor-id="section-4">2.</h4>
+<p><em>Show that, in the case of no censoring, the influence function reduces to</em> <span class="math display">\[\dot{\phi}(X_i^*)=I(T_i\leq t, D=h)-F_h(t).\]</span></p>
+<p>Looking at Equation (6.6), the result follows directly because <span class="math inline">\(G(u)=1\)</span> and <span class="math inline">\(M_{0i}(t)=0\)</span>. Using, as an alternative, the infinitesimal jackknife approach on the complete data estimator <span class="math inline">\(\widehat{F}_h^w(t)={\sum_iw_iI(T_i\leq t, D_i=h)}/{\sum_iw_i}\)</span>, the <span class="math inline">\(i\)</span>th derivative is, when <span class="math inline">\(\mathbf{w}=1/n\)</span>, <span class="math display">\[I(T_i\leq t, D_i=h)-\sum_jI(T_j\leq t, D_j=h)/n=I(T_i\leq t, D_i=h)-\widehat{F}_h(t).\]</span></p>
 
 
+</section>
 </section>
 </section>
 

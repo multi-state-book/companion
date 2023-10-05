@@ -1,0 +1,77 @@
+### Exercise 6.1 (\*)
+
+*The influence function for the survival function $S(t)$ is*
+$$\dot{\phi}(X_i^*)=-S(t)\int_0^t\frac{dM_i(u)}{S(u)G(u)}$$
+*with $M_i(u)=N_i(u)-\int_0^uY_i(s)dA(s)$ being the martingale for the failure counting process for subject $i$ (Overgaard et al. 2017). The corresponding `plug-in' approximation is then*
+$$\widehat{\dot{\phi}}(X_i^*)=-\widehat{S}(t)\left(\frac{N_i(t)}{Y(t\wedge X_i)/n}-\int_0^{t\wedge X_i}\frac{dN(u)}{Y(u)^2/n}\right).$$
+
+#### 1.
+*Show that, writing the estimator in the* `$\exp(-\mbox{Nelson-Aalen})$' *form* $\widehat{S}^w(t)=\exp(-\int_0^t(\sum_iw_idN_i(u)/\sum_iw_iY_i(u)))$*, this expression is obtained as*
+$$\dot{\widehat{\phi}}(X_i^*)=\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}.$$
+The derivative $\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}$ is
+$$-\widehat{S}(t)\int_0^t\frac{(Y(u)/n)dN_i(u)-Y_i(u)dN(u)/n}{(Y(u)/n)^2}$$
+$$=-\widehat{S}(t)(\int_0^t\frac{dN_i(u)}{Y(u)/n}-\int_0^tY_i(u)\frac{dN(u)}{Y(u)^2/n}),$$
+which equals the desired expression.
+
+#### 2.
+
+*Show that for the standard Kaplan-Meier estimator*
+$$\widehat{S}^w(t)=\prod_{[0,t]}(1-\sum_iw_idN_i(u)/\sum_iw_iY(u))$$
+*it holds that*
+$$\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}=
+-n\widehat{S}(t)\left(\frac{N_i(t)}{Y(t\wedge X_i)-dN(t\wedge X_i)}-\int_0^{t\wedge X_i}\frac{dN(u)}{Y(u)(Y(u)-dN(u))}\right).$$
+
+Note that the factor $n$ is missing in the exercise text in the book.
+
+The Kaplan-Meier estimator is a product, say
+$f(\mathbf{w})=\prod_jf_j(\mathbf{w})$, with a factor for each observation time $u=X_j$ and with derivative
+$$f^{\prime}(\mathbf{w})=\sum_jf_j^{\prime}(\mathbf{w})\prod_{k\neq j}f_k(\mathbf{w})=f(\mathbf{w})\sum_j\frac{f_j^{\prime}(\mathbf{w})}{f_j(\mathbf{w})}.$$
+The $j$th factor is
+$f_j(\mathbf{w})=1-\frac{\sum_iw_idN_i(u)}{\sum_iw_iY(u)}$ with $i$th derivative, when $\mathbf{w}=1/n$,
+$$-\frac{(Y(u)/n)dN_i(u)-(dN(u)/n)Y_i(u)}{(Y(u)/n)^2}$$
+and, hence,
+$$\frac{f_j^{\prime}(\mathbf{w})}{f_j(\mathbf{w})}=-\frac{Y(u)dN_i(u)-dN(u)Y_i(u)}{(Y(u)-dN(u))Y(u)/n}.$$
+Summing (integrating) over all observation times, the desired expression is obtained.
+
+
+
+#### 3.
+*Show that, in the case of no censoring, the influence function reduces to* $$\dot{\phi}(X_i^*)=I(T_i>t)-S(t).$$
+
+
+Using the infinitesimal jackknife approach on the complete data estimator $\widehat{S}^w(t)={\sum_iw_iI(T_i>t)}/{\sum_iw_i}$,
+the $i$th derivative is, when $\mathbf{w}=1/n$, 
+$$I(T_i>t)-\sum_jI(T_j>t)/n=I(T_i>t)-\widehat{S}(t).$$
+Alternatively, evaluating the expression for $\dot{\phi}(X_i^*)$ for uncensored data ($G(u)=1$), we get
+$$-S(t)\int_0^t(dN_i(u)-\alpha(u)Y_i(u))/S(u)du=-S(t)(\frac{N_i(t)}{S(t\wedge T_i)}-\int_0^tY_i(u)\alpha(u)/S(u)du,$$
+where the latter integral (using that the density $\alpha(u)S(u)$ is minus the derivative of $S(u)$) can be 
+evaluated as $1-1/S(t\wedge T_i)$. All in all, we get $-S(t)$ for $T_i\leq t$ and $1-S(t)$ for $T_i>t$, i.e., $I(T_i>t)-S(t)$.
+
+
+### Exercise 6.2 (\*)
+
+#### 1.
+*Show that, for the Aalen-Johansen estimator, the calculation*
+$$\dot{\widehat{\phi}}(X_i^*)=\frac{\partial \widehat{F}^w_h(t)}{\partial w_i}\vert_{\mathbf{w}=1/n},$$
+with $\widehat{F}^w_h(t)$ *given by (6.11), leads to the pseudo-value approximation obtained by plugging-in estimators into (6.10).*
+
+The $i$th derivative of $\widehat{F}^w_h(t)$ when $\mathbf{w}=1/n$ is
+$$\int_0^t(-\widehat{S}(u-)(\sum_j\int_0^u\frac{(Y(s)/n)dN_{ji}(s)-(dN_j(s)/n)Y_i(s)}{(Y(s)/n)^2}d\widehat{A}_h(u))$$
+$$+\widehat{S}(u-)(\frac{(Y(u)/n)dN_{hi}(u)-(dN_h(u)/n)Y_i(u)}{(Y(s)/n)^2})).$$
+Using the relation $\widehat{S}(u-)\widehat{G}(u-)=Y(u)/n$, the second line reduces to
+$$\int_0^t\frac{dN_{hi}(u)}{\widehat{G}(u-)}-\int_0^tY_i(u)\frac{d\widehat{A}_h(u)}{\widehat{G}(u-)}$$
+which is the estimate for the first term in (6.10) because $M_{hi}(t)=N_{hi}(t)-\int_0^tY_i(u)dA_h(u)$. 
+Using the same relation for the first line, this reduces to
+$$-\int_0^t\widehat{S}(u-)\left(\int_0^u\sum_h(\frac{dN_{ji}(s)}{\widehat{S}(s-)\widehat{G}(s-)}-
+Y_i(s)\frac{dN_h(s)}{\widehat{S}(s-)\widehat{G}(s-)Y(s)})\right)$$
+which is the estimate of the second term in (6.10) because $$M_{i}(t)=\sum_j (N_{ji}(t)-\int_0^tY_i(u)dA_j(u)).$$
+
+
+
+#### 2.
+*Show that, in the case of no censoring, the influence function reduces to* $$\dot{\phi}(X_i^*)=I(T_i\leq t, D=h)-F_h(t).$$
+
+Looking at Equation (6.6), the result follows directly because $G(u)=1$ and $M_{0i}(t)=0$. Using, as an alternative, 
+the infinitesimal jackknife approach on the complete data estimator $\widehat{F}_h^w(t)={\sum_iw_iI(T_i\leq t, D_i=h)}/{\sum_iw_i}$,
+the $i$th derivative is, when $\mathbf{w}=1/n$,
+$$I(T_i\leq t, D_i=h)-\sum_jI(T_j\leq t, D_j=h)/n=I(T_i\leq t, D_i=h)-\widehat{F}_h(t).$$

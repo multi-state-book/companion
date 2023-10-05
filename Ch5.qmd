@@ -11,3 +11,6 @@ TODO: take some runtime
 ## Bone marrow transplantation in acute leukemia
 {{< include R/chapter5_bmt.qmd >}}
 
+## Exercises
+
+{{< include R/chapter5_solutions.qmd >}}
