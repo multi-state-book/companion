@@ -1195,18 +1195,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="section" class="level4">
 <h4 class="anchored" data-anchor-id="section">1.</h4>
 <p><em>Consider the following records mimicking the Copenhagen Holter study (Example 1.1.8) in wide format and transform them into long format, i.e., create one data set for each of the possible six transitions in Figure 1.7.</em></p>
-<p>Data can (partly) be converted to long format using the <strong>msprep</strong> function from the <strong>mstate</strong> package. However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. Furthermore, we have to fill in <strong>timeafib</strong>, <strong>timestroke</strong> and <strong>timedeath</strong> for all subjects, such that they correspond to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.</p>
-<div class="cell" data-hash="Ch1_cache/html/packages_91b5557ae3be509c2efe61e736990439">
-<details>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Data can (partly) be converted to long format using the <code>msprep</code> function from the <code>mstate</code> package. However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. Furthermore, we have to fill in <code>timeafib</code>, <code>timestroke</code> and <code>timedeath</code> for all subjects, such that they correspond to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.</p>
+<div class="cell" data-hash="Ch1_cache/html/unnamed-chunk-6_f0c2aa0f4e08a91e0ee2165c7b728b28">
+<details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cphholter.csv"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="Ch1_cache/html/exercise-1.2.1_061a36f6a5ccceb551c2f198d9cacac4">
-<details>
+<div class="cell" data-hash="Ch1_cache/html/exercise-1.2.1_1a43122830709613c44926e8d82d9f24">
+<details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The table from the exercise</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>id <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span>
@@ -1227,7 +1230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [7,]  7       NA         35        95      95
 [8,]  8       25         50        65      65</code></pre>
 </div>
-<details>
+<details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating status indicators</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>afib <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(timeafib), <span class="dv">0</span>, <span class="dv">1</span>)</span>
@@ -1258,7 +1261,7 @@ from       No event AF Stroke Death
   Stroke         NA NA     NA     6
   Death          NA NA     NA    NA</code></pre>
 </div>
-<details>
+<details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using msprep to create data in long format</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>long_data <span class="ot">&lt;-</span> <span class="fu">msprep</span>(<span class="at">time =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"timeafib"</span>, <span class="st">"timestroke"</span>, <span class="st">"timedeath"</span>),</span>
@@ -1280,42 +1283,313 @@ from       No event AF Stroke Death
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co"># and added to the data set created my msprep</span></span>
 <span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>finaldata <span class="ot">&lt;-</span> <span class="fu">rbind</span>(long_data,stroketoaf_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>finaldata <span class="ot">&lt;-</span> <span class="fu">rbind</span>(long_data,stroketoaf_long)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(finaldata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>An object of class 'msdata'
+
+Data:
+  id from to trans Tstart Tstop time status
+1  1    1  2     1      0   100  100      0
+2  1    1  3     2      0   100  100      0
+3  1    1  4     3      0   100  100      0
+4  2    1  2     1      0    10   10      1
+5  2    1  3     2      0    10   10      0
+6  2    1  4     3      0    10   10      0</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Create the data.</p>
+<div class="cell" data-hash="Ch1_cache/html/unnamed-chunk-8_2170d9f34997e23146780de683a2b4a0">
+<details open="">
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> wide_<span class="kw">data</span>;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">input</span> id timeafib timestroke timedeath lastobs;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ot">datalines;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ot">1 . . . 100</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="ot">2 10 . . 90</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="ot">3 . 20 . 80</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="ot">4 15 30 . 85</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ot">5 . . 70 70</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="ot">6 30 . 75 75 </span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="ot">7 . 35 95 95</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="ot">8 25 50 65 65</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="ot">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>To convert the data into long format we must first add indicators of whether the subjects transited to AF, stroke and death during the study. Furthermore, we have to fill in <code>timeafib</code>, <code>timestroke</code> and <code>timedeath</code> for all subjects, such that they correspond to the last time where transitions to AF, stroke and death are possible.</p>
+<p>We can now create a long format version of the data, i.e.&nbsp;for each subject all relevant transitions h-&gt;j correspond to one row in the data set and where trans: transition h -&gt; j:</p>
+<ul>
+<li><p><code>Tstart</code>: Time of entry into h</p></li>
+<li><p><code>Tstop</code>: Time last seen in h</p></li>
+<li><p><code>Status</code>: Transition to j or not at time Tstop</p></li>
+</ul>
+<p>The seven possible transitions are:</p>
+<ol type="1">
+<li><p>0 -&gt; AF</p></li>
+<li><p>0 -&gt; Stroke</p></li>
+<li><p>0 -&gt; Dead</p></li>
+<li><p>AF -&gt; Stroke</p></li>
+<li><p>AF -&gt; Dead</p></li>
+<li><p>Stroke -&gt; Dead</p></li>
+<li><p>Stroke -&gt; AF</p></li>
+</ol>
+<div class="cell" data-hash="Ch1_cache/html/unnamed-chunk-9_5b471863e36584ce9e1381531ce30ac0">
+<details open="">
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> wide_<span class="kw">data</span>;</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> wide_<span class="kw">data</span>;</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">    * Introducing indicators for transitions and last time at risk in each state.;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> timedeath = . <span class="kw">then do</span>; death = <span class="dv">0</span><span class="kw">; end</span>; <span class="kw">else do</span> death = <span class="dv">1</span><span class="kw">; end</span>;</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> death = <span class="dv">0</span> <span class="kw">then</span> timedeath = lastobs;</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> timestroke = . <span class="kw">then do</span>; stroke = <span class="dv">0</span>; timestroke = timedeath<span class="kw">; end</span>; <span class="kw">else do</span>; stroke = <span class="dv">1</span><span class="kw">; end</span>;</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> timeafib = . <span class="kw">then do</span>; afib = <span class="dv">0</span>; timeafib = timedeath<span class="kw">; end</span>; <span class="kw">else do</span>; afib = <span class="dv">1</span><span class="kw">; end</span>;</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw"> data</span> = wide_<span class="kw">data; run</span>;</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> long_<span class="kw">data</span>;</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> wide_<span class="kw">data</span>;</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0;</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF;</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke;</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Stroke;</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>) <span class="kw">and</span> (timestroke &gt;= timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; AF;</span></span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>) <span class="kw">and</span> (timestroke &lt; timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Dead;</span></span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Dead;</span></span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; Death;</span></span>
+<span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Stroke -&gt; Dead;</span></span>
+<span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>) <span class="kw">and</span> (timestroke &gt;= timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; AF -&gt; Dead;</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>) <span class="kw">and</span> (timestroke &lt; timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">keep</span> id trans Tstart Tstop status;</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-91"><a href="#cb19-91" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw"> data</span> = long_<span class="kw">data; run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="section-1" class="level4">
 <h4 class="anchored" data-anchor-id="section-1">2.</h4>
 <p><em>Do the same for the entire data set</em>.</p>
-<p>We can then repeat the procedure for the Copenhagen Holter Study data set.</p>
-<div class="cell" data-hash="Ch1_cache/html/exercise-1.2.2_637b86e8223f6f98bb473d25a536530f">
-<details>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Read the Copenhagen Holter Study data set.</p>
+<div class="cell" data-hash="Ch1_cache/html/unnamed-chunk-10_f1f23f6557693d48a8e709ace89ef610">
+<details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>timestroke <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(chs_data<span class="sc">$</span>timestroke),</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                              chs_data<span class="sc">$</span>timedeath, chs_data<span class="sc">$</span>timestroke)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>timeafib <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(chs_data<span class="sc">$</span>timeafib),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                            chs_data<span class="sc">$</span>timestroke, chs_data<span class="sc">$</span>timeafib)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>chs_long <span class="ot">&lt;-</span> <span class="fu">msprep</span>(<span class="at">time =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"timeafib"</span>, <span class="st">"timestroke"</span>, <span class="st">"timedeath"</span>),</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">status =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"afib"</span>, <span class="st">"stroke"</span>, <span class="st">"death"</span>),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trans =</span> tmat, <span class="at">data =</span> chs_data)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="ot">&lt;-</span><span class="fu">subset</span>(chs_data,stroke<span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>from <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>to <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>trans <span class="ot">&lt;-</span> <span class="dv">7</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>Tstart <span class="ot">&lt;-</span> chs_stroketoaf<span class="sc">$</span>timestroke</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>Tstop <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_stroketoaf<span class="sc">$</span>timeafib<span class="sc">&gt;</span>chs_stroketoaf<span class="sc">$</span>timestroke,chs_stroketoaf<span class="sc">$</span>timeafib,chs_stroketoaf<span class="sc">$</span>timedeath)</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_stroketoaf<span class="sc">$</span>timeafib<span class="sc">&gt;</span>chs_stroketoaf<span class="sc">$</span>timestroke,<span class="dv">1</span>,<span class="dv">0</span>)</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>time <span class="ot">&lt;-</span> chs_stroketoaf<span class="sc">$</span>Tstop <span class="sc">-</span> chs_stroketoaf<span class="sc">$</span>Tstart</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf_long <span class="ot">&lt;-</span> <span class="fu">subset</span>(chs_stroketoaf, <span class="at">select =</span> <span class="fu">c</span>(id,from,to,trans,Tstart,Tstop,time,status)) </span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>chs_finaldata <span class="ot">&lt;-</span> <span class="fu">rbind</span>(chs_long,chs_stroketoaf_long)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cphholter.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>We can then repeat the procedure for the full data set:</p>
+<div class="cell" data-hash="Ch1_cache/html/exercise-1.2.2_d962a965c74ef38eac80cfbb3daee259">
+<details open="">
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>timestroke <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(chs_data<span class="sc">$</span>timestroke),</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                              chs_data<span class="sc">$</span>timedeath, chs_data<span class="sc">$</span>timestroke)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>timeafib <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(chs_data<span class="sc">$</span>timeafib),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                            chs_data<span class="sc">$</span>timestroke, chs_data<span class="sc">$</span>timeafib)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>chs_long <span class="ot">&lt;-</span> <span class="fu">msprep</span>(<span class="at">time =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"timeafib"</span>, <span class="st">"timestroke"</span>, <span class="st">"timedeath"</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">status =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"afib"</span>, <span class="st">"stroke"</span>, <span class="st">"death"</span>),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">trans =</span> tmat, <span class="at">data =</span> chs_data)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="ot">&lt;-</span><span class="fu">subset</span>(chs_data,stroke<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>from <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>to <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>trans <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>Tstart <span class="ot">&lt;-</span> chs_stroketoaf<span class="sc">$</span>timestroke</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>Tstop <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_stroketoaf<span class="sc">$</span>timeafib<span class="sc">&gt;</span>chs_stroketoaf<span class="sc">$</span>timestroke,chs_stroketoaf<span class="sc">$</span>timeafib,chs_stroketoaf<span class="sc">$</span>timedeath)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_stroketoaf<span class="sc">$</span>timeafib<span class="sc">&gt;</span>chs_stroketoaf<span class="sc">$</span>timestroke,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf<span class="sc">$</span>time <span class="ot">&lt;-</span> chs_stroketoaf<span class="sc">$</span>Tstop <span class="sc">-</span> chs_stroketoaf<span class="sc">$</span>Tstart</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>chs_stroketoaf_long <span class="ot">&lt;-</span> <span class="fu">subset</span>(chs_stroketoaf, <span class="at">select =</span> <span class="fu">c</span>(id,from,to,trans,Tstart,Tstop,time,status)) </span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>chs_finaldata <span class="ot">&lt;-</span> <span class="fu">rbind</span>(chs_long,chs_stroketoaf_long)</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(chs_finaldata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>An object of class 'msdata'
+
+Data:
+  id from to trans Tstart Tstop time status
+1  1    1  2     1      0  5396 5396      0
+2  1    1  3     2      0  5396 5396      0
+3  1    1  4     3      0  5396 5396      0
+4  2    1  2     1      0  5392 5392      0
+5  2    1  3     2      0  5392 5392      0
+6  2    1  4     3      0  5392 5392      0</code></pre>
+</div>
+</div>
 <p>NB: We get a warning because 5 subjects have two events on the same day. This will be handled if necessary for further analyses.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>We can now repeat the procedure from above to transform the entire Copenhagen Holter Study data set into long format.</p>
+<div class="cell" data-hash="Ch1_cache/html/unnamed-chunk-12_e918e946a26ec0e2fa7d3686fa09c0af">
+<details open="">
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import out = chs_<span class="kw">data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  datafile = <span class="st">'data/cphholter.csv'</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  dbms= csv <span class="kw">replace</span>;</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> chs_long;</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> timestroke = . <span class="kw">then</span> timestroke = timedeath;</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> timeafib = . <span class="kw">then</span> timeafib = timedeath;</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF;</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke;</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Stroke;</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>) <span class="kw">and</span> (timestroke &gt;= timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; AF;</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">0</span>) <span class="kw">and</span> (timestroke &lt; timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Dead;</span></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Dead;</span></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">0</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; Death;</span></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">0</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>)) <span class="kw">then do</span>;</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; AF -&gt; Stroke -&gt; Dead;</span></span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>) <span class="kw">and</span> (timestroke &gt;= timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a><span class="co">    * Path: 0 -&gt; Stroke -&gt; AF -&gt; Dead;</span></span>
+<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> ((afib = <span class="dv">1</span>) <span class="kw">and</span> (stroke = <span class="dv">1</span>) <span class="kw">and</span> (death = <span class="dv">1</span>) <span class="kw">and</span> (timestroke &lt; timeafib)) <span class="kw">then do</span>;</span>
+<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">1</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">2</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">1</span>; <span class="kw">output</span>;</span>
+<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">3</span>; Tstart = <span class="dv">0</span>; Tstop = timestroke; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">4</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">0</span>; <span class="kw">output</span>;</span>
+<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">5</span>; Tstart = timeafib; Tstop = timedeath; status = <span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">6</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">0</span>; <span class="kw">output</span>; </span>
+<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a>    trans = <span class="dv">7</span>; Tstart = timestroke; Tstop = timeafib; status = <span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a>    <span class="kw">keep</span> id trans Tstart Tstop status;</span>
+<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw"> data</span> = chs_long<span class="kw">; run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="exercise-1.3" class="level3">

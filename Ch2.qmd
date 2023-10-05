@@ -13,5 +13,4 @@
 {{< include R/chapter2_leader.qmd >}}
 
 ## Exercises
-
-### Exercise 2.1
+{{< include R/chapter2_solutions.qmd >}}

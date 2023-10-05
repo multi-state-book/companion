@@ -1,93 +1,8 @@
-### Exercise 1.1
+*----------------------------------------------------------------------------------------------------------------------------------;
+*----------------------------- CHAPTER 1 - EXERCISE SOLUTIONS - COPENHAGEN HOLTER STUDY -------------------------------------------;
+*----------------------------------------------------------------------------------------------------------------------------------;
 
-*Consider the small data set in Table 1.6 and argue why both the average of all (12) observation times and the average of the (7) uncensored times will likely underestimate the true mean survival time from entry into the study*.
-
-The average of all 12 observation times: $$\frac{5+6+7+8+9+12+13+15+16+20+22+23}{12} = \frac{156}{12} = 13.00$$ will under-estimate the mean survival time because 5 of the terms in the sum, i.e., those corresponding to right-censored observations, are known to be smaller than the true survival times.
-
-The average of the 7 uncensored observations: $$\frac{5+7+8+13+15+16+23}{7}=\frac{87}{7} = 12.43$$ is also likely to under-estimate the mean because right-censoring will typically cause the longer survival times in the population to be incompletely observed. E.g., survival times longer than the time elapsed from the beginning of the study to its end will always be right-censored.
-
-### Exercise 1.2
-
-#### 1.
-
-*Consider the following records mimicking the Copenhagen Holter study (Example 1.1.8) in wide format and transform them into long format, i.e., create one data set for each of the possible six transitions in Figure 1.7.*
-
-::: panel-tabset
-## R
-
-Data can (partly) be converted to long format using the `msprep` function from the `mstate` package. However, we must first add indicators of whether the subjects transitioned to AF, stroke and death during the study. Furthermore, we have to fill in `timeafib`, `timestroke` and `timedeath` for all subjects, such that they correspond to the last time where transitions to the states AF, stroke and death are possible. Lastly, we need to specify a transition matrix.
-
-```{r, warning = FALSE, message=FALSE}
-#| code-fold: show
-library(tidyverse)
-library(survival)
-library(mstate)
-```
-
-```{r}
-#| label: exercise-1.2.1
-#| code-fold: show
-# The table from the exercise
-id <- factor(1:8)
-timeafib <- c(NA, 10, NA, 15, NA, 30, NA, 25)
-timestroke <- c(NA, NA, 20, 30, NA, NA, 35, 50)
-timedeath <- c(NA, NA, NA, NA, 70, 75, 95, 65)
-lastobs <- c(100, 90, 80, 85, 70, 75, 95, 65)
-cbind(id, timeafib, timestroke, timedeath, lastobs)
-
-# Creating status indicators
-afib <- ifelse(is.na(timeafib), 0, 1)
-stroke <- ifelse(is.na(timestroke), 0, 1)
-death <- ifelse(is.na(timedeath), 0, 1)
-
-# Last time point at risk for a transition to each state
-timedeath <- lastobs
-timestroke <- ifelse(is.na(timestroke), timedeath, timestroke)
-timeafib <- ifelse(is.na(timeafib), timestroke, timeafib)
-wide_data <- as.data.frame(cbind(id, timeafib, timestroke, 
-                                 timedeath, afib, stroke, death))
-
-# Creating the transition matrix without the Stroke to AF transition
-tmat <- matrix(NA,4,4)
-tmat[1, 2:4] <- 1:3
-tmat[2, 3:4] <- 4:5
-tmat[3, 4] <- 6
-dimnames(tmat) <- list(from = c("No event", "AF", "Stroke", "Death"), 
-                       to = c("No event", "AF", "Stroke", "Death"))
-tmat
-
-# Using msprep to create data in long format
-long_data <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
-                    status = c(NA, "afib", "stroke", "death"),
-                    trans = tmat, data = wide_data) 
-
-# Now, the Stroke to AF transition is added manually
-
-stroketoaf<-subset(wide_data,stroke==1)
-
-stroketoaf$from <- 3
-stroketoaf$to <- 2
-stroketoaf$trans <- 7
-stroketoaf$Tstart <- stroketoaf$timestroke
-stroketoaf$Tstop <- ifelse(stroketoaf$timeafib>stroketoaf$timestroke,timeafib,timedeath)
-stroketoaf$status <- ifelse(stroketoaf$timeafib>stroketoaf$timestroke,1,0)
-stroketoaf$time <- stroketoaf$Tstop - stroketoaf$Tstart
-stroketoaf_long <- subset(stroketoaf, select = c(id,from,to,trans,Tstart,Tstop,time,status)) 
-
-# and added to the data set created my msprep
-
-finaldata <- rbind(long_data,stroketoaf_long)
-head(finaldata)
-```
-
-## SAS
-
-Create the data.
-
-```{sas}
-#| eval: false 
-#| output: false
-#| code-fold: show
+* The data in wide format is created below;
 
 data wide_data;
 input id timeafib timestroke timedeath lastobs;
@@ -101,38 +16,27 @@ datalines;
 7 . 35 95 95
 8 25 50 65 65
 ;
-```
 
-To convert the data into long format we must first add indicators of whether the subjects transited to AF, stroke and death during the study. Furthermore, we have to fill in `timeafib`, `timestroke` and `timedeath` for all subjects, such that they correspond to the last time where transitions to AF, stroke and death are possible.
+* To convert the data into long format we must first add indicators of whether the subjects transited to AF, stroke and death 
+  during the study. Furthermore, we have to fill in timeafib, timestroke and timedeath for all subjects, such that they correspond to
+  the last time where transitions to AF, stroke and death are possible.
 
-We can now create a long format version of the data, i.e. for each subject all relevant transitions h-\>j correspond to one row in the data set and where trans: transition h -\> j:
+* We can now create a long format version of the data, i.e. for each subject all relevant transitions h->j correspond to one
+  row in the data set and where
+  	trans: transition h -> j
+  	Tstart: Time of entry into h,
+  	Tstop: Time last seen in h,
+  	Status: Transition to j or not at time Tstop;
 
--   `Tstart`: Time of entry into h
+* The seven possible transitions are:
+	trans 1: 0 -> AF
+	trans 2: 0 -> Stroke
+	trans 3: 0 -> Dead
+	trans 4: AF -> Stroke
+	trans 5: AF -> Dead
+	trans 6: Stroke -> Dead
+    trans 7: Stroke -> AF;
 
--   `Tstop`: Time last seen in h
-
--   `Status`: Transition to j or not at time Tstop
-
-The seven possible transitions are:
-
-1.  0 -\> AF
-
-2.  0 -\> Stroke
-
-3.  0 -\> Dead
-
-4.  AF -\> Stroke
-
-5.  AF -\> Dead
-
-6.  Stroke -\> Dead
-
-7.  Stroke -\> AF
-
-```{sas}
-#| eval: false 
-#| output: false
-#| code-fold: show
 data wide_data;
 	set wide_data;
 	* Introducing indicators for transitions and last time at risk in each state.;
@@ -143,6 +47,7 @@ data wide_data;
 run;
 
 proc print data = wide_data; run;
+
 
 data long_data;
 	set wide_data;
@@ -224,70 +129,17 @@ data long_data;
 run;
 
 proc print data = long_data; run;
-```
-:::
 
-#### 2.
-
-*Do the same for the entire data set*.
-
-::: panel-tabset
-## R
-
-Read the Copenhagen Holter Study data set.
-
-```{r, warning = FALSE, message=FALSE}
-#| code-fold: show
-chs_data <- read.csv("data/cphholter.csv")
-```
-
-We can then repeat the procedure for the full data set:
-
-```{r}
-#| label: exercise-1.2.2
-#| code-fold: show
-chs_data$timestroke <- ifelse(is.na(chs_data$timestroke),
-                              chs_data$timedeath, chs_data$timestroke)
-chs_data$timeafib <- ifelse(is.na(chs_data$timeafib),
-                            chs_data$timestroke, chs_data$timeafib)
-
-chs_long <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
-                   status = c(NA, "afib", "stroke", "death"),
-                   trans = tmat, data = chs_data)
-
-chs_stroketoaf<-subset(chs_data,stroke==1)
-
-chs_stroketoaf$from <- 3
-chs_stroketoaf$to <- 2
-chs_stroketoaf$trans <- 7
-chs_stroketoaf$Tstart <- chs_stroketoaf$timestroke
-chs_stroketoaf$Tstop <- ifelse(chs_stroketoaf$timeafib>chs_stroketoaf$timestroke,chs_stroketoaf$timeafib,chs_stroketoaf$timedeath)
-chs_stroketoaf$status <- ifelse(chs_stroketoaf$timeafib>chs_stroketoaf$timestroke,1,0)
-chs_stroketoaf$time <- chs_stroketoaf$Tstop - chs_stroketoaf$Tstart
-chs_stroketoaf_long <- subset(chs_stroketoaf, select = c(id,from,to,trans,Tstart,Tstop,time,status)) 
-
-
-chs_finaldata <- rbind(chs_long,chs_stroketoaf_long)
-head(chs_finaldata)
-```
-
-NB: We get a warning because 5 subjects have two events on the same day. This will be handled if necessary for further analyses.
-
-## SAS
-
-We can now repeat the procedure from above to transform the entire Copenhagen Holter Study data set into long format.
-
-```{sas}
-#| eval: false 
-#| output: false
-#| code-fold: show
 
 proc import out = chs_data
-  datafile = 'data/cphholter.csv'
-  dbms= csv replace;
+    datafile = 'C:/HRfinal/holter/cphholter.csv'
+	dbms= csv replace;
+	getnames=yes;
 run;
 
-	data chs_long;
+* We can now repeat the procedure from above to transform the entire data set into long format;
+
+data chs_long;
 	set chs_data;
 	if timestroke = . then timestroke = timedeath;
 	if timeafib = . then timeafib = timedeath;
@@ -369,27 +221,3 @@ run;
 run;
 
 proc print data = chs_long; run;
-```
-:::
-
-### Exercise 1.3
-
-#### 1.
-
-*Derive Equations (1.2) and (1.3) for, respectively, the survival function in the two-state model (Figure 1.1) and the cumulative incidence function in the competing risks model (Figure 1.2).*
-
-The hazard function $$\alpha(t)=\lim_{dt\rightarrow 0}P(T\leq t+dt\mid T>t)/dt$$ equals $$\alpha(t)=\frac{f(t)}{S(t)}=\frac{-(d/dt) S(t)}{S(t)}=-(d/dt)\log S(t)$$ where $f(t)$ is the density function for $T$ and, thereby, $S(t)=\exp(-\int_0^t\alpha(u)du)$.
-
-The cause $h$ cumulative incidence is the probability of failing from cause $h$ during $[0,t]$. This is the integral of the infinitesimal probabilities of failing in $(u,u+du)$ for $0\leq u\leq t$. The probability of failing in $(u,u+du)$ is, by definition of the cause-$h$-specific hazard, equal to $S(u)\alpha_h(u)du$ and the desired result $$Q_h(t)=\int_0^tS(u)\alpha_h(u)du$$ follows.
-
-#### 2.
-
-*Show, for the Markov illness-death model (Figure 1.3), that the state occupation probability for state 1 at time* $t$*,* $Q_1(t)$*, is* $$\int_0^t\exp\left(-\int_0^u(\alpha_{01}(x)+\alpha_{02}(x))dx\right)\alpha_{01}(u)\exp\left(-\int_u^t\alpha_{12}(x)dx\right)du.$$
-
-The probability $P_{11}(u,t)$ of staying in state 1 from time $u$ to time $t$ is given by $\exp(-\int_u^t\alpha_{12}(x)dx)$ and combining this with the argument from the previous question, i.e., that the (infinitesimal) probability $\exp(-\int_0^u(\alpha_{01}(x)+\alpha_{02}(x))dx)\alpha_{01}(u)du$, of moving from state 0 to state 1 during $(u, u+du)$, the desired result is obtained by integration over $u$ from 0 to $t$.
-
-### Exercise 1.4 (\*)
-
-*Argue (intuitively) how the martingale property* $E(M(t)\mid {\cal H}_{s})=M(s)$ *follows from* $E(dM(t)\mid {\cal H}_{t-})=0$ *(Section 1.4.3).*
-
-Because $M(s)$ is adapted to the history ${\cal H}_s$ we get $$E(M(t)\mid {\cal F}_s)-M(s)=E(M(t)-M(s)\mid {\cal H}_s).$$ We write the difference $M(t)-M(s)$ as the sum of increments $$=E(\int_{(s,t]}dM(u)\mid {\cal H}_s)$$ and change the order of integration and expectation $$=\int_{(s,t]}E(dM(u)\mid {\cal H}_s).$$ We finally use the \`principle of repeated conditioning' to obtain the desired result of 0 $$=\int_{(s,t]}E(E(dM(u)\mid {\cal H}_{u-})\mid {\cal H}_s)=0.$$
