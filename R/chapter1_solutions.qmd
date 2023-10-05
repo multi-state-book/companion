@@ -59,7 +59,6 @@ tmat
 long_data <- msprep(time = c(NA, "timeafib", "timestroke", "timedeath"),
                     status = c(NA, "afib", "stroke", "death"),
                     trans = tmat, data = wide_data) 
-long_data
 
 # Now, the Stroke to AF transition is added manually
 
@@ -78,7 +77,6 @@ stroketoaf_long <- subset(stroketoaf, select = c(id,from,to,trans,Tstart,Tstop,t
 
 finaldata <- rbind(long_data,stroketoaf_long)
 
-finaldata
 ```
 
 #### 2.
@@ -112,7 +110,6 @@ chs_stroketoaf_long <- subset(chs_stroketoaf, select = c(id,from,to,trans,Tstart
 
 chs_finaldata <- rbind(chs_long,chs_stroketoaf_long)
 
-chs_finaldata
 ```
 
 NB: We get a warning because 5 subjects have two events on the same day. This will be handled if necessary for further analyses.

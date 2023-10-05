@@ -23,7 +23,7 @@ download_dir(
 | `unit`        | hospital                                                              |
 | `days`        | follow-up time in days                                                |
 | `status`      | 0 = censoring, 1 = transplantation, 2 = death without transplantation |
-| `tment`       | 0 = placebo, 1 = CyA                                                  |
+| `tment`       | randomised treatment: 0 = placebo, 1 = CyA                                                  |
 | `sex`         | 0 = female, 1 = male                                                  |
 | `age`         | age in years                                                           |
 | `bili`        | bilirubin (micromoles/L)                                              |
@@ -113,13 +113,17 @@ Data not available for download.
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id  |
-| `start`       |             |
-| `stop`        |             |
-| `status`      |             |
-| `type`        |             |
-| `eventtype`   |             |
-| `eventno`     |             |
-| `treat`       |             |
+| `start`       | start time to event (days since randomization) |
+| `stop`        | stop time (days since randomization)            |
+| `status`      | status at `stop`:|
+||                0 = censoring |
+||                1 = recurrent event |
+||                2 = death  |
+| `type`        | Type of recurrent events:
+|               |'recurrent_mi' = recurrent MIs
+|               |'recurrent_comb' = recurrent MACEs |
+| `eventno`     | Event number  |
+| `treat`       | randomised treatment: 0 = placebo, 1 = liraglutide|
 
 ## 1.7 Bone marrow transplantation in acute leukemia (`bmt.csv`)
 
