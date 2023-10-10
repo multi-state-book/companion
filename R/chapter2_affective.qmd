@@ -6,7 +6,7 @@
 
 ```{r}
 #| label: read-affective-r
-affective <- data.frame(read.csv("data/affective.csv"))
+affective <- read.csv("data/affective.csv")
 affective$wait <- with(affective, stop - start)
 ```
 ## SAS
@@ -28,6 +28,8 @@ run;
 
 ### Table 2.14
 
+NB: Small differences in estimates between R and SAS (SAS output used for table in book).
+
 ::: {.panel-tabset}
 
 ## R
@@ -38,7 +40,6 @@ run;
 library(survival)
 coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
                         data = subset(affective, episode == 1 & state == 0))
-
 coxph(Surv(start, stop, status == 1) ~ bip, method = "breslow",
                         data = subset(affective, episode == 2 & state == 0))
 

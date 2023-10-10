@@ -197,6 +197,7 @@ proc gplot data=breslow;
 	axis2 order=0 to 0.7 by 0.1 minor=none label=(a=90 'Cumulative baseline hazard');
 	symbol1  v=none i=stepjl c=blue;
 run;
+quit;
 
 
 
@@ -687,3 +688,21 @@ proc genmod data=pbc3add;
 run;
 
 
+*---------------------------------------------------------------;
+*--------------------- Table 2.13 -------------------------------;
+*---------------------------------------------------------------;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0 1)=tment alb log2bili sex age / rl;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0 2)=tment alb log2bili sex age / rl;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili sex age / rl;
+run;

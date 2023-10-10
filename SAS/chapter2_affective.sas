@@ -4,6 +4,15 @@
 
 * Load data; 
 
+* Load data; 
+proc import out=affective
+	datafile="data/affective.csv"
+	dbms=csv replace;
+run;
+data affective; 
+	set affective; 
+	wait = stop - start; 
+run; 
 *---------------------------------------------------------------;
 *--------------------- Table 2.13 ------------------------------;
 *---------------------------------------------------------------;
@@ -15,8 +24,15 @@ run;
 
 * Cox model for 1., 2., 3., 4. episode 'Markov': Column 1; 
 proc phreg data=state0;
+  where episode=1;
+	model stop*status (2 3)= bip / entry=start gconv=
+;
+	by episode;
+run;
+
+proc phreg data=state0;
   where episode<=4;
-	model stop*status (2 3)= bip / entry=start;
+	model stop*status (2 3)= bip / entry=start CONVERGELIKE=1E-8;
 	by episode;
 run;
 

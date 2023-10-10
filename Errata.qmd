@@ -6,17 +6,17 @@
 
 ## Chapter 3
 
--   Section 3.3, p. 78: A right bracket was missing before $dt$ in $$\sum_i\left(\int_0^{\infty}\log\bigl(Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigr)dN_i(t)-\int_0^{\infty}Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)$$
--   Exercise 3.12, p. 119: Replace Table 2.12 by Table 3.2
+-   Section 3.3, p. 76: A right bracket was missing before $dt$ in $$\sum_i\left(\int_0^{\infty}\log\bigl(Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigr)dN_i(t)-\int_0^{\infty}Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)$$
+-   Exercise 3.12, p. 116: Replace Table 2.12 by Table 3.2
 
 ## Chapter 5
 
--   Section 5.1.3, p. 172: The equation for $\frac{\partial}{\partial t}P_{01}(s,t)$ should read $$\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)$$
+-   Section 5.1.3, p. 168: The equation for $\frac{\partial}{\partial t}P_{01}(s,t)$ should read $$\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)$$
 
 ## Chapter 6
 
--   Exercise 6.1.2, p. 249: A right bracket is missing after $dN(u)$ in the second denominator
+-   Exercise 6.1.2, p. 243: A right bracket is missing after $dN(u)$ in the second denominator
 
--   Exercise 6.1.2, p. 249: a factor $n$ is missing on the r.h.s. of the equation for $\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}$
+-   Exercise 6.1.2, p. 243: a factor $n$ is missing on the r.h.s. of the equation for $\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}$
 
--   Exercise 6.5, p. 250: It makes no sense to compare with Exercise 5.8
+-   Exercise 6.5, p. 244: It makes no sense to compare with Exercise 5.8

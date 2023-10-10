@@ -14,3 +14,6 @@
 
 ## Exercises
 {{< include R/chapter2_solutions.qmd >}}
+
+<!-- {{< include R/CHS_chapter2.Rmd >}} -->
+

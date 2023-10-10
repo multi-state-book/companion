@@ -10,12 +10,16 @@ proc import out=bissau
 run;
 data bissau; 
 	set bissau; 
-	agem = int(age/30.44); * Age in months; 
+	agem = int(age/30.4); * Age in months; 
 run;
 
 *---------------------------------------------------------------;
 *--------------------- Table 2.12 ------------------------------;
 *---------------------------------------------------------------;
+
+proc phreg data=bissau;
+	model fuptime*dead(0)=bcg / rl;
+run;
 
 proc phreg data=bissau;
 	model fuptime*dead(0)=bcg agem / rl;

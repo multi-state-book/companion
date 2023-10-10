@@ -3,12 +3,15 @@
 *------------------------------------------------------------------;
 
 * Load data; 
-proc import out=leader_mi_3p
+proc import out=leader
 	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv"
 	dbms=csv replace;
 run;
+proc freq data = leader;
+table eventtype*type;
+run;
 data leader_mi; 
-	set leader_mi_3p; 
+	set leader; 
 	where type = "recurrent_mi"; 
 run; 
 

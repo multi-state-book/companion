@@ -2,12 +2,14 @@
 
 In the book, examples of event history data are used to illustrate different methods, models and approaches. All the data sets, except the LEADER data, are available for download as CSV files and description of the variables is given below.
 
-```{r downloadthis, echo=FALSE}
+```{r}
+#| label: downloadthis-all
+#| echo: false
 library(downloadthis)
 download_dir(
   path = "data",
   output_name = "DataFromMSB",
-  button_label = "Download data sets",
+  button_label = "Download all data sets",
   button_type = "success",
   has_icon = TRUE,
   icon = "fa fa-save",
@@ -15,7 +17,24 @@ download_dir(
 )
 ```
 
-## 1.1 PBC3 trial in liver cirrhosis (`pbc3.csv`)
+## 1.1 PBC3 trial in liver cirrhosis
+
+
+
+```{r}
+#| label: downloadthis-pbc3
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/pbc3.csv",
+  button_label = "Download pbc3.csv",
+  button_type = "success",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
 
 | Variable name | Description                                                           |
 |:-----------|:----------------------------------------------------------------------|
@@ -23,14 +42,29 @@ download_dir(
 | `unit`        | hospital                                                              |
 | `days`        | follow-up time in days                                                |
 | `status`      | 0 = censoring, 1 = transplantation, 2 = death without transplantation |
-| `tment`       | randomised treatment: 0 = placebo, 1 = CyA                                                  |
+| `tment`       | randomized treatment: 0 = placebo, 1 = CyA                                                  |
 | `sex`         | 0 = female, 1 = male                                                  |
 | `age`         | age in years                                                           |
 | `bili`        | bilirubin (micromoles/L)                                              |
 | `alb`         | albumin (g/L)                                                         |
 | `stage`       | disease stage: 2 = I-II, 3 = III, 4 = IV                              |
 
-## 1.2 Guinea-Bissau childhood vaccination study (`bissau.csv`)
+## 1.2 Guinea-Bissau childhood vaccination study
+
+
+```{r}
+#| label: downloadthis-bissau
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/bissau.csv",
+  button_label = "Download bissau.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
 
 | Variable name | Description                                              |
 |:-----------|:----------------------------------------------------------------------|
@@ -43,7 +77,23 @@ download_dir(
 | `sex`         | 0 = female, 1 = male                                     |
 | `age`         | age in days at initial visit                             |
 
-## 1.3 Testis cancer incidence and maternal parity (`testis.csv`)
+## 1.3 Testis cancer incidence and maternal parity
+
+```{r}
+#| label: downloadthis-testis
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/testis.csv",
+  button_label = "Download testis.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+
 
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
@@ -54,9 +104,9 @@ download_dir(
 || 25 = 25-29 years|
 || 30 = 30+ years  |
 | `pyrs`        | person years at risk      |
-| `cases`       | number of testis cancer            |
-| `semi`        | number of seminomas cases            |
-| `nonsemi`     | number of non-seminomas cases            |
+| `cases`       | number of testis cancer cases            |
+| `semi`        | number of seminoma cases            |
+| `nonsemi`     | number of non-seminoma cases            |
 | `parity`      | parity of mother at birth of son            |
 | `cohort`      | son cohort (year of birth)
 ||1950 = 1950-1957|
@@ -70,7 +120,22 @@ download_dir(
 ||25 = 25-29|
 ||30 = 30+|
 
-## 1.4 PROVA trial in liver cirrhosis (`prova.csv`)
+## 1.4 PROVA trial in liver cirrhosis
+
+```{r}
+#| label: downloadthis-prova
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/prova.csv",
+  button_label = "Download prova.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
@@ -87,16 +152,33 @@ download_dir(
 | `coag`        | coagulation factors (% of normal)  |
 | `varsize`     | variceal size: 1 = small, 2 = medium, 3 = large |
 
-## 1.5 Recurrent episodes in affective disorders (`affective.csv`)
+## 1.5 Recurrent episodes in affective disorders
+
+```{r}
+#| label: downloadthis-affective
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/affective.csv",
+  button_label = "Download affective.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `episode`     | number of affective episodes                     |
-| `state`       | 0 = no current affective episode, 1 = current affective episode |
+| `state`       | Status at time `start`:|
+||0 = no current affective episode, 1 = current affective episode |
 | `start`       | start time in state (months)                    |
 | `stop`        | last time seen in state (months)                   |
-| `status`      | status at time stop:|
+| `status`      | status at time `stop`:|
 ||                0 = transition to state 0 |
 ||                1 = transition to state 1 |
 ||                2 = transition to death   |
@@ -119,13 +201,29 @@ Data not available for download.
 ||                0 = censoring |
 ||                1 = recurrent event |
 ||                2 = death  |
-| `type`        | Type of recurrent events:
-|               |'recurrent_mi' = recurrent MIs
-|               |'recurrent_comb' = recurrent MACEs |
-| `eventno`     | Event number  |
-| `treat`       | randomised treatment: 0 = placebo, 1 = liraglutide|
+| `type`        | type of recurrent event:
+|               |'recurrent_mi' =  myocardial infarction
+|               |'recurrent_comb' = 3-point MACE |
+| `eventno`     | event number  |
+| `treat`       | randomized treatment: 0 = placebo, 1 = liraglutide|
 
-## 1.7 Bone marrow transplantation in acute leukemia (`bmt.csv`)
+## 1.7 Bone marrow transplantation in acute leukemia
+
+
+```{r}
+#| label: downloadthis-bmt
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/bmt.csv",
+  button_label = "Download bmt.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
@@ -145,7 +243,22 @@ Data not available for download.
 ||                1 = acute lymphoblastic leukemia (ALL)                    |
 | `bmonly`      | 0 = peripheral blood/bone marrow, 1 = only bone marrow  |
 
-## 1.8 The Copenhagen Holter study (`cphholter.csv`)
+## 1.8 The Copenhagen Holter study
+
+```{r}
+#| label: downloadthis-cphholter
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "data/cphholter.csv",
+  button_label = "Download cphholter.csv",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|

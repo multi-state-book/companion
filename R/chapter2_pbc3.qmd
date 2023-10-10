@@ -82,6 +82,7 @@ library(survival)
 nafit <- survfit(Surv(days, status != 0) ~ tment, data = pbc3)
 # Collect data for plot
 nadata <- data.frame(cumhaz = nafit$cumhaz, time = nafit$time, 
+                     sd = nafit$std.err,
                      tment = c(rep(names(nafit$strata)[1], nafit$strata[1]), 
                                rep(names(nafit$strata)[2], nafit$strata[2])))
 
@@ -257,6 +258,9 @@ fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
 
 fig2.2
 ```
+
+## SAS-NA
+
 :::
 
 ### In-text: LRT test piece-wise exponential model
@@ -265,11 +269,11 @@ fig2.2
 ## R
 
 ```{r}
-#| label: in-text-lrt-pcw-sas-r
+#| label: in-text-lrt-pcw-r
 library(stats)
 poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
                   offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-poisred <- glm(fail ~  timegroup + tment +
+poisred <- glm(fail ~  timegroup +
                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
 anova(poisred,poisfull,test="LRT")
 # or
@@ -456,7 +460,7 @@ run;
 # Fit a Cox model using the pbc3 data with treatment as a covariate
 library(survival)
 coxfit <- coxph(Surv(days, status != 0) ~ tment, data = pbc3, method = "breslow")
-coxfit
+summary(coxfit)
 ```
 
 ## SAS
@@ -629,7 +633,7 @@ run;
 # Poisson model with treatment, albumin and bilirubin as covariates
 poismod_t25 <- glm(fail ~ tment + alb + bili+ timegroup-1 +
                      offset(log(risktime/365.25)),data=pbc3mult,family=poisson)
-tidy(poismod_t25)
+summary(poismod_t25)
 ```
 
 ## SAS
@@ -1296,7 +1300,7 @@ lrtest(poismod_t29_base, poismod_t29_alb)
 poismod_t29_bili <- glm(fail ~ tment + alb + bili1 + bili2 + bili3 +
                        timegroup + offset(log(risktime)),
                      data = pbc3mult, family = poisson)
-tidy(poismod_t29_bili) 
+summary(poismod_t29_bili) 
 lrtest(poismod_t29_base, poismod_t29_bili)
 ```
 
@@ -1518,8 +1522,32 @@ fig2.11.right <- ggplot(aes(x = eventtimes / 365.25, y = cumhaztreat),
 
 fig2.11.right
 ```
+
+## SAS-NA
+
 :::
 
+### In-text: simple Aalen model
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: in-text-simple-aalen-r
+#| out-width: 90%
+# Additive model treatment only
+# p-values not exactly as in book because seed changes
+nonparmod0 <- aalen(Surv(days, status != 0) ~ tment, data = pbc3) 
+summary(nonparmod0)
+
+# Constant effect of treatment per year
+nonparmod01 <- aalen(Surv(days/365.25, status != 0) ~ const(tment), data = pbc3) 
+summary(nonparmod01)
+```
+
+## SAS-NA
+
+:::
 ### Figure 2.12
 
 ::: panel-tabset
@@ -1576,6 +1604,9 @@ fig2.12.1
 fig2.12.2
 fig2.12.3
 ```
+
+## SAS-NA
+
 :::
 
 ### Table 2.10
@@ -1585,18 +1616,6 @@ fig2.12.3
 
 ```{r}
 #| label: table-2.10-r
-#------------------------------------------------------------------#
-# Table 2.10 and in-text results
-#------------------------------------------------------------------#
-
-# Additive model treatment only
-# p-values not exactly as in book because seed changes
-nonparmod0 <- aalen(Surv(days, status != 0) ~ tment, data = pbc3) 
-summary(nonparmod0)
-
-# Constant effect of treatment per year
-nonparmod01 <- aalen(Surv(days/365.25, status != 0) ~ const(tment), data = pbc3) 
-summary(nonparmod01)
 
 # Additive model with treatment, albumin, bilirubin
 # Table 2.10, first two columns
@@ -1605,11 +1624,25 @@ nonparmod1 <- aalen(Surv(days, status != 0) ~ tment + alb + bili, data = pbc3)
 summary(nonparmod1)
 
 # Constant effects per year
-# Table 2.10, last columns
+# Table 2.10, last two columns
 nonparmod2 <- aalen(Surv(days/365.25, status != 0) ~ 
                       const(tment) + const(alb) + const(bili), data = pbc3) 
 summary(nonparmod2)
 
+```
+
+
+## SAS-NA
+
+:::
+
+### In-text: Aalen models
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: aalen-models-r
 # In-text
 # Constant effect of treatment, adjusted for albumin and bilirubin
 nonparmod3 <- aalen(Surv(days/365.25, status != 0) ~ 
@@ -1626,7 +1659,6 @@ nonparmod43 <- aalen(Surv(days/365.25, status != 0) ~ const(tment)
                        + I(alb/10) + I(bili/100) + I((bili/100)^2), data = pbc3) 
 summary(nonparmod43)
 
-
 # Interactions
 nonparmod51 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(alb)
                      + const(bili) + const(tment * bili),data = pbc3) 
@@ -1637,50 +1669,18 @@ nonparmod52 <- aalen(Surv(days/365.25, status != 0) ~ const(tment) + const(bili)
 summary(nonparmod52)
 ```
 
-## SAS
+## SAS-NA
 
-```{sas}
-#| label: table-2.10-sas
-#| eval: false 
-#| output: false
-
-* Only constant effect per year possible;
-* Create new variables;
-data pbc3add; 
-	set pbc3mult;
-	time1=(interv=1)*risktime/365.25; 
-	time2=(interv=2)*risktime/365.25; 
-	time3=(interv=3)*risktime/365.25;
-	tment0=(tment=0)*risktime/365.25; 
-	tment1=(tment=1)*risktime/365.25;
-	albny=(alb-35)*risktime/365.25;
-	biliny=(bili-50)*risktime/365.25;
-run;
-
-* link=id;
-* Constant effect of treatment per year;
-proc genmod data=pbc3add;
-	model fail=time1 time2 time3 tment1/dist=poi link=id noint;
-run;
-
-* Constant effects per year;
-proc genmod data=pbc3add;
-	model fail=time1 time2 time3 tment1 albny biliny/dist=poi link=id noint;
-run;
-```
 :::
 
-### Table 2.11
+### In-text: additive Poisson model
 
 ::: panel-tabset
+
 ## R
 
 ```{r}
-#| label: table-2.11-r
-#------------------------------------------------------------------#
-# Table 2.11 and in-text results
-#------------------------------------------------------------------#
-
+#| label: in-text-additive-pois-r
 # Additive hazards model with piecewise constant baseline hazards
 # Model with only treatment as covariate
 # update data set
@@ -1698,17 +1698,81 @@ additive_pcw <- glm(fail ~ time1 + time2 + time3 + tment1 - 1,
                     data = pbc3add, start = c(0.1, 0.1, 0.1, 0),
                     family = poisson(link = "identity"))
 tidy(additive_pcw)
+```
+
+## SAS
+
+```{sas}
+#| label: in-text-additive-pois-sas
+#| eval: false 
+#| output: false
+
+* Only constant effect per year possible;
+* Create new variables;
+data pbc3add; 
+	set pbc3mult;
+	time1=(interv=1)*risktime/365.25; 
+	time2=(interv=2)*risktime/365.25; 
+	time3=(interv=3)*risktime/365.25;
+	tment0=(tment=0)*risktime/365.25; 
+	tment1=(tment=1)*risktime/365.25;
+run;
+
+* link=id;
+* Constant effect of treatment per year;
+proc genmod data=pbc3add;
+	model fail=time1 time2 time3 tment1/dist=poi link=id noint;
+run;
+```
+
+:::
+
+
+### Table 2.11
+
+Questionable fit.
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: table-2.11-r
+#------------------------------------------------------------------#
+# Table 2.11 
+#------------------------------------------------------------------#
 
 # Table 2.11 - questionable fit
 additive_pcw2.11 <- glm(fail ~ time1 + time2 + time3 + tment1 + albny + biliny -1,
                     data = pbc3add, start = c(0.3, 0.35, 0.4, -0.05, -0.8, 2),
                     family = poisson(link = "identity"))
 tidy(additive_pcw2.11)
+```
 
-additive_pcw2.11 <- glm(fail ~ time1 + time2 + time3 + tment1 + albny + biliny -1,
-                        data = pbc3add, start = c(0.3, 0.35, 0.4, -0.05, -0.8, 2.1),
-                        family = poisson(link = "identity"))
-tidy(additive_pcw2.11)
+## SAS
+
+```{sas}
+#| label: table-2.11-sas
+#| eval: false 
+#| output: false
+
+* Only constant effect per year possible;
+* Create new variables;
+data pbc3add; 
+	set pbc3mult;
+	time1=(interv=1)*risktime/365.25; 
+	time2=(interv=2)*risktime/365.25; 
+	time3=(interv=3)*risktime/365.25;
+	tment0=(tment=0)*risktime/365.25; 
+	tment1=(tment=1)*risktime/365.25;
+	albny=(alb-35)*risktime/365.25;
+	biliny=(bili-50)*risktime/365.25;
+run;
+
+* link=id;
+* Constant effects per year;
+proc genmod data=pbc3add;
+	model fail=time1 time2 time3 tment1 albny biliny/dist=poi link=id noint;
+run;
 ```
 :::
 
@@ -1731,5 +1795,27 @@ coxph(Surv(days, status == 1) ~ tment + alb + log2bili + sex + age,
 # Failure of medical treatment
 coxph(Surv(days, status != 0) ~ tment + alb + log2bili + sex + age,
            method = "breslow", data = pbc3)
+```
+
+## SAS
+
+```{sas}
+#| label: table-2.13-sas
+#| eval: false 
+#| output: false
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0 1)=tment alb log2bili sex age / rl;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0 2)=tment alb log2bili sex age / rl;
+run;
+
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model days*status(0)=tment alb log2bili sex age / rl;
+run;
 ```
 :::
