@@ -11,7 +11,7 @@ datafile="data/bissau.csv"
 run;
 data bissau; 
 	set bissau; 
-	agem = int(age/30.44);
+	agem = int(age/30.4);
 run; 
 
 

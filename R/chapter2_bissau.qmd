@@ -25,6 +25,32 @@ run;
 ```
 :::
 
+### In-text, p. 58: Cox model unadjusted for age 
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: in-text-cox-unadjusted-r
+#| out-width: 90%
+library(survival)
+coxfit0 <- coxph(Surv(fuptime, dead) ~ bcg, 
+                 data = bissau, method = "breslow")
+coxfit0
+```
+
+## SAS
+```{r}
+#| label: in-text-cox-unadjusted-sas
+#| eval: false 
+#| output: false
+
+proc phreg data=bissau;
+	model fuptime*dead(0)=bcg / rl;
+run;
+```
+:::
+
+
 ### Table 2.12 
 
 ::: {.panel-tabset}
@@ -72,30 +98,6 @@ run;
 :::
 
 
-### In-text: Cox model unadjusted for age 
-
-::: {.panel-tabset}
-## R
-```{r}
-#| label: in-text-cox-unadjusted-r
-#| out-width: 90%
-library(survival)
-coxfit0 <- coxph(Surv(fuptime, dead) ~ bcg, 
-                 data = bissau, method = "breslow")
-coxfit0
-```
-
-## SAS
-```{r}
-#| label: in-text-cox-unadjusted-sas
-#| eval: false 
-#| output: false
-
-proc phreg data=bissau;
-	model fuptime*dead(0)=bcg / rl;
-run;
-```
-:::
 
 ### Figure 2.13 
 

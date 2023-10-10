@@ -274,16 +274,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-r_4ad91290faf7a58e27e692bfd4feaf13">
+<div class="cell" data-hash="Ch7_cache/html/read-bissau-r_48240b1164be0a686455a7190440b2ee">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>))</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.44</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-sas_bdadbca559ee42c8f593a4edf6dad2a2">
+<div class="cell" data-hash="Ch7_cache/html/read-bissau-sas_434770a1564263a8239ab694960776b3">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc import </span>
@@ -294,7 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>run;</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data bissau; </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    set bissau; </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    agem <span class="ot">=</span> <span class="fu">int</span>(age<span class="sc">/</span><span class="fl">30.44</span>);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    agem <span class="ot">=</span> <span class="fu">int</span>(age<span class="sc">/</span><span class="fl">30.4</span>);</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>run; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>

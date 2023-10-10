@@ -6,7 +6,7 @@
 ```{r}
 #| label: read-bissau-r
 bissau <- data.frame(read.csv("data/bissau.csv"))
-bissau$agem <- as.integer(bissau$age/30.44)
+bissau$agem <- as.integer(bissau$age/30.4)
 ```
 
 ## SAS
@@ -22,7 +22,7 @@ datafile="data/bissau.csv"
 run;
 data bissau; 
 	set bissau; 
-	agem = int(age/30.44);
+	agem = int(age/30.4);
 run; 
 ```
 :::

@@ -3220,10 +3220,9 @@ quit;
 ```{r}
 #| label: in-text-cox-cens-r
 #| out-width: 90%
-library(broom)
-tidy(coxph(Surv(days, status == 0) ~ tment, data = pbc3, method = "breslow"))
-tidy(coxph(Surv(days, status == 0) ~ alb, data = pbc3, method = "breslow"))
-tidy(coxph(Surv(days, status == 0) ~ bili, data = pbc3, method = "breslow"))
+summary(coxph(Surv(days, status == 0) ~ tment, data = pbc3, method = "breslow"))
+summary(coxph(Surv(days, status == 0) ~ alb, data = pbc3, method = "breslow"))
+summary(coxph(Surv(days, status == 0) ~ bili, data = pbc3, method = "breslow"))
 ```
 
 ## SAS

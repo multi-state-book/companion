@@ -4427,37 +4427,72 @@ log2bili        1.10621 1.05057 1.1648</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-24-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-1" role="tab" aria-controls="tabset-24-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-24-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-24-2" role="tab" aria-controls="tabset-24-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-24-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-24-1-tab">
-<div class="cell" data-hash="Ch4_cache/html/in-text-cox-cens-r_392baa693390b74fa7e53d7ce9bd441b">
+<div class="cell" data-hash="Ch4_cache/html/in-text-cox-cens-r_d9549a5e19ff59ea1f0f89872897759e">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> tment, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb154"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> tment, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  term  estimate std.error statistic p.value
-  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 tment   0.0840     0.125     0.669   0.503</code></pre>
+<pre><code>Call:
+coxph(formula = Surv(days, status == 0) ~ tment, data = pbc3, 
+    method = "breslow")
+
+  n= 349, number of events= 259 
+
+         coef exp(coef) se(coef)     z Pr(&gt;|z|)
+tment 0.08402   1.08765  0.12550 0.669    0.503
+
+      exp(coef) exp(-coef) lower .95 upper .95
+tment     1.088     0.9194    0.8505     1.391
+
+Concordance= 0.507  (se = 0.018 )
+Likelihood ratio test= 0.45  on 1 df,   p=0.5
+Wald test            = 0.45  on 1 df,   p=0.5
+Score (logrank) test = 0.45  on 1 df,   p=0.5</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> alb, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> alb, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  term  estimate std.error statistic p.value
-  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 alb    0.00102    0.0128    0.0793   0.937</code></pre>
+<pre><code>Call:
+coxph(formula = Surv(days, status == 0) ~ alb, data = pbc3, method = "breslow")
+
+  n= 343, number of events= 255 
+   (6 observations deleted due to missingness)
+
+        coef exp(coef) se(coef)     z Pr(&gt;|z|)
+alb 0.001017  1.001017 0.012818 0.079    0.937
+
+    exp(coef) exp(-coef) lower .95 upper .95
+alb     1.001      0.999    0.9762     1.026
+
+Concordance= 0.496  (se = 0.021 )
+Likelihood ratio test= 0.01  on 1 df,   p=0.9
+Wald test            = 0.01  on 1 df,   p=0.9
+Score (logrank) test = 0.01  on 1 df,   p=0.9</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> bili, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">coxph</span>(<span class="fu">Surv</span>(days, status <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">~</span> bili, <span class="at">data =</span> pbc3, <span class="at">method =</span> <span class="st">"breslow"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 5
-  term  estimate std.error statistic p.value
-  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 bili  -0.00252   0.00182     -1.39   0.165</code></pre>
+<pre><code>Call:
+coxph(formula = Surv(days, status == 0) ~ bili, data = pbc3, 
+    method = "breslow")
+
+  n= 349, number of events= 259 
+
+          coef exp(coef)  se(coef)      z Pr(&gt;|z|)
+bili -0.002524  0.997479  0.001817 -1.389    0.165
+
+     exp(coef) exp(-coef) lower .95 upper .95
+bili    0.9975      1.003    0.9939     1.001
+
+Concordance= 0.49  (se = 0.021 )
+Likelihood ratio test= 2.18  on 1 df,   p=0.1
+Wald test            = 1.93  on 1 df,   p=0.2
+Score (logrank) test = 1.93  on 1 df,   p=0.2</code></pre>
 </div>
 </div>
 </div>

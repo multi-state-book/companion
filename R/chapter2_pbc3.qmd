@@ -129,13 +129,14 @@ run;
 ```
 :::
 
-### In-text: Nelson-Aalen estimates at 2 years
+### In-text, p. 37: Nelson-Aalen estimates at 2 years
 
 ::: panel-tabset
 ## R
 
 ```{r}
 #| label: in-text-Naa2-r
+#| cache: false
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=0"),1)
 tail(subset(nadata, nadata$time <= 2*365.25 & nadata$tment == "tment=1"),1)
 ```
@@ -151,6 +152,109 @@ proc print data=hazdat;
 run;
 ```
 :::
+
+### In-text, p. 38: LRT test piece-wise exponential model
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: in-text-lrt-pcw-r
+library(stats)
+poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
+                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
+poisred <- glm(fail ~  timegroup +
+                 offset(log(risktime/36525)), data = pbc3mult, family=poisson)
+anova(poisred,poisfull,test="LRT")
+# or
+library(lmtest)
+lrtest(poisred,poisfull)
+```
+
+## SAS
+
+```{sas}
+#| label: in-text-lrt-pcw-sas
+#| eval: false 
+#| output: false
+ods output modelfit=full;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv|tment /dist=poi offset=logrisk;
+run;
+data full;
+  set full;
+	 where Criterion="Deviance";
+	 full_like=value;
+	 full_df=df;
+	 keep full_like full_df;
+run;
+proc print;run;
+ods output modelfit=reduced;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv /dist=poi offset=logrisk;
+run;
+data reduced;
+  set reduced;
+	 where Criterion="Deviance";
+	 reduced_like=value;
+	 reduced_df=df;
+	 keep reduced_like reduced_df;
+run;
+data lrt_pval;
+ merge full reduced;
+  lrt = reduced_like - full_like;
+	df  = reduced_df - full_df;
+  p_value = 1 - probchi(lrt,df);
+run;
+proc print data=lrt_pval;
+  title "LR test statistic and p-value";
+run;
+```
+:::
+
+
+
+### Figure 2.2
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: figure-2.2
+#| out-width: 90%
+# Rates + cuts from Table 2.1
+rateCyA <- c(8.1,13.1,9.6)
+ratePbo <- c(9.4,12.5,8.5)
+pcwtime <- c(0,2,4,5)
+# Collect data
+plotdata <- data.frame(rates = c(rateCyA, ratePbo),
+                       tment = c(rep("CyA", length(rateCyA)), 
+                                 rep("Placebo", length(ratePbo))),
+                       times_s = rep(pcwtime[-4], 2),
+                       times = rep(pcwtime[-1], 2))
+
+# Create Figure 2.2
+fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
+  geom_segment(aes(x = times_s, y = rates, xend = times, yend = rates),size=1) +
+  scale_linetype_discrete("Treatment", labels = c("Placebo", "CyA"))  +
+  xlab("Time since randomization (years)") +
+  ylab("Estimated hazard function (per 100 years)") +
+  scale_x_continuous(expand = expansion(mult = c(0.001, 0.05)),
+                     limits = c(0, 5),
+                     breaks = seq(0, 5, 1))  +
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
+                     limits = c(0,14), breaks = seq(0, 14, 2)) +
+  theme_general
+
+fig2.2
+```
+
+## SAS-NA
+
+:::
+
 
 ### Table 2.1
 
@@ -224,107 +328,8 @@ run;
 ```
 :::
 
-### Figure 2.2
 
-::: panel-tabset
-## R
-
-```{r}
-#| label: figure-2.2
-#| out-width: 90%
-# Rates + cuts from Table 2.1
-rateCyA <- c(8.1,13.1,9.6)
-ratePbo <- c(9.4,12.5,8.5)
-pcwtime <- c(0,2,4,5)
-# Collect data
-plotdata <- data.frame(rates = c(rateCyA, ratePbo),
-                       tment = c(rep("CyA", length(rateCyA)), 
-                                 rep("Placebo", length(ratePbo))),
-                       times_s = rep(pcwtime[-4], 2),
-                       times = rep(pcwtime[-1], 2))
-
-# Create Figure 2.2
-fig2.2 <- ggplot(aes(x = time, y = rates, linetype = tment), data = plotdata) +
-  geom_segment(aes(x = times_s, y = rates, xend = times, yend = rates),size=1) +
-  scale_linetype_discrete("Treatment", labels = c("Placebo", "CyA"))  +
-  xlab("Time since randomization (years)") +
-  ylab("Estimated hazard function (per 100 years)") +
-  scale_x_continuous(expand = expansion(mult = c(0.001, 0.05)),
-                     limits = c(0, 5),
-                     breaks = seq(0, 5, 1))  +
-  scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
-                     limits = c(0,14), breaks = seq(0, 14, 2)) +
-  theme_general
-
-fig2.2
-```
-
-## SAS-NA
-
-:::
-
-### In-text: LRT test piece-wise exponential model
-
-::: panel-tabset
-## R
-
-```{r}
-#| label: in-text-lrt-pcw-r
-library(stats)
-poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
-                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-poisred <- glm(fail ~  timegroup +
-                 offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-anova(poisred,poisfull,test="LRT")
-# or
-library(lmtest)
-lrtest(poisred,poisfull)
-```
-
-## SAS
-
-```{sas}
-#| label: in-text-lrt-pcw-sas
-#| eval: false 
-#| output: false
-ods output modelfit=full;
-proc genmod data=pbc3mult;
-	class interv tment;
-	model fail=interv|tment /dist=poi offset=logrisk;
-run;
-data full;
-  set full;
-	 where Criterion="Deviance";
-	 full_like=value;
-	 full_df=df;
-	 keep full_like full_df;
-run;
-proc print;run;
-ods output modelfit=reduced;
-proc genmod data=pbc3mult;
-	class interv tment;
-	model fail=interv /dist=poi offset=logrisk;
-run;
-data reduced;
-  set reduced;
-	 where Criterion="Deviance";
-	 reduced_like=value;
-	 reduced_df=df;
-	 keep reduced_like reduced_df;
-run;
-data lrt_pval;
- merge full reduced;
-  lrt = reduced_like - full_like;
-	df  = reduced_df - full_df;
-  p_value = 1 - probchi(lrt,df);
-run;
-proc print data=lrt_pval;
-  title "LR test statistic and p-value";
-run;
-```
-:::
-
-### In-text: Logrank test and p-value
+### In-text, p. 40: Logrank test and p-value
 
 ::: panel-tabset
 ## R
@@ -333,7 +338,7 @@ run;
 #| label: in-text-logrank-r
 library(survival)
 lr<-survdiff(Surv(days, status != 0) ~ tment, data = pbc3)
-c(lr$chisq,lr$pvalue)
+print(c(lr$obs[1],lr$exp[1],lr$var[1,1],lr$chisq,lr$pvalue), d=4)
 ```
 
 ## SAS
@@ -450,7 +455,7 @@ run;
 ```
 :::
 
-### In-text: Cox model with treatment only
+### In-text, p. 43: Cox model with treatment only
 
 ::: panel-tabset
 ## R
@@ -590,7 +595,7 @@ run;
 ```
 :::
 
-### In-text: Poisson model with treatment only (and time) {#sec-ch2-pbc3-poisson}
+### In-text, p. 45: Poisson model with treatment {#sec-ch2-pbc3-poisson}
 
 ::: panel-tabset
 ## R
@@ -726,39 +731,39 @@ base_poismod_log <- glm(fail ~ timegroup + tment + alb + log2bili +
 # Splines Poisson 1
 poismod_t26_l1 <- glm(fail ~ timegroup + tment + alb + albnorm + bili +
                         offset(log(risktime)), data=pbc3mult, family=poisson)
-tidy(poismod_t26_l1)
+summary(poismod_t26_l1)
 lrtest(poismod_t26_l1, base_poismod)
 
 # Quadratic Poisson 1
 poismod_t26_q1 <- glm(fail ~ timegroup + tment + alb + I(alb*alb) + bili +
                         offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t26_q1)
+summary(poismod_t26_q1)
 lrtest(poismod_t26_q1, base_poismod)
 
 # Splines Poisson 2
 poismod_t26_l2 <- glm(fail ~ timegroup + tment + alb + 
                         bili + bilihigh + bilitoohigh + bilimuchtoohigh +
                         offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t26_l2)
+summary(poismod_t26_l2)
 lrtest(poismod_t26_l2, base_poismod)
 
 # Quadratic Poisson 2
 poismod_t26_q2 <- glm(fail ~ timegroup + tment + alb + bili + I(bili*bili) +
                         offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t26_q2)
+summary(poismod_t26_q2)
 lrtest(poismod_t26_q2, base_poismod)
 
 # Splines Poisson 3
 poismod_t26_l3 <- glm(fail ~ timegroup + tment + alb + 
                         log2bili + logbilihigh + logbilitoohigh + logbilimuchtoohigh +
                         offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t26_l3)
+summary(poismod_t26_l3)
 lrtest(poismod_t26_l3, base_poismod_log)
 
 # Quadratic Poisson 3
 poismod_t26_q3 <- glm(fail ~ timegroup + tment + alb + log2bili + log2bili2 +
                         offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t26_q3)
+summary(poismod_t26_q3)
 lrtest(poismod_t26_q3, base_poismod_log)
 ```
 
@@ -1153,7 +1158,7 @@ coxmod_t27
 # Poisson model
 poismod_t27 <- glm(fail ~ tment + alb + log2bili + timegroup + 
                      offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t27) 
+summary(poismod_t27) 
 ```
 
 ## SAS
@@ -1213,7 +1218,7 @@ pbc3mult$alb0 <- (pbc3mult$tment==0)*pbc3mult$alb
 pbc3mult$alb1 <- (pbc3mult$tment==1)*pbc3mult$alb
 poismod_t28_1 <- glm(fail ~ tment + alb0 + alb1 + log2bili + timegroup +
                        offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t28_1) 
+summary(poismod_t28_1) 
 lrtest(poismod_t28_base, poismod_t28_1)
 
 # Poisson model 2
@@ -1221,7 +1226,7 @@ pbc3mult$bili0 <- (pbc3mult$tment==0)*pbc3mult$log2bili
 pbc3mult$bili1 <- (pbc3mult$tment==1)*pbc3mult$log2bili
 poismod_t28_2 <- glm(fail ~ tment + alb + bili0 + bili1 + timegroup +
                        offset(log(risktime)), data = pbc3mult, family = poisson)
-tidy(poismod_t28_2) 
+summary(poismod_t28_2) 
 lrtest(poismod_t28_base, poismod_t28_2)
 ```
 
@@ -1286,14 +1291,14 @@ poismod_t29_base <- glm(fail~tment+alb+log2bili+timegroup+offset(log(risktime)),
 poismod_t29_tment <- glm(fail ~ tment1 + tment2 + tment3 + alb + log2bili+
                        timegroup + offset(log(risktime)),
                      data = pbc3mult, family = poisson)
-tidy(poismod_t29_tment) 
+summary(poismod_t29_tment) 
 lrtest(poismod_t29_base, poismod_t29_tment)
 
 # Albumin
 poismod_t29_alb <- glm(fail ~ tment + alb1 + alb2 + alb3 + log2bili+
                        timegroup + offset(log(risktime)),
                      data = pbc3mult, family = poisson)
-tidy(poismod_t29_alb) 
+summary(poismod_t29_alb) 
 lrtest(poismod_t29_base, poismod_t29_alb)
 
 # Bilirubin
@@ -1349,7 +1354,7 @@ run;
 ```
 :::
 
-### In-text: stratified Cox model
+### In-text, p. 51: stratified Cox model
 
 ::: panel-tabset
 ## R
@@ -1527,7 +1532,7 @@ fig2.11.right
 
 :::
 
-### In-text: simple Aalen model
+### In-text, p. 55: simple Aalen model
 
 ::: panel-tabset
 ## R
@@ -1636,7 +1641,7 @@ summary(nonparmod2)
 
 :::
 
-### In-text: Aalen models
+### In-text, p. 57: Aalen models
 
 ::: panel-tabset
 ## R
@@ -1673,7 +1678,7 @@ summary(nonparmod52)
 
 :::
 
-### In-text: additive Poisson model
+### In-text, p. 58: additive Poisson model
 
 ::: panel-tabset
 
@@ -1697,7 +1702,7 @@ pbc3add$biliny <- with(pbc3add, ((bili-50)/1000)*risktime/365.25)
 additive_pcw <- glm(fail ~ time1 + time2 + time3 + tment1 - 1,
                     data = pbc3add, start = c(0.1, 0.1, 0.1, 0),
                     family = poisson(link = "identity"))
-tidy(additive_pcw)
+summary(additive_pcw)
 ```
 
 ## SAS
@@ -1745,7 +1750,7 @@ Questionable fit.
 additive_pcw2.11 <- glm(fail ~ time1 + time2 + time3 + tment1 + albny + biliny -1,
                     data = pbc3add, start = c(0.3, 0.35, 0.4, -0.05, -0.8, 2),
                     family = poisson(link = "identity"))
-tidy(additive_pcw2.11)
+summary(additive_pcw2.11)
 ```
 
 ## SAS
