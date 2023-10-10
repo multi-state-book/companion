@@ -16,8 +16,21 @@ Assume that the LEADER data set is loaded in data set `leader`.
 
 # One data set per recurrent endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
+leader_3p <- subset(leader, type == "recurrent_comb")
 ```
+
+## SAS
+
+```{sas}
+#| label: read-leader-sas
+#| eval: false 
+#| output: false
+data leader_mi; 
+	set leader; 
+	where type = "recurrent_mi"; 
+run; 
+```
+
 :::
 
 ### Figure 2.15
@@ -26,7 +39,7 @@ leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
 ## R
 
 ```{r}
-#| label: Figure-2.15-r
+#| label: figure-2.15-r
 
 library(ggplot2)
 theme_general <- theme_bw() +
@@ -61,6 +74,33 @@ fig2.15 <- ggplot(aes(x = time * 1 / (365.25 / 12), y = cumhaz), data = plotdata
 
 fig2.15
 ```
+
+## SAS
+
+```{sas}
+#| label: figure-2.15-sas
+#| eval: false 
+#| output: false
+* Nelson-Aalen estimates; 
+proc phreg data=leader_mi noprint;
+	model stop*status(0 2)=/entry=start;
+	id id;
+	strata treat;
+  baseline out=na_data cumhaz=naa;
+run;
+data na_est;
+	set na_data; 
+	time = stop/(365.25/12);
+run; 
+proc sgplot data=na_est;
+	step x=time y=naa / group=treat justify=left;
+	xaxis grid values=(0 to 60 by 12);
+	yaxis grid values=(0 to 0.12 by 0.02);
+	label time="Time since randomisation (months)";
+	label cumevent="Cumulative hazard"; 
+run; 
+```
+
 :::
 
 ### Table 2.15
@@ -71,7 +111,7 @@ fig2.15
 ```{r}
 #| label: table-2.15-r
 
-# Cox model first events
+# Cox model first event
 library(survival)
 coxph(Surv(start, stop, status == 1) ~ treat,
       data = subset(leader_mi, eventno == 1), method = "breslow",)
@@ -120,4 +160,34 @@ coxph(Surv(start, stop, status == 1) ~ treat + strata(eventno),
 
 
 ```
+
+## SAS
+
+```{sas}
+#| label: table-2.15-sas
+#| eval: false 
+#| output: false
+proc sort data=leader_mi;
+  by eventno;
+run;
+
+* AG Cox type;
+proc phreg data=leader_mi;
+  model stop*status(0 2)= treat / entry=start; 
+run;
+
+* Cox model first event and PWP models 2nd, ..., 5th event;
+proc phreg data=leader_mi;
+  where eventno<=5;
+  model stop*status(0 2)= treat / entry=start; 
+	by eventno;
+run;
+
+* PWP model all events;
+proc phreg data=leader_mi;
+  model stop*status(0 2)= treat / entry=start; 
+	strata eventno;
+run;
+```
+
 :::

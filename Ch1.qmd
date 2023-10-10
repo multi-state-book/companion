@@ -37,17 +37,50 @@ download_file(
 
 
 | Variable name | Description                                                           |
-|:-----------|:----------------------------------------------------------------------|
+|:-----------|:-------------------------------------------------------------------------|
 | `id`          | patient id                                                            |
 | `unit`        | hospital                                                              |
 | `days`        | follow-up time in days                                                |
 | `status`      | 0 = censoring, 1 = transplantation, 2 = death without transplantation |
-| `tment`       | randomized treatment: 0 = placebo, 1 = CyA                                                  |
+| `tment`       | randomized treatment: 0 = placebo, 1 = CyA                            |
 | `sex`         | 0 = female, 1 = male                                                  |
-| `age`         | age in years                                                           |
+| `age`         | age in years                                                          |
 | `bili`        | bilirubin (micromoles/L)                                              |
 | `alb`         | albumin (g/L)                                                         |
 | `stage`       | disease stage: 2 = I-II, 3 = III, 4 = IV                              |
+
+
+### Read data and in-text summary
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: pbc3-r
+pbc3 <- read.csv("data/pbc3.csv")
+pbc3$fail <- ifelse(pbc3$status != 0, 1, 0) # event/failure indicator
+pbc3$tment_char <- ifelse(pbc3$tment == 0, "Placebo", "CyA")
+addmargins(table(pbc3$status,pbc3$tment_char))
+```
+
+
+
+## SAS
+
+```{sas}
+#| label: pbc3-sas
+#| eval: false 
+#| output: false
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+proc freq data=pbc3;
+  table status*tment;
+run;
+```
+:::
+
 
 ## 1.2 Guinea-Bissau childhood vaccination study
 
@@ -67,7 +100,7 @@ download_file(
 ```
 
 | Variable name | Description                                              |
-|:-----------|:----------------------------------------------------------------------|
+|:-----------|:------------------------------------------------------------|
 | `id`          | child id                                                 |
 | `cluster`     | cluster id                                               |
 | `fuptime`     | follow-up time (days)                                    |
@@ -76,6 +109,51 @@ download_file(
 | `dtp`         | no of dtp vaccinations at initial visit                  |
 | `sex`         | 0 = female, 1 = male                                     |
 | `age`         | age in days at initial visit                             |
+
+
+### Read data and Table 1.1
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: bissau-r
+bissau <- read.csv("data/bissau.csv")
+bissau$vaccine <- 1*(bissau$bcg==1 | bissau$dtp>0)
+# Table 1.1
+
+addmargins(table(bissau$vaccine,bissau$dead))
+with(bissau, table(vaccine, dead)) / rowSums(with(bissau, table(vaccine, dead)))
+```
+or
+
+```{r}
+#| label: alt-bissau-r
+library(procs)
+proc_freq(bissau, tables = vaccine*dead, output = report)
+```
+
+## SAS
+
+```{sas}
+#| label: bissau-sas
+#| eval: false 
+#| output: false
+
+proc import out=bissau
+	datafile="data/bissau.csv"
+	dbms=csv replace;
+run;
+data bissau; 
+	set bissau; 
+	vaccine= bcg=1 or dtp>0; 
+run;
+proc freq data=bissau; 
+	table vaccine*dead;
+run;
+```
+:::
+
 
 ## 1.3 Testis cancer incidence and maternal parity
 
@@ -93,32 +171,73 @@ download_file(
 )
 ```
 
-
-
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
-| `age`         | age of son |
-||  0 = 0-14 years |
-|| 15 = 15-19 years|
-|| 20 = 20-24 years|
-|| 25 = 25-29 years|
-|| 30 = 30+ years  |
-| `pyrs`        | person years at risk      |
-| `cases`       | number of testis cancer cases            |
-| `semi`        | number of seminoma cases            |
-| `nonsemi`     | number of non-seminoma cases            |
-| `parity`      | parity of mother at birth of son            |
-| `cohort`      | son cohort (year of birth)
-||1950 = 1950-1957|
-||1958 = 1958-1962|
-||1963 = 1963-1967|
-||1968 = 1968-1972|
-||1973 = 1973-1992|
+| `age`         | age of son      |
+|               |  0 = 0-14 years |
+|               | 15 = 15-19 years|
+|               | 20 = 20-24 years|
+|               | 25 = 25-29 years|
+|               | 30 = 30+ years  |
+| `pyrs`        | person years at risk|
+| `cases`       | number of testis cancer cases |
+| `semi`        | number of seminoma cases|
+| `nonsemi`     | number of non-seminoma cases|
+| `parity`      | parity of mother at birth of son |
+| `cohort`      | son cohort (year of birth) |
+|               | 1950 = 1950-1957|
+|               | 1958 = 1958-1962|
+|               | 1963 = 1963-1967|
+|               | 1968 = 1968-1972|
+|               | 1973 = 1973-1992|
 | `motherage`   | mother's age at birth of son |
-||12 = 12-19|
-||20 = 20-24|
-||25 = 25-29|
-||30 = 30+|
+|               | 12 = 12-19|
+|               | 20 = 20-24|
+|               | 25 = 25-29|
+|               | 30 = 30+  |
+
+### Read data and in-text summary
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| label: testis-r
+
+testis <- read.csv("data/testis.csv")
+# Add extra variables
+testis$lpyrs <- log(testis$pyrs)
+testis$par2 <- as.numeric(testis$parity < 2)
+
+library(procs)
+proc_means(testis, var = v(pyrs, cases, semi, nonsemi) , stats=v(sum), class=par2)
+```
+## SAS
+```{sas}
+#| label: testis-sas
+#| eval: false 
+#| output: false
+
+proc import out=testis
+	datafile="data/testis.csv"
+	dbms=csv replace;
+run;
+data testis; 
+  set testis; 
+  par2 = (parity>=2); 
+run;
+proc means data=testis sum;
+  var pyrs cases semi nonsemi;
+run;
+proc means data=testis sum;
+  class par2;
+  var cases pyrs;
+run;
+
+```
+:::
+
+
 
 ## 1.4 PROVA trial in liver cirrhosis
 
@@ -141,18 +260,74 @@ download_file(
 |:-----------|:----------------------------------------------------------------------|
 | `id`          | patient id           |
 | `timedeath`   | followup time (days) |
-| `death`       | 0 = alive, 1 = dead                    |
+| `death`       | 0 = alive, 1 = dead  |
 | `timebleed`   | time to bleeding (days); missing if `bleed` = 0   |
 | `bleed`       | 0 = no bleeding, 1 = bleeding  |
 | `beta`        | 0 = no propranolol, 1 = propranolol |
 | `scle`        | 0 = no sclerotherapy, 1 = sclerotherapy   |
 | `sex`         | 0 = female, 1 = male |
-| `age`         | age (years)                     |
+| `age`         | age (years)  |
 | `bili`        | bilirubin (micromoles/L) |
 | `coag`        | coagulation factors (% of normal)  |
 | `varsize`     | variceal size: 1 = small, 2 = medium, 3 = large |
 
+### Read data and Table 1.2
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: prova-r
+prova <- read.csv("data/prova.csv", na.strings = c("."))
+# Treatment 2x2 factorial
+prova$beh <- with(prova, as.factor(scle + beta*2))
+# 0 = none
+# 1 = sclerotherapy only
+# 2 = propranolol only
+# 3 = both
+with(prova, table(beh))
+# Bleeding
+with(prova, table(beh, bleed))
+# Death
+with(prova, table(beh, death))
+# Death w/o bleed
+with(subset(prova, bleed == 0), table(beh, death))
+# Death after bleed
+with(subset(prova, bleed == 1), table(beh, death))
+```
+
+
+
+## SAS
+
+```{sas}
+#| label: prova-sas
+#| eval: false 
+#| output: false
+
+proc import out=prova
+	datafile="data/prova.csv"
+	dbms=csv replace;
+run;
+data prova; 
+	set prova; 
+	beh = scle + beta*2; 
+run; 
+/*
+0 = none
+1 = sclerotherapy only
+2 = propranolol only
+3 = both
+*/
+proc freq data=prova; 
+	table beh beh*bleed beh*death bleed*beh*death; 
+run;
+```
+:::
+
 ## 1.5 Recurrent episodes in affective disorders
+
+Note, that all patients start in state 1 (in hospital).
 
 ```{r}
 #| label: downloadthis-affective
@@ -172,21 +347,63 @@ download_file(
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
-| `id`          | patient id           |
-| `episode`     | number of affective episodes                     |
+| `id`          | patient id |
+| `episode`     | number of affective episodes |
 | `state`       | Status at time `start`:|
-||0 = no current affective episode, 1 = current affective episode |
-| `start`       | start time in state (months)                    |
-| `stop`        | last time seen in state (months)                   |
+|               | 0 = no current affective episode, 1 = current affective episode |
+| `start`       | start time in state (months)  |
+| `stop`        | last time seen in state (months) |
 | `status`      | status at time `stop`:|
-||                0 = transition to state 0 |
-||                1 = transition to state 1 |
-||                2 = transition to death   |
-||                3 = censoring             |
+|               | 0 = transition to state 0 |
+|               | 1 = transition to state 1 |
+|               | 2 = transition to death   |
+|               | 3 = censoring             |
 | `bip`         | 0 = unipolar, 1 = bipolar |
 | `sex`         | 0 = female, 1 = male |
 | `age`         | age (years)          |
 | `year`        | year of initial episode  |
+
+### Read data and in-text summary
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: affective-r
+affective <- read.csv("data/affective.csv")
+length(unique(affective$id))
+length(unique(affective$id[affective$bip==0]))
+length(unique(affective$id[affective$bip==1]))
+# The patients starts in state 1 (at hospital)
+(sum(affective$status==1)+length(unique(affective$id)))/length(unique(affective$id))
+table(affective$status)
+```
+
+
+
+## SAS
+
+```{sas}
+#| label: affective-sas
+#| eval: false 
+#| output: false
+proc import out=affective
+	datafile="data/affective.csv"
+	dbms=csv replace;
+run;
+proc sql;
+  select bip, count(distinct id) as n
+  from affective
+	group by bip;	
+quit;
+proc freq data=affective;
+  table status;
+run;
+```
+
+:::
+
+
 
 ## 1.6 LEADER cardiovascular trial in type 2 diabetes
 
@@ -198,14 +415,109 @@ Data not available for download.
 | `start`       | start time to event (days since randomization) |
 | `stop`        | stop time (days since randomization)            |
 | `status`      | status at `stop`:|
-||                0 = censoring |
-||                1 = recurrent event |
-||                2 = death  |
+|               | 0 = censoring |
+|               | 1 = recurrent event |
+|               | 2 = death  |
 | `type`        | type of recurrent event:
 |               |'recurrent_mi' =  myocardial infarction
 |               |'recurrent_comb' = 3-point MACE |
-| `eventno`     | event number  |
+| `eventno`     | event number (1, 2, 3, ...) |
 | `treat`       | randomized treatment: 0 = placebo, 1 = liraglutide|
+
+
+### Read data and Table 1.3
+
+```{r}
+#| echo: false
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+```
+Assume that the LEADER data set is loaded in data set `leader`.
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: leader-r
+# One data set per recurrent endpoint type
+leader_mi <- subset(leader, type == "recurrent_mi")
+leader_3p <- subset(leader, type == "recurrent_comb")
+
+# For recurrent MI
+length(unique(leader_mi$id)) # n randomized
+with(subset(leader_mi,treat==1), length(unique(id))) # n for liraglutid
+with(subset(leader_mi,treat==0), length(unique(id))) # n for placebo
+with(subset(leader_mi, eventno==1), table(status, treat))  # >=1 event and dead/censored before 1st event
+with(subset(leader_mi, status==1), table(treat)) # Total events
+
+# For recurrent 3p MACE
+length(unique(leader_3p$id)) # n randomized
+with(subset(leader_3p,treat==1), length(unique(id))) # n for liraglutid
+with(subset(leader_3p,treat==0), length(unique(id))) # n for placebo
+with(subset(leader_3p, eventno==1), table(status, treat))  # >=1 event and dead/censored before 1st event
+with(subset(leader_3p, status==1), table(treat)) # Total events
+```
+
+## SAS
+
+```{sas}
+#| label: leader-sas
+#| eval: false 
+#| output: false
+
+* Recurrent MI;
+data leader_mi; 
+	set leader; 
+	where type = "recurrent_mi"; 
+run; 
+proc sql;
+  select treat, count(distinct id) as n
+  from leader_mi
+	group by treat
+  union
+  select . as treat, count(distinct id) as total
+  from leader_mi;	
+quit;
+
+* >=1 event and dead/censored before 1st event;
+proc freq data=leader_mi; 
+  where eventno=1;
+	tables status*treat; 
+run; 
+* Total events;
+proc freq data=leader_mi; 
+  where status=1;
+	tables treat; 
+run; 
+
+* Recurrent 3p-MACE;
+data leader_3p; 
+	set leader; 
+	where type = "recurrent_comb"; 
+run; 
+proc sql;
+  select treat, count(distinct id) as n
+  from leader_3p
+	group by treat
+  union
+  select . as treat, count(distinct id) as total
+  from leader_3p;	
+quit;
+* >=1 event and dead/censored before 1st event;
+proc freq data=leader_3p; 
+  where eventno=1;
+	tables status*treat; 
+run; 
+* Total events;
+proc freq data=leader_3p; 
+  where status=1;
+	tables treat; 
+run; 
+```
+:::
+
+
+
 
 ## 1.7 Bone marrow transplantation in acute leukemia
 
@@ -242,6 +554,54 @@ download_file(
 | `all`         | 0 = acute myelogenous leukemia (AML)|
 ||                1 = acute lymphoblastic leukemia (ALL)                    |
 | `bmonly`      | 0 = peripheral blood/bone marrow, 1 = only bone marrow  |
+
+### Read data and Table 1.4
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: bmt-r
+bmt <- read.csv("data/bmt.csv")
+
+with(bmt, table(rel))
+with(bmt, table(rel)) / sum(with(bmt, table(rel)))
+
+with(bmt, table(death))
+with(bmt, table(death)) / sum(with(bmt, table(death)))
+
+with(bmt, table(rel,death))
+with(bmt, table(rel,death)) / rowSums(with(bmt, table(rel,death)))
+
+with(bmt, table(gvhd))
+with(bmt, table(gvhd)) / sum(with(bmt, table(gvhd)))
+
+with(bmt, table(gvhd, rel))
+with(bmt, table(gvhd, rel)) / rowSums(with(bmt, table(gvhd, rel)))
+
+with(bmt, table(gvhd, death))
+with(bmt, table(gvhd, death)) / rowSums(with(bmt, table(gvhd, death)))
+```
+
+
+
+## SAS
+
+```{sas}
+#| label: bmt-sas
+#| eval: false 
+#| output: false
+
+proc import out=bmt
+	datafile="data/bmt.csv"
+	dbms=csv replace;
+run;
+proc freq data=bmt; 
+	table rel death rel*death gvhd gvhd*rel gvhd*death; 
+run; 
+```
+:::
+
 
 ## 1.8 The Copenhagen Holter study
 
@@ -280,7 +640,43 @@ download_file(
 | `probnp`      | NT-proBNP (pmol/L)                     |
 | `sbp`         | systolic blood pressure (mmHg)                     |
 
+### Read data and Table 1.5
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: cphholter-r
+holter <- read.csv("data/cphholter.csv")
+with(holter, table(esvea)) # total
+with(holter, table(afib, stroke, death, esvea))
+with(subset(holter, timeafib <= timestroke),
+     table(afib, stroke, death, esvea)) # 0 -> AF -> Stroke -> dead (yes/no)
+with(subset(holter, timestroke < timeafib), 
+     table(afib, stroke, death, esvea)) # 0 -> Stroke -> AF -> dead (yes/no)
+```
+
+
+```
+
+
+
+## SAS
+
+```{sas}
+#| label: cphholter-sas
+#| eval: false 
+#| output: false
+
+
+```
+:::
+
+
+
 ## 1.9 Small set of survival data
+
+Only done in R.
 
 {{< include R/chapter1_simpledata.qmd >}}
 

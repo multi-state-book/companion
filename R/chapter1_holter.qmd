@@ -1,19 +1,10 @@
-### Read data {.unnumbered}
-
 ```{r}
-#| label: read-cphholter
-holter <- data.frame(read.csv("data/cphholter.csv"))
-```
-
-#### Table 1.5 {.unnumbered} 
-
-```{r}
-#| label: table-1.5
-with(holter, table(esvea))
-with(holter, table(afib, esvea))
-with(holter, table(stroke, esvea))
-with(holter, table(death, esvea))
+#| label: cphholter-r
+holter <- read.csv("data/cphholter.csv")
+with(holter, table(esvea)) # total
 with(holter, table(afib, stroke, death, esvea))
-with(subset(holter, timeafib < timestroke), table(afib, stroke, death, esvea))
-with(subset(holter, timestroke < timeafib), table(afib, stroke, death, esvea))
+with(subset(holter, timeafib <= timestroke),
+     table(afib, stroke, death, esvea)) # 0 -> AF -> Stroke -> dead (yes/no)
+with(subset(holter, timestroke < timeafib), 
+     table(afib, stroke, death, esvea)) # 0 -> Stroke -> AF -> dead (yes/no)
 ```

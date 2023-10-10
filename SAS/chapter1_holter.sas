@@ -4,7 +4,7 @@
 
 * Load data; 
 proc import 
-datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/cphholter.csv"
+datafile="data/cphholter.csv"
 	out=holter
 	dbms = csv
 	replace;
@@ -20,21 +20,23 @@ run;
 *---------------------------------------------------------------;
 
 proc freq data=holter; 
-	tables esvea; 
+  title 'Total';
+	tables esvea / nocol norow nopercent; 
 run;
 
 proc freq data=holter; 
-	tables afib*stroke*death*esvea; 
+	title '';
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
 run;
 
-
 proc freq data=holter; 
-where timeafib < timestroke; 
-	tables afib*stroke*death*esvea; 
+	title '0 -> AF -> Stroke -> dead (yes/no)';
+	where .<timeafib <= timestroke; 
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
 run;
 
-
 proc freq data=holter; 
-where timestroke < timeafib; 
-	tables afib*stroke*death*esvea; 
+	title '0 -> Stroke -> AF -> dead (yes/no)';
+	where .<timestroke < timeafib; 
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
 run;
