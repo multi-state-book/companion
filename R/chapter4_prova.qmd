@@ -13,7 +13,7 @@ provany$log2bili <- with(provany, log2(bili))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-prova-sas
 #| eval: false 
 #| output: false
@@ -81,7 +81,7 @@ fig4.22
 
 ## SAS
 
-```{r}
+```{sas}
 #| label: figure-4.22-sas
 #| eval: false 
 #| output: false
@@ -130,7 +130,7 @@ coxph(Surv(time, death == 0) ~ age, data = provany)
 
 ## SAS
 
-```{r}
+```{sas}
 #| label: table-4.12-sas
 #| eval: false 
 #| output: false

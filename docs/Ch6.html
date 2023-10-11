@@ -326,10 +326,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="pbc3-trial-in-liver-cirrhosis">PBC3 trial in liver cirrhosis</h2>
 <section id="read-data" class="level3">
 <h3 class="anchored" data-anchor-id="read-data">Read data</h3>
-<div class="cell" data-hash="Ch6_cache/html/read-pbc3_daaf2a130e8f7a048ca2078bc24e20e8">
+<div class="cell" data-hash="Ch6_cache/html/read-pbc3_32aa2d9e284e9b59e1e2d97ed8f8d2b3">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>))</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pbc3 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/pbc3.csv"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>fail <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">with</span>(pbc3, status <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pbc3<span class="sc">$</span>log2bili <span class="ot">&lt;-</span> <span class="fu">with</span>(pbc3, <span class="fu">log2</span>(bili))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
@@ -1375,10 +1375,10 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <h2 class="anchored" data-anchor-id="prova-trial-in-liver-cirrhosis">PROVA trial in liver cirrhosis</h2>
 <section id="read-data-1" class="level3">
 <h3 class="anchored" data-anchor-id="read-data-1">Read data</h3>
-<div class="cell" data-hash="Ch6_cache/html/read-prova_6d0b88259c98498dd5a011f44ce7f56d">
+<div class="cell" data-hash="Ch6_cache/html/read-prova_071b6feddc1e23ac624af34b962f6982">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>)))</span>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>prova <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/prova.csv"</span>, <span class="at">na.strings =</span> <span class="fu">c</span>(<span class="st">"."</span>))</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment 2x2 factorial</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>prova<span class="sc">$</span>beh <span class="ot">&lt;-</span> <span class="fu">with</span>(prova, <span class="fu">as.factor</span>(scle <span class="sc">+</span> beta<span class="sc">*</span><span class="dv">2</span>))</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>

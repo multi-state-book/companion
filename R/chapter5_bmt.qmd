@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: read-bmt
-bmt <- data.frame(read.csv("data/bmt.csv"))
+bmt <- read.csv("data/bmt.csv")
 bmt$intxsurv<- bmt$timedeath
 bmt$dead <- bmt$death
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)

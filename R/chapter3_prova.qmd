@@ -5,7 +5,7 @@
 ## R
 ```{r}
 #| label: read-prova-r
-prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
+prova <- read.csv("data/prova.csv", na.strings = c("."))
 # Treatment 2x2 factorial
 prova$beh <- with(prova, as.factor(scle + beta*2))
 # Extra variables
@@ -21,7 +21,7 @@ provany$wait     <- ifelse(provany$bleed == 1, provany$bdtime - provany$timeblee
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-prova-sas
 #| eval: false 
 #| output: false
@@ -91,7 +91,7 @@ coxph(Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize),
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.3-sas
 #| eval: false 
 #| output: false
@@ -156,7 +156,7 @@ lrtest(coxreduced,cox)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.4-sas
 #| eval: false 
 #| output: false
@@ -253,7 +253,7 @@ coxdur_tt_reduced<-coxph(Surv(btime, bdtime, deadb != 0) ~ sex + log2bili+tt(tsb
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.8-sas
 #| eval: false 
 #| output: false
@@ -357,7 +357,7 @@ fig3.2
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.2-sas
 #| eval: false 
 #| output: false
@@ -419,7 +419,7 @@ fig3.3
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.3-sas
 #| eval: false 
 #| output: false
@@ -490,7 +490,7 @@ aggregate(cbind(fail2, risktimeys2) ~ tint + wint, provasplit2,
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.9-sas
 #| eval: false 
 #| output: false
@@ -590,7 +590,7 @@ lrtest(glmwint,glmboth)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.10-sas
 #| eval: false 
 #| output: false
@@ -690,7 +690,7 @@ lrtest(ph, pht)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.13-sas
 #| eval: false 
 #| output: false
@@ -783,7 +783,7 @@ fig3.9
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.9-sas
 #| eval: false 
 #| output: false

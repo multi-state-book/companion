@@ -16,7 +16,7 @@ bmt$state0  <- bmt$rel + 2*bmt$trm
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-bmt-sas
 #| eval: false 
 #| output: false
@@ -119,7 +119,7 @@ fig4.15
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.15-sas
 #| eval: false 
 #| output: false
@@ -187,7 +187,7 @@ Missing for R - but should be possible with mstate or survival?
 ## R-NA
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-mu-sas
 #| eval: false 
 #| output: false
@@ -358,7 +358,7 @@ summary(coxph(Surv(intxsurv, dead != 0) ~ bmonly + all + age + cluster(team),
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.8-sas
 #| eval: false 
 #| output: false
@@ -423,7 +423,7 @@ coxph(Surv(nytgvhd, gvhdny != 0) ~ bmonly + all + age10, data=bmt1, ties="breslo
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.11-sas
 #| eval: false 
 #| output: false

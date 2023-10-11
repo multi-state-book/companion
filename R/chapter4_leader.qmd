@@ -110,7 +110,7 @@ fig4.20 <- ghosh_lin_nonpar_mcf(endpointdat = leader_mi)
 fig4.20
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.20-sas
 #| eval: false 
 #| output: false
@@ -242,7 +242,7 @@ summary(fit2)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-lwyy-ghoshlin-sas
 #| eval: false 
 #| output: false

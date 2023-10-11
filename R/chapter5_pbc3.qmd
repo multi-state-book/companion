@@ -5,12 +5,12 @@
 ```{r}
 #| label: read-pbc3
 
-pbc3 <- data.frame(read.csv("data/pbc3.csv"))
+pbc3 <- read.csv("data/pbc3.csv")
 pbc3$log2bili <- with(pbc3, log2(bili))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-pbc3-sas
 #| eval: false 
 #| output: false
@@ -19,12 +19,10 @@ proc import out=pbc3
 	datafile="data/pbc3.csv"
 	dbms=csv replace;
 run;
-	
 data pbc3; 
 	set pbc3;
 	log2bili=log2(bili);
 run;
-
 ```
 :::
 
@@ -64,9 +62,8 @@ timereg3 <- comp.risk(
 summary(timereg3)$coef
 ```
 
-## SAS
+## SAS-NA
 
-Not available
 :::
 
 ### Figure 5.12
@@ -75,7 +72,7 @@ Not available
 #| label: figure-5.12
 #| out-width: 90%
 
-        library(timereg)
+library(timereg)
 library(ggplot2) 
 theme_general <- theme_bw() +
   theme(legend.position = "bottom", 

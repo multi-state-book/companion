@@ -1,0 +1,927 @@
+### Exercise 3.7 
+
+*Consider the Cox model for stroke-free survival in the Copenhagen Holter study including the covariates ESVEA, sex, age, and systolic blood pressure (Exercise 4 in Chapter 2). Test, using time-dependent covariates, whether the effects of these covariates may be described as time-constant hazard ratios*.
+
+::: panel-tabset
+## R
+
+The data should be loaded as **chs_data** and we convert the time variables to years and add a time and censoring variable for the composite end-point stroke-free survival.
+
+```{r}
+#| code-fold: show
+chs_data <- read.csv("data/cphholter.csv")
+chs_data <- chs_data %>% mutate(timeafib = timeafib/365.25,
+                                timestroke = timestroke/365.25,
+                                timedeath = timedeath/365.25,
+                                timestrokeordeath = ifelse(stroke == 1, timestroke, timedeath),
+                                strokeordeath = ifelse(stroke ==1, 1, death))
+```
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(survminer) #Plots of survival curves
+theme_set(theme_bw())
+```
+
+We fit the Cox proportional hazards model for stroke-free survival including the covariates ESVEA, sex, age, and systolic blood pressure using the function **coxph** from the survival package (just like we did in exercise 2.4.1).
+
+```{r}
+#| code-fold: show
+# Cox model for stroke-free survival including ESVEA, sex, age and systolic blood pressure
+cox241 <- coxph(formula = Surv(timestrokeordeath, strokeordeath) ~ esvea + sex + age + sbp , data = chs_data, method = "breslow")
+summary(cox241)
+```
+To investigate if the covariate effects may be described as time-constant hazard ratios, we will compare our model from 2.4.1 with models where one of the covariates is allowed to have a time-dependent effect. 
+
+This can be done using the time-transform functionality of **coxph**. To make a time-dependent variable the covariate, x, is added together with tt(x) on the right side of '~' in the formula argument. Then tt = function(x,t,...) should be followed by the desired function format of the covariate, x, and time, t. It is also possible to have a function with multiple terms with the use of cbind. 
+
+We will investigate the assumption of a time-constant effect of ESVEA by fitting a model with a time-dependent effect of ESVEA allowing for a change in the effect after t=5 years. Multiple other forms of the function could be chosen but we will only illustrate one choice for each covariate.
+
+```{r}
+#| code-fold: show
+
+#Cox model including a time-dependent effect of ESVEA
+cox37_esvea <- coxph(Surv(timestrokeordeath, strokeordeath) ~ esvea + sex + age + sbp + tt(esvea), tt = function(x,t,...) x*(t > 5), data = chs_data, method = "breslow")
+summary(cox37_esvea)
+```
+We estimate the coefficient of the time-dependent effect of ESVEA to be $\beta_{ESVEA}(t) = 0.7787 - 0.7033 \cdot I(t >5)$.The model thus predicts a decrease in the effect of having ESVEA on the stroke-free survival hazard after 5 years.
+
+We cannot compare two models using the **anova** function when one of the models contains a tt function. Thus, we must manually calculate the likelihood ratio test. We can use the **logLik** method for a Cox model to extract the log likelihood values. The corresponding p-value is calculated using the chi-squared distribution with, in this case, 1 degree of freedom. The chi-squared distribution function is implemented as **pchisq**.
+
+```{r}
+#| code-fold: show
+
+# Likelihood ratio score
+(LR <- -2*(logLik(cox241)-logLik(cox37_esvea))[1])
+# Corresponding p-value
+(pval <- 1 - pchisq(LR, df = 1))
+```
+
+We get a likelihood ratio test statistic of 4.9885 and a p-value of 0.0255. Thus, allowing ESVEA to have a time-dependent effect is significant. The same conclusion is arrived at when looking at the Wald test for the time-dependent variable 
+
+Likewise, we can investigate the assumption of time-constant effect of sex by fitting a model with $\beta_{sex}(t) = \beta_1\log(t) + \beta_2$ and compare it with the model from 2.4.1 using a likelihood ratio test.
+
+```{r}
+#| code-fold: show
+#Cox model including time-dependent effect of sex 
+cox37_sex <- coxph(Surv(timestrokeordeath, strokeordeath) ~ esvea + sex + age + sbp + tt(sex), tt = function(x,t,...) x*log(t), data = chs_data, method = "breslow")
+summary(cox37_sex)
+```
+We estimate the coefficient of the time-dependent effect of sex to be $\beta_{sex}(t) = -0.0536  \log(t) + 0.6783$.
+
+Then, we can compare this model with the one from exercise 2.4.1 with a likelihood ratio test.
+
+```{r}
+#| code-fold: show
+#LRT
+(LR <- -2*(logLik(cox241)-logLik(cox37_sex))[1])
+# Corresponding p-value
+(pval <- 1 - pchisq(LR, df = 1))
+```
+We get a likelihood ratio test statistic of 0.1194 and a p-value of 0.7297. Thus, we do not find evidence against the assumption of a time-constant effect of sex. The Wald test leads to the same conclusion.
+
+We will check the assumption of a time-constant effect of age by including an indicator of whether the current age is greater than 70, i.e. $\beta_{age}(t) = \beta_1 + \beta_2\cdot I((age + t) > 70)$. 
+
+```{r}
+#| code-fold: show
+#Cox model including a time-dependent effect of age
+cox37_age <- coxph(Surv(timestrokeordeath, strokeordeath) ~  esvea + sex + age + sbp + tt(age), tt = function(x,t,...) {cur_age <- (x + t) 
+cbind(age70=1*(cur_age>70))}, data = chs_data, method = "breslow")
+summary(cox37_age)
+```
+We estimate the coefficient of the time-dependent effect of age to be  $\beta_{age}(t) = 0.0585  +  0.3753 \cdot I(age + t > 70)$.
+
+```{r}
+#| code-fold: show
+#LRT
+(LR <- -2*(logLik(cox241)-logLik(cox37_age))[1])
+#Corresponding p-value
+(pval <- 1 - pchisq(LR, df = 1))
+```
+We get a likelihood ratio test statistic of 2.8206 and a p-value of 0.0931. Thus, there is no evidence against the assumption of a time-constant effect of age.
+
+Lastly, we will check the assumption of time-constant effect of systolic blood pressure. We will investigate a model where $\beta_{sbp}(t) = \beta_1\cdot t + \beta_2$.
+
+```{r}
+#| code-fold: show
+#Cox model including time-dependent effect of systolic blood pressure
+cox37_sbp <- coxph(Surv(timestrokeordeath, strokeordeath) ~ age + esvea + sex + sbp + tt(sbp), tt = function(x,t,...) x*t, data = chs_data, method = "breslow")
+summary(cox37_sbp)
+```
+
+We get an estimated time-dependent coefficient for the effect of systolic blood pressure of $\beta_{sbp}(t) = 5.321 \cdot 10^{-3} - 2.107 \cdot 10^{-5}  \cdot t$.
+
+```{r}
+#| code-fold: show
+#LRT
+(LR <- -2*(logLik(cox241) - logLik(cox37_sbp))[1])
+#Corresponding p-value
+(pval <- 1 - pchisq(LR, df = 1))
+```
+We get a likelihood ratio test statistic of 0.0012 and a corresponding p-value of 0.9718 Thus, we cannot reject the hypothesis that the effect of systolic blood pressure is time-constant.
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We fit the Cox proportional hazards model for stroke-free survival including the covariates ESVEA, sex, age, and 
+  systolic blood pressure like we did in exercise 2.4.1.;
+  
+title "3.7: Cox model from exercise 2.4.1";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp;
+run;
+
+* To investigate if the covariates may be described as time-constant hazard ratios, we will compare our model from exercise 2.4.1 
+  with models where one of the covariates, Z, is assumed time-dependent, i.e. Z(t) = Z*f(t) for some function t of time.;
+
+* We will investigate the assumption of a time-constant effect of ESVEA by fitting a Cox model with a time-dependent effect of ESVEA 
+  described by Z(t) = x1*I(t > 5 years) + x2. Multiple other forms of the function could be chosen but we will only illustrate one 
+  choice of f(t) for each covariate.;
+
+title "3.7: Cox model with time-dependent effect of ESVEA";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp esveat0;
+	esveat0 = (esvea=1)*(timestrokeordeath > 5);
+run;
+
+* We estimate the coefficient of the time-dependent effect of ESVEA to be Z(t) = 0.7788 - 0.0734*I(t > 5). The model thus predicts a decrease 
+  in the effect of having ESVEA on the stroke-free survival hazard after 5 years.;
+
+* We can then compare the model with the one from exercise 2.4.1 using a likelihood ratio test. This is done by comparing the likelihood 
+  scores for the two models and then calculating the p-value using the Chi-square distribution with 1 degrees of freedom. The likelihood 
+  scores are found in the 'Model Fit Statistics' table;
+
+title "3.7: Likelihood ratio test investigating the assumption of a time-constant effect of ESVEA";
+data p;
+	chi2=3457.955-3452.967;
+	p=1-probchi(chi2,1);
+proc print;
+run;
+
+*  We get a Chi-square statistic of 4.988 on 1 degree of freedom and a correpsonding p-value of 0.0255. Thus, including ESVEA as a time-
+   dependent covariate is significant on a 0.05 significance level. The same conclusion appears when studying the Wald test.; 
+
+* Likewise, we can investigate the assumption of time-constant effect of sex by fitting a Cox model with Z(t) = x1*log(t) + x2.; 
+
+title "3.7: Cox model with a time-dependent effect of sex";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp sexlogtime;
+	sexlogtime = (sex=1)*log(timestrokeordeath);
+run;
+
+* We estimate the coefficient of the time-dependent effect of sex to be Z(t) = -0.0536*log(t) + 0.6783.;
+
+*Then, we can compare this model with the one from exercise 2.4.1 with a likelihood ratio test.;
+
+title "3.7: Likelihood ratio test investigating the assumption of a time-constant effect of sex";
+data p;
+	chi2=3457.955-3457.836;
+	p=1-probchi(chi2,1);
+proc print;
+run;
+
+* We get a Chi-square statistic of 0.119 on 1 degree of freedom and a correpsonding p-value of 0.7301. We conclude that we do not have 
+  evidence against the assumption of a time-constant hazard ratio for sex. Same conclusion for the Wald test.;
+
+* We will check the assumption of a time-constant effect of age by including an indicator of whether the current age is greater than 70, 
+  i.e. Z(t) = x1 + x2*I((age + t) > 70), in our Cox model.;
+
+title "3.7: Cox model with a time-dependent effect of age";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp aget0;
+	aget0 = ((age + timestrokeordeath) > 70);
+run;
+
+* We estimate the coefficient of the time-dependent effect of age to be  Z(t) = 0.0585  +  0.3753*I(age + t > 70).;
+
+* Then, we can compare this model with the one from exercise 2.4.1 using a likelihood ratio test.;
+
+data p;
+	chi2=3457.955-3455.135;
+	p=1-probchi(chi2,1);
+proc print;
+run;
+
+* We get a Chi-square statistic of 2.82 on 1 degree of freedom and a correpsonding p-value of 0.0931. Thus, our inclusion of age as a
+  time-dependent covariate does not provide evidence against the assumption of a time-constant hazard ratio of age.
+  Same conclusion for the Wald test.;
+
+* Lastly, we will check the assumption of time-constant effect of systolic blood pressure. We will investigate a model where 
+  Z(t) = x1* + x2.;
+
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp sbptime;
+	sbptime = sbp*timestrokeordeath;
+run;
+
+* We get an estimated time-dependent coefficient for the effect of systolic blood pressure of Z(t) = 5.32*10^{-3} - 2.11*10^{-5}*t.;
+
+* Then, we can compare this model with the one from exercise 2.4.1 using a likelihood ratio test.;
+
+data p;
+	chi2=3457.955-3457.954;
+	p=1-probchi(chi2,1);
+proc print;
+run;
+
+* We get a Chi-square statistic of 0.001 on 1 degree of freedom and a correpsonding p-value of 0.9748.Thus, we do not have evidence 
+  against the assumption of a time-constant effect of systolic blood pressure.  Same conclusion for the Wald test.;
+```
+
+:::
+
+### Exercise 3.8  
+
+*Consider the Cox model for stroke-free survival in the Copenhagen Holter study including the covariates ESVEA, sex, age, and systolic blood pressure. Add to that model the time-dependent covariate I(AF $\leq$ t). How does this affect the effect of ESVEA?*.
+
+Since the following exercises investigate the effect of AF on stroke-free survival, we will neglect diagnoses of AF after a stroke. Furthermore, we will replace the NA's in **timeafib** with 15.5, i.e. longer than any observation time in the study.
+
+::: panel-tabset
+## R
+
+```{r}
+#| code-fold: show
+chs_data <- chs_data %>%  
+            mutate(afib = ifelse(afib == 1 & timeafib > timestrokeordeath, 0, afib),
+                   #timestroke = ifelse(stroke == 1, timestroke, timedeath),
+                   timeafib = ifelse(afib == 1, timeafib, 15.5))
+```
+
+Then we can include the time-dependent covariate I(AF $\leq$ t) using the tt functionality described in exercise 3.7. 
+
+```{r}
+#| code-fold: show
+#Cox model including time-dependent covariate I(AF <= t)
+cox38 <- coxph(Surv(timestrokeordeath, strokeordeath) ~ age + esvea + sex + sbp + tt(timeafib), tt = function(x,t,...)
+  1*(x <= t), data = chs_data, method = "breslow")
+summary(cox38)
+```
+
+We get a hazard ratio of exp(0.226) = 1.2536 for ESVEA with a Wald test of 1.459 and a corresponding p-value of 0.1447. Thus, having ESVEA is (insignificantly) associated with a higher rate of stroke or death. 
+
+The effect of being diagnosed with AF before time t is highly significant and associated with a much higher rate for the composite end-point compared to those not diagnosed with AF at time t.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* Since the following exercises investigates the effect of AF on stroke-free survival, we will neglect diagnoses of AF 
+  after a stroke. ;
+
+data chs_data;
+	set chs_data;
+	if afib = 1 and timeafib > timestrokeordeath then afib = 0;
+run;
+
+* We will include a time-dependent covariate I(AF <= t) to our Cox model.;
+
+title "3.8: Cox model including the time-dependent covariate I(AF < t)";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0) = esvea sex age sbp timeaf;
+	timeaf = 0;
+	if afib = 1 and timeafib <= timestrokeordeath then timeaf=1;
+run;
+
+* We get a hazard ratio of 1.254 for ESVEA with a Chi-square statistic of 2.1277 on 1 degree of freedom and a correpsonding p-value of 
+  0.1447. Thus, having ESVEA is associated with shorter stroke-free survival. However, this effect is not significant!; 
+
+* The effect of being diagnosed with AF before time t is highly significant and associated with a much smaller rate of
+  stroke-free survival compared to those not diagnosed with AF at time t.;
+```
+
+:::
+
+
+### Exercise 3.9 
+
+*Consider the Cox model for stroke-free survival in the Copenhagen Holter study including the covariates ESVEA, sex, age, and systolic blood pressure. Add to that model, incorrectly, the covariate AF – now considered as time-fixed. How does this affect the AF-effect?*.
+
+::: panel-tabset
+## R
+We will now fit a model where AF is considered a time-fixed covariate which will lead to so-called immortal time bias.
+
+```{r}
+#| code-fold: show
+cox39 <- coxph(Surv(timestrokeordeath, strokeordeath) ~ age + esvea + sex + sbp + afib, data = chs_data, method = "breslow")
+summary(cox39)
+```
+We get a hazard ratio of $\exp(-0.1532) = 0.8580$ for being diagnosed with AF. The effect of being diagnosed with AF in this model is thus associated with a lower rate of the composite end-point compared to those not diagnosed. The associated Wald test is -0.822 and the p-value is 0.4113.
+
+This contradicts the result from exercise 3.8 where AF was (correctly) included as an time-dependent covariate.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will include AF as a time-fixed covariate to our Cox model which will lead to so-called immortal time bias.;
+
+title "3.9: Cox model including AF as a time-fixed covariate";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)= esvea sex age sbp afib;
+run;
+
+* We get a hazard ratio of 0.858 for being diagnosed with AF. The effect of being diagnosed with AF during the study is associated 
+  with a slightly shorter expected stroke-free survival compared to those not diagnosed. However we get a Chi-square statistic of 
+  0.06751 on 1 degree and the p-value is 0.4113. Thus, the effect is not significant.;
+
+* This contradicts the result from exercise 3.7 where AF was (correctly) included as an time-dependent covariate.;
+```
+
+:::
+
+
+### Exercise 3.10 
+
+*Consider an illness-death model for the Copenhagen Holter study with states ‘0: Alive without AF or stroke’, ‘1: Alive with AF and no stroke’, ‘2: Dead or stroke’, see Figures 1.3 and 1.7*.
+
+#### 1. 
+
+*Fit separate Cox models for the rates of the composite end-point for subjects without or with AF, i.e. for the 0->2 and 1->2 transitions including the covariates ESVEA, sex, age, and systolic blood pressure. The time variable in both models should be time since recruitment*.
+
+::: panel-tabset
+## R
+
+We will fit two separate Cox models for the 0->2 and 1->2 transitions including ESVEA, sex, age, and systolic blood pressure using the procedure described in Section 3.8.
+
+We must first add two new time variables, **timeoutof0** and **timeoutof1** which will indicate time last seen in state 0 and state 1, respectively, and a new censoring variable, **strokeordeath0** indicating whether a subject transited to state 2 directly from state 0.
+
+```{r}
+#| code-fold: show
+chs_data <- chs_data %>%  
+            mutate(timeoutof0 = ifelse(afib == 1, timeafib, timestrokeordeath),
+                   strokeordeath0 = ifelse(afib == 1, 0, strokeordeath),
+                   timeoutof1 = ifelse(afib ==1 & timeafib == timestrokeordeath, timestrokeordeath + 0.5/365.25, timestrokeordeath))
+```
+
+Then, we can make the duplicated data set. All potential 0->2 transitions will be represented by a row where **stratum** is 0 whereas potential 1->2 transitions will have **stratum** equal to 1; **entrytime** and **time** will denote the time of entry and the last time seen in state 0 or 1 while **status** indicates whether a stroke or death occurred at time **time**. Furthermore, the covariates associated with the 0->2 transition are denoted **esvea0**, **sex0**, **age0**, and **sbp0** while the covariates associated with the 1->2 transition are denoted **esvea1**, **sex1**, **age1**, and **sbp1**.
+
+```{r}
+#| code-fold: show
+# Data set for 0 -> 2 transition
+double0 <- chs_data %>% mutate(stratum = 0,
+                               entrytime = 0,
+                               time = timeoutof0,
+                               status = strokeordeath0,
+                               sex0 = sex,
+                               age0 = age,
+                               esvea0 = esvea,
+                               sbp0 = sbp,
+                               sex1 = 0,
+                               age1 = 0, 
+                               esvea1 = 0,
+                               sbp1 = 0)
+
+# Data set for 1 -> 2 transition
+double1 <- chs_data %>% filter(afib == 1) %>%
+                        mutate(stratum = 1,
+                               entrytime = timeafib,
+                               time = timeoutof1,
+                               status = strokeordeath,
+                               sex0 = 0,
+                               age0 = 0,
+                               esvea0 = 0,
+                               sbp0 = 0,
+                               sex1 = sex,
+                               age1 = age, 
+                               esvea1 = esvea,
+                               sbp1 = sbp)
+
+# Duplicated data set as described in section 3.8.1
+double <- as.data.frame(rbind(double0, double1))                          
+```
+
+Finally, we will use **coxph** to fit the two separate Cox models; **entrytime**, **time** and **status** are given to the **Surv** object and **strata(stratum)**, **esvea0**, **sex0**, **age0**, **sbp0**, **esvea1**, **sex1**, **age1**, and **sbp1** are included on the right side of '~'.
+
+```{r}
+#| code-fold: show
+# Different covariate effects and non-proportional hazards
+cox3101 <- coxph(Surv(entrytime, time, status) ~ strata(stratum) + esvea0 + sex0 + age0 + sbp0 + esvea1 + sex1 + age1 + sbp1, data = double, ties = "breslow")
+summary(cox3101)
+```
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+
+* We will fit two separate Cox models for 0->2/3 and 1->2/3 transitions including ESVEA, sex, age, and systolic blood pressure using 
+  the procedure described in section 3.8. Thus, we will first make the duplicated data set.
+
+  We must first add two new time variables, 'timeoutof0' and 'timeoutof1' which will indicate time last seen in state 0 and state 1,
+  respectively, and a new censoring variable, 'strokeordeath0' indicating whether a subject transitioned to state 2 or 3 directly 
+  from state 0.;
+
+data chs_data;
+	set chs_data;
+	timeoutof0 = timestrokeordeath;
+	if afib = 1 then timeoutof0 = timeafib;
+	strokeordeath0 = strokeordeath;
+	if afib = 1 then strokeordeath0 = 0;
+	timeoutof1 = timestrokeordeath;
+	if afib = 1 and timeafib = timestrokeordeath then timeoutof1 = timestrokeordeath + 0.5/365.25;
+run;
+
+
+/* Then, we can make the duplicated data set. All potential 0->2/3 transitions will be represented by a row where 'stratum' is 0
+  whereas potential 1->2/3 transitions will have 'stratum' equal to 1. 'entrytime' and 'time' will denote the time of entry 
+  and the last time seen in state 0 or 1 while 'status' indicates whether a stroke or death occurred at time 'time'. Furthermore, 
+  the covariates associated with the 0->2/3 transition are denoted 'esvea0', 'sex0', age0', and 'sbp0' while the covariates 
+  associated with the 1->2/3 transition are denoted 'esvea1', 'sex1', 'age1', and 'sbp1'.;
+*/
+data double0;
+	set chs_data;
+	entrytime = 0;
+	time = timeoutof0;
+	status = strokeordeath0;
+	esvea0 = esvea;
+	sex0 = sex;
+	age0 = age;
+	sbp0 = sbp;
+	esvea1 = 0;
+	sex1 = 0;
+	age1 = 0;
+	sbp1 = 0;
+	stratum = 0;
+run;
+
+data double1;
+	set chs_data;
+	if afib = 1;
+	entrytime = timeafib;
+	time = timeoutof1;
+	status = strokeordeath;
+	esvea0 = 0;
+	sex0 = 0;
+	age0 = 0;
+	sbp0 = 0;
+	esvea1 = esvea;
+	sex1 = sex;
+	age1 = age;
+	sbp1 = sbp;
+	stratum = 1;
+run;
+
+data double;
+	set double0 double1;
+run;
+
+/*
+Finally, we will use **phreg** to fit the two separate Cox models. 'entrytime', 'time' and 'status' are given to the left of '=' and
+and 'esvea0', 'sex0', 'age0', 'sbp0', 'esvea1', 'sex1', 'age1', and 'sbp1' are included on the right side of '='. Furthermore, 'stratum' 
+is given in the strata statement
+*/
+
+title "3.10.1: Separate Cox models for stroke-free survival for subjects
+with or without AF";
+proc phreg data = double;
+	strata stratum;
+	model (entrytime, time)*status(0)= esvea0 sex0 age0 sbp0 esvea1 sex1 age1 sbp1; 
+run;
+```
+
+:::
+
+
+#### 2. 
+
+*Examine to what extent a combined model for the two intensities (i.e., possibly with common regression coefficients and/or proportional hazards between the 0->2 and 1->2 transition rates) may be fitted*.
+
+::: panel-tabset
+## R
+
+We will examine whether a model that assumes the same covariate effect for the two transitions describes our data just as well as the model we fitted in exercise 3.10.1. 
+
+Thus, we will fit a model where **esvea0**, **sex0**, **age0**, **sbp0**, **esvea1**, **sex1**, **age1**, and **sbp1** are replaced with **esvea**, **sex**, **age**, and **sbp**.
+
+```{r}
+#| code-fold: show
+# Non-proportional hazards same covariate effects
+cox3102_cov <- coxph(Surv(entrytime, time, status) ~ strata(stratum) + esvea + sex + age + sbp, data = double, ties = "breslow")
+summary(cox3102_cov)
+```
+
+Then, we can compare this model with the one from exercise 3.10.1 using a likelihood ratio test.
+
+```{r}
+#| code-fold: show
+# Testing whether the effect of the covariate is the same for the two transitions
+anova(cox3101, cox3102_cov, test = "LRT")
+```
+We get a chi-squared statistic of 4.811 on 4 degrees of freedom and a corresponding p-value of 0.3072. Thus, it seems like the new model with common regression coefficients describes our data as well as the one from exercise 3.10.1.
+
+We will now examine the assumption of non-proportional hazards. Thus, we must first fit a Cox model where the hazards for subjects with or without AF are assumed proportional. This is done by including AF as a time-dependent covariate like we did in exercise 3.8.
+
+```{r}
+#| code-fold: show
+cox3102_ph <- coxph(Surv(entrytime, time, status) ~  esvea0 + sex0 + age0 + sbp0 + esvea1 + sex1 + age1 + sbp1 + tt(timeafib), tt = function(x,t,...) 1*(x<t), data = double, ties = "breslow")
+summary(cox3102_ph)
+```
+
+Then the baseline hazards from the Cox model fitted in exercise 3.10.1 are plotted against each other (solid line). Furthermore, a (dashed) straight line through (0,0) with a slope equal to the hazard ratio for the time-dependent covariate AF is added to the plot.
+
+```{r}
+#| code-fold: show
+#Cumulative hazard for subjects without AF
+from0_haz <- rbind(c(0,0),subset(basehaz(cox3101, centered = FALSE), strata == "stratum=0")[,1:2])
+colnames(from0_haz) <- c("haz0", "time")
+
+#Cumulative hazard for subjects with AF
+from1_haz <- rbind(c(0,0),subset(basehaz(cox3101, centered = FALSE), strata == "stratum=1")[,1:2])
+colnames(from1_haz) <- c("haz1", "time")
+
+#Data frame with time column and both hazards
+ph_data <- merge(from0_haz, from1_haz, all = TRUE)
+ph_data <- ph_data %>% fill(haz0,haz1)
+
+#Plotting the hazards against each other
+ggplot(data = ph_data) + geom_step(aes(haz0, haz1)) + geom_abline(aes(intercept = 0, slope = 1.222040), linetype = "dashed") + xlab("Cumulative hazard for subjects without AF") + ylab("Cumulative hazard for subjects with AF")
+```
+
+The model assuming proportional hazards does not seem to fit the data well, since the dashed straight line does not coincide nicely with the solid curve.
+
+We now investigate this further by adding a (linear) time-dependent effect of **afib**.
+
+```{r}
+#| code-fold: show
+cox3103_ph <- coxph(Surv(entrytime, time, status) ~  esvea0 + sex0 + age0 + sbp0 + esvea1 + sex1 + age1 + sbp1 + tt(timeafib), tt = function(x,t,...) cbind(af=1*(x<t), taf=1*(x<t)*(t-x)), data = double, ties = "breslow")
+summary(cox3103_ph)
+```
+
+This results in a p-value of 0.07186, thus emphasizing that the proportional hazards assumption is questionable.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+/* We will examine whether a model that assumes the same covariate effect for the two transitions describes our data just as good as 
+  the model we fitted in exercise 3.10.1.
+
+ Thus, we will fit a model where 'esvea0', 'sex0', 'age0', 'sbp0', 'esvea1', 'sex1', 'age1', and 'sbp1' are replaced with 'esvea', 
+  'sex', 'age', and 'sbp'.
+*/
+
+title "3.10.2: Cox model assuming the same effect of the covariates for 0->2/3 and 1->2/3";
+proc phreg data = double;
+	strata stratum;
+	model (entrytime, time)*status(0) = esvea sex age sbp;
+run;
+
+/* Then we can compare this model with the one from exercise 3.10.1 with a likelihood ratio test using the scores from the tables 
+  'Model Fit Statistics'
+*/
+title "3.10.2: Examining the assumption of same covariate effect";
+data p;
+	chi2=3253.556-3248.745;
+	p=1-probchi(chi2,4);
+proc print;
+run;
+
+* We get a Chi-square statistics of 4.811 on 4 degrees of freedom and a corresponding p-value of 0.3072. Thus, it seems like the 
+  new model with common regression coefficients describes our data as good as the one from exercise 3.10.1.;
+
+* We will now examine the assumption of proportional hazards. We must extract the baseline hazards for subjects with or without AF 
+  in the model where the hazards are assumed non-proportional. Thus, we fit a model from exercise 3.10.1 once more and specify that 
+  all covariates should be 0.;  
+
+data covstr;
+	esvea0 = 0; sex0 = 0; age0 = 0; sbp0 = 0;
+	esvea1 = 0; sex1 = 0; age1 = 0; sbp1 = 0;
+run;
+
+proc phreg data = double;
+	strata stratum;
+	model (entrytime, time)*status(0)= esvea0 sex0 age0 sbp0 esvea1 sex1 age1 sbp1;
+	baseline out=hazdata cumhaz = breslow covariates = covstr;
+run;
+
+data breslow023;
+	set hazdata; 
+	if stratum=0; 
+	a023=breslow; 
+run;
+
+data breslow123;
+	set hazdata;
+	if stratum=1;
+	a123=breslow;
+run;
+
+data breslow; 
+	merge breslow023 breslow123; 
+	by time; 
+run;
+
+* Then, the empty cells of the cumulative hazards are replaced with the previous values;
+
+data breslow; 
+set breslow;
+	by time;
+	retain last1 last2;
+	if a023=. then cumhaz0=last1; if a023 ne . then cumhaz0=a023; 
+	if a123=. then cumhaz1=last2; if a123 ne . then cumhaz1=a123;
+	output;
+	last1=cumhaz0; last2=cumhaz1; 
+run;
+
+* Then, we must fit a Cox model where the hazards for subjects with or without AF are assumed proportional. This is done by 
+  including AF as an time-dependent covariate like we did in exercise 3.7.;
+
+proc phreg data = double;
+	model (entrytime, time)*status(0) = esvea0 sex0 age0 sbp0 esvea1 sex1 age1 sbp1 timedepaf;
+	timedepaf = 0;
+	if afib = 1 and time > timeafib then timedepaf = 1;
+run;
+
+* Lastly, the predicted hazard ratio for the time-dependent covariate is added to the data as the slope of a straigth line 
+  through (0,0);
+
+data breslow; 
+	set breslow;
+	line=1.222*cumhaz0;
+run;
+
+
+* Finally, we can check the assumption of proportional hazards by plotting the hazards from the model assuming non-
+  proportional hazards against each other together with the straigth line through (0,0) with a slope equal to the hazard ratio of 
+  AF.;
+
+title "3.10.2: Examining the assumption of proportional hazards";
+proc gplot data=breslow;
+	plot cumhaz1*cumhaz0 line*cumhaz0/haxis=axis1 vaxis=axis2 overlay;
+	axis1 order=0 to 0.0014 by 0.0001 minor=none label=('Cumulative baseline hazard for subjects without AF');
+	axis2 order=0 to 0.0022 by 0.0001 minor=none label=(a=90 'Cumulative baseline hazard for subjects with AF');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=rl c=blue;
+run;
+
+*The model assuming proportional hazards does not seem to fit the data well, since the straigth blue line does not coincide nicely 
+ with the red curve.; 
+
+*The proportional hazards assumption may also be investigated using a time-dependent covariate: duration since af.;
+
+proc phreg data = double;
+	model (entrytime, time)*status(0) = esvea0 sex0 age0 sbp0 esvea1 sex1 age1 sbp1 timedepaf duration;
+	timedepaf = 0;
+	if afib = 1 and time > timeafib then timedepaf = 1;
+	duration=0;
+	if timedepaf = 1 then duration = time - timeafib;
+run;
+
+*This, once more, suggests borderline deviations from proportional hazards.;
+```
+
+:::
+
+### Exercise 3.11 
+
+*Consider the data on repeated episodes in affective disorder, Example 1.1.5*.
+
+#### 1.
+
+*Fit separate gamma frailty models for unipolar and bipolar patients including the covariate 'number of previous events' $N(t-)$ assuming (not quite satisfactorily!) that the mortality rate is independent of frailty*.
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **affective_data**
+
+```{r}
+#| code-fold: show
+affective_data <- read.csv("data/affective.csv")
+```
+
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(mets)
+```
+
+We can fit a gamma frailty model including the number of previous events assuming that the mortality rate is independent of frailty using the **coxph** function and adding **fraily(id)** and **episode** in the formula argument.
+
+```{r}
+#| code-fold: show
+# Fitting a gamma frailty model for patients with unipolar disorder
+frailty3111_uni <- coxph(Surv(start, stop, status == 1) ~ episode + frailty(id), 
+                  method = "breslow", 
+                  data = subset(affective_data, bip == 0))
+summary(frailty3111_uni)
+```
+Thus, we obtain a hazard ratio of $\exp(0.0281) = 1.029$ for the number of previous episodes for patients with unipolar disorder.
+
+We will now fit a gamma frailty model for the patients with bipolar disorder
+
+```{r}
+#| code-fold: show
+# Fitting a gamma frailty model for patients with bipolar disorder
+frailty3111_bip <- coxph(Surv(start, stop, status == 1) ~ episode + frailty(id), 
+                  method = "breslow", 
+                  data = subset(affective_data, bip == 1))
+summary(frailty3111_bip)
+```
+
+We get an estimate of the hazard ratio for the number of episodes of $\exp(0.0761) = 1.079$ for patients diagnosed with bipolar disorder.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+
+* We first load the data;
+
+proc import out=affective_data
+	datafile='data/affective.csv' 
+	dbms=csv replace;
+	getnames=yes;
+run;
+
+* We can fit a gamma frailty model using the phreg procedure where we include a random statement where we specify 
+'dist = gamma'.; 
+
+* We will first fit a frailty model for the subset of patients with unipolar disorder.;
+
+title '3.11.1 - unipolar disorder';
+proc phreg data=affective_data;
+	class id;
+	model (start,stop)*status(0,2,3)=episode;
+	random id/dist=gamma;
+	where state = 0 and bip = 0;
+run;
+
+* Thus, we obtain a hazard ratio of exp(0.028) = 1.028 for the number of previous episodes for patients with unipolar disorder.;
+
+* Then, we will fit a frailty model for the patients with bipolar disorder;
+
+title '3.11.1 - bipolar disorder';
+proc phreg data=affective_data;
+	class id;
+	model (start,stop)*status(0,2,3)=episode;
+	random id/dist=gamma;
+	where state = 0 and  bip = 1;
+run;
+
+* We get an estimate of the hazard ratio for the number of episodes of exp(0.077) = 1.08 for patients diagnosed with bipolar  disorder.;
+```
+
+:::
+
+#### 2. 
+
+*Do the recurrence rates tend to increase with number of previous episodes?*.
+
+The recurrence rates tend to increase with the number of previous episodes both for patients diagnosed with unipolar and bipolar disorder.
+
+### Exercise 3.12
+
+*Consider the data on mortality in relation to childhood vaccinations in Guinea-Bissau, Example 1.1.2*. 
+
+
+#### 1. 
+
+*Fit a gamma frailty model with a random effect of cluster (‘village’) including binary variables for BCG and DTP vaccination and adjusting for age at recruitment (i.e., using time since recruitment as time-variable). Compare the results with those in Table 2.12*.
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **bissau_data**:
+
+```{r}
+#| code-fold: show
+bissau_data <- read.csv("data/bissau.csv")
+```
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+```
+
+To make our results comparable to Table 2.12 we must first convert the age variable from days to months.
+
+```{r}
+#| code-fold: show
+# Age in months
+bissau_data$agem <- bissau_data$age/30.4
+```
+
+Then, we will fit a gamma frailty model using the **coxph** function from the *survival* package where we adjust for age, BCG and DTP and a random effect of cluster. This is done by adding **frailty(cluster)** in the formula argument. 
+
+```{r}
+#| code-fold: show
+# Fitting gamma frailty model
+fit3121 <- coxph(Surv(fuptime, dead) ~ frailty(cluster) + bcg + dtp + agem, 
+                  method = "breslow", 
+                  data = bissau_data)
+summary(fit3121)
+```
+The coefficient for age (month) is estimated to be 0.04 and the coefficient for BCG vaccination is -0.41. In table 2.12 the coefficient for age (month) was 0.055 and the coefficient for BCG was -0.353. Thus, an increasing age increase the hazard and being vaccinated with BCG decrease the hazard in both models in both models.
+
+We furthermore note that our model also adjust for the effect of DTP vaccination unlike the model from Table 2.12. We could also compare with Table 3.2 where dtp is included. Both models suggest
+an effect of BCG but not DTP.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We first load the data;
+proc import out=bissau_data
+  datafile='data/bissau.csv' 
+  dbms=csv replace;
+  getnames=yes;
+run;
+
+* To make our results comparable to table 2.12 we must first convert the age variable from days to months.;
+
+data bissau_data;
+	set bissau_data;
+	agem = age/30.4;
+run;
+
+* Then, we will fit the gamma frailty model using the 'phreg' procedure where we include a random statement with 'dist = gamma' 
+  included.;
+
+title '3.11.1';
+proc phreg data=bissau_data;
+	class cluster;
+	model fuptime*dead(0)=bcg dtp agem;
+	random cluster/dist=gamma;
+run;
+
+* The coefficient for age (month) is estimated to be 0.04 and the coefficient for BCG vaccination is -0.41. In table 2.12 the 
+  coefficient for age (month) was 0.055 and the coefficient for BCG was -0.353. Thus, an increasing age increase the hazard and 
+  being vaccinated with BCG decrease the hazard in both models in both models.;
+
+* We furthermore note that our model also adjust for the effect of DTP vaccination unlike the model from table 2.12. 
+  We could also compare with Table 3.2 where dtp is included. Both models suggest an effect of BCG but not DTP.;
+```
+
+:::
+
+
+#### 2.
+
+*We fit a Cox model stratified on cluster with the **coxph** function by including **strata(cluster)** in the formula argument*.
+
+::: panel-tabset
+
+## R
+```{r}
+#| code-fold: show
+# Fitting a Cox model statified on cluster
+fit3122 <- coxph(Surv(fuptime, dead) ~ strata(cluster) + bcg + dtp + agem, 
+                  method = "breslow", 
+                  data = bissau_data)
+summary(fit3122)
+```
+The Cox model stratified on cluster and the gamma frailty model agree in the direction BCG, DTP and age change the hazard. However, the gamma frailty model estimates a bigger decrease by being vaccinated with BCG, a smaller increase by being vaccinated with DTP and a larger increase of a positive change in age of the hazard compared to the stratified Cox model.
+
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We fit a Cox model stratified on cluster by adding a 'strata' statement in the 'phreg' procedure;
+
+title '3.11.2';
+proc phreg data=bissau_data;
+	model fuptime*dead(0)=bcg dtp agem;
+	strata cluster;
+run;
+
+* The Cox model stratified on cluster and the gamma frailty model agree in the direction BCG, DTP and age change the hazard. 
+  However, the gamma frailty model estimates a bigger decrease by being vaccinated with BCG, a smaller increase by being vaccinated 
+  with DTP and a larger increase of a positive change in age of the hazard compared to the stratified Cox model.;
+```
+
+:::

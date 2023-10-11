@@ -5,33 +5,46 @@ leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leade
 
 ### Read data
 
+Assume that the LEADER data set is loaded in data set `leader`.
+
 ::: {.panel-tabset}
 
 ## R
-
-Assume that the LEADER data set is loaded in data set `leader`.
 
 ```{r}
 #| label: read-leader-r
 # One data set per recurrent endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
+leader_3p <- subset(leader, type == "recurrent_comb")
+```
+
+## SAS
+```{sas}
+#| label: read-leader-sas
+#| eval: false 
+#| output: false
+
+data leader_mi; 
+	set leader; 
+	where type = "recurrent_mi"; 
+run; 
+
 ```
 :::
 
-### Table 3.15
+### Table 3.16
 
 ::: {.panel-tabset}
 ## R
 ```{r}
-#| label: table3.15-r
-
+#| label: table-3.16-r
 # Cox model, frailty
 library(survival)
 coxfrail <- coxph(Surv(start, stop, status == 1) ~ treat + frailty(id), 
                   method = "breslow", 
                   data = leader_mi)
 summary(coxfrail)
+sqrt(coxfrail$fvar[1]) # frailty SD
 
 # PieceWise constant, frailty
 # Make cuts 
@@ -42,9 +55,8 @@ FunctionIntervalM <- function(a,b) {
 }
 
 cuts <- FunctionIntervalM(a = alltimes, b = 5)
-cuts
 
-# AG model, piecewise constant hazards 
+# AG model, piece-wise constant hazards 
 cut_data <- survSplit(Surv(start, stop, status == 1) ~ ., 
                       leader_mi,
                       cut = cuts[-1], 
@@ -54,17 +66,46 @@ pwch_frail <- coxph(Surv(start, stop, event) ~
                     treat + strata(timegroup) + frailty(id), 
                                data = cut_data)
 summary(pwch_frail)
+sqrt(pwch_frail$fvar[1]) # frailty SD
+```
 
-# Joint frailty model, piecewise constant hazards
+## SAS
+
+Only Cox-type model.
+
+```{sas}
+#| label: table-3.16-sas
+#| eval: false 
+#| output: false
+
+# very slow!
+proc phreg data=leader_mi covs(aggregate);
+  class id;
+  model stop*status(0 2) = treat / entry=start; 
+  random id / dist=gamma;
+  title1 'Frailty model for recurrent event data';
+run;
+```
+
+:::
+
+### Table 3.17
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-3.17-r
+# Joint frailty model, piece-wise constant hazards
 library(frailtypack)
 leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
-jointfrail_pc_eq_mi <- frailtyPenal(Surv(start, stop, status == 1) ~
-                                      cluster(id) + treat + terminal(death),
-                                    formula.terminalEvent = ~ treat,
-                                    data = leader_mi,
-                                    hazard = "Piecewise-equi", nb.int = c(5, 5),
-                                    recurrentAG = TRUE)
+jointfrail_pc_eq_mi <- frailtyPenal(
+  Surv(start, stop, status == 1) ~ cluster(id)+ treat + terminal(death),
+  formula.terminalEvent = ~ treat,data = leader_mi, 
+  hazard = "Piecewise-equi", nb.int = c(5, 5), recurrentAG = TRUE)
 jointfrail_pc_eq_mi
+sqrt(jointfrail_pc_eq_mi$theta) # Frailty SD
 summary(jointfrail_pc_eq_mi)
 ```
+## SA-NA
+
 :::

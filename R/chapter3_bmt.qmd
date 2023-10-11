@@ -5,7 +5,7 @@
 ## R
 ```{r}
 #| label: read-bmt-r
-bmt <- data.frame(read.csv("data/bmt.csv"))
+bmt <- read.csv("data/bmt.csv")
 bmt$intxsurv<- bmt$timedeath
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
 bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
@@ -14,7 +14,7 @@ bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
 bmt$state0  <- bmt$rel + 2*bmt$trm
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: read-bmt-sas
 #| eval: false 
 #| output: false
@@ -70,7 +70,7 @@ fig3.5
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.5-sas
 #| eval: false 
 #| output: false
@@ -132,7 +132,7 @@ fig3.6
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.6-sas
 #| eval: false 
 #| output: false
@@ -246,7 +246,7 @@ fig3.7
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.7-sas
 #| eval: false 
 #| output: false
@@ -268,7 +268,7 @@ quit;
 ```
 :::
 
-### In-text: GvHD as time-dependent covariate
+### In-text, p. 102: GvHD as time-dependent covariate
 
 #### Relapse
 
@@ -294,7 +294,7 @@ tidy(coxph(Surv(intxrel,rel!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
 
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-tGvHD-relapse-sas
 #| eval: false 
 #| output: false
@@ -336,7 +336,7 @@ tidy(coxph(Surv(intxrel,trm!=0) ~ tt(tgvhd), data = bmt, ties="breslow",
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-tGvHD-death-sas
 #| eval: false 
 #| output: false
@@ -416,7 +416,7 @@ fig3.8
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.8-sas
 #| eval: false 
 #| output: false
@@ -514,7 +514,7 @@ fig3.4
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.4-sas
 #| eval: false 
 #| output: false
@@ -623,7 +623,7 @@ coxph(Surv(intxrel,trm!=0) ~  tt(tgvhd) + I(age/10) + bmonly + all + tt(tanc500)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.12-sas
 #| eval: false 
 #| output: false
@@ -739,7 +739,7 @@ lrtest(r3,r2)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label:  table-3.14-sas
 #| eval: false 
 #| output: false
@@ -844,7 +844,7 @@ fig3.10
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-3.10-sas
 #| eval: false 
 #| output: false
@@ -887,7 +887,7 @@ coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.15-sas
 #| eval: false 
 #| output: false
@@ -908,7 +908,7 @@ run;
 ```
 :::
 
-### In-text: stratified Cox model by center
+### In-text, p. 112: stratified Cox model by center
 
 ::: {.panel-tabset}
 
@@ -920,7 +920,7 @@ coxph(Surv(intxrel, state0 != 0) ~ bmonly + all + age
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-stratified-sas
 #| eval: false 
 #| output: false

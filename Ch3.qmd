@@ -23,4 +23,13 @@
 
 ## Exercises
 
-{{< include R/chapter3_solutions.qmd >}}
+The SAS solutions are available as single files for download:
+
+-   [Exercises 3.7 - 3.10 (The Copenhagen Holter study)](/SAS/chapter3_solutions_cphholter.sas)
+
+-   [Exercise 3.11 (Recurrent episodes in affective disorders)](/SAS/chapter3_solutions_affective.sas)
+
+-   [Exercise 3.12 (Guinea-Bissau childhood vaccination study)](/SAS/chapter3_solutions_bissau.sas)
+
+{{< include R/chapter3_solutions_star.qmd >}}
+{{< include R/chapter3_solutions_prac.qmd >}}

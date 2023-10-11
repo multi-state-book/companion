@@ -11,7 +11,7 @@ library(survival)
 
 ## SAS
 
-```{r}
+```{sas}
 #| label: read-affective-sas
 #| eval: false 
 #| output: false
@@ -351,7 +351,7 @@ Estimates in the book are from SAS.
 
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.7
 #| eval: false 
 #| output: false
@@ -418,7 +418,7 @@ fig4.18
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label:  figure-4.18-sas
 #| eval: false 
 #| output: false
@@ -513,7 +513,7 @@ fig4.19
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label:  figure-4.19-sas
 #| eval: false 
 #| output: false
@@ -612,7 +612,7 @@ with(subset(affective, episode < 5), table(episode, status))
 apply(with(subset(affective, episode < 5), table(episode, status)), 2, cumsum)
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.9-sas
 #| eval: false 
 #| output: false
@@ -669,8 +669,7 @@ summary(fit4)
 ```
 
 ## SAS
-
-```{r}
+```{sas}
 #| label: table-4.10-sas
 #| eval: false 
 #| output: false
@@ -803,7 +802,7 @@ fig4.23
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label:  figure-4.23-sas
 #| eval: false 
 #| output: false
@@ -844,7 +843,7 @@ coxph(Surv(stop,status==3)~bip,data=cens)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-censoring-sas
 #| eval: false 
 #| output: false

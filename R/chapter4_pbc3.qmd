@@ -28,7 +28,7 @@ pbc3$logbilimuchtoohigh <- with(pbc3, (log2bili-log2(51.3))*(bili>51.3))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-pbc3-sas
 #| eval: false 
 #| output: false
@@ -103,7 +103,7 @@ fig4.2
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.2-sas
 #| eval: false 
 #| output: false
@@ -149,7 +149,7 @@ summary(kmfit,times=2*365.25)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-KM2yr-sas
 #| eval: false 
 #| output: false
@@ -264,7 +264,7 @@ fig4.4
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.4-sas
 #| eval: false 
 #| output: false
@@ -340,7 +340,7 @@ fig4.5
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.5-sas
 #| eval: false 
 #| output: false
@@ -396,7 +396,7 @@ fig4.6 <- ggplot(aes(x = days / 365.25, y = logminlogsurv, linetype = as.factor(
 fig4.6
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.6-sas
 #| eval: false 
 #| output: false
@@ -481,7 +481,7 @@ fig4.7 <- ggplot(aes(x = time / 365.25, y = average_pred, linetype = as.factor(t
 fig4.7
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.7-sas
 #| eval: false 
 #| output: false
@@ -546,7 +546,7 @@ summary(survivalG(cfitmets, subpbc, time = 2*365.25))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-cox-gform-sas
 #| eval: false 
 #| output: false
@@ -602,7 +602,7 @@ fig4.8
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.8-sas
 #| eval: false 
 #| output: false
@@ -941,7 +941,7 @@ rbind(Placebo=gc.ate$RMST0,CyA=gc.ate$RMST1)
 ## SAS
 
 #### Non-parametric using PROC RMSTREG
-```{r}
+```{sas}
 #| label: table-4.1-sas-proc-rmstreg
 #| eval: false 
 #| output: false
@@ -984,7 +984,7 @@ run;
 
 #### Macro and bootstrap data set
 
-```{r}
+```{sas}
 #| label: table-4.1-macro
 #| eval: false 
 #| output: false
@@ -1034,7 +1034,7 @@ run;
 
 #### Non-parametric using macro
 
-```{r}
+```{sas}
 #| label: table-4.1-nonparm
 #| eval: false 
 #| output: false
@@ -1060,7 +1060,7 @@ run;
 
 #### Cox (38,45) using macro
 
-```{r}
+```{sas}
 #| label: table-4.1-sas-38-45
 #| eval: false 
 #| output: false
@@ -1089,7 +1089,7 @@ run;
 
 #### Cox (20,90) using macro
 
-```{r}
+```{sas}
 #| label: table-4.1-sas-20-90
 #| eval: false 
 #| output: false
@@ -1118,7 +1118,7 @@ run;
 
 #### Cox g-formula using macro
 
-```{r}
+```{sas}
 #| label: table-4.1-sas-gform
 #| eval: false 
 #| output: false
@@ -1214,7 +1214,7 @@ fig4.10
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.10-sas
 #| eval: false 
 #| output: false
@@ -1344,7 +1344,7 @@ fig4.11
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.11-sas
 #| eval: false 
 #| output: false
@@ -1633,7 +1633,7 @@ fig4.12c
 
 The SAS macro below can alternatively be loaded using this code:
 
-```{r}
+```{sas}
 #| label: sas-macro-cuminc
 #| eval: false 
 #| output: false
@@ -1642,7 +1642,7 @@ filename cumincpr url 'http://publicifsv.sund.ku.dk/~pka/CumInc.sas';
 %inc cumincpr;
 ```
 
-```{r}
+```{sas}
 #| label: figure-4.12-sas-macro
 #| eval: false 
 #| output: false
@@ -1842,7 +1842,7 @@ run;
 ```
 
 #### Figure 4.12 (a)
-```{r}
+```{sas}
 #| label: figure-4.12a-sas
 #| eval: false 
 #| output: false
@@ -1887,7 +1887,7 @@ quit;
 ```
 
 #### Figure 4.12 (b)
-```{r}
+```{sas}
 #| label: figure-4.12b-sas
 #| eval: false 
 #| output: false
@@ -1930,7 +1930,7 @@ quit;
 ```
 
 #### Figure 4.12 (c)
-```{r}
+```{sas}
 #| label: figure-4.12c-sas
 #| eval: false 
 #| output: false
@@ -2205,7 +2205,7 @@ scenario4.T;scenario4.D
 ## SAS
 
 #### Macro for area under CIF
-```{r}
+```{sas}
 #| label: table-4.2-macro
 #| eval: false 
 #| output: false
@@ -2232,7 +2232,7 @@ scenario4.T;scenario4.D
 
 #### Scenario 1 (no adjustment)
 
-```{r}
+```{sas}
 #| label: table-4.2-sas-1
 #| eval: false 
 #| output: false
@@ -2261,7 +2261,7 @@ title "CyA";
 
 #### Scenario 2
 
-```{r}
+```{sas}
 #| label: table-4.2-sas-2
 #| eval: false 
 #| output: false
@@ -2323,7 +2323,7 @@ run;
 
 #### Scenario 3
 
-```{r}
+```{sas}
 #| label: table-4.2-sas-3
 #| eval: false 
 #| output: false
@@ -2389,7 +2389,7 @@ run;
 
 #### Scenario 4
 
-```{r}
+```{sas}
 #| label: table-4.2-sas-4
 #| eval: false 
 #| output: false
@@ -2485,7 +2485,7 @@ resmeanIPCW(Event(followup,fail)~factor(tment)+alb+log2bili,
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.4-sas
 #| eval: false 
 #| output: false
@@ -2546,6 +2546,7 @@ rbind(
         Diff=sqrt(var(bootres$t[,3])))
 )
 ```
+## SAS
 
 :::
 
@@ -2599,7 +2600,7 @@ summary(fg_cox1)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-4.5-sas
 #| eval: false 
 #| output: false
@@ -2646,7 +2647,7 @@ summary(survivalG(fgdeath, subpbc, 2*365.25))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-fg-gform-sas
 #| eval: false 
 #| output: false
@@ -2752,7 +2753,7 @@ fig4.17b
 ## SAS
 
 #### Covariate values
-```{r}
+```{sas}
 #| label: figure-4.17-sas-covs
 #| eval: false 
 #| output: false
@@ -2776,7 +2777,7 @@ run;
 
 #### Figure 4.17 (a)
 
-```{r}
+```{sas}
 #| label: figure-4.17a-sas
 #| eval: false 
 #| output: false
@@ -2809,7 +2810,7 @@ quit;
 
 #### Figure 4.17 (b)
 
-```{r}
+```{sas}
 #| label: figure-4.17b-sas
 #| eval: false 
 #| output: false
@@ -3176,7 +3177,7 @@ fig4.21
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-4.21-sas
 #| eval: false 
 #| output: false
@@ -3226,7 +3227,7 @@ summary(coxph(Surv(days, status == 0) ~ bili, data = pbc3, method = "breslow"))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-cox-cens-sas
 #| eval: false 
 #| output: false

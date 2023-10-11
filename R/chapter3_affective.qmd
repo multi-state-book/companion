@@ -5,12 +5,12 @@
 ## R
 ```{r}
 #| label: read-affective
-affective <- data.frame(read.csv("data/affective.csv"))
+affective <- read.csv("data/affective.csv")
 affective$wait <- with(affective, stop - start)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-affective-sas
 #| eval: false 
 #| output: false
@@ -51,7 +51,7 @@ coxph(Surv(start, stop, status == 1) ~ bip + factor(epi),
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.6-sas
 #| eval: false 
 #| output: false
@@ -101,7 +101,7 @@ coxph(Surv(start, stop, status == 1) ~ bip + tt(year),
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-3.7-sas
 #| eval: false 
 #| output: false

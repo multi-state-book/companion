@@ -6,13 +6,13 @@
 ```{r}
 #| label: read-testis-r
 
-testis <- data.frame(read.csv("data/testis.csv"))
+testis <- read.csv("data/testis.csv")
 # Add extra variables
 testis$lpyrs <- log(testis$pyrs)
 testis$par2 <- as.numeric(testis$parity < 2)
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: read-testis-sas
 #| eval: false 
 #| output: false

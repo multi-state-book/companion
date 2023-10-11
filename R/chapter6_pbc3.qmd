@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: read-pbc3
-pbc3 <- data.frame(read.csv("data/pbc3.csv"))
+pbc3 <- read.csv("data/pbc3.csv")
 pbc3$fail <- as.numeric(with(pbc3, status > 0))
 pbc3$log2bili <- with(pbc3, log2(bili))
 ```

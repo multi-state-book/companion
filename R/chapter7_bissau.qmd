@@ -5,12 +5,12 @@
 ## R
 ```{r}
 #| label: read-bissau-r
-bissau <- data.frame(read.csv("data/bissau.csv"))
+bissau <- read.csv("data/bissau.csv")
 bissau$agem <- as.integer(bissau$age/30.4)
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: read-bissau-sas
 #| eval: false 
 #| output: false
@@ -65,7 +65,7 @@ summary(clogit(Fail ~ factor(bcg) + factor(agem), data=nccdata))
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: table-8.1-sas
 #| eval: false 
 #| output: false

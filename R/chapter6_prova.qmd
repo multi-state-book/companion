@@ -2,7 +2,7 @@
 
 ```{r}
 #| label: read-prova
-prova <- data.frame(read.csv("data/prova.csv", na.strings = c(".")))
+prova <- read.csv("data/prova.csv", na.strings = c("."))
 # Treatment 2x2 factorial
 prova$beh <- with(prova, as.factor(scle + beta*2))
 library(tidyverse)

@@ -1,3 +1,22 @@
+* Load data; 
+proc import out=leader
+	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv"
+	dbms=csv replace;
+run;
+data leader_mi; 
+	set leader; 
+	where type = "recurrent_mi"; 
+run; 
+
+
+* Frailty model - slow!; 
+proc phreg data=leader_mi covs(aggregate);
+  class id;
+  model stop*status(0 2) = treat / entry=start; 
+  random id / dist=gamma;
+  title1 'Frailty model for recurrent event data';
+run;
+
 /* 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -121,15 +140,7 @@ run;
 
 
 
-* Frailty model -slow!; 
-/*
-proc phreg data=recurrent_mi covs(aggregate);
-  class trt01p subjid;
-  model (starttime, stoptime)*status(0) = trt01p / ties=breslow eventcode=1; 
-  random subjid / dist=gamma;
-  title1 'Frailty model for recurrent event data';
-run;
-*/
+
 
 
 * Non-parametric two-sample estimates (Lawless & Nadeau); 
