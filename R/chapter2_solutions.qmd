@@ -9,7 +9,6 @@
 *Estimate non-parametrically the cumulative hazards of death for subjects with or without ESVEA*.
 
 ::: panel-tabset
-
 ## R
 
 The cumulative hazard can be estimated non-parametrically using the Nelson-Aalen estimator. It is implemented in the **survfit** function from the survival package. The formula argument must have a **Surv** object on the left side of '\~'. Since the event of interest is death the time variable of the **Surv** object is **timedeath** and the status indicator is **death**. The covariate(s), **esvea** in this analysis, should be on the right side of the '\~'. The cumulative hazard is then stored as the object cumhaz, and can be plotted against time.
@@ -59,7 +58,6 @@ proc gplot data=hazdata;
 	symbol2 i=stepjl c=blue;
 run;
 ```
-
 :::
 
 #### 2.
@@ -67,7 +65,6 @@ run;
 *Make a non-parametric test for comparison of the two*.
 
 ::: panel-tabset
-
 ## R
 
 The Nelson-Aalen estimate of the cumulative hazards for subjects with or without ESVEA can be compared with a logrank test which is implemented as the function **survdiff** from the survival package.
@@ -97,7 +94,6 @@ run;
 
 * We get a Chi-square statistic of 17.66 on 1 degree of freedom with a corresponding p-value <0.0001;
 ```
-
 :::
 
 #### 3.
@@ -105,9 +101,7 @@ run;
 *Make a similar analysis based on a model where the hazard is assumed constant within 5-year intervals*.
 
 ::: panel-tabset
-
 ## R
-
 
 To estimate the cumulative hazard under the assumption that the hazard is constant within 5-year intervals we must first split each record into sub-records with cut times at 5 and 10 years. This can be done using the **survSplit** function from the survival package. Duration of each sub-record is then stored as the column **duration**.
 
@@ -308,7 +302,7 @@ run;
 * We get a Chi-square statistics of 16.22 on 3 degrees of freedom with a corresponding p-value of 0.001
   We conclude once more that the hazards seem different for the subjects with or without ESVEA also under this model.; 
 ```
-::: 
+:::
 
 ### Exercise 2.2
 
@@ -316,13 +310,11 @@ run;
 
 {{< include R/readholter.qmd >}}
 
-
 #### 1.
 
 *Make a version of the data set enabling an analysis of the composite endpoint of stroke or death without stroke ('stroke-free survival', i.e. define the relevant Time and Status variables), see Section 1.2.4*.
 
 ::: panel-tabset
-
 ## R
 
 To estimate the cumulative hazards for the composite end-point of stroke or death we must first create a suitable time variable, **timestrokeordeath** and status indicator, **strokeordeath**.
@@ -354,13 +346,11 @@ run;
 ```
 :::
 
-
 #### 2.
 
 *Estimate non-parametrically the cumulative hazards of stroke-free survival for subjects with or without ESVEA*.
 
 ::: panel-tabset
-
 ## R
 
 We repeat the procedure from exercise 2.1.1 to obtain the Nelson-Aalen estimate of the cumulative hazards.
@@ -382,7 +372,6 @@ naadata222 <- data.frame(time = naafit222$time,
           xlab("Time since randomization (years)") + 
           ylab("Cumulative hazard"))
 ```
-
 
 ## SAS
 
@@ -412,13 +401,11 @@ run;
 ```
 :::
 
-
 #### 3.
 
 *Make a non-parametric test for comparison of the two*.
 
 ::: panel-tabset
-
 ## R
 
 The hazards are compared using a logrank test
@@ -430,7 +417,6 @@ survdiff(Surv(timestrokeordeath, strokeordeath) ~ esvea, data = chs_data)
 ```
 
 We get a chi-squared statistic of 18.6 on 1 degree of freedom and a corresponding p-value of $2 \cdot 10^{-5}$.
-
 
 ## SAS
 
@@ -451,13 +437,11 @@ run;
 ```
 :::
 
-
 #### 4.
 
 *Make a similar analysis based on a model where the hazard is assumed constant within 5-year intervals*.
 
 ::: panel-tabset
-
 ## R
 
 We fit a Poisson model where the hazards are assumed constant within (approximate) 5-year intervals.
@@ -512,7 +496,6 @@ poisson_esvea1 <- as.data.frame(
 fig222 + geom_line(data = poisson_esvea0, aes(x = time, y = cumhaz), linewidth = 1) + 
          geom_line(data = poisson_esvea1, aes(x = time, y = cumhaz), linewidth = 1, linetype = "dotted") 
 ```
-
 
 ## SAS
 
@@ -587,7 +570,6 @@ run;
 ```
 :::
 
-
 ### Exercise 2.3
 
 *Consider the data from the Copenhagen Holter study and the composite end-point stroke-free survival*.
@@ -599,7 +581,6 @@ run;
 *Fit a Cox model and estimate the hazard ratio between subjects with or without ESVEA*.
 
 ::: panel-tabset
-
 ## R
 
 The Cox proportional hazards model is implemented as *coxph* in the **survival** package. The formula argument consists of a Surv object to the left of '\~' and the covariates to the right. We include the argument **ties = "breslow"** to obtain the Breslow estimate of the cumulative hazard.
@@ -646,7 +627,6 @@ run;
 *Fit a Poisson model where the hazard is assumed constant within 5-year intervals and estimate the hazard ratio between subjects with or without ESVEA*.
 
 ::: panel-tabset
-
 ## R
 
 The piece-wise constant model is fitted using **glm** as described in exercise 2.1.3.
@@ -659,7 +639,6 @@ summary(poisson232)
 ```
 
 We get a coefficient of 0.6209 for the ESVEA variable. This corresponds to a hazard ratio of $\exp(0.6209) = 1.8606$. The Wald test is 4.188 with a corresponding p-value of $2.82 \cdot 10^{-5}$.
-
 
 ## SAS
 
@@ -680,12 +659,11 @@ run;
 ```
 :::
 
-
 #### 3.
 
 *Compare the results from the two models*.
 
-The hazard ratio between subjects with or without ESVEA found using the Cox model is 1.87 while it was 1.86 assuming the  piece-wise constant hazards model. Thus, the estimates are nearly identical both predicting an increase of the rate for subjects with ESVEA of a factor 1.86-1.87.
+The hazard ratio between subjects with or without ESVEA found using the Cox model is 1.87 while it was 1.86 assuming the piece-wise constant hazards model. Thus, the estimates are nearly identical both predicting an increase of the rate for subjects with ESVEA of a factor 1.86-1.87.
 
 ### Exercise 2.4
 
@@ -698,7 +676,6 @@ The hazard ratio between subjects with or without ESVEA found using the Cox mode
 *Fit a Cox model and estimate the hazard ratio between subjects with or without ESVEA, now also adjusting for sex, age, and systolic blood pressure (sysBP)*.
 
 ::: panel-tabset
-
 ## R
 
 We fit the Cox model as described in exercise 2.3.1. This time we also include **sex**, **age** and **sbp** as covariates.
@@ -741,7 +718,6 @@ run;
 *Fit a Poisson model where the hazard is assumed constant within 5-year intervals and estimate the hazard ratio between subjects with or without ESVEA, now also adjusting for sex, age, and sysBP*.
 
 ::: panel-tabset
-
 ## R
 
 To obtain estimates under the piece-wise constant hazard assumption we add **sex**, **age** and **sbp** on the right hand side of '\~' both in the **survSplit** and the **glm** functions.
@@ -761,7 +737,6 @@ summary(poisson242)
 ```
 
 We get a coefficient of 0.3111 for ESVEA and a hazard ratio of $\exp(0.3111) = 1.3649$. The Wald test is 2.039 and the corresponding p-value is 0.0414.
-
 
 ## SAS
 
@@ -784,7 +759,6 @@ run;
 ```
 :::
 
-
 #### 3.
 
 *Compare the results from the two models*.
@@ -798,7 +772,6 @@ Again, the hazard ratios estimated using either the Cox model or the Poisson mod
 *Check the Cox model from the previous exercise by examining proportional hazards between subjects with or without ESVEA and between men and women*.
 
 ::: panel-tabset
-
 ## R
 
 To check the assumption of proportional hazards for subjects with or without ESVEA under the Cox model we fit a stratified Cox model. This can be done by adding **strata(esvea)** instead of **esvea** as a covariate in the *coxph* function. The baseline hazard can then be extracted using the function *basehaz* from the **survival** package. The argument **centered = FALSE** is added. Otherwise, the predicted cumulative hazard at the mean values of the covariates is returned.
@@ -1006,13 +979,11 @@ run;
 ```
 :::
 
-
 #### 2.
 
 *Check for linearity on the log(hazard)-scale for age and sysBP*.
 
 ::: panel-tabset
-
 ## R
 
 We can check the linearity assumptions on the log(hazards)-scale for age and systolic blood pressure by including non-linear effects.
@@ -1122,14 +1093,11 @@ run;
 ```
 :::
 
-
-
 #### 3.
 
 *Do the same for the Poisson model*.
 
 ::: panel-tabset
-
 ## R
 
 To investigate the assumption of proportional hazards for subjects with or without ESVEA for the Poisson model we will include an interaction term between time and ESVEA. This model can then be compared with the model from exercise 2.4.1 using a likelihood ratio test.
@@ -1308,21 +1276,17 @@ run;
 ```
 :::
 
-
-
 ### Exercise 2.6
 
 *Consider the data from the Copenhagen Holter study and focus now on the mortality rate after stroke*.
 
 {{< include R/readholter.qmd >}}
 
-
 #### 1.
 
 *Estimate non-parametrically the cumulative hazards for subjects with or without ESVEA using the time variable 'time since recruitment'*.
 
 ::: panel-tabset
-
 ## R
 
 We first make a subset the data which only includes subjects experiencing a stroke during the study. Furthermore, we will add 0.5 day to the time of death for observations where time of stroke and time of death are the same.
@@ -1403,7 +1367,6 @@ run;
 *Assume proportional hazards and estimate the hazard ratio between subjects with or without ESVEA*.
 
 ::: panel-tabset
-
 ## R
 
 Similarly, we fit the Cox model where both time of entry and exit are included in the **Surv** object.
@@ -1416,7 +1379,6 @@ summary(cox262)
 ```
 
 We get a hazard ratio of 1.300 for ESVEA with a Wald test of 0.853 and a corresponding p-value of 0.393. This suggests that having ESVEA does not significantly increase the rate of death after stroke when the time variable is time since recruitment.
-
 
 ## SAS
 
@@ -1472,13 +1434,11 @@ run;
 ```
 :::
 
-
 #### 3.
 
 *Repeat these two questions using now the time variable 'time since stroke' and compare the results*.
 
 ::: panel-tabset
-
 ## R
 
 In the model where the time variable is time since stroke, a new variable **timesincestroke** is added to the data set and used as time variable in the **Surv** object in the formula for the Cox model.
@@ -1527,7 +1487,6 @@ We get a hazard ratio of 1.1654 and a Wald test of 0.493 with a corresponding p-
 ```
 :::
 
-
 ### Exercise 2.7
 
 #### 1.
@@ -1536,9 +1495,7 @@ We get a hazard ratio of 1.1654 and a Wald test of 0.493 with a corresponding p-
 
 {{< include R/readholter.qmd >}}
 
-
 ::: panel-tabset
-
 ## R
 
 We fit a Cox model to the cause-specific hazard for the outcome stroke
@@ -1601,7 +1558,6 @@ run;
 ```
 :::
 
-
 #### 2.
 
 *Compare with the results from Exercise 4 in Chapter 2 (first question)*.
@@ -1615,7 +1571,6 @@ Please note that the Cox model for the composite end-point and those for the sep
 *Consider the data on repeated episodes in affective disorder, Example 1.1.5*.
 
 ::: panel-tabset
-
 ## R
 
 The data should be loaded as **affective_data**:
@@ -1633,6 +1588,7 @@ library(mets)
 library(ggplot2)
 theme_set(theme_bw())
 ```
+
 ## SAS
 
 The data should be loaded as **affective_data**:
@@ -1648,7 +1604,6 @@ proc import out=affective_data
 run;
 
 ```
-
 :::
 
 #### 1.
@@ -1656,7 +1611,6 @@ run;
 *Estimate non-parametrically the cumulative event intensities for unipolar and bipolar patients*.
 
 ::: panel-tabset
-
 ## R
 
 We estimate the cumulative event intensities non-parametrically using the **survfit** function from the *survival* package. We must include the **id = id** argument since we have multiple lines from the same subject. Furthermore, we include **start** in the **surv** object of the formula argument to account for delayed entry and restrict attention to records with state=0 (out of hospital).
@@ -1687,7 +1641,6 @@ fig281
 ```
 
 The cumulative event intensity is at all times higher for bipolar patients compared to unipolar patients.
-
 
 ## SAS
 
@@ -1722,13 +1675,11 @@ run;
 ```
 :::
 
-
 #### 2.
 
 *Fit an AG-type model and estimate, thereby, the ratio between intensities for unipolar and bipolar patients, adjusting for year of diagnosis*.
 
 ::: panel-tabset
-
 ## R
 
 We can fit a very simple version of a AG model (like the one described in Section 2.4.1) using the **coxph** function from the survival package. We take delayed entry into account in the **Surv** object of the formula argument and adjust for disease type (unipolar vs bipolar) and year of diagnosis. Furthermore, we restrict the data set to the rows where patients are out of hospital (state = 0).
@@ -1764,13 +1715,11 @@ run;
 ```
 :::
 
-
 #### 3.
 
 *Fit a PWP model and estimate, thereby, the ratio between intensities for unipolar and bipolar patients, adjusting for year of diagnosis*.
 
 ::: panel-tabset
-
 ## R
 
 We can fit a PWP model using the **coxph** function by adding **strata(episode)** in the formula argument. We must still restrict the data to time periods where the patients are out of hospital (state = 0).
@@ -1804,7 +1753,6 @@ run;
 * We get an estimate of the hazard ratio of readmission for patients diagnosed with bipolar disorder of exp(0.2421) = 1.274 compared to patients diagnosed with unipolar disorder.;
 ```
 :::
-
 
 #### 4.
 

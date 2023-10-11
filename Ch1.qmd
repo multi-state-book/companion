@@ -157,6 +157,9 @@ run;
 
 ## 1.3 Testis cancer incidence and maternal parity
 
+
+-   [Download `testis.csv`](/data/testis.csv)
+
 ```{r}
 #| label: downloadthis-testis
 #| echo: false
