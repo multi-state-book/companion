@@ -18,12 +18,6 @@
 
 ## Exercises
 
-The SAS solutions can also be downloaded as single files:
-
--   [Exercises 2.1 - 2.7 (The Copenhagen Holter study)](/SAS/chapter2_solutions_cphholter.sas)
-
--   [Exercise 2.8 (Recurrent episodes in affective disorders)](/SAS/chapter2_solutions_affective.sas)
-
 {{< include R/chapter2_solutions.qmd >}}
 
 

@@ -20,18 +20,18 @@ R code with output for analyses and plots presented in the book is provided. Cor
 
 Please note:
 
--   A few places R or SAS code is not available (NA) and is denoted *R-NA* and *SAS-NA*, respectively.
-
+-   A few places R or SAS code is not available (NA) and is denoted **R-NA** and **SAS-NA**, respectively.
 -   Code often depends on previous code in the same chapter including loading of required R packages.
-
 -   R and SAS will not necessarily give exactly the same answers. For a comparison of `coxph` and SAS `phreg` see [coxph vs. SAS phreg](https://github.com/therneau/survival/blob/master/vignette2/sas.pdf).
-
 -   When using bootstrap and other re-sampling techniques, small deviations from the book will occur as no fixed seeds have been used.
+-   The solutions files as Quarto files (`.qmd`) are available in the R folder on [github](https://github.com/multi-state-book/companion). SAS solutions are also available as `.sas` files -- see the individual exercises.
 
-A chapter with errata is also provided.
+A chapter with **errata** is also provided.
 
 <!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
 
 ## Acknowledgements {.unnumbered}
 
-Thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples.
+Sincerely thanks to Julie K. Furberg who created figures and validated analyses quoted in the book. Thanks to Eva N.S. Wandall who created solutions to practical exercises and contributed to some of the examples.
+
+A special thank you goes to those who have provided data: Peter Aaby, Jules Angst, Flemming Bendtsen, John P. Klein, Bjørn S. Larsen, Thorkild I.A. Sørensen, Niels Tygstrup, and Tine Westergaard. Permission to present analyses of LEADER data was given by Novo Nordisk A/S.

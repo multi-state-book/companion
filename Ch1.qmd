@@ -19,21 +19,7 @@ download_dir(
 
 ## 1.1 PBC3 trial in liver cirrhosis
 
-
-
-```{r}
-#| label: downloadthis-pbc3
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/pbc3.csv",
-  button_label = "Download pbc3.csv",
-  button_type = "success",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
+[Download `pbc3.csv`](/data/pbc3.csv)
 
 
 | Variable name | Description                                                           |
@@ -84,20 +70,7 @@ run;
 
 ## 1.2 Guinea-Bissau childhood vaccination study
 
-
-```{r}
-#| label: downloadthis-bissau
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/bissau.csv",
-  button_label = "Download bissau.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
+[Download `bissau.csv`](/data/bissau.csv)
 
 | Variable name | Description                                              |
 |:-----------|:------------------------------------------------------------|
@@ -158,21 +131,8 @@ run;
 ## 1.3 Testis cancer incidence and maternal parity
 
 
--   [Download `testis.csv`](/data/testis.csv)
+[Download `testis.csv`](/data/testis.csv)
 
-```{r}
-#| label: downloadthis-testis
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/testis.csv",
-  button_label = "Download testis.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
 
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
@@ -244,20 +204,7 @@ run;
 
 ## 1.4 PROVA trial in liver cirrhosis
 
-```{r}
-#| label: downloadthis-prova
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/prova.csv",
-  button_label = "Download prova.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
-
+[Download `prova.csv`](/data/prova.csv)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
@@ -330,22 +277,9 @@ run;
 
 ## 1.5 Recurrent episodes in affective disorders
 
+[Download `affective.csv`](/data/affective.csv)
+
 Note, that all patients start in state 1 (in hospital).
-
-```{r}
-#| label: downloadthis-affective
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/affective.csv",
-  button_label = "Download affective.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
-
 
 
 | Variable name | Description          |
@@ -524,21 +458,7 @@ run;
 
 ## 1.7 Bone marrow transplantation in acute leukemia
 
-
-```{r}
-#| label: downloadthis-bmt
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/bmt.csv",
-  button_label = "Download bmt.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
-
+[Download `bmt.csv`](/data/bmt.csv)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
@@ -608,20 +528,7 @@ run;
 
 ## 1.8 The Copenhagen Holter study
 
-```{r}
-#| label: downloadthis-cphholter
-#| echo: false
-library(downloadthis)
-download_file(
-  path = "data/cphholter.csv",
-  button_label = "Download cphholter.csv",
-  button_type = "succes",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
-
+[Download `cphholter.csv`](/data/cphholter.csv)
 
 | Variable name | Description          |
 |:-----------|:----------------------------------------------------------------------|
@@ -646,6 +553,7 @@ download_file(
 ### Read data and Table 1.5
 
 ::: panel-tabset
+
 ## R
 
 ```{r}
@@ -659,19 +567,42 @@ with(subset(holter, timestroke < timeafib),
      table(afib, stroke, death, esvea)) # 0 -> Stroke -> AF -> dead (yes/no)
 ```
 
-
-```
-
-
-
 ## SAS
 
 ```{sas}
 #| label: cphholter-sas
 #| eval: false 
 #| output: false
+proc import 
+  datafile="data/cphholter.csv"
+	out=holter
+	dbms = csv
+	replace;
+run;
 
+*--- Table 1.5 -------------------------------;
 
+	proc freq data=holter; 
+  title 'Total';
+	tables esvea / nocol norow nopercent; 
+run;
+
+proc freq data=holter; 
+	title '';
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
+run;
+
+proc freq data=holter; 
+	title '0 -> AF -> Stroke -> dead (yes/no)';
+	where .<timeafib <= timestroke; 
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
+run;
+
+proc freq data=holter; 
+	title '0 -> Stroke -> AF -> dead (yes/no)';
+	where .<timestroke < timeafib; 
+	tables afib*stroke*death*esvea / nocol norow nopercent; 
+run;
 ```
 :::
 
