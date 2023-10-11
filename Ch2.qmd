@@ -20,9 +20,25 @@
 
 The SAS solutions can also be downloaded as single files from github
 
--   [Exercises 2.1 - 2.7 (The Copenhagen Holter study)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_cphholter.sas)
+-   [Exercises 2.1 - 2.7 (The Copenhagen Holter study)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_cphholter.sas){target="_blank"}
 
--   [Exercise 2.8 (Recurrent episodes in affective disorders)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_affective.sas)
+```{r}
+#| label: downloadthis-testis
+#| echo: false
+library(downloadthis)
+download_file(
+  path = "SAS/chapter2_solutions_cphholter.sas",
+  button_label = "Exercises 2.1 - 2.7 (The Copenhagen Holter study)",
+  button_type = "succes",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+
+
+-   [Exercise 2.8 (Recurrent episodes in affective disorders)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_affective.sas){target="_blank"}
 
 {{< include R/chapter2_solutions.qmd >}}
 
