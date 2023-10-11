@@ -3,8 +3,9 @@
 *----------------------------------------------------------------------------------------------------------------------------------;
 * We first load the data;
 
-proc import out=affective_data datafile='c:/HRfinal/angst/affective.csv' 
-		dbms=csv replace;
+proc import out=affective_data
+	datafile='data/affective.csv' 
+	dbms=csv replace;
 	getnames=yes;
 run;
 
@@ -263,15 +264,15 @@ run;
 * Less transparently, but in a way a lot easier, we can 'cheat' proc phreg to do the computations by
   fitting an empty Fine-Gray model and transform the cumulative sub-distribution hazard!;
 
-proc phreg data=affective_data;
-model stop*status(0 3)=/entry=prev eventcode=1;
-strata bip;
-baseline out=mcfdata1 cif=naa1;
+proc phreg data=data491;
+	model stop*status(0 3)=/entry=prev eventcode=1;
+	strata bip;
+	baseline out=mcfdata1 cif=naa1;
 run;
 
 data mcfdata1; set mcfdata1;
-cmf=-log(1-naa1);
-years=stop/12;
+	cmf=-log(1-naa1);
+	years=stop/12;
 run;
 
 proc gplot data=mcfdata1;
@@ -281,6 +282,7 @@ axis2 order=0 to 8 by 0.5 minor=none label=(a=90 'Expected number of episodes');
 symbol1  v=none i=stepjl c=red;
 symbol2  v=none i=stepjl c=blue;
 run;
+quit;
 
 *----------------------------------------------  4.9.2 ----------------------------------------------------------------------------;
 

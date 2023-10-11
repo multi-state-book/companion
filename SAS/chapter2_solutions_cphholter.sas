@@ -5,7 +5,7 @@
 * We first load the data;
 
 proc import out = chs_data
-    datafile = 'C:/HRfinal/holter/cphholter.csv'
+  datafile = 'data/cphholter.csv'
 	dbms= csv replace;
 	getnames=yes;
 run;
@@ -314,7 +314,7 @@ proc genmod data=chs_pch_null;
 	model cens=interval esvea/dist=poi offset=logrisk;
 run;
 
-* We get a hazard ration of exp(0.6209) = 1.860602 for ESVEA under the assumption of piece-wise constant hazards model. This 
+* We get a hazard ratio of exp(0.6209) = 1.860602 for ESVEA under the assumption of piece-wise constant hazards model. This 
   difference in hazards between subjects with or without ESVEA is significant, since we get a Chi-square statistic of 17.56 on 1 
   degree of freedom with a corresponding p-value <0.0001.;
 
@@ -778,7 +778,9 @@ run;
 * We get a hazard ratio of 1.17 and a Chi-square statistic of 0.7344 on 1 degree of freedom with a corresponding p-value of 0.391. 
   This suggests that the status of ESVEA does not change the hazard significantly when the outcome is death without stroke.;
 
-* 2.7.2: It is seen that (male) sex and age are both significantly associated with increased cause-specific hazards 
+* 2.7.2:
+
+	It is seen that (male) sex and age are both significantly associated with increased cause-specific hazards 
   whereas ESVEA and SysBP are only associated with the rate of stroke. The coefficients for the composite end-point 
   are between those for the cause-specific hazards. Please note that the Cox model for the composite end-point and 
   those for the separate cause-specific hazards are mathematically incompatible.

@@ -1,19 +1,29 @@
 # Intuition for intensity models
 
 ## PBC3 trial in liver cirrhosis
+
 {{< include R/chapter2_pbc3.qmd >}}
 
 ## Guinea-Bissau childhood vaccination study
+
 {{< include R/chapter2_bissau.qmd >}}
 
 ## Recurrent episodes in affective disorders
+
 {{< include R/chapter2_affective.qmd >}}
 
 ## LEADER cardiovascular trial in type 2 diabetes
+
 {{< include R/chapter2_leader.qmd >}}
 
 ## Exercises
+
+The SAS solutions can also be downloaded as single files from github
+
+-   [Exercises 2.1 - 2.7 (The Copenhagen Holter study)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_cphholter.sas)
+
+-   [Exercise 2.8 (Recurrent episodes in affective disorders)](https://github.com/multi-state-book/companion/tree/main/SAS/chapter2_solutions_affective.sas)
+
 {{< include R/chapter2_solutions.qmd >}}
 
 <!-- {{< include R/CHS_chapter2.Rmd >}} -->
-

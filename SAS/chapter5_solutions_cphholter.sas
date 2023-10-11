@@ -5,7 +5,7 @@
 * We first load the data;
 
 proc import out = chs_data
-    datafile = 'C:\\Users\\htk287\\Desktop\\CHS\\holt.csv'
+    datafile = 'data/chpholter.csv'
 	dbms= csv replace;
 	getnames=yes;
 run;

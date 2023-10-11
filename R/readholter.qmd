@@ -1,0 +1,56 @@
+The data should be loaded as `chs_data`:
+  
+::: panel-tabset
+
+## R
+```{r}
+#| code-fold: show
+chs_data <- read.csv("data/cphholter.csv")
+```
+
+Note that the time variables, `timeafib`, `timestroke` and `timedeath`, are measured in days. We will first convert them to years for easier interpretations.
+
+```{r}
+#| code-fold: show
+chs_data$timeafib   <- chs_data$timeafib/365.25
+chs_data$timestroke <- chs_data$timestroke/365.25
+chs_data$timedeath  <- chs_data$timedeath/365.25
+```
+
+Load the relevant packages:
+  
+```{r, warning = FALSE, message=FALSE}
+#| code-fold: show
+
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+
+* We first load the data;
+
+proc import out = chs_data
+datafile = 'data/cphholter.csv'
+dbms= csv replace;
+getnames=yes;
+run;
+
+* We will convert the time variables ('timeafib', 'timestroke', and 'timedeath') from days to years;
+
+data chs_data;
+set chs_data;
+timeafib = timeafib/365.25;
+timestroke = timestroke/365.25;
+timedeath = timedeath/365.25;
+run;
+```
+:::
+  
