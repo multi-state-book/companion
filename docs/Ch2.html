@@ -3779,12 +3779,12 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-33-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-33-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-cox-unadjusted-sas_a17049019e5e9029aad881eae7674cd6">
+<div class="cell" data-hash="Ch2_cache/html/in-text-cox-unadjusted-sas_539a5dd31cdcf403a4a5d515f7cfde70">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
-<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a>    model fuptime<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg <span class="sc">/</span> rl;</span>
-<span id="cb177-3"><a href="#cb177-3" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb177"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb177-2"><a href="#cb177-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg / rl;</span>
+<span id="cb177-3"><a href="#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3844,24 +3844,24 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-34-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-34-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.12-sas_7796b9042c3a10bc80dbba528a3db99e">
+<div class="cell" data-hash="Ch2_cache/html/table-2.12-sas_4930efdca142871ffd8007e4548abb16">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
-<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>    model fuptime<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg agem <span class="sc">/</span> rl;</span>
-<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a>run;</span>
+<div class="sourceCode cell-code" id="cb182"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg agem / rl;</span>
+<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
 <span id="cb182-4"><a href="#cb182-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Make age the time variable instead;</span>
-<span id="cb182-6"><a href="#cb182-6" aria-hidden="true" tabindex="-1"></a>data bissau; </span>
-<span id="cb182-7"><a href="#cb182-7" aria-hidden="true" tabindex="-1"></a>    set bissau;</span>
-<span id="cb182-8"><a href="#cb182-8" aria-hidden="true" tabindex="-1"></a>    agein<span class="ot">=</span>age<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>);</span>
-<span id="cb182-9"><a href="#cb182-9" aria-hidden="true" tabindex="-1"></a>    ageout<span class="ot">=</span>agein<span class="sc">+</span>fuptime<span class="sc">/</span>(<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>);</span>
-<span id="cb182-10"><a href="#cb182-10" aria-hidden="true" tabindex="-1"></a>run;</span>
+<span id="cb182-5"><a href="#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="co">* Make age the time variable instead;</span></span>
+<span id="cb182-6"><a href="#cb182-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> bissau; </span>
+<span id="cb182-7"><a href="#cb182-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> bissau;</span>
+<span id="cb182-8"><a href="#cb182-8" aria-hidden="true" tabindex="-1"></a>    agein=age/(<span class="dv">365.24</span>/<span class="dv">12</span>);</span>
+<span id="cb182-9"><a href="#cb182-9" aria-hidden="true" tabindex="-1"></a>    ageout=agein+fuptime/(<span class="dv">365.24</span>/<span class="dv">12</span>);</span>
+<span id="cb182-10"><a href="#cb182-10" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
 <span id="cb182-11"><a href="#cb182-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb182-12"><a href="#cb182-12" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit <span class="sc">-</span> column <span class="dv">2</span>; </span>
-<span id="cb182-13"><a href="#cb182-13" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
-<span id="cb182-14"><a href="#cb182-14" aria-hidden="true" tabindex="-1"></a>    model ageout<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg <span class="sc">/</span> entry<span class="ot">=</span>agein rl;</span>
-<span id="cb182-15"><a href="#cb182-15" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb182-12"><a href="#cb182-12" aria-hidden="true" tabindex="-1"></a><span class="co">* Cox model fit - column 2;</span> </span>
+<span id="cb182-13"><a href="#cb182-13" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb182-14"><a href="#cb182-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> ageout*dead(<span class="dv">0</span>)=bcg / entry=agein rl;</span>
+<span id="cb182-15"><a href="#cb182-15" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3910,36 +3910,36 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-35-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-35-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.13--sas_7a980bc45b9cdf777de7197fda50d5dd">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.13--sas_bb2574b684a826cfcce4a2c46986790a">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit and get cumulative baseline hazard ; </span>
-<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
-<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a>    model fuptime<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg agem<span class="sc">/</span>rl;</span>
-<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>hazfuptime covariates<span class="ot">=</span>cov1 cumhaz<span class="ot">=</span>basefup;</span>
-<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb184-6"><a href="#cb184-6" aria-hidden="true" tabindex="-1"></a>data hazfuptime_months; </span>
-<span id="cb184-7"><a href="#cb184-7" aria-hidden="true" tabindex="-1"></a>    set hazfuptime; </span>
-<span id="cb184-8"><a href="#cb184-8" aria-hidden="true" tabindex="-1"></a>    fuptime_m <span class="ot">=</span> fuptime <span class="sc">/</span> (<span class="fl">365.24</span><span class="sc">/</span><span class="dv">12</span>); </span>
-<span id="cb184-9"><a href="#cb184-9" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb184-10"><a href="#cb184-10" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>hazfuptime_months;</span>
-<span id="cb184-11"><a href="#cb184-11" aria-hidden="true" tabindex="-1"></a>    plot basefup<span class="sc">*</span>fuptime_m<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
-<span id="cb184-12"><a href="#cb184-12" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">7</span> by <span class="dv">1</span> minor<span class="ot">=</span>none</span>
-<span id="cb184-13"><a href="#cb184-13" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="st">'Follow-up time (months)'</span>);</span>
-<span id="cb184-14"><a href="#cb184-14" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.06</span> by <span class="fl">0.01</span> minor<span class="ot">=</span>none</span>
-<span id="cb184-15"><a href="#cb184-15" aria-hidden="true" tabindex="-1"></a>    label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative hazard'</span>);</span>
-<span id="cb184-16"><a href="#cb184-16" aria-hidden="true" tabindex="-1"></a>    symbol1 v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
-<span id="cb184-17"><a href="#cb184-17" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb184-18"><a href="#cb184-18" aria-hidden="true" tabindex="-1"></a>quit;</span>
-<span id="cb184-19"><a href="#cb184-19" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> or using proc sgplot;</span>
-<span id="cb184-20"><a href="#cb184-20" aria-hidden="true" tabindex="-1"></a>ods graphics on;</span>
-<span id="cb184-21"><a href="#cb184-21" aria-hidden="true" tabindex="-1"></a>proc sgplot data<span class="ot">=</span>hazfuptime_months;</span>
-<span id="cb184-22"><a href="#cb184-22" aria-hidden="true" tabindex="-1"></a>  step x<span class="ot">=</span>fuptime_m y<span class="ot">=</span>basefup <span class="sc">/</span> justify<span class="ot">=</span>left;</span>
-<span id="cb184-23"><a href="#cb184-23" aria-hidden="true" tabindex="-1"></a>    xaxis grid values<span class="ot">=</span>(<span class="dv">0</span> to <span class="dv">7</span> by <span class="dv">1</span>);</span>
-<span id="cb184-24"><a href="#cb184-24" aria-hidden="true" tabindex="-1"></a>    yaxis grid values<span class="ot">=</span>(<span class="dv">0</span> to <span class="fl">0.06</span> by <span class="fl">0.01</span>);</span>
-<span id="cb184-25"><a href="#cb184-25" aria-hidden="true" tabindex="-1"></a>    label fuptime_m<span class="ot">=</span><span class="st">"Follow-up time (months)"</span>;</span>
-<span id="cb184-26"><a href="#cb184-26" aria-hidden="true" tabindex="-1"></a>    label basefup<span class="ot">=</span><span class="st">"Cumulative hazard"</span>;</span>
-<span id="cb184-27"><a href="#cb184-27" aria-hidden="true" tabindex="-1"></a>run;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb184"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb184-1"><a href="#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co">* Cox model fit and get cumulative baseline hazard ;</span> </span>
+<span id="cb184-2"><a href="#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb184-3"><a href="#cb184-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg agem/rl;</span>
+<span id="cb184-4"><a href="#cb184-4" aria-hidden="true" tabindex="-1"></a>    baseline out=hazfuptime covariates=cov1 cumhaz=basefup;</span>
+<span id="cb184-5"><a href="#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb184-6"><a href="#cb184-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> hazfuptime_months; </span>
+<span id="cb184-7"><a href="#cb184-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> hazfuptime; </span>
+<span id="cb184-8"><a href="#cb184-8" aria-hidden="true" tabindex="-1"></a>    fuptime_m = fuptime / (<span class="dv">365.24</span>/<span class="dv">12</span>); </span>
+<span id="cb184-9"><a href="#cb184-9" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb184-10"><a href="#cb184-10" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> gplot<span class="kw"> data</span>=hazfuptime_months;</span>
+<span id="cb184-11"><a href="#cb184-11" aria-hidden="true" tabindex="-1"></a>    plot basefup*fuptime_m/haxis=axis1 vaxis=axis2;</span>
+<span id="cb184-12"><a href="#cb184-12" aria-hidden="true" tabindex="-1"></a>    axis1 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">7</span> <span class="kw">by</span> <span class="dv">1</span> minor=none</span>
+<span id="cb184-13"><a href="#cb184-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">label</span>=(<span class="st">'Follow-up time (months)'</span>);</span>
+<span id="cb184-14"><a href="#cb184-14" aria-hidden="true" tabindex="-1"></a>    axis2 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">0.06</span> <span class="kw">by</span> <span class="dv">0.01</span> minor=none</span>
+<span id="cb184-15"><a href="#cb184-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">label</span>=(a=<span class="dv">90</span> <span class="st">'Cumulative hazard'</span>);</span>
+<span id="cb184-16"><a href="#cb184-16" aria-hidden="true" tabindex="-1"></a>    symbol1 v=none i=stepjl c=blue;</span>
+<span id="cb184-17"><a href="#cb184-17" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb184-18"><a href="#cb184-18" aria-hidden="true" tabindex="-1"></a><span class="kw">quit</span>;</span>
+<span id="cb184-19"><a href="#cb184-19" aria-hidden="true" tabindex="-1"></a><span class="co">* or using proc sgplot;</span></span>
+<span id="cb184-20"><a href="#cb184-20" aria-hidden="true" tabindex="-1"></a>ods graphics <span class="kw">on</span>;</span>
+<span id="cb184-21"><a href="#cb184-21" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sgplot<span class="kw"> data</span>=hazfuptime_months;</span>
+<span id="cb184-22"><a href="#cb184-22" aria-hidden="true" tabindex="-1"></a>  step <span class="kw">x</span>=fuptime_m y=basefup / justify=<span class="fu">left</span>;</span>
+<span id="cb184-23"><a href="#cb184-23" aria-hidden="true" tabindex="-1"></a>    xaxis grid values=(<span class="dv">0</span> <span class="kw">to</span> <span class="dv">7</span> <span class="kw">by</span> <span class="dv">1</span>);</span>
+<span id="cb184-24"><a href="#cb184-24" aria-hidden="true" tabindex="-1"></a>    yaxis grid values=(<span class="dv">0</span> <span class="kw">to</span> <span class="dv">0.06</span> <span class="kw">by</span> <span class="dv">0.01</span>);</span>
+<span id="cb184-25"><a href="#cb184-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">label</span> fuptime_m=<span class="st">"Follow-up time (months)"</span>;</span>
+<span id="cb184-26"><a href="#cb184-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">label</span> basefup=<span class="st">"Cumulative hazard"</span>;</span>
+<span id="cb184-27"><a href="#cb184-27" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -3976,29 +3976,29 @@ n= 5274, number of events= 222 </code></pre>
 </div>
 </div>
 <div id="tabset-36-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-36-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/figure-2.14--sas_b8c7f170697cd22a904e1421da307095">
+<div class="cell" data-hash="Ch2_cache/html/figure-2.14--sas_e187b6f19b4149a7ef463bd50aab1adb">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a>data cov2;</span>
-<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a>input bcg;</span>
-<span id="cb186-3"><a href="#cb186-3" aria-hidden="true" tabindex="-1"></a>datalines;</span>
-<span id="cb186-4"><a href="#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span></span>
-<span id="cb186-5"><a href="#cb186-5" aria-hidden="true" tabindex="-1"></a>;</span>
-<span id="cb186-6"><a href="#cb186-6" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb186-7"><a href="#cb186-7" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span> Cox model fit and get cumulative baseline hazard ; </span>
-<span id="cb186-8"><a href="#cb186-8" aria-hidden="true" tabindex="-1"></a>proc phreg data<span class="ot">=</span>bissau;</span>
-<span id="cb186-9"><a href="#cb186-9" aria-hidden="true" tabindex="-1"></a>    model ageout<span class="sc">*</span><span class="fu">dead</span>(<span class="dv">0</span>)<span class="ot">=</span>bcg <span class="sc">/</span> entry<span class="ot">=</span>agein rl;</span>
-<span id="cb186-10"><a href="#cb186-10" aria-hidden="true" tabindex="-1"></a>    baseline out<span class="ot">=</span>hazage covariates<span class="ot">=</span>cov2 cumhaz<span class="ot">=</span>baseage;</span>
-<span id="cb186-11"><a href="#cb186-11" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb186-12"><a href="#cb186-12" aria-hidden="true" tabindex="-1"></a>proc gplot data<span class="ot">=</span>hazage;</span>
-<span id="cb186-13"><a href="#cb186-13" aria-hidden="true" tabindex="-1"></a>    plot baseage<span class="sc">*</span>ageout<span class="sc">/</span>haxis<span class="ot">=</span>axis1 vaxis<span class="ot">=</span>axis2;</span>
-<span id="cb186-14"><a href="#cb186-14" aria-hidden="true" tabindex="-1"></a>    axis1 order<span class="ot">=</span><span class="dv">0</span> to <span class="dv">15</span> by <span class="dv">5</span> minor<span class="ot">=</span>none</span>
-<span id="cb186-15"><a href="#cb186-15" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="st">'Age (months)'</span>);</span>
-<span id="cb186-16"><a href="#cb186-16" aria-hidden="true" tabindex="-1"></a>    axis2 order<span class="ot">=</span><span class="dv">0</span> to <span class="fl">0.15</span> by <span class="fl">0.05</span> minor<span class="ot">=</span>none </span>
-<span id="cb186-17"><a href="#cb186-17" aria-hidden="true" tabindex="-1"></a>        label<span class="ot">=</span>(<span class="at">a=</span><span class="dv">90</span> <span class="st">'Cumulative baseline hazard'</span>);</span>
-<span id="cb186-18"><a href="#cb186-18" aria-hidden="true" tabindex="-1"></a>    symbol1  v<span class="ot">=</span>none i<span class="ot">=</span>stepjl c<span class="ot">=</span>blue;</span>
-<span id="cb186-19"><a href="#cb186-19" aria-hidden="true" tabindex="-1"></a>run;</span>
-<span id="cb186-20"><a href="#cb186-20" aria-hidden="true" tabindex="-1"></a>quit;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb186"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb186-1"><a href="#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> cov2;</span>
+<span id="cb186-2"><a href="#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="kw">input</span> bcg;</span>
+<span id="cb186-3"><a href="#cb186-3" aria-hidden="true" tabindex="-1"></a><span class="ot">datalines;</span></span>
+<span id="cb186-4"><a href="#cb186-4" aria-hidden="true" tabindex="-1"></a><span class="ot">0</span></span>
+<span id="cb186-5"><a href="#cb186-5" aria-hidden="true" tabindex="-1"></a><span class="ot">;</span></span>
+<span id="cb186-6"><a href="#cb186-6" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb186-7"><a href="#cb186-7" aria-hidden="true" tabindex="-1"></a><span class="co">* Cox model fit and get cumulative baseline hazard ;</span> </span>
+<span id="cb186-8"><a href="#cb186-8" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb186-9"><a href="#cb186-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> ageout*dead(<span class="dv">0</span>)=bcg / entry=agein rl;</span>
+<span id="cb186-10"><a href="#cb186-10" aria-hidden="true" tabindex="-1"></a>    baseline out=hazage covariates=cov2 cumhaz=baseage;</span>
+<span id="cb186-11"><a href="#cb186-11" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb186-12"><a href="#cb186-12" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> gplot<span class="kw"> data</span>=hazage;</span>
+<span id="cb186-13"><a href="#cb186-13" aria-hidden="true" tabindex="-1"></a>    plot baseage*ageout/haxis=axis1 vaxis=axis2;</span>
+<span id="cb186-14"><a href="#cb186-14" aria-hidden="true" tabindex="-1"></a>    axis1 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">15</span> <span class="kw">by</span> <span class="dv">5</span> minor=none</span>
+<span id="cb186-15"><a href="#cb186-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">label</span>=(<span class="st">'Age (months)'</span>);</span>
+<span id="cb186-16"><a href="#cb186-16" aria-hidden="true" tabindex="-1"></a>    axis2 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">0.15</span> <span class="kw">by</span> <span class="dv">0.05</span> minor=none </span>
+<span id="cb186-17"><a href="#cb186-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">label</span>=(a=<span class="dv">90</span> <span class="st">'Cumulative baseline hazard'</span>);</span>
+<span id="cb186-18"><a href="#cb186-18" aria-hidden="true" tabindex="-1"></a>    symbol1  v=none i=stepjl c=blue;</span>
+<span id="cb186-19"><a href="#cb186-19" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb186-20"><a href="#cb186-20" aria-hidden="true" tabindex="-1"></a><span class="kw">quit</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -6882,10 +6882,41 @@ Score (logrank) test = 0.24  on 1 df,   p=0.6</code></pre>
 <p>We get a hazard ratio of 1.1654 and a Wald test of 0.493 with a corresponding p-value of 0.622. This suggests that ESVEA does not change the hazard significantly when the time variable is time since stroke as well.</p>
 </div>
 <div id="tabset-63-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-63-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/unnamed-chunk-154_fd77a752857fb5b18663b56f5549f317">
+<div class="cell" data-hash="Ch2_cache/html/unnamed-chunk-154_ec5e1a24365f47466f90e42f52f1f155">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb340"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb340"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb340-1"><a href="#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> stroke_<span class="kw">data</span>;</span>
+<span id="cb340-2"><a href="#cb340-2" aria-hidden="true" tabindex="-1"></a>   <span class="kw">set</span> stroke_<span class="kw">data</span>;</span>
+<span id="cb340-3"><a href="#cb340-3" aria-hidden="true" tabindex="-1"></a>   timesincestroke = timedeath - timestroke;</span>
+<span id="cb340-4"><a href="#cb340-4" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb340-5"><a href="#cb340-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-6"><a href="#cb340-6" aria-hidden="true" tabindex="-1"></a><span class="co">* The Nelson Aalen estimates of the cumulative hazards are then calculated and plotted as before;</span></span>
+<span id="cb340-7"><a href="#cb340-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-8"><a href="#cb340-8" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=stroke_<span class="kw">data</span>; </span>
+<span id="cb340-9"><a href="#cb340-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> timesincestroke*death(<span class="dv">0</span>)=;</span>
+<span id="cb340-10"><a href="#cb340-10" aria-hidden="true" tabindex="-1"></a>    strata esvea;</span>
+<span id="cb340-11"><a href="#cb340-11" aria-hidden="true" tabindex="-1"></a>    baseline out=hazdata cumhaz=naa;</span>
+<span id="cb340-12"><a href="#cb340-12" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb340-13"><a href="#cb340-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-14"><a href="#cb340-14" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">"2.6.3: Nelson-Aalen estimate of the cumulative hazards of death after stroke"</span>;</span>
+<span id="cb340-15"><a href="#cb340-15" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> gplot<span class="kw"> data</span>=hazdata;</span>
+<span id="cb340-16"><a href="#cb340-16" aria-hidden="true" tabindex="-1"></a>    plot naa*timesincestroke = esvea / haxis=axis1 vaxis=axis2;</span>
+<span id="cb340-17"><a href="#cb340-17" aria-hidden="true" tabindex="-1"></a>    axis1 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">15.19</span> <span class="kw">by</span> <span class="dv">1</span> minor=none <span class="kw">label</span>=(<span class="st">'Years'</span>);</span>
+<span id="cb340-18"><a href="#cb340-18" aria-hidden="true" tabindex="-1"></a>    axis2 <span class="kw">order</span>=<span class="dv">0</span> <span class="kw">to</span> <span class="dv">3.5</span> <span class="kw">by</span> <span class="dv">0.1</span> minor=none <span class="kw">label</span>=(a=<span class="dv">90</span> <span class="st">'Cumulative hazard'</span>);</span>
+<span id="cb340-19"><a href="#cb340-19" aria-hidden="true" tabindex="-1"></a>    symbol1  v=none i=stepjl c=red;</span>
+<span id="cb340-20"><a href="#cb340-20" aria-hidden="true" tabindex="-1"></a>    symbol2  v=none i=stepjl c=blue;</span>
+<span id="cb340-21"><a href="#cb340-21" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb340-22"><a href="#cb340-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-23"><a href="#cb340-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-24"><a href="#cb340-24" aria-hidden="true" tabindex="-1"></a><span class="co">* Likewise, the hazard ratio is estimated assuming proportional hazards with the Cox model;</span> </span>
+<span id="cb340-25"><a href="#cb340-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-26"><a href="#cb340-26" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">"2.6.3"</span>;</span>
+<span id="cb340-27"><a href="#cb340-27" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span> = stroke_<span class="kw">data</span>;</span>
+<span id="cb340-28"><a href="#cb340-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> timesincestroke*death(<span class="dv">0</span>)=esvea;</span>
+<span id="cb340-29"><a href="#cb340-29" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb340-30"><a href="#cb340-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-31"><a href="#cb340-31" aria-hidden="true" tabindex="-1"></a><span class="co">* We get a hazard ratio of exp(0.15385) = 1.1663 for ESVEA with a  Ï‡2 statistic of 0.2458 and a corresponding p-value of 0.62. Thus,</span></span>
+<span id="cb340-32"><a href="#cb340-32" aria-hidden="true" tabindex="-1"></a><span class="co">  ESVEA does not increase the risk of death after stroke significantly when the time variable is time since stroke as well.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

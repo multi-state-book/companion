@@ -1490,38 +1490,6 @@ We get a hazard ratio of 1.1654 and a Wald test of 0.493 with a corresponding p-
 #| output: false
 #| code-fold: show
 
-data stroke_data;
-   set stroke_data;
-   timesincestroke = timedeath - timestroke;
-run;
-
-* The Nelson Aalen estimates of the cumulative hazards are then calculated and plotted as before;
-
-proc phreg data=stroke_data; 
-	model timesincestroke*death(0)=;
-	strata esvea;
-	baseline out=hazdata cumhaz=naa;
-run;
-
-title "2.6.3: Nelson-Aalen estimate of the cumulative hazards of death after stroke";
-proc gplot data=hazdata;
-	plot naa*timesincestroke = esvea / haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 15.19 by 1 minor=none label=('Years');
-	axis2 order=0 to 3.5 by 0.1 minor=none label=(a=90 'Cumulative hazard');
-	symbol1  v=none i=stepjl c=red;
-	symbol2  v=none i=stepjl c=blue;
-run;
-
-
-* Likewise, the hazard ratio is estimated assuming proportional hazards with the Cox model; 
-
-title "2.6.3";
-proc phreg data = stroke_data;
-	model timesincestroke*death(0)=esvea;
-run;
-
-* We get a hazard ratio of exp(0.15385) = 1.1663 for ESVEA with a  Ï‡2 statistic of 0.2458 and a corresponding p-value of 0.62. Thus,
-  ESVEA does not increase the risk of death after stroke significantly when the time variable is time since stroke as well.
 ```
 :::
 

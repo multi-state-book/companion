@@ -39,7 +39,7 @@ coxfit0
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: in-text-cox-unadjusted-sas
 #| eval: false 
 #| output: false
@@ -74,7 +74,7 @@ coxfit2 <- coxph(Surv(agein, ageout, dead) ~ bcg,
 coxfit2
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: table-2.12-sas
 #| eval: false 
 #| output: false
@@ -136,7 +136,7 @@ fig2.13
 ```
 
 ## SAS
-```{r}
+```{sas}
 #| label: figure-2.13--sas
 #| eval: false 
 #| output: false
@@ -195,7 +195,7 @@ fig2.14 <- ggplot(aes(x = time, y = hazard), data = coxcumhaz) +
 fig2.14
 ```
 ## SAS
-```{r}
+```{sas}
 #| label: figure-2.14--sas
 #| eval: false 
 #| output: false
