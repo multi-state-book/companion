@@ -32,7 +32,8 @@ download_file(
   button_type = "succes",
   has_icon = TRUE,
   icon = "fa fa-save",
-  self_contained = FALSE
+  self_contained = FALSE,
+  id = 'hope'
 )
 ```
 
