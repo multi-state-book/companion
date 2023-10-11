@@ -14,7 +14,7 @@ book:
     left: |
       Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values
     right: |
-      Built with <a href="https://quarto.org/">Quarto</a>, R v4.3.1, and SAS 15.1
+      Built with <a href="https://quarto.org/">Quarto</a> and <a href="https://https://posit.co/downloads/">RStudio</a>
   cover-image: MSB-cover.png
   favicon: corvos.png
   repo-actions: issue

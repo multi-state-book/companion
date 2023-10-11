@@ -25,10 +25,9 @@ Please note:
 -   R and SAS will not necessarily give exactly the same answers. For a comparison of `coxph` and SAS `phreg` see [coxph vs. SAS phreg](https://github.com/therneau/survival/blob/master/vignette2/sas.pdf).
 -   When using bootstrap and other re-sampling techniques, small deviations from the book will occur as no fixed seeds have been used.
 -   The solutions files as Quarto files (`.qmd`) are available in the R folder on [github](https://github.com/multi-state-book/companion). SAS solutions are also available as `.sas` files -- see the individual exercises.
+-   Versions R-4.3.1 and SAS/STAT 15.1 were used.
 
-A chapter with **errata** is also provided.
-
-<!-- This code and output was created using R version 4.3.1 and SAS/Stat version 15.1. -->
+A chapter with errata is also provided.
 
 ## Acknowledgements {.unnumbered}
 
