@@ -1,9 +1,50 @@
-*----------------------------------------------------------------------------------------------------------------------------------;
-*----------------------------- CHAPTER 6 - EXERCISE SOLUTIONS ---------------------------------------------------------------------;
-*----------------------------------------------------------------------------------------------------------------------------------;
+### Exercise 6.3 
 
-* We first load the data;
+This and the next two exercises are using the Copenhagen Holter study, and we start by loading and preparing data.
 
+::: panel-tabset
+
+## R
+
+The data should be loaded as **chs_data**
+
+```{r}
+#| code-fold: show
+chs_data <- read.csv("data/cphholter.csv")
+```
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(survminer) #Plots of survival curves
+library(survRM2) #RMST 
+library(mstate) #probtrans, ELOS
+library(mets) #binreg
+library(pseudo)
+library(geepack)
+```
+
+Finally, we will convert the time variables to years and add a time variable and status indicator for the composite end-point stroke-free survival.
+
+```{r}
+#| code-fold: show
+chs_data <- chs_data %>% mutate(timeafib = timeafib/365.25,
+                                timestroke = timestroke/365.25,
+                                timedeath = timedeath/365.25,
+                                timestrokeordeath = ifelse(stroke == 1, timestroke, timedeath),
+                                strokeordeath = ifelse(stroke ==1, 1, death))
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
 proc import out = chs_data
     datafile = 'data/cphholter.csv'
 	dbms= csv replace;
@@ -28,14 +69,49 @@ data chs_data;
 	strokeordeath = death;
 	if stroke = 1 then strokeordeath = 1;
 run;
+```
+:::
 
+*Consider the Copenhagen Holter study and the composite end-point strokefree survival.*
 
-*----------------------------------------------------------------------------------------------------------------------------------;
-*---------------------------------------- EXERCISE 6.3 ----------------------------------------------------------------------------;
-*----------------------------------------------------------------------------------------------------------------------------------;
+#### 1. 
 
-*----------------------------------------------  6.3.1 ----------------------------------------------------------------------------;
+*Fit, using pseudo-values, a cloglog model for experiencing that end-point before time 3 years including the covariates ESVEA, sex, age, and systolic blood pressure.*
 
+::: panel-tabset
+
+## R
+
+We will compute the pseudo observations for the incompletely observed survival indicators $I(T_i > 3 \text{ years})$, $i = 1,...,678$ using the **pseudosurv** function from the *pseudo* package. The function takes a time variable, **time**, status indicator, **event**, and time point(s) where the pseudo observations should be computed, **tmax**, as arguments. The pseudo observations are returned as a list called **pseudo**. 
+
+```{r}
+#| code-fold: show
+# Computing the pseudo observations 
+chs_data$pseudo631 <- pseudosurv(time = chs_data$timestrokeordeath, event = chs_data$strokeordeath, tmax = 3)$pseudo
+```
+
+The cloglog model for experiencing stroke-free survival is fitted using the **geese** function from the *geepack* library where we must provide the arguments **formula**, **data** and **mean.link**. Since the cloglog link function is implemented as $\log(-\log(1-x))$ we must use 1 minus the pseudo observations as responses in the GEE. Furthermore, we must exclude the three observations with missing values of systolic blood pressure in the data argument.
+
+```{r}
+#| code-fold: show
+# Fitting the GEE
+fit631 <- geese(formula = I(1 - pseudo631) ~ esvea + sex + age + sbp, data = subset(chs_data, !is.na(sbp)), mean.link = "cloglog")
+summary(fit631)
+```
+
+Thus, we obtain the following model for stroke-free survival at three years including the covariates ESVEA, sex, age, and systolic blood pressure
+
+$$ S(3|Z) = \exp(-\exp(-8.417674 + 0.235836\cdot Z_1$$
+$$+ 0.552503\cdot Z_2 +  0.081001\cdot Z_3 -0.001947\cdot Z_4 ) ),$$
+
+where $Z_1, Z_2, Z_3$, and $Z_4$ are ESVEA, sex, age, and systolic blood pressure, respectively.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
 * We will compute the pseudo observations for the incompletely observed survival indicators I(T_i > 3 years), i = 1,...,678 using 
   the pseudosurv MACRO.;
 
@@ -208,27 +284,57 @@ run;
   blood pressure
   S(3|Z) = exp(-exp(-8.4177 + 0.2358*Z1 + 0.5525*Z2 +  0.0810*Z3 - 0.0019*Z4)),
   where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;
+```
+:::
 
+#### 2. 
 
-*----------------------------------------------  6.3.2 ----------------------------------------------------------------------------;
+*Compare the results with those of Exercise 2.4.*
 
-* In Exercise 2.4 we obtained the following estimates of the coefficients for ESVEA, sex, age, and systolic blood pressure assuming 
-  the Cox model and almost identical estimates was found assuming a Poisson model;
-   
-* beta_esvea = 0.31830, beta_sex = 0.57759, beta_age = 0.07666, beta_sbp = 0.00515;
+In Exercise 2.4, we obtained the following estimates of the coefficients for ESVEA, sex, age, and systolic blood pressure assuming the Cox model and almost identical estimates was found assuming a Poisson model
 
-* Thus, the models agree in the direction and in some degree the magnitude of the effect of ESVEA, sex, and age. The effect of 
-  systolic blood pressure is on the other hand estimated to have the opposite effect in the model using pseudo observations 
-  compared with the Cox and Poisson models. However, the effect of systolic blood pressure (and also ESVEA and sex) is not 
-  significant at a 0.05 level in the model based on pseudo values.;
+$$ \beta_{ESVEA} = 0.318284 \quad \beta_{sex} = 0.577585 \quad \beta_{age} = 0.076658   \quad \beta_{sbp} = 0.005152   $$
 
+Thus, the models agree in the direction and in some degree the magnitude of the effect of ESVEA, sex, and age. The effect of systolic blood pressure is on the other hand estimated to have the opposite effect in the model using pseudo observations compared with the Cox and Poisson models. However, the effect of systolic blood pressure (and also ESVEA and sex) is not significant at a 0.05 level in the model based on pseudo values.
 
-*----------------------------------------------------------------------------------------------------------------------------------;
-*---------------------------------------- EXERCISE 6.4 ----------------------------------------------------------------------------;
-*----------------------------------------------------------------------------------------------------------------------------------;
+### Exercise 6.4 
 
-*----------------------------------------------  6.4.1 ----------------------------------------------------------------------------;
+*Consider the Copenhagen Holter study and the composite end-point strokefree survival.*
 
+#### 1. 
+
+::: panel-tabset
+
+## R
+
+*Fit, using pseudo-values a linear model for the 3-year restricted mean time to the composite event including the covariates ESVEA, sex, age, and systolic blood pressure.*
+
+The pseudo observations for the 3 year restricted mean time to the composite end-point are fitted using the **pseudomean** function from the *pseudo* package. 
+
+The values are then used as responses in the **formula** argument of the **geese** function.
+
+```{r}
+#| code-fold: show
+# Computing the pseudo observations
+chs_data$pseudo641 <- pseudomean(time = chs_data$timestrokeordeath,event = chs_data$strokeordeath, tmax = 3)
+
+# Fitting the GEE
+fit641 <- geese(formula = pseudo641 ~ esvea + sex + age + sbp, data = subset(chs_data, !is.na(sbp)), mean.link = "identity")
+summary(fit641)
+```
+
+We get the following model for the 3-year restricted mean time to the composite end-point stroke-free survival
+                     
+$$ \varepsilon(3|Z) = 3.355175 - 0.027374 \cdot Z_1 - 0.054032 \cdot Z_2 - 0.007322 \cdot Z_3 + 0.000514 \cdot Z_4,$$
+
+where $Z_1, Z_2, Z_3$, and $Z_4$ are ESVEA, sex, age, and systolic blood pressure, respectively.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
 * The pseudo observations for the 3 year restricted mean time to the composite end-point are computed using the pseudomean MACRO;
 
 %macro pseudomean(indata,time,dead,howmany,tmax,outdata);
@@ -340,22 +446,82 @@ run;
 * We get the following model for the 3-year restricted mean time to the composite end-point stroke-free survival
   epsilon(3|Z) = 3.3552 - 0.0274*Z1 - 0.0540*Z2 - 0.0073*Z3 + 0.0005*Z4,
   where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;
+```
+:::
+
+#### 2. 
+
+*Compare with the results of Exercise 4.3.*
+
+The model obtained in Exercise 4.3 is identical to the model fitted using pseudo observations. This is because none of the subjects are censored before 3 years and the pseudo observation for subject $i$ is thus $\min(3,T_i)$ where $T_i$ is the time of stroke or death without stroke for subject $i$.
+
+### Exercise 6.5 
+
+*Consider the competing outcomes stroke and death without stroke in the Copenhagen Holter study.*
+
+#### 1. 
+
+*Fit, using pseudo-values, a cloglog-model for the cumulative incidences at 3 years including ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+To estimate the cumulative incidences at 3 years we will first create a variable called **event** where 1 indicates stroke, 2 indicates death without stroke and 0 indicates censoring.
+
+The pseudo observations for the cumulative incidences are then computed using the **pseudoci** function from the *pseudo* package. The output **pseudo** is a list of two cmponents; the first containing the pseudo observation for cause 1 (stroke) and the second containing the pseudo observations for cause 2 (death without stroke). 
+The pseudo observations are stored as **pseudo651_stroke** and **pseudo651_death**, respectively.
+
+```{r}
+#| code-fold: show
+# Status indicator for death without stroke
+chs_data$death_wo_stroke <- ifelse(chs_data$stroke == 1, 0, chs_data$death)
+# Event variable
+chs_data$event <- ifelse(chs_data$death_wo_stroke == 0, chs_data$stroke, chs_data$death_wo_stroke*2)
+
+# Computing the pseudo observations
+pseudo651 <- pseudoci(time = chs_data$timestrokeordeath, event = chs_data$event, tmax = 3)$pseudo
+chs_data <- chs_data %>% mutate(pseudo651_stroke = pseudo651[[1]],
+                                pseudo651_death = pseudo651[[2]])
+```
+
+We then fit a cloglog model for the cumulative incidence of stroke at 3 years using the **geese** function.
+
+```{r}
+#| code-fold: show
+# Fitting GEE for the end-point stroke
+fit651_stroke <- geese(formula = pseudo651_stroke ~ esvea + sex + age + sbp, data = subset(chs_data, !is.na(sbp)), mean.link = "cloglog")
+summary(fit651_stroke)
+```
+
+Thus, we obtain the following model for the cumulative incidence of stroke at 3 years
+$$ F_{stroke}(3|Z) = 1 - \exp(-\exp(-13.229246 + 0.031213\cdot Z_1$$
+$$+ 0.971025 \cdot Z_2 + 0.119878 \cdot Z_3  + 0.004029\cdot Z_4)),$$
+where $Z_1, Z_2, Z_3$, and $Z_4$ are ESVEA, sex, age, and systolic blood pressure, respectively.
+
+Likewise, we will fit a model for the cumulative incidence of death without stroke at 3 years
+
+```{r}
+#| code-fold: show
+fit651_death <- geese(formula = pseudo651_death ~ esvea + sex + age + sbp, data = subset(chs_data, !is.na(sbp)), mean.link = "cloglog")
+summary(fit651_death)
+```
+
+We obtain the following model for the cumulative incidence of death without stroke at 3 years
+
+$$ F_{death}(3|Z) = 1 - \exp(-\exp(-3.184918 + 0.330675\cdot Z_1 + 1.208126 \cdot Z_2$$
+$$+ 0.074079 \cdot Z_3  - 0.043965\cdot Z_4)),$$
+
+where $Z_1, Z_2, Z_3$, and $Z_4$ are ESVEA, sex, age, and systolic blood pressure, respectively.
 
 
-*----------------------------------------------  6.4.2 ----------------------------------------------------------------------------;
+## SAS
 
-* The model obtained in Exercise 4.3 is identical to the model fitted using pseudo observations. This is because none of the subjects 
-  are censored before 3 years and the pseudo observation for subject i is thus min(3,T_i) where T_i is the time of stroke or death 
-  without stroke for subject i.;
-
-*----------------------------------------------------------------------------------------------------------------------------------;
-*---------------------------------------- EXERCISE 6.5 ----------------------------------------------------------------------------;
-*----------------------------------------------------------------------------------------------------------------------------------;
-
-*----------------------------------------------  6.5.1 ----------------------------------------------------------------------------;
-
-* The pseudo observations for the cumulative incidences of stroke and death without stroke at three years are computed using the 
-  pseudoci MACRO. To use this MACRO we must remember to include the cuminc MACRO.;
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* The pseudo observations for the cumulative incidences of stroke and death without stroke at three years are computed using the  pseudoci MACRO. To use this MACRO we must remember to include the cuminc MACRO.;
 
 %macro cuminc(datain,x,re,de,dataout,cir,cid);
 /*  THIS MACRO COMPUTES THE CUMULATIVE INCIDENCE FUNCTIONS FOR
@@ -569,21 +735,21 @@ run;
 * We obtain the following model for the cumulative incidence of death without stroke at 3 years
   F_death(3|Z) = 1 - exp(-exp(-3.3924 + 0.2862*Z1 + 1.2618*Z2 + 0.0771*Z3 - 0.0442*Z4)), 
   where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;
+```
+:::
 
-*----------------------------------------------  6.6.2 ----------------------------------------------------------------------------;
+#### 2. 
 
-* In Exercise 4.5 we used Fine-Gray models to estimate the cumulative incidence functions for stroke and death without stroke. 
-  For the end-point stroke we obtained the following coefficients
-  beta_esvea = 0.59398, beta_sex = 0.37919, beta_age = 0.06335, beta_sbp = 0.01063;
+*Compare with the results of Exercises 4.4 and 5.8.*
 
-* and for death without stroke we obtained the following coefficients
-  beta_esvea = -0.00596, beta_sex = 0.53042, beta_age = 0.06651, beta_sbp = 0.00160; 
+In Exercise 4.5, we used Fine-Gray models to estimate the cumulative incidence functions for stroke and death without stroke. For the end-point stroke we obtained the following coefficients
 
-* The estimates of the coefficients are quite different for the Fine-Gray model and the model based on pseudo 
-observations for 
-  both end-points. This is likely due to the fact that the Fine-Gray model assumes that the linear 
-predictor has the same association with the cumulative incidence at all time points. We also notice that only one of the covariates in each model using pseudo values (age in the case of stroke 
-  and systolic blood pressure in the case of death without stroke) are associated with p-values smaller than 0.05 which might explain 
-  the poor agreement.;
+$$ \beta_{ESVEA} = 0.593921   \quad \beta_{sex} = 0.379189   \quad \beta_{age} = 0.063347   \quad \beta_{sbp} = 0.010629,     $$
 
-* Comparison with Exercise 5.8 is not meaningful - sorry!;
+and for death without stroke we obtained the following coefficients
+
+$$ \beta_{ESVEA} = -0.006269     \quad \beta_{sex} = 0.530219     \quad \beta_{age} = 0.066495       \quad \beta_{sbp} = 0.001601.$$
+
+The estimates of the coefficients are quite different for the Fine-Gray model and the model based on pseudo observations for both end-points. This is likely due to the fact that the Fine-Gray model assumes that the linear predictor has the same association with the cumulative incidence at all time points. We also notice that only one of the covariates in each model using pseudo values (age in the case of stroke and systolic blood pressure in the case of death without stroke) are associated with $p$-values smaller than 0.05. 
+
+Comparison with Exercise 5.8 is not meaningful - sorry!

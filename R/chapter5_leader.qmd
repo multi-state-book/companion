@@ -3,44 +3,31 @@
 leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
 ```
 
-#------------------------------------------------------------------#
-#------- Chapter 5, R code, LEADER data ---------------------------#
-#------------------------------------------------------------------#
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-require(mets)
-
-
-leader <- read.csv("data/leader_mi_3p.csv")
-
 # One data set per endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
-
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------# 
-#------------------------------------------------------------------#
-
-# General theme
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom", 
-        text = element_text(size = 20), 
-        axis.text.x = element_text(size = 20), 
-        axis.text.y = element_text(size = 20)) 
-
-theme_general
+leader_3p <- subset(leader, type == "recurrent_comb")
 
 
 #------------------------------------------------------------------#
-#---------------- Table 5.7 ---------------------------------------#
+#---------------- In-text, p. 213: Mao-Lin models -----------------#
 #------------------------------------------------------------------#
+
+library(mets)
+fitML_mi <- recreg(Event(start, stop, status) ~ factor(treat) + cluster(id),
+               data = leader_mi, cause = c(1,2), cens.code = 0, death.code = 2)
+summary(fitML_mi)
+
+table(leader_3p$status)
+fit_3p <- recreg(Event(start, stop, status) ~ treat + cluster(id),
+               data = leader_3p, cause = 1, cens.code = c(0,2), death.code = 3)
+summary(fit_3p)
+
+fit_3p <- recreg(Event(start, stop, status) ~ treat + cluster(id),
+               data = leader_3p, cause = 1, cens.code = c(0,2), death.code = 2)
+summary(fit_3p)
+
 
 # Make a small hack to make data ready for analysis
-
 # Death = 1, recurrent MI = 2, cens = 0
 leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
 leader_mi1 <- leader_mi

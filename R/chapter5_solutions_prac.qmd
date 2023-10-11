@@ -1,0 +1,845 @@
+### Exercise 5.6 
+
+*Consider an illness-death model for the Copenhagen Holter study with states ‘0: Alive without AF or stroke’, ‘1: Alive with AF and no stroke’, ‘2: Dead or stroke’, see Figures 1.3 and 1.7. Examine, using a time-dependent covariate, whether this process may be modeled as being Markovian.*
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **chs_data**
+
+```{r}
+#| code-fold: show
+chs_data <- read.csv("data/cphholter.csv")
+```
+
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(mstate) #probtrans, ELOS
+library(mets) #binreg
+library(timereg)
+```
+Finally, we will convert the time variables to years and add a time variable and status indicator for the composite end-point stroke-free survival.
+
+```{r}
+#| code-fold: show
+chs_data <- chs_data %>% mutate(timeafib = timeafib/365.25,
+                                timestroke = timestroke/365.25,
+                                timedeath = timedeath/365.25,
+                                timestrokeordeath = ifelse(stroke == 1, timestroke, timedeath),
+                                strokeordeath = ifelse(stroke ==1, 1, death))
+```
+
+For  an illness-death process to be Markovian, $\alpha_{13}(\cdot)$ must only depend on time since start of the study, $t$. We will test the Markov assumption by adding the following time-dependent covariate in a Cox model for $\alpha_{13}(\cdot)$,
+
+$$ Z_{i1}(t) = I(d_i(t) < \text{30 days}),$$
+
+where $d_i(t) = t - T_{1i}$  and $T_{1i}$ is the time of diagnosis of AF for patient $i$.
+
+We will first make a subset of the data only containing subjects with AF (and where no stroke occurred before the time of the AF diagnosis). We will add a variable **wait** to this data frame which is the difference between **timeafib** and **timestrokeordeath**.
+
+```{r}
+#| code-fold: show
+af_subset <- chs_data %>% filter(afib == 1 & timeafib & timeafib < timestrokeordeath) %>% mutate(wait = timestrokeordeath - timeafib)
+```
+
+Then, we will split each record at 30 days after the diagnosis of AF using the **survSplit** function from the *survival* package. We must include a **Surv** object as the formula argument and specify the name of our time-dependent covariate in the **episode** argument and the values where we wish to split the data using the **cut** argument.
+
+Furthermore, we will add the variables **start** and **end** which are the start and end time for each row using time since entry to study as time variable.
+
+```{r}
+#| code-fold: show
+# Creating new data for estimation with piece-wise constant effect of duration in state 1
+data56 <- survSplit(formula = Surv(wait, strokeordeath) ~ ., data = af_subset, cut = (30-0.00001)/365.25, episode = "interval")
+# Resetting start and end points of interval
+data56$start <- data56$tstart + data56$timeafib
+data56$end <- data56$wait + data56$timeafib
+```
+
+Finally, we fit a model with **coxph** from the survival package using the data set **data56**.
+
+```{r}
+#| code-fold: show
+cox56 <- coxph(Surv(start, end, strokeordeath) ~ interval, data= data56, ties = "breslow") 
+summary(cox56)
+```
+Since the time-dependent covariate is highly significant ($p$-value is $0.0015$), the Markov assumption does seem to be violated.
+
+## SAS
+
+We first load and prepare the data:
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+proc import out = chs_data
+    datafile = 'data/cphholter.csv'
+	dbms= csv replace;
+	getnames=yes;
+run;
+
+* We will convert the time variables, timeafib, timestroke, and timedeath, from days to years;
+* Furthermore, we add variables for the composite end-point of stroke or death without stroke;
+data chs_data;
+	set chs_data;
+	timeafib = timeafib/365.25;
+	timestroke = timestroke/365.25;
+	timedeath = timedeath/365.25;
+	timestrokeordeath = timedeath;
+	if stroke = 1 then timestrokeordeath = timestroke;
+	strokeordeath = death;
+	if stroke = 1 then strokeordeath = 1;
+run;
+```
+
+Then code for solution.
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* For the process of an illness-death model to be Markovian alpha13(.) must only depend on time since start of the study, 
+  t. We will test the Markov assumption by adding the following time-dependent covariate in a Cox model for alpha13(.),
+  
+   Z_i1(t) = I(d_i(t) > 30 days),
+   
+   where d_i(t) = t - T_1i  and T_1i is the time of diagnosis of AF for patient i.;
+
+* The model is fitted using the 'phreg' procedure. The only covariate in the model is 'wait30' which is designed as described above. 
+  To account for delayed entry we must add the argument '/ entry = timeafib' in the model statement.;
+
+title "5.6";
+proc phreg data = chs_data;
+	model timestrokeordeath*strokeordeath(0)=wait30 / entry = timeafib;
+	wait30 = 0;
+	if ((timestrokeordeath - timeafib) > 30/365.25) then wait30 = 1;
+run;
+	
+* The time-dependent covariate is highly significant (p-value of 0.0016). Thus, the Markov assumption does seem to be violated, 
+  i.e. there seems to be an effect of the duration of AF.;
+```
+:::
+
+
+### Exercise 5.7 
+
+*Consider the four-state model for the Copenhagen Holter study, see Figure 1.7.*
+
+#### 1. 
+
+*Fit separate landmark models at times 3, 6, and 9 years for the mortality rate, including AF, stroke, ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+In order to fit separate land-mark models at times $s$ = 3, 6, and 9 years for the mortality rate, including AF, stroke, ESVEA, sex, age, and systolic blood pressure, 
+we must create a new data set.
+
+For each time point, we will make a data set which only contains subjects still under observation at time $s$ = 3, 6 or 9 years. 
+The variables **afib** and **stroke** are modified such that they correspond to the indicator functions $I(AF \leq s)$ and $I(\text{stroke} \leq s)$. 
+Furthermore, **landmark = s** and **entry = s** are added to the data sets.
+
+```{r}
+#| code-fold: show
+# Creating the landmark data at $s$ = 3, 6, 9 years 
+lm571_3 <- chs_data %>% filter(timedeath >= 3) %>% mutate(afib = ifelse(afib == 1 & timeafib <= 3,1,0),
+                                                         stroke = ifelse(stroke == 1 & timestroke <= 3, 1,0),
+                                                         landmark = 3,
+                                                         entry = 3)
+lm571_6 <- chs_data %>% filter(timedeath >= 6) %>% mutate(afib = ifelse(afib == 1 & timeafib <= 6,1,0),
+                                                         stroke = ifelse(stroke == 1 & timestroke <= 6, 1,0),
+                                                         landmark = 6,
+                                                         entry = 6)
+lm571_9 <- chs_data %>% filter(timedeath >= 9) %>% mutate(afib = ifelse(afib == 1 & timeafib <= 9,1,0),
+                                                         stroke = ifelse(stroke == 1 & timestroke <= 9, 1,0),
+                                                         landmark = 9, entry = 9)
+```
+
+We then create a data set called **lm571** where the former data sets are merged and covariates corresponding to each time point are added.
+
+```{r}
+#| code-fold: show
+#Merging the data sets and specifying covariates for each time point
+lm571 <- rbind(lm571_3, lm571_6, lm571_9)
+
+lm571 <- lm571 %>% mutate(afib3 = (landmark == 3)*afib,
+                          afib6 = (landmark == 6)*afib,
+                          afib9 = (landmark == 9)*afib,
+                          stroke3 = (landmark == 3)*stroke,
+                          stroke6 = (landmark == 6)*stroke,
+                          stroke9 = (landmark == 9)*stroke,
+                          esvea3 = (landmark == 3)*esvea,
+                          esvea6 = (landmark == 6)*esvea,
+                          esvea9 = (landmark == 9)*esvea,
+                          sex3 = (landmark == 3)*sex,
+                          sex6 = (landmark == 6)*sex,
+                          sex9 = (landmark == 9)*sex,
+                          age3 = (landmark == 3)*age,
+                          age6 = (landmark == 6)*age,
+                          age9 = (landmark == 9)*age,
+                          sbp3 = (landmark == 3)*sbp,
+                          sbp6 = (landmark == 6)*sbp,
+                          sbp9 = (landmark == 9)*sbp)
+```
+
+Finally, the models are fitted with the **coxph** function using the **lm571** data set. We must include **strata(landmark)** in the formula argument to obtain separate models for each time point.
+
+```{r}
+#| code-fold: show
+# Fitting a Cox model using the land-mark data set
+cox571 <- coxph(Surv(entry, timedeath, death) ~ afib3 + stroke3 + esvea3 + sex3 + age3 + sbp3 + 
+                                                     afib6 + stroke6 + esvea6 + sex6 + age6 + sbp6 + 
+                                                     afib9 + stroke9 + esvea9 + sex9 + age9 + sbp9 + strata(landmark),
+                  data = lm571,
+                  method = "breslow")
+summary(cox571)
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will now fit separate land-mark models at times 3, 6, and 9 years for the mortality rate, including AF, stroke, ESVEA, sex, 
+  age, and systolic blood pressure. AF and stroke will enter as the time-dependent covariates I(AF < s) and I(stroke < s) for s = 3, 6,
+  9 years;
+
+* We will first make a new data set called 'landmark' where we record the status of AF and stroke for all subjects at risk at the 
+  three landmark times;
+
+data landmark; set chs_data;
+	if timedeath >=3 then do;
+		landmark=3; entry=3;
+		af = 0; if afib = 1 and timeafib <= 3 then af = 1;
+		str =0; if stroke = 1 and timestroke <=3 then str=1;
+	output; end;
+	if timedeath >=6 then do;
+		landmark=6; entry=6;
+		af = 0; if afib = 1 and timeafib <= 6 then af = 1;
+		str =0; if stroke = 1 and timestroke <=6 then str=1;
+	output; end;
+	if timedeath>=9 then do;
+		landmark=9; entry=9;
+		af = 0; if afib = 1 and timeafib <= 9 then af = 1;
+		str =0; if stroke = 1 and timestroke <=9 then str=1;
+	output; end;
+run;
+
+* We will fit all three models within one 'phreg' procedure. Therefore, we must use three different names for the 
+  covariates at each land-mark time. The names are specified in the data frame 'covar541';
+
+data cov571;
+	afib3 = 0; afib6 = 0; afib9 = 0;
+	stroke3 = 0; stroke6 = 0; stroke9 = 0;
+	esvea3 = 0; esvea6 = 0; esvea9 = 0;
+	sex3 = 0; sex6 = 0; sex9 = 0;
+	age3 = 0; age6 = 0; age9 = 0;
+	sbp3 = 0; sbp6 = 0; sbp9 = 0;
+run;
+
+* We must include the argument '/entry = entry' in the model statement and 'landmark' in the strata statement.;
+
+title "5.7.1";
+proc phreg data=landmark;
+	model timedeath*death(0)= afib3 stroke3 esvea3 sex3 age3 sbp3
+						  	  afib6 stroke6 esvea6 sex6 age6 sbp6
+						  	  afib9 stroke9 esvea9 sex9 age9 sbp9 /entry=entry;
+	afib3 = af*(landmark = 3); stroke3 = str*(landmark = 3); esvea3 = esvea*(landmark = 3); 
+	sex3 = sex*(landmark = 3); age3 = age*(landmark = 3); sbp3 = sbp*(landmark = 3);
+	afib6 = af*(landmark = 6); stroke6 = str*(landmark = 6);esvea6 = esvea*(landmark = 6); 
+	sex6 = sex*(landmark = 6); age6 = age*(landmark = 6); sbp6 = sbp*(landmark = 6);
+	afib9 = af*(landmark = 9); stroke9 = str*(landmark = 9); esvea9 = esvea*(landmark = 9); 
+	sex9 = sex*(landmark = 9); age9 = age*(landmark = 9); sbp9 = sbp*(landmark = 9);
+	strata landmark;
+run;
+```
+:::
+
+#### 2.
+
+*Fit landmark ‘super models’ where the coefficients vary smoothly among landmarks but with separate baseline hazards at each landmark.*
+
+::: panel-tabset
+
+## R
+
+We will now fit land-mark ‘super-models’ where the coefficients vary smoothly among land-marks but with separate baseline hazards at each land-mark. We will let $m = 2$ and $f_1(s) = \frac{s - s_1}{s_L - s_1} = \frac{s - 3}{9-3} = \frac{s-3}{6}$ and $f_2(s) = f_1(s)^2$.
+
+Based on the data set **lm571** we create a new data set, **lm572**, where variables $f_1(s)$ and $f_2(s)$ are added for all covariates.
+
+```{r}
+#| code-fold: show
+# Data frame fir the land-mark 'super-models' with separate baseline hazards at each land-mark
+lm572 <- lm571 %>%
+  mutate(afibtime  = afib * (landmark - 3)/6,
+         afibtime2 = afib * ((landmark - 3)/6)^2,
+         stroketime  = stroke * (landmark - 3)/6,
+         stroketime2 = stroke * ((landmark - 3)/6)^2,
+         esveatime  = esvea * (landmark - 3)/6,
+         esveatime2 = esvea * ((landmark - 3)/6)^2,
+         sextime  = sex * (landmark - 3)/6,
+         sextime2 = sex * ((landmark - 3)/6)^2,
+         agetime  = age * (landmark - 3)/6,
+         agetime2 = age * ((landmark - 3)/6)^2,
+         sbptime  = sbp * (landmark - 3)/6,
+         sbptime2 = sbp * ((landmark - 3)/6)^2,)
+```
+
+Then, we fit the model with **coxph** using the data set **lm572**. We must include **strata(landmark)** in the formula argument to obtain separate baseline hazards at each land-mark.
+
+```{r}
+#| code-fold: show
+# Fitting a Cox model using the land-mark data set
+cox572 <- coxph(Surv(entry, timedeath, death) ~  afib + afibtime + afibtime2 + stroke + stroketime + stroketime2 +
+                                                      esvea + esveatime + esveatime2 + sex + sextime + sextime2 +
+                                                      age + agetime + agetime2 + sbp + sbptime + sbptime2 + strata(landmark),
+                  data = lm572,
+                  method = "breslow")
+summary(cox572)
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will now fit land-mark ‘super-models’ where the coefficients vary smoothly among land-marks but with separate baseline hazards 
+  at each land-mark. We will do as suggested in the book, m = 2 and f1(s) = (s - s1)/(sL - s1) = (s - 3)/6 and f2(s) = f1(s)^2.;
+
+* Once again, we specify the names of the covariates in a data step;
+
+data cov572;
+	afib_ = 0; afibtime = 0; afibtime2 = 0;
+	stroke_ = 0; stroketime = 0; stroketime2 = 0;
+	esvea_ = 0; esveatime = 0; esveatime2 = 0;
+	sex_ = 0; sextime = 0; sextime2 = 0;
+	age_ = 0; agetime = 0; agetime2 = 0;
+	sbp_ = 0; sbptime = 0; sbptime2 = 0;
+run;
+
+* Then, we fit the models using 'phreg' just as before.;
+
+title "5.7.2";
+proc phreg data=landmark;
+	model timedeath*death(0)= afib_ afibtime afibtime2
+							  stroke_ stroketime stroketime2
+							  esvea_ esveatime esveatime2
+							  sex_ sextime sextime2
+							  age_ agetime agetime2
+							  sbp_ sbptime sbptime2 / entry=entry;
+	afib_ = af; afibtime = af*(landmark - 3)/6; afibtime2 = af*((landmark-3)/6)**2;
+	stroke_ = str; stroketime = str*(landmark - 3)/6; stroketime2 = str*((landmark-3)/6)**2;
+	esvea_ = esvea; esveatime = esvea*(landmark - 3)/6; esveatime2 = esvea*((landmark-3)/6)**2;
+	sex_ = sex; sextime = sex*(landmark - 3)/6; sextime2 = sex*((landmark-3)/6)**2;
+	age_ = age; agetime = age*(landmark - 3)/6; agetime2 = age*((landmark-3)/6)**2;
+	sbp_ = sbp; sbptime = sbp*(landmark - 3)/6; sbptime2 = sbp*((landmark-3)/6)**2;
+	strata landmark;
+run;
+```
+:::
+
+
+#### 3. 
+
+*Fit a landmark ‘super model’ where both the coefficients and the baseline hazards vary smoothly among landmarks.*
+
+::: panel-tabset
+
+## R
+
+Finally, we will fit a land-mark ‘super-model’ where both the coefficients and the baseline hazards vary smoothly among land-marks. We will choose the same smoothing functions for regression coefficients and baseline hazards, i. e. $g_1 = f_1$ and $g_2 = f_2$.
+
+Based on the data frame **lm572** we create a new data frame, **lm573**, where $g_1$ and $g_2$ are added.
+
+```{r}
+#| code-fold: show
+# Data frame for a land-mark 'super-model' where both the coefficients and the baseline hazards vary smoothly among land-mark
+lm573 <- lm572 %>% mutate(strtime = (landmark - 3)/6,
+                          strtime2 = ((landmark - 3)/6)^2)
+```
+
+Then, we fit the model with **coxph** using the data set **lm573**.
+
+```{r}
+#| code-fold: show
+# Fitting a Cox model using the land-mark data set
+cox573 <- coxph(Surv(entry, timedeath, death) ~ afib + afibtime + afibtime2 + stroke + stroketime + stroketime2 +
+                                                     esvea + esveatime + esveatime2 + sex + sextime + sextime2 +
+                                                     age + agetime + agetime2 + sbp + sbptime + sbptime2 + strtime + strtime2,
+                  data = lm573,
+                  method = "breslow")
+summary(cox573)
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* Finally, we will fit a land-mark ‘super-model’ where both the coefficients and the baseline hazards vary smoothly among 
+  land-marks. We choose m = 2 and g_l = f_l as suggested in the book.;
+
+* We thus add g_1 ('strtime') and  g_2 ('strtime2') to our data frame;
+
+data cov573;
+	afib_ = 0; afibtime = 0; afibtime2 = 0;
+	stroke_ = 0; stroketime = 0; stroketime2 = 0;
+	esvea_ = 0; esveatime = 0; esveatime2 = 0;
+	sex_ = 0; sextime = 0; sextime2 = 0;
+	age_ = 0; agetime = 0; agetime2 = 0;
+	sbp_ = 0; sbptime = 0; sbptime2 = 0;
+	strtime=0; strtime2=0;
+run;
+
+*  We once again fit the model using the 'phreg' procedure (but this time we must exclude the strata statement);
+
+title "5.7.3";
+proc phreg data=landmark;
+	model timedeath*death(0)= afib_ afibtime afibtime2
+							  stroke_ stroketime stroketime2
+							  esvea_ esveatime esveatime2
+							  sex_ sextime sextime2
+							  age_ agetime agetime2
+							  sbp_ sbptime sbptime2 
+							  strtime strtime2 / entry=entry;
+	afib_ = af; afibtime = af*(landmark - 3)/6; afibtime2 = af*((landmark-3)/6)**2;
+	stroke_ = str; stroketime = str*(landmark - 3)/6; stroketime2 = str*((landmark-3)/6)**2;
+	esvea_ = esvea; esveatime = esvea*(landmark - 3)/6; esveatime2 = esvea*((landmark-3)/6)**2;
+	sex_ =sex; sextime = sex*(landmark - 3)/6; sextime2 = sex*((landmark-3)/6)**2;
+	age_ = age; agetime = age*(landmark - 3)/6; agetime2 = age*((landmark-3)/6)**2;
+	sbp_ = sbp; sbptime = sbp*(landmark - 3)/6; sbptime2 = sbp*((landmark-3)/6)**2;
+	strtime=(landmark-3)/6; strtime2=strtime**2;
+run;
+```
+:::
+
+
+### Exercise 5.8 
+
+*Consider a competing risks model for the Copenhagen Holter study with states ‘0: Alive without AF or stroke’, ‘1: Alive with AF and no stroke’, ‘2: Dead or stroke’, see Figures 1.2 and 1.7.*
+
+*Fit, using direct binomial regression, a model for being in state 1 at time 3 years including the covariates ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+We will fit a direct binomial model for the cumulative incidence function of AF at 3 years including covariates ESVEA, sex, age, and systolic blood pressure using the **binreg** function from the *mets* package.
+
+Based on our original data set we will create a data frame called **data58** where the three observations with missing values of systolic blood pressure are removed and, add a variable called **event** for the competing risks (1 is AF, 2 is stroke or death and 0 is censoring from
+state 0) and replace the empty cells of **timeaf** with the values from **timestrokeordeath**.
+
+```{r}
+#| code-fold: show
+# Adding the variable 'event' and replacing empty cells of timeafib with timestrokeordeath
+data58 <- chs_data %>% filter(!is.na(sbp))  %>% mutate(event = ifelse(afib == 1, 1, 2*strokeordeath),
+                                                       timeafib = ifelse(afib == 1, timeafib, timestrokeordeath))
+```
+
+
+The **binreg** function takes a formula argument where the left side of '~' must be an **Event** object. The argument **cause** specifies the cause of interest (i.e. AF in this case), **time** specifies the time of interest and **cens.code** specifies the value of censoring.
+
+```{r}
+#| code-fold: show
+# Fitting a direct binomial model
+dirbin58 <- binreg(Event(timeafib, event) ~ esvea + sex + age + sbp, 
+                  data = data58, cause = 1, time = 3, cens.code = 0)
+summary(dirbin58)$coef
+```
+
+We get the following model 
+
+$$-17.126 + 1.9231\cdot Z_1 + 1.4524 \cdot Z_2 + 0.1394 \cdot Z_3 + 0.0075 \cdot Z_4,$$ 
+
+where $Z_1$, $Z_2$, $Z_3$, and $Z_4$ are the ESVEA, sex, age, and systolic blood pressure respectively. 
+
+
+## SAS-NA
+
+There is currently no implementation of direct binomial regression in SAS.
+
+:::
+
+### Exercise 5.9 
+
+*Consider the Cox model for stroke-free survival in the Copenhagen Holter study including the covariates ESVEA, sex, age, and systolic blood pressure (Exercises 2.4 and 3.7).*
+
+#### 1.
+
+*Investigate, using cumulative Schoenfeld residuals, whether the effects of the covariates may be described as time-constant hazard ratios.*
+
+::: panel-tabset
+
+## R
+
+We will use cumulative Schoenfeld residuals to test whether the assumption of time-constant hazard ratios is reasonable for ESVEA, sex, age, and systolic blood pressure. This is done using the **cox.aalen** function from the *timereg* package.
+
+To fit a Cox model using the **cox.aalen** function, all covariates must enter in the formula argument wrapped by **prop()**.
+
+The argument **n.sim** specifies the number of paths to be generated from the approximate asymptotic distribution of the goodness-of-fit process.
+
+Furthermore, we specify **residuals = 1** to get the residuals and **weigthed.test = 1** to get a variance weighted version of the process suitable for testing the assumption of a time-constant effects of the covariates.
+
+```{r}
+#| code-fold: show
+# Cox model for stroke-free survival including ESVEA, sex, age and systolic blood pressure
+cox591 <- cox.aalen(Surv(timestrokeordeath, strokeordeath) ~ prop(esvea) + prop(sex) + prop(age) + prop(sbp),
+          data = chs_data, n.sim = 1000, residuals = 1, weighted.test = 1)
+summary(cox591)
+```
+
+From the summary we note that the $p$-values are quite small and borderline significant for ESVEA and age while the $p$-values for sex and systolic blood pressure are far from significance. 
+
+However, we will also make a visual examination of whether the assumption of time-constant hazard ratios seems reasonable. This is done by plotting the observed cumulative Schoenfeld residuals together with 50 paths generated from the approximate asymptotic distribution against time.
+
+The 50 random paths generated from the approximated asymptotic distribution are stored as the argument **sim.test.procProp** while the observed cumulative Schoenfeld residuals are stored as **test.procProp**. 
+
+```{r}
+#| code-fold: show
+# 50 random realizations of the goodness-of-fit process
+sim591 <- cox591$sim.test.procProp
+# Cumulative Schoenfeld residuals
+obs591 <- cox591$test.procProp
+# Time vector
+time591 <- obs591[,1]
+```
+
+The values for ESVEA are stored in the second column of the **obs591** object and first column in each of the lists in the **sim591** object.
+
+```{r}
+#| code-fold: show
+# Cumulative Schoenfeld residuals (observed)
+obs_esvea591 <- data.frame(time = time591, 
+                             res = obs591[,2])
+
+# Cumulative Schoenfeld residuals (simulated)
+sim_esvea591 <- data.frame(res = do.call("rbind", sim591)[,1],
+                             time = rep(time591, times = 50), 
+                             sim = rep(1:50, each = length(time591)))
+
+
+# Cumulative Schoenfeld residuals plotted against time
+(fig591_esvea <- ggplot(aes(x = time, y = res), data = obs_esvea591) +
+  geom_step(aes(x = time, y = res, group = sim), 
+            color = "grey", size = 0.8, data = sim_esvea591) +
+  geom_step(size = 1) +
+  xlab(expression("Time"))+
+  ylab("Standardized score process"))
+```
+
+The effect of ESVEA does not seem to be time-constant, since the curve does not vary randomly around 0. This was also supported by the low $p$-value from the summary.
+
+We repeat the procedure for sex. The values for sex are stored in the third column of the **obs591** object and second column in each of the lists in the **sim591** object.
+
+```{r}
+#| code-fold: show
+# Cumulative Schoenfeld residuals (observed)
+obs_sex591 <- data.frame(time = time591, 
+                             res = obs591[,3])
+
+# Cumulative Schoenfeld residuals (simulated)
+sim_sex591 <- data.frame(res = do.call("rbind", sim591)[,2],
+                             time = rep(time591, times = 50), 
+                             sim = rep(1:50, each = length(time591)))
+
+# Cumulative Schoenfeld residuals plotted against time
+(fig591_sex <- ggplot(aes(x = time, y = res), data = obs_sex591) +
+  geom_step(aes(x = time, y = res, group = sim), 
+            color = "grey", size = 0.8, data = sim_sex591) +
+  geom_step(size = 1) +
+  xlab(expression("Time"))+
+  ylab("Standardized score process"))
+```
+The assumption of a time-constant hazard ratio of sex seems to be reasonable since the Schoenfeld residuals vary randomly around 0. 
+This was also supported by the high $p$-value found in the summary.
+
+We repeat the procedure for age. The values for age are stored in the fourth column of the **obs591** object and third column in each of the lists in the **sim591** object.
+
+```{r}
+#| code-fold: show
+# Cumulative Schoenfeld residuals (observed)
+obs_age591 <- data.frame(time = time591, 
+                             res = obs591[,4])
+
+# Cumulative Schoenfeld residuals (simulated)
+sim_age591 <- data.frame(res = do.call("rbind", sim591)[,3],
+                             time = rep(time591, times = 50), 
+                             sim = rep(1:50, each = length(time591)))
+
+
+# Cumulative Schoenfeld residuals plotted against time
+(fig591_age <- ggplot(aes(x = time, y = res), data = obs_age591) +
+  geom_step(aes(x = time, y = res, group = sim), 
+            color = "grey", size = 0.8, data = sim_age591) +
+  geom_step(size = 1) +
+  xlab(expression("Time"))+
+  ylab("Standardized score process"))
+```
+
+The assumption of a time-constant hazard ratio of age may seem to be violated since the curve of the Schoenfeld residuals does not vary randomly around 0. 
+The $p$-value from the summary is quite low as well.
+
+Finally, we repeat the procedure for systolic blood pressure. The values for systolic blood pressure are stored in the fifth column of the **obs591** object and fourth column in each of the lists in the **sim591** object.
+
+```{r}
+#| code-fold: show
+# Cumulative Schoenfeld residuals (observed)
+obs_sbp591 <- data.frame(time = time591, 
+                             res = obs591[,5])
+
+# Cumulative Schoenfeld residuals (simulated)
+sim_sbp591 <- data.frame(res = do.call("rbind", sim591)[,4],
+                             time = rep(time591, times = 50), 
+                             sim = rep(1:50, each = length(time591)))
+
+
+# Cumulative Schoenfeld residuals plotted against time
+(fig591_sbp <- ggplot(aes(x = time, y = res), data = obs_sbp591) +
+  geom_step(aes(x = time, y = res, group = sim), 
+            color = "grey", size = 0.8, data = sim_sbp591) +
+  geom_step(size = 1) +
+  xlab(expression("Time"))+
+  ylab("Standardized score process"))
+```
+T
+he assumption of a time-constant hazard ratio of systolic blood pressure does seem reasonable, since the curve varies randomly around 0. 
+This conclusion is also supported by the $p$-value found in the summary.
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will use cumulative Schoenfeld residuals to test whether the assumption of time-constant hazard ratios of ESVEA, sex, age, and systolic blood pressure is reasonable. This can be done by adding the 'assess' statement followed by 'ph'. 
+
+Furthermore, '\ resample' is added to generate 1000 paths from the approximate asymptotic distribution which is used to calculate a goodness-of-fit test.;
+  
+* For the assumption of time-constant hazard ratio to hold we expect the observed Schoenfeld residuals to vary randomely around 0 
+  and that the p-value is non-significant.;
+
+title "5.9.1";
+proc phreg data=chs_data;
+   model timestrokeordeath*strokeordeath(0)=esvea sex age sbp;
+   assess ph / resample;
+run;
+
+* The assumption of time-constant hazard ratios of ESVEA and age may not be reasonable since the p-values are borderline significant
+  and the observed Schoenfeld residuals do not seem to vary randomly around 0.
+
+* In contrast, the effect of sex and systolic blood pressure does seem to fulfill the assumption of time-constant hazard ratios, since the curves of the observed Schoenfeld residuals vary randomely around 0 and the p-values are far from significant.;
+```
+:::
+
+
+#### 2.
+
+*Investigate, using cumulative martingale residuals, whether the effects of age and systolic blood pressure can be considered linear on the log(hazard) scale.*
+
+::: panel-tabset
+
+## R
+
+To test whether the assumption of linearity (on the log(hazard) scale) is reasonable for the effect of age and systolic blood pressure we will consider the cumulative martingale residuals. 
+
+This is done using the **cox.aalen** and **cum.residuals** functions from the *timereg* pacakge. 
+
+Once again, the covariates should be wrapped by **prop()** to obtain a Cox model and the argument **residuals = 1** must be specified in the **cox.aalen** function to get the residuals.
+
+Then, to get the cumulative martingale residuals the output from the model fitted with **cox.aalen** is given to the **cum.residuals** function. The argument **n.sim** specifies the number of paths to be generated from the approximate asymptotic distribution of the goodness-of-fit process and the argument **cum.resid = 1** specifies that we want residuals for each of the continuous covariates.
+
+```{r}
+#| code-fold: show
+cox592 <- cox.aalen(Surv(timestrokeordeath, strokeordeath) ~ prop(esvea) + prop(sex) + prop(age) + prop(sbp),
+                  data = chs_data, residuals = 1)
+
+res592 <- cum.residuals(cox592, chs_data, cum.resid=1, n.sim = 1000)
+summary(res592)
+```
+
+The $p$-values given in the summary do not indicate violation of the assumption of linearity of age and systolic blood pressure on the log(hazard) scale. 
+
+However, we will also check this assumption by plotting the cumulative martingale residuals together with 50 realizations generated from the approximated asymptotic distribution of the goodness-of-fit process against $z$, where $z$ is either age or systolic blood pressure.
+
+The observed cumulative martingale residuals versus all continuous covariates of the model are stored as **proc.cumz**, while 50 random realizations of the goodness-of-fit process for all continuous covariates are stored as **sim.test.proccumz**.
+
+```{r}
+#| code-fold: show
+# 50 random realizations of the goodness-of-fit process
+sim592 <- res592$sim.test.proccumz
+# Cumulative martingale residuals
+obs592 <-  res592$proc.cumz
+```
+
+The values for age are stored in the first list of the **obs592** and **sim592** objects.
+
+```{r}
+#| code-fold: show
+obs_age592 <- data.frame(age = obs592[[1]][,1],
+                          res = obs592[[1]][,2])
+
+sim_age592 <- data.frame(age = rep((obs592[[1]][,1]), times = 50),
+                                     res = c(sim592[[1]]),
+                                     sim = rep(1:50, each = length((obs592[[1]][,1]))))
+
+(fig592_age <- ggplot(aes(x = age, y = res), data = obs_age592) +
+  geom_step(aes(x = age, y = res, group = sim), color = "grey", size = 0.8, data = sim_age592) +
+  geom_step(size = 1) +
+  xlab(expression("Age"))+
+  ylab("Cumulative martingale residuals"))
+```
+The assumption of linearity of the effect of age seems reasonable since the curve does seem to vary randomly around 0 which was also indicated by the $p$-value.
+
+We repeat the procedure for systolic blood pressure. The values for systolic blood pressure are stored in the second list of the **obs592** and **sim592** objects.
+
+```{r}
+#| code-fold: show
+obs_sbp592 <- data.frame(sbp = obs592[[2]][,1],
+                         res = obs592[[2]][,2])
+
+sim_sbp592 <- data.frame(sbp = rep(obs592[[2]][,1], times = 50),
+                         res = c(sim592[[2]]),
+                         sim = rep(1:50, each = length(obs592[[2]][,1])))
+
+(fig592_sbp <- ggplot(aes(x = sbp, y = res), data = obs_sbp592) +
+  geom_step(aes(x = sbp, y = res, group = sim), color = "grey", size = 0.8, data = sim_sbp592) +
+  geom_step(size = 1) +
+  xlab(expression("Systolic blood pressure"))+
+  ylab("Cumulative martingale residuals"))
+```
+
+The assumption of linearity of the effect of systolic blood pressure seems reasonable, since the curve varies randomly around 0. This aligns with the conclusion based on the $p$-value.
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* To test whether the assumption of linearity (on the log(hazard) scale) is reasonable for the effect of age and systolic blood pressure we will consider the cumulative martingale residuals.;
+
+* This can be done by adding the 'assess' statement to the 'phreg' procedure followed by the argument 'var' which specifies the  covariates of interest. '\ resample' is added to generate 1000 paths from the approximate asymptotic distribution which is used to calculate a goodness-of-fit test.;  
+
+* Once again, we expect non-significant p-values and curves that vary randomly around 0 for the assumption of linearity to hold.;
+
+title "5.9.2";
+proc phreg data=chs_data;
+   model timestrokeordeath*strokeordeath(0)=esvea sex age sbp;
+   assess var=(age sbp) /  resample;
+run;
+
+* The assumption of lineraty seems to hold for both age and systolic blood pressure based on the result of both the goodness-of-fit test as well as the graphical assessment.;
+```
+
+:::
+
+
+### Exercise 5.10 
+
+*Consider the data on recurrent episodes in affective disorder, Example 1.1.5. Fit a Mao-Lin regression model (5.31) for the mean of the composite end-point recurrent episode or death, including initial diagnosis as the only covariate and using severity weights equal to 1.*
+
+::: panel-tabset
+
+## R
+
+Load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(mets)
+```
+
+```{r}
+#| code-fold: show
+affective_data <- read.csv("data/affective.csv")
+
+# Creating data corresponding to set up depicted in Figure 1.5
+aff <- data.frame(affective_data %>% group_by(id) %>% 
+                mutate(prev1 = lag(start, n = 1, default = 0),  # moves start one line down
+                       prev2 = lag(stop, n = 1, default = 0),   # moves stop one line down
+                       prev = ifelse(state == 1, prev2, prev1)) %>% # picks the displaced value of stop if hospitalized, otherwise the displaced value of start.
+                filter(state == 0 | status %in% c(2,3)))
+
+fitML <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id),
+               data = aff, cause = c(1,2), cens.code = 3, death.code = 2)
+summary(fitML)
+
+# PKA: but changed cens.code=3
+#angst<-read.table('angstGLML.txt',header=TRUE)
+#fitGLa <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = 1, cens.code = 3, death.code = 2)
+#summary(fitGLa)
+#fitMLa <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = c(1,2), cens.code = 3, death.code = 2)
+#summary(fitMLa)
+
+
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+proc import out=affective_data
+	datafile='data/affective.csv' 
+	dbms=csv replace;
+	getnames=yes;
+run;
+
+* We make a data set correpsonding to the setting with cycles depicted in figure 1.5, i.e. the interval in hospital is 
+  included in the time between events.;
+
+title '5.10';
+data data510; 
+	set affective_data;
+	by id;
+	retain prev;
+	if first.id then prev=0; 
+	output; 
+	if state=1 then prev=start; if state=0 then prev=stop;
+run;
+data data510;
+	set data510;
+	if state = 0 or status = 2 or status = 3;
+* Thus the entry and exit time are now 'prev' and 'stop';
+run;
+
+* Death are defined as part of composite and add an extra record with (prev,stop) length 0.5 for
+  death events as to be able to trick phreq to estimate Mao-Lin model:
+  Mi and deaths count as events and death also as competing risk;
+data angstML;
+	set data510;
+	if status ne 2 then output;
+	if status = 2 then do;
+		status=1; output; 
+		prev=stop; stop=stop+0.5; status=2; output;
+	end; 
+run;
+* Mao-Lin model;
+proc phreg data=angstML;
+	class bip(ref='0');
+	model stop*status(0)= bip / entry=prev eventcode=1 rl;
+run;
+```
+
+
+:::
+

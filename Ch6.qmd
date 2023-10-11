@@ -8,5 +8,10 @@
 
 ## Exercises
 
-{{< include R/chapter6_solutions.qmd >}}
+The SAS solutions are available as a single file for download:
+
+-   [Exercises 6.3 - 6.5 (The Copenhagen Holter study)](/SAS/chapter6_solutions_cphholter.sas)
+
+{{< include R/chapter6_solutions_star.qmd >}}
+{{< include R/chapter6_solutions_prac.qmd >}}
 
