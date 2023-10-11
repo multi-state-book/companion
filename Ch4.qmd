@@ -59,3 +59,6 @@ fig4.3
 ## Bone marrow transplantation in acute leukemia
 {{< include R/chapter4_bmt.qmd >}}
 
+## Exercises
+
+{{< include R/chapter4_solutions.qmd >}}

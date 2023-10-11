@@ -868,7 +868,7 @@ run;
 * Then, we will fit the gamma frailty model using the 'phreg' procedure where we include a random statement with 'dist = gamma' 
   included.;
 
-title '3.11.1';
+title '3.12.1';
 proc phreg data=bissau_data;
 	class cluster;
 	model fuptime*dead(0)=bcg dtp agem;
@@ -913,7 +913,7 @@ The Cox model stratified on cluster and the gamma frailty model agree in the dir
 #| code-fold: show
 * We fit a Cox model stratified on cluster by adding a 'strata' statement in the 'phreg' procedure;
 
-title '3.11.2';
+title '3.12.2';
 proc phreg data=bissau_data;
 	model fuptime*dead(0)=bcg dtp agem;
 	strata cluster;

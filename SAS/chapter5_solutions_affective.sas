@@ -147,22 +147,21 @@ proc gplot data=plotdata491;
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
 run;
-quit;
 
 * The expected number of episodes is larger for bipolar patients at all times compared to unipolar patients.;
 
 * Less transparently, but in a way a lot easier, we can 'cheat' proc phreg to do the computations by
   fitting an empty Fine-Gray model and transform the cumulative sub-distribution hazard!;
 
-proc phreg data=data491;
-	model stop*status(0 3)=/entry=prev eventcode=1;
-	strata bip;
-	baseline out=mcfdata1 cif=naa1;
+proc phreg data=affective_data;
+model stop*status(0 3)=/entry=prev eventcode=1;
+strata bip;
+baseline out=mcfdata1 cif=naa1;
 run;
 
 data mcfdata1; set mcfdata1;
-	cmf=-log(1-naa1);
-	years=stop/12;
+cmf=-log(1-naa1);
+years=stop/12;
 run;
 
 proc gplot data=mcfdata1;
@@ -172,7 +171,6 @@ axis2 order=0 to 8 by 0.5 minor=none label=(a=90 'Expected number of episodes');
 symbol1  v=none i=stepjl c=red;
 symbol2  v=none i=stepjl c=blue;
 run;
-quit;
 
 *----------------------------------------------  4.9.2 ----------------------------------------------------------------------------;
 
@@ -191,7 +189,7 @@ proc gplot data=uni;
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
 run;
-quit;
+
 
 title '4.9.2 - bipolar';
 proc gplot data=bip;
@@ -201,6 +199,6 @@ proc gplot data=bip;
 	symbol1  v=none i=stepjl c=red;
 	symbol2  v=none i=stepjl c=blue;
 run;
-quit;
+
 
 * For both unipolar and bipolar patients we get larger estimates of the mean number of episodes when we do not account for mortality.;

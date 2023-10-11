@@ -13,4 +13,5 @@ TODO: take some runtime
 
 ## Exercises
 
-{{< include R/chapter5_solutions.qmd >}}
+{{< include R/chapter5_solutions_star.qmd >}}
+{{< include R/chapter5_solutions_prac.qmd >}}

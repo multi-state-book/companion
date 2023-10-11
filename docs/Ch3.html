@@ -5725,7 +5725,7 @@ Likelihood ratio test= 6.7  on 3 df,   p=0.08</code></pre>
 <p>We furthermore note that our model also adjust for the effect of DTP vaccination unlike the model from Table 2.12. We could also compare with Table 3.2 where dtp is included. Both models suggest an effect of BCG but not DTP.</p>
 </div>
 <div id="tabset-44-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-44-2-tab">
-<div class="cell" data-hash="Ch3_cache/html/unnamed-chunk-110_5efdddf387937fa61a6a7bb4fcb6bb83">
+<div class="cell" data-hash="Ch3_cache/html/unnamed-chunk-110_660efed7f9f03cf43e1a7002e338cb84">
 <details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb295"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb295-1"><a href="#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="co">* We first load the data;</span></span>
@@ -5745,7 +5745,7 @@ Likelihood ratio test= 6.7  on 3 df,   p=0.08</code></pre>
 <span id="cb295-15"><a href="#cb295-15" aria-hidden="true" tabindex="-1"></a><span class="co">* Then, we will fit the gamma frailty model using the 'phreg' procedure where we include a random statement with 'dist = gamma' </span></span>
 <span id="cb295-16"><a href="#cb295-16" aria-hidden="true" tabindex="-1"></a><span class="co">  included.;</span></span>
 <span id="cb295-17"><a href="#cb295-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb295-18"><a href="#cb295-18" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'3.11.1'</span>;</span>
+<span id="cb295-18"><a href="#cb295-18" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'3.12.1'</span>;</span>
 <span id="cb295-19"><a href="#cb295-19" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau_<span class="kw">data</span>;</span>
 <span id="cb295-20"><a href="#cb295-20" aria-hidden="true" tabindex="-1"></a>    class cluster;</span>
 <span id="cb295-21"><a href="#cb295-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg dtp agem;</span>
@@ -5808,12 +5808,12 @@ Score (logrank) test = 4.39  on 3 df,   p=0.2</code></pre>
 <p>The Cox model stratified on cluster and the gamma frailty model agree in the direction BCG, DTP and age change the hazard. However, the gamma frailty model estimates a bigger decrease by being vaccinated with BCG, a smaller increase by being vaccinated with DTP and a larger increase of a positive change in age of the hazard compared to the stratified Cox model.</p>
 </div>
 <div id="tabset-45-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-45-2-tab">
-<div class="cell" data-hash="Ch3_cache/html/unnamed-chunk-112_bc67c09cb3886940f413a9fdf47fcac2">
+<div class="cell" data-hash="Ch3_cache/html/unnamed-chunk-112_ce7809c2e90f350c9678baaa6ca0206d">
 <details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb298"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb298-1"><a href="#cb298-1" aria-hidden="true" tabindex="-1"></a><span class="co">* We fit a Cox model stratified on cluster by adding a 'strata' statement in the 'phreg' procedure;</span></span>
 <span id="cb298-2"><a href="#cb298-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb298-3"><a href="#cb298-3" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'3.11.2'</span>;</span>
+<span id="cb298-3"><a href="#cb298-3" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'3.12.2'</span>;</span>
 <span id="cb298-4"><a href="#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau_<span class="kw">data</span>;</span>
 <span id="cb298-5"><a href="#cb298-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg dtp agem;</span>
 <span id="cb298-6"><a href="#cb298-6" aria-hidden="true" tabindex="-1"></a>    strata cluster;</span>

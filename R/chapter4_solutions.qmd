@@ -6,10 +6,1857 @@ The SAS solutions are available as single files for download:
 
 -   [Exercise 4.9 (Recurrent episodes in affective disorders)](/SAS/chapter4_solutions_affective.sas)
 
-### Exercise 4.1
 
-*Consider the data from the Copenhagen Holter study (Example 1.1.8)*.
+### Exercise 4.1 
 
-{{< include R/readholter.qmd >}}
+*Consider the data from the Copenhagen Holter study and estimate the probabilities
+of stroke-free survival for subjects with or without ESVEA using the Kaplan-Meier
+estimator.*
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **chs_data**
+
+```{r}
+#| code-fold: show
+chs_data <- read.csv("data/cphholter.csv")
+```
+
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(survminer) #Plots of survival curves
+library(survRM2) #RMST 
+library(mstate) #probtrans, ELOS
+```
+
+Finally, we will convert the time variables to years and add a time variable and status indicator for the composite end-point stroke-free survival.
+
+```{r}
+#| code-fold: show
+chs_data <- chs_data %>% mutate(timeafib = timeafib/365.25,
+                                timestroke = timestroke/365.25,
+                                timedeath = timedeath/365.25,
+                                timestrokeordeath = ifelse(stroke == 1, timestroke, timedeath),
+                                strokeordeath = ifelse(stroke ==1, 1, death))
+```
+
+To estimate the probability of stroke-free survival for subjects with or without ESVEA using the Kaplan-Meier estimator we use the **survfit** function from the *survival* package. 
+
+```{r}
+#| code-fold: show
+# Kaplan-Meier estimate of the survival functions
+km41 <- survfit(formula = Surv(timestrokeordeath, strokeordeath) ~ esvea, data = chs_data)
+
+kmdata41 <- data.frame(time = km41$time,
+                        surv = km41$surv, 
+                        esvea = c(rep(names(km41$strata)[1], km41$strata[1]),
+                               rep(names(km41$strata)[2], km41$strata[2])))
+```
+
+Then, we can plot the Kaplan-Meier estimates of the survival probabilities against time.
+
+```{r}
+#| code-fold: show
+# Plotting the Kaplan-Meier estimate
+(fig41 <- ggplot(data = kmdata41) + geom_step(aes(x = time, y = surv, linetype = esvea), size = 1) + 
+          scale_linetype_discrete("ESVEA", labels = c("0", "1")) + 
+          ylim(c(0,1)) +
+          xlab("Time since randomization (years)") + 
+          ylab("Probability of stroke-free survival"))
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We must first load the data;
+proc import out = chs_data
+    datafile = 'data/cphholter.csv'
+	dbms= csv replace;
+	getnames=yes;
+run;
+
+* We will convert the time variables (timeafib, timestroke, and timedeath) from days to years;
+* Furthermore, we add variables for the composite end-point of stroke or death without stroke;
+data chs_data;
+	set chs_data;
+	timeafib = timeafib/365.25;
+	timestroke = timestroke/365.25;
+	timedeath = timedeath/365.25;
+	timestrokeordeath = timedeath;
+	if stroke = 1 then timestrokeordeath = timestroke;
+	strokeordeath = death;
+	if stroke = 1 then strokeordeath = 1;
+run;
+
+* We estimate the Kaplan-Meier survival function for subjects with or without ESVEA with the phreg procedure where 'esvea' is added
+  in the strata statement. The result is saved as 'survdat'.;
+
+title "4.1: Stroke-free survival probabilities estimated with the Kaplan-Meier estimator";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=;
+	strata esvea;
+	baseline out=survdat survival=km;
+run;
+
+* Then the estimates are plotted using the gplot procedure;
+
+proc gplot data=survdat;
+plot km*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 1 by 0.1 label=(a=90 'Survival probability');
+	symbol1 i=stepjl c=red;
+	symbol2 i=stepjl c=blue;
+run;
+quit;
+```
+
+:::
+
+
+### Exercise 4.2 
+
+*Consider the Cox model for stroke-free survival in the Copenhagen Holter
+study including the covariates ESVEA, sex, age, and systolic blood pressure (Exercise 2.4).*
+
 
 #### 1.
+
+*Estimate the survival functions for a female subject aged 65 years and with systolic
+blood pressure equal to 150 mmHg – either with or without ESVEA.*
+
+::: panel-tabset
+
+## R
+
+The Cox model including ESVEA, sex, age, and systolic blood pressure is fitted using the **coxph** function from the *survival* package as first done in exercise 2.4.1.
+
+```{r}
+#| code-fold: show
+# Cox model for the composite end-point stroke or death with covariates ESVEA, sex, age, and systolic blood pressure
+cox241 <- coxph(formula = Surv(timestrokeordeath, strokeordeath) ~ esvea + sex + age + sbp , data = chs_data, method = "breslow")
+summary(cox241)
+```
+
+We will now estimate the survival functions for a 65-year-old female (sex = 0) with a systolic blood pressure of 150mmHg with or without ESVEA. The values of the covariates are stored in the data frame **covar**. The survival function is then found using the **survfit** function with the formula argument given by the Cox model and the newdata argument given by the data frame **covar**.
+
+```{r}
+#| code-fold: show
+# Defining the covariates
+covar <- data.frame(esvea = c(0,1), sex = 0, age = 65, sbp = 150)
+
+# Estimate of the survival function given the covariate values
+surv421 <- survfit(cox241, newdata = covar)
+```
+
+Finally, the survival functions are plotted
+
+```{r}
+#| code-fold: show
+# Plotting the predicted survival probabilities.
+(plot421 <- ggplot() + geom_step(aes(x = surv421$time, y = surv421$surv[,1], color = "ESVEA=0")) +
+  geom_step(aes(x = surv421$time, y = surv421$surv[,2], color = "ESVEA=1")) +
+  theme(legend.title=element_blank()) +
+  ylab("Probability") + xlab("Time since randomization (years)") + 
+  ggtitle("Stroke-free survival for a 65-year-old woman with a sbp of 150mmHg")  + ylim(c(0,1)))
+
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* To estimate the stroke-free survival functions for a 65-year old woman with a systolic blood pressure of 150mmHg with or without
+  ESVEA we will first create a data frame 'cov' with the desired values of the covariate.;
+
+data cov;
+	esvea = 0; sex = 0; age = 65; sbp = 150; output;
+	esvea = 1; sex = 0; age = 65; sbp = 150; output;
+run;
+
+* Then, a Cox model including ESVEA, sex, age, and systolic blood pressure is fitted with the phreg procedure and the stroke-free
+  survival functions for subjects with values according to 'cov' are saved as 'survdata'.;
+
+title "4.2: Stroke-free survival for a 65-year old woman with sbp = 150mmHg";
+proc phreg data=chs_data;
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp;
+	baseline out=survdata survival=surv covariates = cov;
+run;
+
+* Finally, the survival functions are plotted using the gplot procedure;
+
+proc gplot data=survdata;
+	plot surv*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 1 by 0.1 label=(a=90 'Stroke-free survival probability');
+	symbol1  i=stepjl c=blue;
+	symbol2  i=stepjl c=red;
+run;
+quit;
+```
+
+:::
+
+
+
+#### 2. 
+
+*Estimate the survival functions for patients with or without ESVEA using the g-formula.*
+
+::: panel-tabset
+
+## R
+To estimate the survival functions using the g-formula, two predictions are made for each subject, i: one setting ESVEA $(Z_1)$ to 0, and one setting ESVEA to 1, while keeping the observed values of sex, age, and systolic blood pressure $(Z_2, Z_3, Z_4)$. The g-formula estimate is then
+
+$$ 
+\hat{S}_j(t) = \frac{1}{n}\sum_{i}\hat{S}(t|Z_1 = j, Z_{2i}, Z_{3i}, Z_{4i}), j = 0,1
+$$
+Thus, we will make two new data frames corresponding to the two settings, i.e. ESVEA = 0 (**chs_covar0**) or ESVEA = 1 (**chs_covar1**) and all other covariates equal to the observed values. Then, the two predictions of the survival functions for each subject are found using the **survfit** function, and the average of these predictions with or without ESVEA are taken to obtaian the g-formula estimate.
+
+```{r}
+#| code-fold: show
+# Creating data sets with or without ESVEA while keeping the observed values of sex, age, and sbp for all subjects
+chs_covar0 <- data.frame(esvea = 0, sex = chs_data$sex, age = chs_data$age, sbp = chs_data$sbp)
+chs_covar1 <- data.frame(esvea = 1, sex = chs_data$sex, age = chs_data$age, sbp = chs_data$sbp)
+                           
+# Predicting the survival functions for all rows in chs_covar0 and chs_covar1
+pred0_422 <- survfit(cox241, newdata = chs_covar0)
+pred1_422 <- survfit(cox241, newdata = chs_covar1)
+
+# Taking the average prediction at each transition time
+surv0_422 <- rowMeans(pred0_422$surv, na.rm = TRUE)
+surv1_422 <- rowMeans(pred1_422$surv, na.rm = TRUE)
+```
+
+The survival functions estimated using the g-formula are then plotted against time.
+
+```{r}
+#| code-fold: show
+# Plotting the predicted survival probabilities (g-formula).
+(plot422 <- ggplot() + geom_step(aes(x = pred0_422$time, y = surv0_422, color = "ESVEA=0")) +
+  geom_step(aes(x =pred1_422$time, y = surv1_422, color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Probability") + xlab("Time since randomization (years)") + 
+  ggtitle("Survival function for stroke-free survival (g-formula)")) + ylim(c(0,1))
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+
+* A Cox model including ESVEA, sex, age, and systolic blood pressure is fitted and 'diradj group = esvea' is added to obtain the
+  predicted survival functions for patients with or without ESVEA using the g-formula. The data is saved as 'gsurv'.;
+
+title "4.2: Cox model for the outcome stroke-free survival including ESVEA, sex, age, and systolic blood pressure";
+proc phreg data=chs_data;
+	class esvea (ref = '0');
+	model timestrokeordeath*strokeordeath(0)=esvea sex age sbp;
+	baseline out=gsurv survival=surv / diradj group=esvea;
+run;
+
+* The survival functions are then plotted using the gplot procedure;
+
+title "4.2: Stroke-free survival probabilities estimated using the G-formula";
+proc gplot data=gsurv;
+	plot surv*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 minor=none label=('Years');
+	axis2 order=0 to 1 by 0.1 minor=none label=(a=90 'Estimated survival function (g-formula)');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;
+run;
+quit;
+```
+
+:::
+
+
+### Exercise 4.3 
+
+*Consider the data from the Copenhagen Holter study and fit a linear model
+for the 3-year restricted mean time to the composite end-point stroke or death including
+ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+We will use the **rmst2** function from the *survRM2* package to fit a linear model for the 3-year restricted mean time to the composite end-point stroke or death including ESVEA, sex, age, and systolic blood pressure. We must include the arguments time, status, arm, tau and covariates which in this case are **timestrokeordeath**, **strokeordeath**, **esvea**, **3** and **sex,age, and systolic blood pressure** respectively.
+
+```{r}
+#| code-fold: show
+# 3-year restricted mean time to the composite end-point stroke or death
+
+# Attention must be restricted to subjects with complete covariate data (sbp).
+
+newchs <- subset(chs_data,!is.na(sbp))
+
+rmst <- rmst2(time = newchs$timestrokeordeath, status = newchs$strokeordeath, arm = newchs$esvea, tau = 3,  covariates = newchs[, c(8,9,17)] )
+rmst$RMST.difference.adjusted
+```
+
+Thus, we obtain the following model for the 3-year restricted mean time to the composite end-point stroke or death
+
+$$\varepsilon(3|Z) = 3.3552 -0.0274\cdot Z_1 -0.054\cdot Z_2 -0.0073\cdot Z_3 + 0.0005\cdot Z_4,$$
+
+where $(Z_1,Z_2,Z_3,Z_4)$ are ESVEA, sex, age, and systolic blood pressure.
+
+We will finally estimate the 3-year resticted mean time to the composite end-point stroke or death for subjects with or without ESVEA non-parametrically using the area under the Kaplan-Meier curve. We use the object from Exercise 4.1.
+
+```{r}
+#| code-fold: show
+print(km41,rmean=3)
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will estimate the 3-year restricted mean time survival to the composite end-point strokke or death including ESVEA, sex, age, 
+  and systolic blood pressure using the rmstreg procedure. We specify 'tau = 3' in the rmstreg statement to obtain a 3 year time 
+  limit and 'link = linear' in the model statement to get a linear model. NB: requires SAS STAT 15.1;
+
+title "4.3";
+proc rmstreg data=chs_data tau=3;
+   model timestrokeordeath*strokeordeath(0)=esvea sex age sbp / link=linear;
+run;
+
+* Thus, we obtain the following model for the 3-year restricted mean time to the composite end-point stroke or death
+  epsilon(3|Z) = 3.3552 - 0.0274*Z1 - 0.0540*Z2 - 0.0073*Z3 + 0.0005*Z4, where (Z1,Z2,Z3,Z4) are ESVEA, age, sex, and systolic blood 
+  pressure;
+
+* We will also present the non-parametric estimates. We restrict the data set at tau=3.  NB: requires SAS STAT 15.1;
+
+proc lifetest data=chs_data rmst(tau=3);
+time timestrokeordeath*strokeordeath(0);
+strata esvea;
+run;
+```
+
+:::
+
+
+### Exercise 4.4 
+
+*Consider the Cox models for the cause-specific hazards for the outcomes
+stroke and death without stroke in the Copenhagen Holter study including ESVEA, sex,
+age, and systolic blood pressure (Exercise 2.7). Estimate (using plug-in) the cumulative
+incidences for both end-points for a female subject aged 65 years and with systolic blood
+pressure equal to 150 mmHg – either with or without ESVEA.*
+
+::: panel-tabset
+
+## R
+
+The cumulative incidence functions for cause $h$ for a subject with covariates $Z$ is calculated using the formula $F_{h}(t|Z) = \int_0^t S(u|Z)\alpha_{h}(u|Z)du$, where $S(u|Z) = \prod\limits_{j} \exp(-\int_0^u \alpha_j(x|Z) dx)$.
+
+We will first fit Cox models for the cause-specific outcomes. For the outcome stroke we will use **timestrokeordeath** as time variable and **stroke** as status indicator in the **Surv** object. For the outcome death without stroke we will also use **timestrokeordeath** as time variable, but we must create a new status indicator, which will be named **death_wo_stroke**.
+
+```{r}
+#| code-fold: show
+# Cox model with stroke as outcome
+cox44_stroke <- coxph(formula = Surv(timestrokeordeath, stroke) ~ esvea + sex + age + sbp , data = chs_data)
+summary(cox44_stroke)
+
+# Status indicator for death without stroke
+chs_data$death_wo_stroke <- ifelse(chs_data$stroke == 1, 0, chs_data$death)
+
+# Cox model with death without stroke as outcome
+cox44_death <- coxph(formula = Surv(timestrokeordeath, death_wo_stroke) ~ esvea + sex + age + sbp , data = chs_data)
+summary(cox44_death)
+```
+
+Then, the hazard, $\alpha_h(t|Z)$ and $\exp(-\int_0^ta_{h}(t|Z))$ are extracted for a 65-year-old female with systolic blood pressure of 150mmHg with or without ESVEA for each cause-specific Cox model using the **survfit** function.
+
+```{r}
+#| code-fold: show
+# Survfit for the cause-specific hazard stroke given covariates Z
+survfit_stroke44 <- survfit(cox44_stroke, newdata = covar)
+# Estimate of exp(-A_02(t|Z))
+S0_stroke44 <- survfit_stroke44$surv[,1]
+S1_stroke44 <- survfit_stroke44$surv[,2]
+#Estimate of the hazard for stroke, alpha_02(t|Z)
+haz0_stroke44 <- c(0, diff(survfit_stroke44$cumhaz[,1]))
+haz1_stroke44 <- c(0, diff(survfit_stroke44$cumhaz[,2]))
+
+# Survfit for the cause specific hazard death without stroke given covariates Z
+survfit_death44 <- survfit(cox44_death, newdata = covar)
+# Estimate of exp(-A_03(t|Z))
+S0_death44 <- survfit_death44$surv[,1]
+S1_death44 <- survfit_death44$surv[,2]
+# Estimate of the hazard for death without stroke, alpha_03(t|Z)
+haz0_death44 <- c(0, diff(survfit_death44$cumhaz[,1]))
+haz1_death44 <- c(0, diff(survfit_death44$cumhaz[,2]))
+```
+
+```{r}
+#| code-fold: show
+# Estimate of cumulative incidence functions for stroke
+cif0_stroke44 <- cumsum(S0_stroke44*S0_death44*haz0_stroke44)
+cif1_stroke44 <- cumsum(S1_stroke44*S1_death44*haz1_stroke44)
+
+#Plotting the cumulative incidence function with stroke as outcome for a 65-year-old female with sbp of 150mmHg
+(plot44_stroke <- ggplot() + geom_step(aes(x = survfit_stroke44$time, y = cif0_stroke44, color = "ESVEA=0")) +
+  geom_step(aes(x =survfit_stroke44$time, y = cif1_stroke44, color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") + ggtitle("Cox: CIF for stroke for a 65-year-old female with sbp 150mmHg"))
+```
+
+Likewise, we can estimate and plot the cumulative incidence functions for the outcome death without stroke.
+
+```{r}
+#| code-fold: show
+# Estimate of cumulative incidence functions for death without stroke
+cif0_death44 <- cumsum(S0_stroke44*S0_death44*haz0_death44)
+cif1_death44 <- cumsum(S1_stroke44*S1_death44*haz1_death44)
+
+#Plotting the cumulative incidence function with stroke as outcome for a 65-year-old female with sbp of 150mmHg
+(plot44_death <- ggplot() + geom_step(aes(x = survfit_death44$time, y = cif0_death44, color = "ESVEA=0")) +
+  geom_step(aes(x =survfit_death44$time, y = cif1_death44, color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") + 
+  ggtitle("Cox: CIF for death for a 65-year-old female with sbp 150mmHg"))
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We must first create a variable for the competing risks which we will call 'event'. 0 is censored, 1 is stroke, and 2 is death 
+  without stroke;
+
+data chs_data;
+	set chs_data;
+	death_wo_stroke = death;
+	if stroke = 1 then death_wo_stroke = 0;
+	event = 0;
+	if stroke = 1 then event = 1;
+	if death_wo_stroke = 1 then event = 2;
+run;
+
+* Then we will fit a Cox model returning the predicted cumulative incidence functions with the specified covariates. 
+  This is done by adding the argument eventcode(cox) to the model statement and adding the 'cif' argument in the baseline 
+  statement.  NB: requires SAS STAT 15.1;
+
+proc phreg data = chs_data noprint; 
+	model timestrokeordeath*event(0) =esvea sex age sbp / eventcode(cox) = 1;
+	baseline covariates = cov out=cif44_stroke cif = cif;
+run;
+
+* Finally, the cumulative incidence functions are plotted using the gplot procedure;
+
+title '4.4: CIF for the outcome stroke (based on Cox model)';
+proc gplot data=cif44_stroke;
+	plot cif*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 0.2 by 0.02 label=(a=90 'CIF for stroke');
+	symbol1  i=stepjl c=blue;
+	symbol2  i=stepjl c=red;
+run;
+
+* Then, we repeat the procedure for the outcome death without stroke;
+
+proc phreg data = chs_data noprint; 
+	model timestrokeordeath*event(0) =esvea sex age sbp / eventcode(cox) = 2;
+	baseline covariates = cov out=cif44_death cif = cif;
+run;
+
+* We can now plot the cumulative incidence functions gpt death without stroke using the gplot procedure;
+
+title '4.4: CIF for the outcome death without stroke (based on Cox model)';
+proc gplot data=cif44_death;
+	plot cif*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 0.3 by 0.03 label=(a=90 'CIF for death w/o stroke');
+	symbol1  i=stepjl c=blue;
+	symbol2  i=stepjl c=red;
+run;
+quit;
+```
+
+:::
+
+
+
+### Exercise 4.5
+
+#### 1. 
+
+*Repeat the previous question using instead Fine-Gray models.*
+
+::: panel-tabset
+
+## R
+
+We will fit the Fine-Gray models using the **finegray** function from the *survival* package. 
+We must make a new status indicator with one level for each possible outcome, which we will call **fg_event**. The value 0 must indicate stroke-free survival and we let 1 indicate stroke and 2 indicate death without stroke. 
+
+```{r}
+#| code-fold: show
+#Creating event variable, 0 = censored, 1 = stroke, 2 = death w/o stroke
+fg_event <- with(chs_data, ifelse(death_wo_stroke == 0, stroke, death_wo_stroke*2))
+```
+
+The **finegray** function takes a formula argument with a **Surv** object on the left of '~' and '.' on the right. The cause of interest is specified by the **etype** argument.
+
+Afterwards the model is fitted using the **coxph** function with the data frame created by the **finegray** function. The formula argument should have **Surv(fgstart,fgstop,fgstatus)** on the left side of '~' and as usual the covariates of interest (ESVEA, age, sex, and sbp) on the right. The argument **weigth = fgwt** must also be included.
+
+```{r}
+#| code-fold: show
+#Fitting Fine-Gray model for stroke
+fgdata_stroke <- finegray(Surv(timestrokeordeath, factor(fg_event)) ~ ., etype = 1, data =chs_data)
+fg45_stroke <- coxph(Surv(fgstart, fgstop, fgstatus) ~ esvea + sex + age + sbp, weight = fgwt, data = fgdata_stroke)
+summary(fg45_stroke)
+```
+
+```{r}
+#| code-fold: show
+#Fitting Fine-Gray for death without stroke
+fgdata_death <- finegray(Surv(timestrokeordeath, factor(fg_event)) ~ ., etype = 2, data =chs_data)
+fg45_death <- coxph(Surv(fgstart, fgstop, fgstatus) ~ esvea + sex + age + sbp, weight = fgwt, data = fgdata_death)
+summary(fg45_death)
+```
+
+As described in Section 4.2.2, the Fine-Gray model has a simple expression for the cumulative incidence function for cause $h$ since
+
+$$
+\log(-\log(1-F_h(t|Z))) = \log(\tilde{A}_{0h}(t)) + LP_h \\
+\iff F_h(t|Z) = 1-\exp(-\tilde{A}_{0h}(t)\exp(LP_h))
+$$
+
+Thus, we can use the **survfit** function to obtain the estimate for $\exp(-\tilde{A}_{0h}(t)\exp(\beta Z))$, given $Z_1 = 0,1$ and $(Z_2,Z_3,Z_4) = (0,65,150)$ for the outcome stroke.
+
+```{r}
+#| code-fold: show
+# Cumulative incidence functions for the outcome stroke given covariates Z
+cif_stroke451 <- 1- survfit(fg45_stroke, newdata = covar)$surv
+```
+
+The Fine-Gray estimate of the cumulative incidence function for stroke can then be plotted.
+
+```{r}
+#| code-fold: show
+# Plotting the predicted cumulative incidence functions.
+(plot451_stroke <- ggplot() + geom_step(aes(x = survfit(fg45_stroke, newdata = covar)$time, y = cif_stroke451[,1], color = "ESVEA=0")) +
+  geom_step(aes(x =survfit(fg45_stroke, newdata = covar)$time, y = cif_stroke451[,2], color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") + 
+  ggtitle("Fine-Gray: CIF for stroke for a 65-year-old woman with sbp 150 mmHg"))
+```
+
+We repeat the procedure above for the outcome death without stroke
+
+```{r}
+#| code-fold: show
+# Cumulative incidence functions for the outcome death without stroke given covariates Z
+cif_death451 <- 1- survfit(fg45_death, newdata = covar)$surv
+
+# Plotting the predicted cumulative incidence functions.
+(plot451_death <- ggplot() + geom_step(aes(x = survfit(fg45_death, newdata = covar)$time, y = cif_death451[,1], color = "ESVEA=0")) +
+  geom_step(aes(x =survfit(fg45_death, newdata = covar)$time, y = cif_death451[,2], color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") 
+  + ggtitle("Fine-Gray: CIF for death w/o stroke for a 65-year-old woman with sbp 150 mmHg"))
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* To obtain the CIF for the outcomes stroke and death without stroke using the Fine-Gray model, 'eventcode' is added instead of
+  'eventcode(cox)' in the model statement of the phreg procedure;
+
+* We will first estimate the CIF for the outcome stroke;
+
+proc phreg data = chs_data; 
+	model timestrokeordeath*event(0) =esvea sex age sbp / eventcode = 1;
+	baseline covariates = cov out=cif451_stroke cif = cif;
+run;
+
+title '4.5.1: CIF for the outcome stroke (based on Fine-Gray model)';
+proc gplot data=cif451_stroke;
+	plot cif*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 0.125 by 0.0125 label=(a=90 'CIF for stroke');
+	symbol1  i=stepjl c=blue;
+	symbol2  i=stepjl c=red;
+run;
+
+* Then we will estimate the CIF for the outcome death without stroke;
+
+proc phreg data = chs_data; 
+	model timestrokeordeath*event(0) =esvea sex age sbp / eventcode = 2;
+	baseline covariates = cov out=cif451_death cif = cif;
+run;
+
+title '4.5.1: CIF for the outcome stroke (based on Fine-Gray model)';
+proc gplot data=cif451_death;
+	plot cif*timestrokeordeath=esvea/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 0.25 by 0.025 label=(a=90 'CIF for death w/o stroke');
+	symbol1  i=stepjl c=blue;
+	symbol2  i=stepjl c=red;
+run;
+quit;
+```
+
+:::
+
+#### 2. 
+
+*Estimate the cumulative incidence functions for patients with or without ESVEA using the g-formula.*
+
+::: panel-tabset
+
+## R
+
+To obtain an estimate of the cumulative incidence functions with or without ESVEA using the g-formula we will exploit the simple expression of the CIF in the Fine-Gray model and simply use **survfit** and the data frames **chs_covar0** and **chs_covar1** from exercise 4.2.2 to make two predictions of $1 -\exp(-\tilde{A}_{0h}(t)\exp(LP_h))$ for each subject, one with ESVEA and one without ESVEA. Then, the g-formula estimate is the average of the predictions with or without ESVEA.
+
+We will find the g-formula estimate of the cumulative incidence functions for the outcome stroke.
+
+```{r}
+#| code-fold: show
+# Calculating the CIFs for stroke for all subjects with ESVEA = 0 or ESVEA = 1
+cifs0_stroke452 <- 1- survfit(fg45_stroke, newdata = chs_covar0)$surv
+cifs1_stroke452 <- 1- survfit(fg45_stroke, newdata = chs_covar1)$surv
+
+# Taking the average of the CIFs
+cif0_stroke452 <- rowMeans(cifs0_stroke452)
+cif1_stroke452 <- rowMeans(cifs1_stroke452)
+
+# Plotting the predicted cumulative incidence functions for death without stroke.
+(plot452_stroke <- ggplot() + geom_step(aes(x = survfit(fg45_stroke, newdata = covar)$time, y = cif0_stroke452, color = "ESVEA=0")) +
+  geom_step(aes(x =survfit(fg45_stroke, newdata = covar)$time, y = cif1_stroke452, color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") + 
+  ggtitle("Fine-Gray: CIF for stroke (g-formula)"))
+```
+
+Then, we repeat the procedure for the outcome death without stroke.
+
+```{r}
+#| code-fold: show
+# Calculating the CIFs for death without stroke for all subjects with ESVEA = 0 or ESVEA = 1
+cifs0_death452 <- 1- survfit(fg45_death, newdata = chs_covar0)$surv
+cifs1_death452 <- 1- survfit(fg45_death, newdata = chs_covar1)$surv
+
+# Taking the average of the CIFs
+cif0_death452 <- rowMeans(cifs0_death452)
+cif1_death452 <- rowMeans(cifs1_death452)
+
+# Plotting the predicted cumulative incidence functions for death without stroke.
+(plot452_death <- ggplot() + geom_step(aes(x = survfit(fg45_death, newdata = covar)$time, y = cif0_death452, color = "ESVEA=0")) +
+  geom_step(aes(x =survfit(fg45_death, newdata = covar)$time, y = cif1_death452, color = "ESVEA=1")) +  theme(legend.title=element_blank()) +
+  ylab("Cumulative incidence") + xlab("Time since randomization (years)") 
+  + ggtitle("Fine-Gray: CIF for death w/o stroke (g-formula)"))
+```
+
+We will finally compare the estimates obtained using the g-formula with the non-parametric estimates obtained using the Aalen-Johansen estimator. The latter are obtained using **survfit**.
+
+```{r}
+#| code-fold: show
+aj <- survfit(Surv(timestrokeordeath,factor(fg_event),type='mstate')~esvea,data=chs_data,influence = TRUE)
+plot(aj,col=c(1,2,1,2))
+legend("topleft",legend=c("esvea=0", "esvea=1"),col=1:2,lty=c(1,1))
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will then make a macro function taking the cause of interest (stroke or death without stroke) and value of ESVEA as arguments;
+
+%macro cif452(cause, esvea);
+* Creating modified covariates. Observed values for sex, age, and sbp, while ESVEA is either 0 or 1 for all subjects;
+data covar_temp;
+	set chs_data;
+	esvea = &esvea;
+	keep id esvea sex age sbp;
+run;
+* Fine-Gray model returning the predicted cumulative incidence functions for the modified covariates for all patients;
+proc phreg data = chs_data noprint; 
+	model timestrokeordeath*event(0) =esvea sex age sbp / eventcode = &cause;
+	baseline covariates = covar_temp out=ciftest cif = cif;
+run;
+* Splitting the data set ciftest and returning one data set per patient containing the predicted cumulative incidence function;
+%do i = 1 %to 678;
+	data cif&i;
+		set ciftest;
+		if id = &i;
+		cif&i = cif;
+		keep id timestrokeordeath cif&i;  
+	run;	
+%end;
+* Calculating the average of the cumulative incidence functions;
+data res&esvea;
+	set cif1-cif678 ;
+	merge cif1-cif678;
+	by timestrokeordeath;
+	ESVEA&esvea = mean(of cif1-cif678);
+	keep timestrokeordeath ESVEA&esvea;
+run;
+%mend;
+
+*We call the function for the outcome stroke and ESVEA = 0,1;
+
+%cif452(1,1);
+%cif452(1,0);
+
+* Then we create a data set containing the cumulative incidence function for both ESVEA = 0 and ESVEA = 1 and plot the result.;
+
+data stroke452;
+	set res0 res1;
+	merge res0 res1;
+	by timestrokeordeath;
+run;
+
+proc sgplot data=stroke452;
+title1'4.5.2 - Cumulative incidence function for stroke predicted with Fine-Gray models using the g-formula';
+   step y=ESVEA0 x=timestrokeordeath;
+   step y=ESVEA1 x=timestrokeordeath;
+   xaxis label= "Time (Years since randomization)";
+   yaxis label= "Cumulative incidence";
+run;
+
+* We repeat for the outcome death without stroke. First we call our macro function;
+
+%cif452(2,1);
+%cif452(2,0);
+
+*Then the data is collected in one data set and afterwards we plot the result;
+
+data death452;
+	set res0 res1;
+	merge res0 res1;
+	by timestrokeordeath;
+run;
+
+proc sgplot data=death452;
+title1'4.5.2 - Cumulative incidence function for death predicted with Fine-Gray models using the g-formula';
+   step y=ESVEA0 x=timestrokeordeath;
+   step y=ESVEA1 x=timestrokeordeath;
+   xaxis label= "Time (Years since randomization)";
+   yaxis label= "Cumulative incidence";
+run;
+
+
+/* For comparison, we also estimate the cumulative incidences non-parametrically. */
+
+proc lifetest data=chs_data plots=(cif);
+time timestrokeordeath*event(0)/eventcode=1;
+strata esvea;
+run;
+
+
+proc lifetest data=chs_data plots=(cif);
+time timestrokeordeath*event(0)/eventcode=2;
+strata esvea;
+run;
+```
+
+:::
+
+### Exercise 4.6 
+
+*Consider the data from the Copenhagen Holter study and fit linear models
+for the expected time lost (numbers of years) before 3 years due to either stroke or death
+without stroke including ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+There are currently no packages in R where a function estimating linear models for the time lost due to cause-specific outcomes are implemented.
+
+However, Conner and Trinquart (2021) have made their code available online. Thus, the following code chunk which implements such a function is adapted from their code on [github](https://github.com/s-conner/rmtl/blob/master/functions/rmtl_ipcw_function.R){target="_blank"}
+
+```{r}
+#| code-fold: show
+rmtl.ipcw <- function(times, event, eoi=1, tau, cov=NULL, strata=FALSE, group=NULL){
+  
+  if(is.null(group) & strata==TRUE){stop('Please specify a factor variable to statify weights.')}
+  if(is.null(cov)){print('Warning: Fitting intercept-only model.')}
+  
+  # Round event times to avoid issues with survival() package rounding differently
+  y <- round(times,4)
+  id <- 1:length(y)
+  
+  # Recode so delta1 reflects event of interest, delta2 reflects all competing events. Assumes 0=censoring.
+  delta1 <- ifelse(event==eoi, 1, 0)
+  delta2 <- ifelse(event!=0 & event!=eoi, 1, 0)
+  
+  # Overall quantities
+  x <- cbind(int=rep(1, length(y)), cov)
+  p <- length(x[1,])
+  if(is.null(group)){group <- as.factor(rep(1, length(y)))}
+  
+  # Recode event indicators to reflect status at chosen tau
+  delta1[y>tau] <- 0
+  delta2[y>tau] <- 0
+  
+  y <- pmin(y, tau)
+  y1 <- y*delta1
+  
+  d0 <- 1 - (delta1 + delta2) # censoring indicator
+  d0[y==tau] <- 0  # If follow-up lasts til tau, the event will not count as 'censored' in IPCW weights
+  weights <- NULL
+  
+  ## Calculate IPCW weights (option to stratify by group) ## 
+  
+  if(strata==TRUE){
+    for(aa in 1:length(unique(group))){
+      # Subset the group
+      a <- unique(group)[aa]
+      d0.a <- d0[group==a]
+      delta1.a <- delta1[group==a]
+      y.a <- y[group==a]
+      x.a <- x[group==a,]
+      n.a <- length(d0.a)
+      orig.id.a0 <- orig.id.a <- id[group==a]
+      
+      # Order the event times
+      id.a <- order(y.a)
+      y.a <- y.a[id.a]
+      d0.a <- d0.a[id.a]
+      delta1.a <- delta1.a[id.a]
+      x.a <- x.a[id.a,]
+      orig.id.a <- orig.id.a[id.a]
+      
+      # Derive IPCW
+      fit <- survfit(Surv(y.a, d0.a) ~ 1)
+      weights.a <- (1-d0.a)/rep(fit$surv, table(y.a))
+      
+      # Need to assign weights accordig to original ID, not ordered by event time
+      linked.weights.a <- cbind(orig.id.a, weights.a, delta1.a, d0.a, y.a)
+      weights <- rbind(weights, linked.weights.a)
+    }
+  } else {
+    
+    # Order the event times
+    id.a <- order(y)
+    y.a <- y[id.a]
+    d0.a <- d0[id.a]
+    delta1.a <- delta1[id.a]
+    x.a <- x[id.a,]
+    orig.id.a <- id[id.a]
+    
+    # Derive IPCW
+    fit <- survfit(Surv(y.a, d0.a) ~ 1)
+    weights.a <- (1-d0.a)/rep(fit$surv, table(y.a))
+    
+    # Need to assign weights accordig to original ID, not ordered by event time
+    linked.weights.a <- cbind(orig.id.a, weights.a, delta1.a, d0.a, y.a)
+    weights <- rbind(weights, linked.weights.a)
+  }
+  
+  
+  ## Fit linear model ## 
+  
+  # Link weights to original data frame
+  #colnames(weights) <- c('id', 'weights')
+  #data <- merge(data0, weights, by='id')
+  #summary(lm(tau-y ~ x-1, weights=weights, data=data))
+  
+  # Or, sort weights and use vectors
+  w <- weights[order(weights[, 1]),2]
+  lm.fit <- lm(delta1*(tau-y) ~ x-1, weights=w)
+  
+  
+  ## Derive SE ##
+  
+  beta0 <- lm.fit$coef
+  error <- tau - y - as.vector(x %*% beta0)
+  score <- x * w * error
+  
+  # Kappa (sandwich variance components) stratified by group
+  kappa <- NULL
+  
+  for(aa in 1:length(unique(group))){
+    
+    # Subset the group
+    a <- unique(group)[aa]
+    d0.a <- d0[group==a]
+    delta1.a <- delta1[group==a]
+    y.a <- y[group==a]
+    x.a <- x[group==a,]
+    n.a <- length(d0.a)
+    orig.id.a0 <- orig.id.a <- id[group==a]
+    score.a <- score[group==a,]
+    
+    # Kappa calculations for sandwich variance
+    kappa.a <- matrix(0, n.a, p)
+    
+    for(i in 1:n.a){
+      kappa1 <- score.a[i,]
+    
+      kappa2 <- apply(score.a[y.a>=y.a[i],,drop=F], 2, sum)*(d0.a[i])/sum(y.a>=y.a[i])
+    
+      kappa3 <- rep(0, p)
+    
+      for(k in 1:n.a){
+        if(y.a[k]<=y.a[i]){
+          kappa3 <- kappa3+apply(score.a[y.a>=y.a[k],,drop=F], 2, sum)*(d0.a[k])/(sum(y.a>=y.a[k]))^2
+        }
+      }
+  
+      kappa.a[i,] <- kappa1+kappa2-kappa3
+    }
+    kappa <- rbind(kappa, kappa.a)
+  }
+  
+  # Transpose the kappas rbinded from each group gives pxp matrix
+  gamma <- t(kappa) %*% kappa
+  
+  A <- t(x) %*% x
+  varbeta <- solve(A) %*% gamma %*% solve(A)
+  se <- sqrt(diag(varbeta))
+  
+  
+  #--- Return results ---
+  
+  res <- cbind(beta=lm.fit$coef, se=se, cil=lm.fit$coef-(1.96*se), ciu=lm.fit$coef+(1.96*se), 
+               z=lm.fit$coef/se, p=2*(1-pnorm(abs(lm.fit$coef/se))))
+  #rownames(res) <- c("Intercept", colnames(x[,-1])): REMOVED!
+  
+  allres <- list(res=res, varbeta=varbeta)
+  print(round(res, 3))
+  invisible(allres)
+return(res[,1]) # ADDED
+}  
+ 
+```
+
+The argument **times** is the time of event or censoring for all subjects. The argument **event** is the type of transition happening at the time **times** for all subjects. The arguments **eio** and **tau** are the event of interest and the threshold $\tau$. The argument **cov** gives the covariates to be included in the model.
+
+We will first extract the values of our covariates of interest and store them as **covar46**.
+
+```{r}
+#| code-fold: show
+# Extracting the values of the covariates ESVEA, sex, age, and sbp
+covar46 <- cbind(newchs$esvea, newchs$sex, newchs$age, newchs$sbp)
+colnames(covar46) <- c("esvea", "sex", "age", "sbp")
+```
+
+Then, we will fit a linear model for the time lost due to stroke using the function **rmtl.ipcw**. The arguments **times**, **event**, **eoi**, **tau** and **cov** are set to **chs_data$timestrokeordeath**, **fg_event**, 1, 3 and **covar46, respectively.
+
+```{r}
+#| code-fold: show
+# Fitting a linear model for the time lost due to stroke before 3 ýears
+
+newchs$death_wo_stroke <- ifelse(newchs$stroke == 1, 0, newchs$death)
+newchs$fg_event <- ifelse(newchs$death_wo_stroke == 0, newchs$stroke, newchs$death_wo_stroke*2)
+
+(rmtl_stroke <- rmtl.ipcw(times = newchs$timestrokeordeath,event = newchs$fg_event, eoi = 1, tau = 3, cov = covar46))
+```
+
+Thus, we obtain the following model for the time lost before 3 years due to stroke
+
+$$\varepsilon(3|Z) = -0.277 + 0.005 \cdot Z_1  + 0.024 \cdot Z_2  + 0.004 \cdot Z_3 - 3 \cdot 10^{-6} \cdot Z_4,$$
+
+where $(Z_1,Z_2,Z_3,Z_4)$ are ESVEA, sex, age, and systolic blood pressure.
+
+We will fit a linear model to the time lost due to death without stroke by changing the value of the **eio** argument to 2.
+
+```{r}
+#| code-fold: show
+# Fitting a linear model for the time lost due to death without stroke before 3 years
+(rmtl_death <- rmtl.ipcw(newchs$timestrokeordeath,newchs$fg_event, eoi = 2, tau = 3, covar46))
+```
+
+Thus, we obtain the following model for the time lost before 3 years due to death without stroke
+
+$$\varepsilon(3|Z) = -0.078 + 0.022 \cdot Z_1  + 0.03 \cdot Z_2  + 0.003 \cdot Z_3 - 0.001 \cdot Z_4,$$
+where $(Z_1,Z_2,Z_3,Z_4)$ are ESVEA, sex, age, and systolic blood pressure.
+
+We will finally estimate the cause-specific time lost for subjects with or without ESVEA non-parametrically as the area under the Aalen-Johansen estimates. We use the aj object from the previous exercise (where the option influence=TRUE provides SD estimates).
+
+```{r}
+#| code-fold: show
+print(aj,rmean=3)
+```
+
+## SAS-NA
+
+There is currently not an implementation of a procedure for linear models of the number of years lost due to a specific cause in SAS.
+
+:::
+
+
+### Exercise 4.7 
+
+*Consider an illness-death model for the Copenhagen Holter study with states
+‘0: Alive without AF or stroke’, ‘1: Alive with AF and no stroke’, ‘2: Dead or stroke’, see Figures 1.3 and 1.7.*
+
+#### 1. 
+
+*Estimate the prevalence of AF.*
+
+::: panel-tabset
+
+## R
+
+The prevalence of AF at time $t$ can be estimated as the conditional probability of having AF at time $t$ given alive at time $t$, i.e. $\frac{Q_1(t)}{Q_0(t) + Q_1(t)}$. 
+Here, $Q_0$ and $Q_1$ can be estimated the *mstate* package. We must first define a transition matrix, **tmat** for the ilness-death model and turn the data into long format using the **msprep** function as we did in exercise 1.2. Then, we extract the hazards for each transition using the **msfit** function. Finally, $Q_0$ and $Q_1$ are estimated with the **probtrans** function where the prediction time **predt** is set to 0.
+
+```{r}
+#| code-fold: show
+# Transition matrix for the three-state illness-death model.
+tmat <- trans.illdeath()
+
+# Putting the data on long format, i.e. 1 row per possible transition
+chs_data <- chs_data %>% mutate(timestroke = ifelse(stroke == 1, timestroke, timedeath),
+                                timeafib = ifelse(afib == 1, timeafib, timestroke))
+long_format <- msprep(time = c(NA, "timeafib", "timestrokeordeath"), status = c(NA,"afib","strokeordeath"), data = chs_data, trans = tmat)
+
+# Fitting a model for each of the three transitions, 0 -> 1, 0 -> 2 and 1 -> 2.
+cox471 <- coxph(Surv(Tstart, Tstop, status) ~ strata(trans), data = long_format, method = "breslow")
+
+# Extracting the hazards for each transition
+msfit <- msfit(cox471, trans = tmat)
+
+# Calculating the state occupation probabilities; pstate1 is $Q_0$, pstate2 is $Q_1$, and pstate3 is $Q_2$.
+probtrans <- probtrans(msfit, predt = 0)
+AaJ471 <- probtrans[[1]]
+
+# Calculating the prevalence of AF
+AaJ471$prevalence <- AaJ471$pstate2 / (AaJ471$pstate1 + AaJ471$pstate2)
+
+# Plotting the prevalence of AF against time
+(fig471 <- ggplot(aes(x = time, y = prevalence), data = AaJ471) +
+          geom_step())
+```
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* The prevalence of AF is given by Q_1 / (Q_0 + Q_1). Thus, we must first obtain estimates of Q_0 and Q_1.
+
+* We will first fill in the empty spots of timeafib and replace paths where AF happens after stroke;
+* We will also add an censoring variable for leaving state 0 called 'outof0'.;
+
+title '4.7.1';
+data chs_data;
+	set chs_data;
+	if afib = 1 and timeafib > timestrokeordeath then afib = 0;
+	if afib = 0 then timeafib = timestrokeordeath;
+	outof0 = 0;
+	if afib = 1 or strokeordeath = 1 then outof0 = 1;
+run;
+
+
+* Then, we will fit a model for being in state 0 by using 'timeafib' as our time variable and 'outof0' as our censoring variable;
+
+proc phreg data=chs_data; /* Q0(t) */
+	model timeafib*outof0(0)=;
+	baseline out=q0 survival=km0;
+run;
+
+* We will also fit a model for being in state 0 or state 1 by using 'timestrokeordeath' as our timevariable and 'strokeordeath' 
+  as our censoring variable.;
+
+proc phreg data=chs_data; /* Q0(t) + Q1(t) */
+	model timestrokeordeath*strokeordeath(0)=;
+	baseline out=q0andq1 survival = km01;
+run;
+
+
+* We will now estimate the probability of being in state 1 as the difference between the two models specified above. We must 
+  first merge the data frames 'q0' and 'q0andq1' by the joint 'time' variable and fill the empty cells for the survival 
+  probabilities with the last observed value. Then, 'q1' and the prevalence 'prev' is added to the dataframe 'allrev'.;
+
+data q0; set q0; time=timeafib; run;
+data q0andq1; set q0andq1; time=timestrokeordeath; run;
+data all; merge q0 q0andq1; by time; run;
+
+data allrev; 
+set all;
+	by time;
+	retain last1 last2;
+	if km0=. then q0=last1; if km0 ne . then q0=km0; *AF-free survival, Q0; 
+	if km01=. then q01=last2; if km01 ne . then q01=km01; *Q0 + Q1;
+	q1 = q01 - q0;
+	prev = q1/q01;
+	output;
+	last1=q0; last2=q01; 
+run;
+
+*Finally, we plot the result;
+
+proc gplot data=allrev;
+	title'4.7.1: Prevalence of AF';
+	plot prev*time / haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 5 minor=none label=('Years');
+	axis2 order=0 to 0.12 by 0.02 minor=none label=(a=90 'Prevalence of AF');
+	symbol  v=none i=stepjl c=blue;
+run;
+```
+
+:::
+
+#### 2. 
+
+*Estimate the expected lengths of stay in states 0 or 1 up to 3 years.*
+
+::: panel-tabset
+
+## R
+
+
+The expected lengths of stay in states 0 or 1 up till 3 years can be estimated using the **ELOS** function from the **mstate** package which take a **probtrans** object and threshold **tau** as input.
+
+```{r}
+#| code-fold: show
+# Estimating the expected length of stay in each state from state 0 before 3 years
+(ELOS472 <- ELOS(probtrans, tau = 3))
+```
+
+Thus, the expected length of stay up till 3 years is $2.9151$ in state 0 and $0.0088$ in state 1.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* To estimate the expected length of stay in state 0 and state 1 up till 3 years we will integrate the functions for being in state 
+  0 or 1 from 0 t0 3 years. 
+
+* We must first add the time point for 3 years to the data set 'allrev'.;
+
+data end_point; time = 3; run;
+data allrev; merge allrev end_point; by time; run;
+
+* Then we will calculate the product of the length of each time period and the value of q0 or q1 and then sum these products to 
+  obtain estimates of the expected length of state in state 0 or 1.;
+
+data allrev;
+	set allrev;
+	retain elos0 elos1;
+	dq0 = dif(time)*lag(q0);
+	dq1 = dif(time)*lag(q1);
+	elos0 + dq0;
+	elos1 + dq1;
+run;
+
+* Finally, we will print the result;
+
+title'4.7.2';
+proc print data = allrev;
+	var time elos0 elos1;
+	where time = 3;
+run;
+```
+
+:::
+
+#### 3. 
+
+*Evaluate the SD of the expected lengths of stay using the bootstrap.*
+
+::: panel-tabset
+
+## R
+
+We will use bootstrapping to estimate the SD of the expected lengths of stay in states 0 and 1. This can be done using the **msboot** function from the *mstate* package.
+
+We must first create a function which, given a data set **data**, calculates the statistics of interest, in this case the expected lengths of stay in state 0 and 1. Then, the **msboot** function takes this function as well as the data in long format, the desired number of bootstrap replications **B** and the name of the **id** variable in the data frame as arguments. 
+
+```{r}
+#| code-fold: show
+# Setting a seed for reproducibility
+set.seed(1234)
+
+# Function of data returning the value of the statistic to be bootstrapped
+boot_fct473 <- function(data){
+  cox <- coxph(Surv(Tstart, Tstop, status) ~ strata(trans), data = data, method = "breslow")
+  msfit <-  msfit(cox, trans = tmat)
+  pt <- probtrans(msfit, predt = 0, direction = "forward", method = "aalen")
+  elos <- ELOS(pt, 3)
+  return(elos[1,1:2])}
+
+# Bootstrapping with B = 200
+elos_boot473 <- msboot(theta = boot_fct473, data = long_format, B = 200, id = "id")
+```
+
+Finally, the mean and standard deviation of the statistics based on the bootstrap samples can be calculated
+
+```{r}
+#| code-fold: show
+# Mean and SD obtained using bootstrapping for expected length of stay in state 0 and 1
+(c(mean(elos_boot473[1,]), sqrt(var(elos_boot473[1,]))))
+(c(mean(elos_boot473[2,]), sqrt(var(elos_boot473[2,]))))
+```
+
+We obtain an estimate for the standard deviation of 0.0160782 for the expected length in state 0 and 0.004976452 for the expected length in state 1 using a bootstrap with 200 replications.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We will first make our bootstrap data frames. We will make 200 bootstrap samples and each bootstrap sample contains 678 rows which
+  are sampled with replacement from our originqal data.;
+
+title'4.7.3';
+data boot_chs;
+	do sampnum = 1 to 200; /* nboot=200*/
+	do i = 1 to 678; /*nobs=678*/
+	x=round(ranuni(0)*678); /*nobs=678*/
+	set chs_data
+	point=x;
+	output;
+	end;
+	end;
+	stop;
+run;
+
+* Then we will estimate the expected length of stay in state 0 before 3 years based on each of the 200 bootstrap samples;
+
+* We will first estimate the probability of being in state 0 and the probability of being in either state 0 or state 1.;
+
+proc phreg data=boot_chs noprint; /* Q0(t) */
+	by sampnum;
+	model timeafib*outof0(0)=;
+	baseline out=q0_boot survival=km0;
+run;
+
+proc phreg data=boot_chs noprint; /* Q0(t) + Q1(t) */
+	by sampnum;
+	model timestrokeordeath*strokeordeath(0)=;
+	baseline out=q0andq1_boot survival = km01;
+run;
+
+* Then, we will merge the two datasets by time and add the time point for 3 years to all bootstrap samples.;
+
+data q0_boot; set q0_boot; time=timeafib; run;
+data q0andq1_boot; set q0andq1_boot; time=timestrokeordeath; run;
+
+data end_point; do sampnum = 1 to 200; time = 3; output; end; run;
+data all_boot; merge q0_boot q0andq1_boot end_point; by sampnum time; run;
+
+
+* Then, we will estimate q1 as the difference between the probability of being in either state 0 or state 1 and the 
+  probability of being in state 0.;
+
+data allrev_boot; 
+set all_boot;
+	by sampnum time;
+	retain last1 last2;
+	if km0=. then q0=last1; if km0 ne . then q0=km0; *AF-free survival, Q0; 
+	if km01=. then q01=last2; if km01 ne . then q01=km01; *Q0 + Q1;
+	q1 = q01 - q0;
+	output;
+	last1=q0; last2=q01; 
+run;
+
+* The expected length of stay in state 0 or 1 is then estimated as the sum of the products of the length of the time intervals 
+  and the value of q0 or q1;
+
+data allrev_boot;
+	set allrev_boot;
+	if time > 3 then delete;
+	retain elos0 elos1;
+	dq0 = dif(time)*lag(q0);
+	dq1 = dif(time)*lag(q1);
+	if time = 0 then do; elos0 = 0; elos1 = 0; dq0 = .; dq1 = .; end;
+	elos0 + dq0;
+	elos1 + dq1;
+run;
+
+* We will only keep the result for the value of the expected lengths of stay up at 3 years in the data frame 'elos_est';
+
+data elos_est;
+	set allrev_boot;
+	keep time elos0 elos1;
+	where time = 3;
+run;
+
+* Finally, the mean and standard deviation is calculated;
+
+proc means data=elos_est stddev mean;
+	var elos0 elos1;
+run;
+```
+
+:::
+
+
+### Exercise 4.8 
+
+*Consider the data on mortality in relation to childhood vaccinations in Guinea-Bissau, Example 1.1.2*.
+
+
+#### 1. 
+
+*Fit a marginal hazard model for the mortality rate, adjusting for cluster ‘(village)’ and including binary variables for BCG and DTP vaccination and adjusting for age at recruitment (i.e., using time since recruitment as time-variable)*.
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **bissau_data**
+
+```{r}
+#| code-fold: show
+bissau_data <- read.csv("data/bissau.csv")
+bissau_data$agem<-bissau_data$age/30.4
+```
+
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+```
+
+We use the **coxph** function to fit the marginal hazard model for the mortality rate adjusting for cluster and the variables BCG, DTP and age. We adjust for cluster by adding **cluster(cluster)** in the formula argument.
+
+```{r}
+#| code-fold: show
+# Fitting a marginal hazard model
+fit481 <- coxph(Surv(fuptime,dead)~ bcg + dtp + agem + cluster(cluster), data=bissau_data)
+summary(fit481)
+```
+We obtain a coefficient of -0.41 for BCG, 0.073 for DTP and 0.04 for age.
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We first load the data;
+
+proc import out=bissau_data
+  datafile='data/bissau.csv' 
+	dbms=csv replace;
+	getnames=yes;
+run;
+
+* To make our results comparable to table 2.12 we must first convert the age variable from days to months.;
+
+data bissau_data;
+	set bissau_data;
+	agem = age/30.4;
+run;
+
+/* We fit a marginal hazard model for the mortality rate adjusting for cluster and the variables BCG, DTP and age using the 'phreg'  procedure where we include 'covs(aggregate)' in the phreg statement to obtain robust SD estimates and 'cluster' in the id statement */
+
+title '4.8.1';
+proc phreg data=bissau_data covs(aggregate);
+	class cluster;
+	model fuptime*dead(0)= bcg dtp agem;
+	id cluster;
+run;
+```
+
+:::
+
+
+#### 2. 
+
+*Compare the results with those from the gamma frailty model (Exercise 3.12)*.
+
+The estimates of the coefficients are almost identical with the ones obtained with the gamma frailty model. The standard deviations of the marginal hazards model are, however, a little bit smaller than the standard errors from the gamma frailty model. 
+
+
+### Exercise 4.9 
+
+*Consider the data on recurrent episodes in affective disorder, Example 1.1.5*.
+
+::: panel-tabset
+
+## R
+
+The data should be loaded as **affective_data**
+
+```{r}
+#| code-fold: show
+affective_data <- read.csv("data/affective.csv")
+```
+We then load the relevant packages
+
+```{r}
+#| code-fold: show
+#| warning: false
+#| message: false
+library(tidyverse) #Data manipulations and plots
+library(survival) #Core survival analysis routines
+library(mets)
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+proc import out=affective_data
+	datafile='data/affective.csv' 
+	dbms=csv replace;
+	getnames=yes;
+run;
+```
+
+:::
+
+
+#### 1. 
+
+*Estimate the mean number of episodes, $\mu(t)$, in $[0; t]$ for unipolar and bipolar patients, taking the mortality into account*.
+
+::: panel-tabset
+
+## R
+
+We will estimate the mean number of episodes, $\mu(t)$, in $[0; t]$ for unipolar and bipolar patients, taking the mortality into account by 
+
+$$\hat{\mu}(t) = \sum_{x \leq t} \hat{S}(x-)\frac{dN(x)}{Y(x)}$$
+We must first make a data set corresponding to the setting with cycles depicted in Figure 1.5, i.e., the interval in hospital is included in the time between events.
+
+```{r}
+#| code-fold: show
+# Creating data corresponding to set up depicted in Figure 1.5
+data491 <- affective_data %>% group_by(id) %>% 
+                mutate(prev1 = lag(start, n = 1, default = 0),  # moves start one line down
+                       prev2 = lag(stop, n = 1, default = 0), # moves stop one line down
+                       prev = ifelse(state == 1, prev2, prev1)) %>% # picks the displaced value of stop if hospitalized, otherwise the displaced value of start.
+                filter(state == 0 | status %in% c(2,3))
+```
+
+We can estimate $\hat{S}(t)$ with the **survfit** function from the *survival* package where we use the data set **data491** and death (status = 2) as the event variable.
+
+```{r}
+#| code-fold: show
+#S(t)
+kmfit491 <- survfit(Surv(prev, stop, status == 2) ~ strata(bip) + cluster(id), data = data491)
+  
+#S(t) for unipolar patients
+S0 <- dplyr::lag(kmfit491$surv[1:(kmfit491$strata[1])], default = 1)
+
+#S(t) for bipolar patients
+S1 <- dplyr::lag(kmfit491$surv[(kmfit491$strata[1]+1):(kmfit491$strata[1] + kmfit491$strata[2])], default = 1)
+```
+
+We can also calculate $\frac{dN(x)}{Y(x)}$ using the **survfit** function where we have admission to hospital (status = 1) as event variable. 
+
+```{r}
+#| code-fold: show
+#A(t)
+naafit491 <- survfit(Surv(prev, stop, status == 1) ~ strata(bip) + cluster(id), data = data491)
+
+#dA(t) for unipolar patients
+dA0 <- diff(naafit491$cumhaz[1:naafit491$strata[1]])
+
+#dA(t) for bipolar patients
+dA1 <- diff(naafit491$cumhaz[(kmfit491$strata[1]+1):(kmfit491$strata[1] + kmfit491$strata[2])])
+```
+
+Then we can calculate the estimate of m(t) for both patient groups and plot the result
+
+```{r}
+#| code-fold: show
+#m(t) for unipolar patients
+mu0 <- cumsum(S0 * c(0, dA0))
+
+#m(t) for bipolar patients
+mu1 <- cumsum(S1 * c(0, dA1))
+
+# Collecting the data
+plotdata491 <- data.frame(time = kmfit491$time/12, 
+                       mu = c(mu0, mu1), 
+                       disorder = c(rep("Unipolar", length(mu0)), 
+                               rep("Bipolar", length(mu1))))
+
+# Plotting the result
+fig491 <- ggplot(data = plotdata491) + geom_step(aes(x = time, y = mu, color = disorder)) + 
+  xlab("Time since first admission (years)") + 
+  ylab("Expected number of episodes") + 
+  theme_bw()
+fig491
+```
+
+The expected number of episodes is larger for bipolar patients at all times compared to unipolar patients.
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We can estimate the mean number of episodes in [0,t] for unipolar and bipolar patients, taking the mortality into account 
+  by equation (4.13).
+
+* We make a data set correpsonding to the setting with cycles depicted in figure 1.5, i.e. the interval in hospital is 
+  included in the time between events.;
+
+title '4.9.1';
+data data491; 
+	set affective_data;
+	by id;
+	retain prev;
+	if first.id then prev=0; 
+	output; 
+	if state=1 then prev=start; if state=0 then prev=stop;
+run;
+
+data data491;
+	set data491;
+	if state = 0 or status = 2 or status = 3;
+run;
+
+* Thus the entry and exit time are now 'prev' and 'stop';
+
+* We can estimate S(X-) using the phreg procedure. Since the event of interest is death (status = 2) we include 'status(0 1 3)' as 
+  censoring variables in the model statement. The result is saved as 'kmdata491';
+
+proc phreg data=data491;
+	class bip;
+	model (prev,stop)*status(0 1 3)=;
+	id id;
+	strata bip;
+	baseline out=kmdata491 survival=km;
+run;
+
+* Likewise, we can estimate dN(X)/Y(X) using the phreg procedure with censoring variables 'status(0 2 3)' in the model statement. The 
+  result is saved as 'naadata491';
+
+proc phreg data=data491;
+	class bip;
+	model (prev,stop)*status(0 2 3)=;
+	id id;
+	strata bip;
+	baseline out=naadata491 cumhaz=naa;
+run;
+
+* We then create a data set for the unipolar patients and one for the bipolar patients containing the estimates of S(X-) and
+  dN(X)/Y(X);
+
+data naa_uni;
+	set naadata491;
+	if bip = 0;
+run;
+
+data km_uni; 
+	set kmdata491;
+	if bip = 0;
+run;
+
+data uni;
+	merge naa_uni km_uni;
+	by stop;
+run;
+
+data naa_bip;
+	set naadata491;
+	if bip = 1;
+run;
+
+data km_bip;
+	set kmdata491;
+	if bip = 1;
+run;
+
+data bip;
+	merge naa_bip km_bip;
+	by stop;
+run;
+
+* We then fill the empty cells in the data set with the previous value of S(X-) and dN(X)/Y(X);
+
+
+data uni;
+	set uni;
+	retain _km _naa;
+	if km ne . then _km = km;
+	if naa ne . then _naa = naa;
+	years = stop/12;
+run;
+
+data bip;
+	set bip;
+	retain _km _naa;
+	if km ne . then _km = km;
+	if naa ne . then _naa = naa;
+	years = stop/12;
+run;
+
+* Finally, we estimate m(t) for unipolar and bipolar patients respectively;
+
+data uni; 
+	set uni;
+	dA = dif(_naa); 
+	if years = 0 then dA = 0;
+	dmu = _km*dA;
+	retain mu;
+	mu + dmu;
+	bip = 0;
+	keep years _naa mu bip;
+run;
+
+
+data bip; 
+	set bip;
+	dA = dif(_naa); 
+	if years = 0 then dA = 0;
+	dmu = _km*dA;
+	retain mu;
+	mu + dmu;
+	bip = 1;
+	keep years _naa mu bip;
+run;
+
+* We merge the data sets for unipolar and bipolar patients and plot the data using the gplot procedure;
+
+data plotdata491;
+	set uni bip;
+run;
+
+title '4.9.1';
+proc gplot data=plotdata491;
+	plot mu*years=bip/ haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 30 by 5 minor=none label=('Years');
+	axis2 order=0 to 10 by 2 minor=none label=(a=90 'Expected number of episodes');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=stepjl c=blue;
+run;
+quit;
+  
+* The expected number of episodes is larger for bipolar patients at all times compared to unipolar patients.;
+
+* Less transparently, but in a way a lot easier, we can 'cheat' proc phreg to do the computations by
+  fitting an empty Fine-Gray model and transform the cumulative sub-distribution hazard!;
+
+proc phreg data=data491;
+	model stop*status(0 3)=/entry=prev eventcode=1;
+	strata bip;
+	baseline out=mcfdata1 cif=naa1;
+run;
+
+data mcfdata1; set mcfdata1;
+	cmf=-log(1-naa1);
+	years=stop/12;
+run;
+
+proc gplot data=mcfdata1;
+plot cmf*years=bip/haxis=axis1 vaxis=axis2;
+axis1 order=0 to 30 by 5 minor=none label=('Years');
+axis2 order=0 to 8 by 0.5 minor=none label=(a=90 'Expected number of episodes');
+symbol1  v=none i=stepjl c=red;
+symbol2  v=none i=stepjl c=blue;
+run;
+quit;
+```
+
+:::
+
+
+
+
+#### 2. 
+
+*Estimate, incorrectly, the same mean curves by treating death as censoring and compare with the correct curves from the first question, thereby, re-constructing the cover figure from this book (unipolar patients)*.
+
+::: panel-tabset
+
+## R
+
+We will estimate the mean number of episodes in $[0,t]$ for unipolar and bipolar patients neglecting mortality with the Nelson-Aalen estimator
+
+$$\hat{m}(t) = \sum_{x \leq t} \frac{dN(x)}{Y(x)},$$
+where $x$ is event time.
+
+This is exactly the Nelson-Aalen estimate obtained in **naafit491** in the previous exercise. We will save this data as **plotdata492**
+
+```{r}
+#| code-fold: show
+# Collecting the data for plotting
+plotdata492 <- data.frame(time = naafit491$time/12, 
+                       mu = naafit491$cumhaz, 
+                       disorder = c(rep("Unipolar", naafit491$strata[[1]]), 
+                               rep("Bipolar", naafit491$strata[[2]])))
+```
+
+
+We will now plot the curves for the two estimates of the mean number of episodes for unipolar patients
+
+```{r}
+#| code-fold: show
+# Plotting the estimate of the expected number of episodes for patients with unipolar disorder
+fig492_uni <- ggplot()  + geom_step(data = subset(plotdata492, disorder == "Unipolar"), aes(x = time, y = mu, color = "Not accounting for mortality")) + geom_step(data = subset(plotdata491, disorder == "Unipolar"), aes(x = time, y = mu, color = "Accounting for mortality")) +  ylab("Expected number of episodes") +
+  xlab("Time since first admission (years)") +
+  theme(legend.title=element_blank()) + ggtitle("Unipolar disorder")
+fig492_uni
+```
+
+We repeat for the bipolar patients
+
+```{r}
+#| code-fold: show
+fig492_bip <- ggplot() + geom_step(data = subset(plotdata491, disorder == "Bipolar"), aes(x = time, y = mu, color = "Accounting for mortality")) + geom_step(data = subset(plotdata492, disorder == "Bipolar"), aes(x = time, y = mu, color = "Not accounting for mortality")) +   ylab("Expected number of episodes") +
+  xlab("Time since first admission (years)") +
+  theme(legend.title=element_blank()) + ggtitle("Bipolar disorder")
+fig492_bip
+```
+
+For both unipolar and bipolar patients we get larger estimates of the mean number of episodes when we do not account for mortality.
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+* We can estimate the expected number of episodes neglecting mortality by equation (4.11). This is 
+  in fact the Nelson-Aalen estimate we saved in the data set 'naadata491';
+
+* We use the gplot procedure to plot the two estimates of the expected number of episodes;
+
+legend1 label = ('Accounting for mortality') value = ('Yes' 'No');
+
+title '4.9.2 - unipolar';
+proc gplot data=uni;
+	plot mu*years _naa*years/ overlay haxis=axis1 vaxis=axis2 legend =legend1;
+	axis1 order=0 to 30 by 5 minor=none label=('Years');
+	axis2 order=0 to 6 by 2 minor=none label=(a=90 'Expected number of episodes');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=stepjl c=blue;
+run;
+quit;
+
+title '4.9.2 - bipolar';
+proc gplot data=bip;
+	plot mu*years _naa*years/ overlay haxis=axis1 vaxis=axis2 legend =legend1;
+	axis1 order=0 to 30 by 5 minor=none label=('Years');
+	axis2 order=0 to 10 by 2 minor=none label=(a=90 'Expected number of episodes');
+	symbol1  v=none i=stepjl c=red;
+	symbol2  v=none i=stepjl c=blue;
+run;
+quit;
+
+* For both unipolar and bipolar patients we get larger estimates of the mean number of episodes when we do not account for mortality.;
+```
+
+:::
+
+
+### Exercise 4.10 
+
+*Consider the data from the Copenhagen Holter study.*
+
+#### 1. 
+
+*Estimate the distribution, $G(t)$ of censoring.*
+
+::: panel-tabset
+
+## R
+
+We will estimate the censoring distribution $G(t)$ with the Kaplan-Meier estimator where *censoring* is the event and *death* acts as censoring.
+
+```{r}
+#| code-fold: show
+km4101 <- survfit(Surv(timedeath, 1 - death) ~ 1, data = chs_data)
+
+
+# Plotting the Kaplan-Meier estimate
+(fig41 <- ggplot() + geom_step(aes(x = km4101$time, y = km4101$surv), size = 1)  + 
+          ylim(c(0,1)) +
+          xlab("Time (years)") + 
+          ylab("Probability of censoring")) 
+```
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+*We will estimate the censoring distribution G(t) with the Kaplan-Meier estimator where 'censoring' is the event and 'death' acts 
+ as censoring.;
+
+
+title "4.10.1";
+proc phreg data=chs_data;
+	model timedeath*death(1)=;
+	baseline out=survdat survival=km;
+run;
+
+* Then the estimates are plotted using the gplot procedure;
+
+proc gplot data=survdat;
+plot km*timedeath/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 16 by 2 label=('Years');
+	axis2 order=0 to 1 by 0.1 label=(a=90 'Censoring probability');
+run;
+quit;
+```
+
+:::
+
+
+#### 2. 
+
+*Examine to what extent this distribution depends on the variables ESVEA, sex, age, and systolic blood pressure.*
+
+::: panel-tabset
+
+## R
+
+To examine to what extent the censoring distribution depends on the variables ESVEA, sex, age, and systolic blood pressure, we will fit a Cox model including these covariates and where *censoring* is the event and *death* acts as censoring.
+
+```{r}
+#| code-fold: show
+cox4102 <- coxph(Surv(timedeath, 1- death) ~ esvea + sex + age + sbp, data = chs_data, ties = "breslow")
+summary(cox4102)
+```
+The $p$-values indicate that censoring depends on ESVEA, sex, and age but not on systolic blood pressure. 
+
+
+## SAS
+
+```{sas}
+#| eval: false 
+#| output: false
+#| code-fold: show
+*To examine to what extent the censoring distribution depends on the variables ESVEA, sex, age, and systolic blood pressure we will
+ fit a Cox model including these covariates and where 'censoring' is the event and 'death' acts as censoring.;
+
+title "4.10.2";
+proc phreg data=chs_data;
+	model timedeath*death(1)=esvea sex age sbp;
+run;
+
+*The p-values indicate that censoring depends strongly on ESVEA, sex, and age but not on systolic blood pressure.;
+```
+:::
