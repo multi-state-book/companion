@@ -1,4 +1,3 @@
-################################################ DOWNLOADING PACKAGES ###################################################################################
 library(survival)
 library(mstate)
 library(tidyverse) #Mostly for ggplot2
@@ -16,21 +15,21 @@ theme_general <- theme_bw() +
         axis.text.y = element_text(size = 22),
         legend.text = element_text(size = 22))
 
-################################################# DATA PREPARATIONS ######################################################################################### 
+# DATA PREPARATIONS ########################################################## 
 
 # Read data
 bmt <- read.csv("data/bmt.csv")
 bmt <- bmt %>% mutate(outof0 = ifelse(gvhd == 1 | rel == 1 | death == 1, 1, 0),
-                              outof0and1 = ifelse(rel == 1 | death == 1, 1,0),
-                              dead = death,
-                              timerel = ifelse(rel == 1, timerel, timedeath),
-                              timegvhd = ifelse(gvhd ==1, timegvhd, timerel),
-                              wait2 = timedeath - timerel,
-                              intxsurv = timedeath,
-                              intxrel = timerel,
-                              tgvhd = timegvhd,)
+                      outof0and1 = ifelse(rel == 1 | death == 1, 1,0),
+                      dead = death,
+                      timerel = ifelse(rel == 1, timerel, timedeath),
+                      timegvhd = ifelse(gvhd ==1, timegvhd, timerel),
+                      wait2 = timedeath - timerel,
+                      intxsurv = timedeath,
+                      intxrel = timerel,
+                      tgvhd = timegvhd,)
 
-################################# PREPARATIONS FOR AALEN-JOHANSEN & LANDMARK AALEN-JOHANSEN ############################################################################
+# PREPARATIONS FOR AALEN-JOHANSEN & LANDMARK AALEN-JOHANSEN ##################
 
 #Transition matrix
 tmat <- matrix(NA, 4,4)
@@ -53,7 +52,7 @@ msfit <- msfit(cox_base, trans = tmat)
 #Warning due to the same as above
 
 
-############################################### S = 3 ############################################################################################
+# S = 3 #######################################################################
 
 #Aalen-Johansen
 AJ3 <- probtrans(msfit, predt = 3, direction = "forward", method = "aalen")[[1]]
@@ -70,7 +69,7 @@ colnames(LMAJ3_data) <- c("time", "p02")
 
 LMAJ3_max60 <- subset(LMAJ3, time <= 60)
 
-############################################## S = 9 #############################################################################################
+# S = 9 #######################################################################
 
 #Aalen-Johansen
 AJ9 <- probtrans(msfit, predt = 9, direction = "forward", method = "aalen")[[1]]
@@ -86,10 +85,7 @@ colnames(LMAJ9_data) <- c("time", "p02")
 
 LMAJ9_max60 <- subset(LMAJ9, time <= 60)
 
-####################################################################################################################################################
-####################################################################################################################################################
-
-########################### PREPARATIONS FOR SEMI-MARKOV AND PLUG-IN ESTIMATORS #####################################################################################################
+# PREPARATIONS FOR SEMI-MARKOV AND PLUG-IN ESTIMATORS #########################
 
 #Transforming data to data.table for faster speed
 bmt_dt <- setDT(bmt)
@@ -152,7 +148,9 @@ time01 <- sort(unique(bmt_dt[gvhd == 1]$tgvhd))
 #Times of 1 -> 2 transitions
 time12 <- sort(unique(bmt_dt[gvhd ==1 & rel == 1]$intxrel)) 
 
-#################### FOR REPRODUCING THE TABLE p11alpha12. Takes approximately 10 minutes  ###################################################
+# -----------------------------------------------------------------------------
+# FOR REPRODUCING THE TABLE p11alpha12. Takes approximately 10 minutes
+
 #p11alpha12_table_raw <- matrix(NA, nrow = length(time01), ncol = length(time12))
 #colnames(p11alpha12_table_raw) <- time12
 #rownames(p11alpha12_table_raw) <- time01
@@ -161,10 +159,11 @@ time12 <- sort(unique(bmt_dt[gvhd ==1 & rel == 1]$intxrel))
 #    if (time01[i] > time12[j]){p11alpha12_table_raw[i,j] <- NA}
 #    else {p11alpha12_table_raw[i,j] <- p11(time01[i],time12[j])*alpha12(time12[j])}}}
 #p11alpha12_table <- as.data.table(p11alpha12_table_raw, keep.rownames = TRUE)
-#############################################################################################################################################
 
-#Data.table of P11(u,x-)alpha12(x)
-p11alpha12_table <- read.csv("mellemregninger/p11alpha12tabel.csv")
+# -----------------------------------------------------------------------------
+
+# Data.table of P11(u,x-)alpha12(x)
+p11alpha12_table <- read.csv("temp/p11alpha12tabel.csv")
 colnames(p11alpha12_table) <- c("rn",time12)
 p11alpha12_table <- as.data.table(p11alpha12_table)
 
@@ -183,7 +182,7 @@ patients_in_1 <- cmpfun(patients_in_1)
 patients_in_2 <- cmpfun(patients_in_2)
 p11alpha12 <- cmpfun(p11alpha12)
 
-########################################## S = 3 ##################################################################################################
+# S = 3 #######################################################################
 
 #Time of 0 -> 1 transitions for u > 3
 time01_s3 <- sort(unique(bmt_dt[tgvhd > 3 & gvhd == 1]$tgvhd))
@@ -207,7 +206,7 @@ p00alpha02_s3[, 2] <- sapply(p00alpha02_s3[,1], p00, start = 3) #P00(3,u -)
 p00alpha02_s3[, 3] <- sapply(p00alpha02_s3[,1], alpha02) #alpha02(u) 
 p00alpha02_s3[, 4] <- p00alpha02_s3[,2]*p00alpha02_s3[,3] #P00(3,u -)*alpha(u)
 
-######################################## S = 9 #####################################################################################################
+# S = 9 #######################################################################
 
 #Time of 0 -> 1 transitions for u > 9
 time01_s9 <- sort(unique(bmt_dt[tgvhd > 9 & gvhd == 1]$tgvhd))
@@ -231,10 +230,8 @@ p00alpha02_s9[, 2] <- sapply(p00alpha02_s9[,1], p00, start = 9) #P00(9,u -)
 p00alpha02_s9[, 3] <- sapply(p00alpha02_s9[,1], alpha02) #alpha02(u) 
 p00alpha02_s9[, 4] <- p00alpha02_s9[,2]*p00alpha02_s9[,3] #P00(9,u -)*alpha(u)
 
-###################################################################################################################################################
-####################################################################################################################################################
 
-############################################## SEMI-MARKOV #################################################################################################
+# SEMI-MARKOV #################################################################
 
 #Kaplan-Meier for being in state 2 under semi-Markov assumption.
 s2_semi <- survfit(Surv(wait2, dead) ~1, data = bmt_dt[rel ==1], type = "kaplan-meier") 
@@ -248,7 +245,7 @@ p22_semi <- function(start,end){
   p22 <- sub_tabel[length(sub_tabel)]
   return(p22)}
 
-##################################### S = 3 ########################################################################################################### 
+# S = 3 ####################################################################### 
 
 #P_{0->2}(3,t) = \int_{3}^{t} P_00(3,u-)alpha02(u)P_22(u,t)
 p02_direct_semi_s3 <- function(t){
@@ -282,7 +279,7 @@ p02_non_direct_semi_s3 <- function(t){
 p02_semi_s3 <- function(t){
   return(p02_direct_semi_s3(t) + p02_non_direct_semi_s3(t))}
 
-########################################### s = 9 ##############################################################################################
+# s = 9 #######################################################################
 
 #P_{0->2}(9,t) = \int_{9}^{t} P_00(9,u-)alpha02(u)P_22(u,t)
 p02_direct_semi_s9 <- function(t){
@@ -316,12 +313,9 @@ p02_non_direct_semi_s9 <- function(t){
 p02_semi_s9 <- function(t){
   return(p02_direct_semi_s9(t) + p02_non_direct_semi_s9(t))}
 
-########################################################################################################################################################
-########################################################################################################################################################
+# Landmark Pepe ###############################################################
 
-########################################### Landmark Pepe #####################################################################################################
-
-############################################# s = 3 ###################################################################################################
+# s = 3 #######################################################################
 
 #S_012, Kaplan-Meier for being in state 0,1 or 2 among patients in state 0 at time 3
 Pepe_S012_s3 <- survfit(Surv(intxsurv, dead) ~1, data = bmt_dt[tgvhd > 3]) 
@@ -339,7 +333,7 @@ LMPepe_s3 <- function(t){
   Pepe_est <- S012t - S01t
   return(Pepe_est)}
 
-############################################# s = 9 ###################################################################################################
+# s = 9 ######################################################################
 
 #S_012, Kaplan-Meier for being in state 0,1 or 2 among patients in state 0 at time 9
 Pepe_S012_s9 <- survfit(Surv(intxsurv, dead) ~1, data = bmt_dt[tgvhd > 9]) 
@@ -357,10 +351,7 @@ LMPepe_s9 <- function(t){
   Pepe_est <- S012t - S01t
   return(Pepe_est)}
 
-########################################################################################################################################################
-########################################################################################################################################################
-
-######################################### PLUG-IN WITH DURATION OF GVHD AS LINEAR EFFECT ###############################################################
+# PLUG-IN WITH DURATION OF GVHD AS LINEAR EFFECT ##############################
 
 #Subset of data only containing subjects with GvHD = 1.
 gvhd_subset <- subset(bmt, gvhd ==1)
@@ -422,20 +413,22 @@ p11_linear_gvhd <- function(start,end){
   return(p11)}
 
 
-#################################################################################################################### 
-### For reproducing data.table p11alpha12_linear_gvhd_table. Takes approximately 5 minutes ###
-#Table of p11alpha12 with linear effect of duration in state 1.
+# -----------------------------------------------------------------------------
+# For reproducing data.table p11alpha12_linear_gvhd_table. Takes approximately 5 minutes 
+
+# Table of p11alpha12 with linear effect of duration in state 1.
 #p11alpha12_table_raw2 <- matrix(NA, nrow = length(time01), ncol = length(time12))
 #colnames(p11alpha12_table_raw2) <- time12
 #rownames(p11alpha12_table_raw2) <- time01
 #for (i in 1:length(time01)){
 #  for (j in 1:length(time12)){
-#    if (time01[i] > time12[j]){p11alpha12_table_raw2[i,j] <- NA}
+#   if (time01[i] > time12[j]){p11alpha12_table_raw2[i,j] <- NA}
 #    else {p11alpha12_table_raw2[i,j] <- p11_linear_gvhd(time01[i],time12[j])*haz12(s = time01[i], x = time12[j])}}}
 #p11alpha12_linear_gvhd_table <- as.data.table(p11alpha12_table_raw2, keep.rownames = TRUE)
-###########################################################################################################
+# -----------------------------------------------------------------------------
 
-p11alpha12_linear_gvhd_table <- read.csv("mellemregninger/p11alpha12-linear-gvhd.csv")
+
+p11alpha12_linear_gvhd_table <- read.csv("temp/p11alpha12-linear-gvhd.csv")
 colnames(p11alpha12_linear_gvhd_table) <- c("rn",time12)
 p11alpha12_linear_gvhd_table <- as.data.table(p11alpha12_linear_gvhd_table)
 
@@ -454,15 +447,15 @@ S2_markov <- function(t){
     prob <- prod(frac)}
   return(prob)}
 
-#####################################################################################################################################
-### For reproducing S2_markov_table. Takes approximately 10 minutes. ###
+# -----------------------------------------------------------------------------
+# For reproducing S2_markov_table. Takes approximately 10 minutes. 
 #Data.table with 1st column times, t, and 2nd column S2_markov(t)
 #times_for_S2_markov <- seq(0,149.34, by = 0.01)
 #S2_markov_of_time <- sapply(times_for_S2_markov, S2_markov)
 #S2_markov_table <- as.data.table(cbind(times_for_S2_markov, S2_markov_of_time))
-#####################################################################################################################################
+# -----------------------------------------------------------------------------
 
-s2_markov_table <- read.csv("mellemregninger/s2_table.csv")
+s2_markov_table <- read.csv("temp/s2_table.csv")
 
 #P22(u,t) = S2(t)/S2(u)
 p22_markov <- function(start,end){
@@ -470,7 +463,7 @@ p22_markov <- function(start,end){
   s2_end <- s2_markov_table[end*100 + 1,2]
   return(as.numeric(s2_end/s2_start))}
 
-######################################################### s = 3 #####################################################################
+# s = 3 #####################################################################
 p02_direct_lingvhd_s3 <- function(t){
   time <- p00alpha02_s3[, 1][p00alpha02_s3[, 1] <= t]
   if (length(time) == 0){prob02 <- 0}
@@ -502,7 +495,7 @@ p02_non_direct_lingvhd_s3 <- function(t){
 p02_lingvhd_s3 <- function(t){
   return(p02_direct_lingvhd_s3(t) + p02_non_direct_lingvhd_s3(t))}
 
-######################################################### s = 9 #####################################################################
+# s = 9 #####################################################################
 p02_direct_lingvhd_s9 <- function(t){
   time <- p00alpha02_s9[, 1][p00alpha02_s9[, 1] <= t]
   if (length(time) == 0){prob02 <- 0}
@@ -534,10 +527,7 @@ p02_non_direct_lingvhd_s9 <- function(t){
 p02_lingvhd_s9 <- function(t){
   return(p02_direct_lingvhd_s9(t) + p02_non_direct_lingvhd_s9(t))}
 
-###########################################################################################################################################
-###########################################################################################################################################
-
-###################################### PLUG-IN WITH LINEAR EFFECT OF DURATION OF RELAPSE ###############################################
+# PLUG-IN WITH LINEAR EFFECT OF DURATION OF RELAPSE ###########################
 
 rel_subset <- bmt_dt[rel == 1]
 
@@ -574,8 +564,8 @@ p22_linrel_slow <- function(start,end){
       p22 <- exp(-int)}}
   return(p22)}
 
-###############################################################################################################################
-### For reproducing data.table p22_linrel_table. Takes approximately 10 minutes ###
+# -----------------------------------------------------------------------------
+# For reproducing data.table p22_linrel_table. Takes approximately 10 minutes
 #Table of p22 with linear effect of relapse as covariate.
 #p22_linrel_table_raw <- matrix(NA, nrow = length(timej2), ncol = length(time23))
 #rownames(p22_linrel_table_raw) <- timej2
@@ -585,9 +575,9 @@ p22_linrel_slow <- function(start,end){
 #    if (timej2[i] > time23[j]){p22_linrel_table_raw[i,j] <- NA}
 #    else {p22_linrel_table_raw[i,j] <- p22_linrel_slow(timej2[i],time23[j])}}}
 #p22_linrel_table <- as.data.table(p22_linrel_table_raw, keep.rownames = TRUE)
-###############################################################################################################################
+# -----------------------------------------------------------------------------
 
-p22_linrel_table <- read.csv("mellemregninger/p22_linrel_table.csv")
+p22_linrel_table <- read.csv("temp/p22_linrel_table.csv")
 colnames(p22_linrel_table) <- c("rn", time23)
 p22_linrel_table <- as.data.table(p22_linrel_table)
 
@@ -600,7 +590,7 @@ p22_linrel <- function(start,end){
   return(p22)}
 
 
-##################################### S = 3 ########################################################################################################### 
+# S = 3 ####################################################################### 
 
 #P_{0->2}(3,t) = \int_{3}^{t} P_00(3,u-)alpha02(u)P_22(u,t)
 p02_direct_linrel_s3 <- function(t){
@@ -635,10 +625,7 @@ p02_linrel_s3 <- function(t){
   return(p02_direct_linrel_s3(t) + p02_non_direct_linrel_s3(t))}
 
 
-
-########################################### s = 9 ##############################################################################################
-
-
+# s = 9 ######################################################################
 
 #P_{0->2}(9,t) = \int_{9}^{t} P_00(9,u-)alpha02(u)P_22(u,t)
 p02_direct_linrel_s9 <- function(t){
@@ -673,10 +660,18 @@ p02_linrel_s9 <- function(t){
   return(p02_direct_linrel_s9(t) + p02_non_direct_linrel_s9(t))}
 
 
-###########################################################################################################################################
-###########################################################################################################################################
+# Table 5.5 #################################################################
 
-###################################################### Figure 5.10 ##############################################################################
+cox12 <- coxph(formula = Surv(tgvhd, intxrel, rel) ~ tt(tgvhd), data = subset(bmt, gvhd ==1), tt = function(x, t, ...) t - x, method = "breslow")
+summary(cox12)
+
+cox13 <- coxph(formula = Surv(tgvhd, intxsurv, dead) ~ tt(tgvhd), data = subset(bmt, gvhd ==1), tt = function(x, t, ...) t - x, method = "breslow")
+summary(cox13)
+
+cox23 <- coxph(formula = Surv(intxrel, intxsurv, dead) ~ tt(intxrel), data = subset(bmt, rel == 1), tt = function(x, t, ...) t - x, method = "breslow")
+summary(cox23)
+
+# Figure 5.10 #################################################################
 
 #For reproducing the data.frame semi_s3_data - takes approximately 1.5 hour
 #Data.frame for plotting semi-Markov
@@ -685,22 +680,23 @@ p02_linrel_s9 <- function(t){
 #semi_s3_data <- as.data.frame(cbind(time_semi_s3, semi_p02_s3))
 #colnames(semi_s3_data) <- c("time", "pstate3")
 
-semi_s3_data <- read.csv("mellemregninger/semi_s3_data.csv")
+semi_s3_data <- read.csv("temp/semi_s3_data.csv")
 
 #LM Pepe data for plot with s = 3
 time_pepe_s3 <- seq(3.01,60,0.01)
 est_pepe_s3 <- sapply(time_pepe_s3, LMPepe_s3)
 data_pepe_s3 <- as.data.frame(cbind(time_pepe_s3, est_pepe_s3))
 
-#### For reproducing the data.frame lingvhd_s3_data. Takes approximately 1 hour
+# -----------------------------------------------------------------------------
+# For reproducing the data.frame lingvhd_s3_data. Takes approximately 1 hour
 #Plug-in (linear effect of duration of gvhd) data for plot with s = 3
 #time_lingvhd_s3 <- seq(3.01,60,by = 0.03)
 #lingvhd_p02_s3 <- sapply(time_lingvhd_s3, p02_lingvhd_s3)
 #lingvhd_s3_data <- as.data.frame(cbind(time_lingvhd_s3,lingvhd_p02_s3))
 #colnames(lingvhd_s3_data) <- c("time", "pstate3")
+# -----------------------------------------------------------------------------
 
-lingvhd_s3_data <- read.csv("mellemregninger/data_lingvhd_s3.csv")
-
+lingvhd_s3_data <- read.csv("temp/data_lingvhd_s3.csv")
 
 #For reproducing the data.frame linrel_s3_data. Takes approximately 1.5 hour
 #time_linrel_s3 <- AJ3_max60$time
@@ -709,7 +705,7 @@ lingvhd_s3_data <- read.csv("mellemregninger/data_lingvhd_s3.csv")
 #linrel_s3_data <- as.data.frame(cbind(time_linrel_s3, linrel_p02_s3))
 #colnames(linrel_s3_data) <- c("time", "pstate3")
 
-linrel_s3_data <- read.csv("mellemregninger/linrel_s3_data.csv")
+linrel_s3_data <- read.csv("temp/linrel_s3_data.csv")
 
 #Plot with AaJ, LM AaJ and LM Pepe, s = 3
 threemonths_ggplot_all <- ggplot(AJ3_max60,aes(time*(1/12),pstate3)) + 
@@ -747,11 +743,7 @@ fig5.10 <- ggplot(AJ3_max60,aes(time,pstate3)) +
 
 fig5.10
 
-
-#ggsave("figures/h_BMT-all-s3.pdf", plot = fig5.10,width = 29.7, height = 21, units = "cm")
-
-
-######################################### Figure 5.11 #################################################################################################
+# Figure 5.11 #################################################################
 
 #For reproducing the data.frame semi_s9_data - takes approximately 15 minutes
 #Data.frame for plotting semi-Markov
@@ -760,7 +752,7 @@ fig5.10
 #semi_s9_data <- as.data.frame(cbind(time_semi_s9, semi_p02_s9))
 #colnames(semi_s9_data) <- c("time", "pstate3")
 
-semi_s9_data <- read.csv("mellemregninger/semi_s9_data.csv")
+semi_s9_data <- read.csv("temp/semi_s9_data.csv")
 
 #LM Pepe data for plot with s = 9
 time_pepe_s9 <- seq(9.01,60,0.01)
@@ -774,7 +766,7 @@ data_pepe_s9 <- as.data.frame(cbind(time_pepe_s9,est_pepe_s9))
 #lingvhd_s9_data <- as.data.frame(cbind(time_lingvhd_s9,lingvhd_p02_s9))
 #colnames(lingvhd_s9_data) <- c("time", "pstate3")
 
-lingvhd_s9_data <- read.csv("mellemregninger/lingvhd_s9_data.csv")
+lingvhd_s9_data <- read.csv("temp/lingvhd_s9_data.csv")
 
 #For reproducing the data.frame linrel_s9_data. Takes approximately 30 minutes
 #time_linrel_s9 <- seq(9.01, 60, by = 0.03)
@@ -782,8 +774,7 @@ lingvhd_s9_data <- read.csv("mellemregninger/lingvhd_s9_data.csv")
 #linrel_s9_data <- as.data.frame(cbind(time_linrel_s9, linrel_p02_s9))
 #colnames(linrel_s9_data) <- c("time", "pstate3")
 
-linrel_s9_data <- read.csv("mellemregninger/linrel_s9_data.csv")
-
+linrel_s9_data <- read.csv("temp/linrel_s9_data.csv")
 
 #Plot with AaJ, LM AaJ, LM Pepe, s = 9
 ninemonths_ggplot_all <- ggplot(AJ9_max60,aes(time*(1/12),pstate3)) + 
@@ -822,15 +813,3 @@ fig5.11 <- ggplot(AJ9_max60,aes(time,pstate3)) +
 
 fig5.11
 
-#ggsave("figures/h_BMT-all-s9.pdf", plot = fig5.11, width = 29.7, height = 21, units = "cm")
-
-####################################################### Table 5.5 #################################################################
-
-cox12 <- coxph(formula = Surv(tgvhd, intxrel, rel) ~ tt(tgvhd), data = subset(bmt, gvhd ==1), tt = function(x, t, ...) t - x, method = "breslow")
-summary(cox12)
-
-cox13 <- coxph(formula = Surv(tgvhd, intxsurv, dead) ~ tt(tgvhd), data = subset(bmt, gvhd ==1), tt = function(x, t, ...) t - x, method = "breslow")
-summary(cox13)
-
-cox23 <- coxph(formula = Surv(intxrel, intxsurv, dead) ~ tt(intxrel), data = subset(bmt, rel == 1), tt = function(x, t, ...) t - x, method = "breslow")
-summary(cox23)

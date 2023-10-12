@@ -1,14 +1,22 @@
 # Marginal models
 
 ## PBC3 trial in liver cirrhosis
+<!-- finished -->
+
 {{< include R/chapter5_pbc3.qmd >}}
 
 ## PROVA trial in liver cirrhosis
+<!-- not finished -->
+TODO: prova analyses take some runtime
 
-TODO: take some runtime
 <!-- {{< include R/chapter5_prova.qmd >}} -->
 
+## LEADER cardiovascular trial in type 2 diabetes
+<!-- not finished -->
+<!-- {{< include R/chapter5_leader.qmd >}} -->
+
 ## Bone marrow transplantation in acute leukemia
+<!-- finished, using Eva's saved data in temp -->
 {{< include R/chapter5_bmt.qmd >}}
 
 ## Exercises

@@ -6,6 +6,9 @@
 ## PROVA trial in liver cirrhosis
 {{< include R/chapter6_prova.qmd >}}
 
+## LEADER cardiovascular trial in type 2 diabetes
+{{< include R/chapter6_leader.qmd >}}
+
 ## Exercises
 
 The SAS solutions are available as a single file for download:

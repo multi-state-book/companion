@@ -13,6 +13,10 @@
 
 -   Section 5.1.3, p. 168: The equation for $\frac{\partial}{\partial t}P_{01}(s,t)$ should read $$\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)$$
 
+-   Table 5.1, p. 178: At risk at landmark time 0 should be $2009$.
+
+-   Table 5.6 (b), p. 213: Treatment estimate in adjusted model is negative, i.e., $-0.520$.
+
 ## Chapter 6
 
 -   Exercise 6.1.2, p. 243: A right bracket is missing after $dN(u)$ in the second denominator

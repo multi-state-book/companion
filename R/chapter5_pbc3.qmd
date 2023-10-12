@@ -1,10 +1,11 @@
 ### Read data
 
 ::: {.panel-tabset}
-## R
-```{r}
-#| label: read-pbc3
 
+## R
+
+```{r}
+#| label: read-pbc3-r
 pbc3 <- read.csv("data/pbc3.csv")
 pbc3$log2bili <- with(pbc3, log2(bili))
 ```
@@ -14,7 +15,6 @@ pbc3$log2bili <- with(pbc3, log2(bili))
 #| label: read-pbc3-sas
 #| eval: false 
 #| output: false
-
 proc import out=pbc3
 	datafile="data/pbc3.csv"
 	dbms=csv replace;
@@ -22,6 +22,7 @@ run;
 data pbc3; 
 	set pbc3;
 	log2bili=log2(bili);
+	years=days/365.25;
 run;
 ```
 :::
@@ -33,7 +34,7 @@ run;
 ## R
 
 ```{r}
-#| label: table-5.6
+#| label: table-5.6-r
 
 library(mets)
 pbcny <- subset(pbc3, !is.na(alb))
@@ -64,12 +65,19 @@ summary(timereg3)$coef
 
 ## SAS-NA
 
+There is currently no implementation of direct binomial regression in SAS.
+
 :::
 
 ### Figure 5.12
 
+::: {.panel-tabset}
+
+## R
+
+
 ```{r}
-#| label: figure-5.12
+#| label: figure-5.12-r
 #| out-width: 90%
 
 library(timereg)
@@ -81,8 +89,8 @@ theme_general <- theme_bw() +
         axis.text.y = element_text(size = 20)) 
 
 # Make Cox model fit
-pbc3$followup <- pbc3$days / 365.25
-fit <- cox.aalen(Surv(followup, status != 0) ~ prop(tment) + prop(alb) + prop(bili),
+pbc3$years <- pbc3$days/365.25
+fit <- cox.aalen(Surv(years, status != 0) ~ prop(tment) + prop(alb) + prop(bili),
                  data = pbc3, n.sim = 0,
                  residuals = 1)
 
@@ -116,10 +124,29 @@ fig5.12
 cum_res$pval.test[1]
 ```
 
+## SAS
+```{sas}
+#| label: figure-5.12-sas
+#| eval: false 
+#| output: false
+ods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb bili / rl;
+	assess var=(alb) / resample=1000 npaths=50;
+run;
+```
+:::
+
+
 ### Figure 5.13
 
+::: {.panel-tabset}
+
+## R
+
 ```{r}
-#| label: figure-5.13
+#| label: figure-5.13-r
 #| out-width: 90%
 
 # Figure bili
@@ -148,16 +175,35 @@ fig5.13
 # p-value
 cum_res$pval.test[2]
 ```
+
+## SAS
+```{sas}
+#| label: figure-5.13-sas
+#| eval: false 
+#| output: false
+ods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb bili / rl;
+	assess var=(bili) / resample=1000 npaths=50;
+run;
+```
+:::
+
 ### Figure 5.14
 
+::: {.panel-tabset}
+
+## R
+
 ```{r}
-#| label: figure-5.14
+#| label: figure-5.14-r
 #| out-width: 90%
 
 
 # Make Cox model fit with log2bili
 fit2 <- cox.aalen(
-  Surv(followup, status != 0) ~ prop(tment) + prop(alb) + prop(log2bili),
+  Surv(years, status != 0) ~ prop(tment) + prop(alb) + prop(log2bili),
   data = pbc3, n.sim = 0, residuals = 1)
 
 # Cumulative martingale residuals
@@ -187,22 +233,40 @@ fig5.14 <- ggplot(aes(x = log2bili, y = cum_mg_res),
 
 fig5.14
 cum_res$pval.test[2]
-
 ```
+
+## SAS
+```{sas}
+#| label: figure-5.14-sas
+#| eval: false 
+#| output: false
+ods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb log2bili /rl;
+	assess var=(log2bili) / resample=1000 npaths=50;
+run;
+```
+:::
 
 ### Figure 5.15
 
+::: {.panel-tabset}
+
+## R
+
+
 ```{r}
-#| label: figure-5.15
+#| label: figure-5.15-r
 #| out-width: 90%
 # Compute Schoenfeld residuals (standardized)
 set.seed(130966)
 fit3 <- cox.aalen(
-  Surv(followup, status != 0) ~ prop(tment) + prop(alb) + prop(log2bili),
+  Surv(years, status != 0) ~ prop(tment) + prop(alb) + prop(log2bili),
   data = pbc3, n.sim = 1000, residuals = 1, weighted.test = 1)
 summary(fit3)
 par(mfrow = c(1,1))
-plot(fit3, score = T)
+#plot(fit3, score = T)
 
 time <- fit3$residuals$time
 sim <- fit3$sim.test.procProp
@@ -227,11 +291,29 @@ fig5.15 <- ggplot(aes(x = time, y = res), data = data_tment_obs) +
 fig5.15
 fit3$pval.Prop[1]
 ```
+## SAS
+```{sas}
+#| label: figure-5.15-sas
+#| eval: false 
+#| output: false
+pods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb log2bili /rl;
+	assess ph / resample=1000 npaths=50;
+run;
+```
+:::
 
 ### Figure 5.16
 
+::: {.panel-tabset}
+
+## R
+
+
 ```{r}
-#| label: figure-5.16
+#| label: figure-5.16-r
 #| out-width: 90%
 
 # Same but for albumin
@@ -256,10 +338,29 @@ fig5.16
 fit3$pval.Prop[2]
 ```
 
+## SAS
+```{sas}
+#| label: figure-5.16-sas
+#| eval: false 
+#| output: false
+ods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb log2bili /rl;
+	assess ph / resample=1000 npaths=50;
+run;
+```
+:::
+
+
 ### Figure 5.17
 
+::: {.panel-tabset}
+
+## R
+
 ```{r}
-#| label: figure-5.17
+#| label: figure-5.17-r
 #| out-width: 90%
 
 # Same but for log2bili
@@ -283,3 +384,20 @@ fig5.17 <- ggplot(aes(x = time, y = res), data = data_log2bili_obs) +
 fig5.17
 fit3$pval.Prop[3]
 ```
+
+## SAS
+```{sas}
+#| label: figure-5.17-sas
+#| eval: false 
+#| output: false
+ods graphis on; 
+proc phreg data=pbc3;
+	class tment (ref='0');
+	model years*status(0)=tment alb log2bili /rl;
+	assess ph / resample=1000 npaths=50;
+run;
+```
+:::
+
+
+

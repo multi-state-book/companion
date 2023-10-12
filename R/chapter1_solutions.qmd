@@ -1,6 +1,6 @@
 The SAS solution is available as a single file for download:
 
--   [Exercises 1.2 (The Copenhagen Holter study)](/SAS/chapter1_solutions_cphholter.sas)
+-   [Exercise 1.2 (The Copenhagen Holter study)](/SAS/chapter1_solutions_cphholter.sas)
 
 ### Exercise 1.1
 

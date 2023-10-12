@@ -285,33 +285,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#figure-6.10" id="toc-figure-6.10" class="nav-link" data-scroll-target="#figure-6.10">Figure 6.10</a></li>
   <li><a href="#table-6.7" id="toc-table-6.7" class="nav-link" data-scroll-target="#table-6.7">Table 6.7</a></li>
   </ul></li>
+  <li><a href="#leader-cardiovascular-trial-in-type-2-diabetes" id="toc-leader-cardiovascular-trial-in-type-2-diabetes" class="nav-link" data-scroll-target="#leader-cardiovascular-trial-in-type-2-diabetes">LEADER cardiovascular trial in type 2 diabetes</a></li>
+  <li><a href="#set-working-directory---location-of-data" id="toc-set-working-directory---location-of-data" class="nav-link" data-scroll-target="#set-working-directory---location-of-data">Set working directory - location of data</a></li>
+  <li><a href="#load-required-packages-should-be-installed-if-not-already" id="toc-load-required-packages-should-be-installed-if-not-already" class="nav-link" data-scroll-target="#load-required-packages-should-be-installed-if-not-already">Load required packages (should be installed if not already)</a></li>
+  <li><a href="#one-data-set-per-endpoint-type" id="toc-one-data-set-per-endpoint-type" class="nav-link" data-scroll-target="#one-data-set-per-endpoint-type">One data set per endpoint type</a></li>
+  <li><a href="#general-theme" id="toc-general-theme" class="nav-link" data-scroll-target="#general-theme">General theme</a>
+  <ul>
   <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">Exercises</a>
   <ul>
   <li><a href="#exercise-6.1" id="toc-exercise-6.1" class="nav-link" data-scroll-target="#exercise-6.1">Exercise 6.1 (*)</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.</a></li>
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2.</a></li>
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">3.</a></li>
   </ul></li>
   <li><a href="#exercise-6.2" id="toc-exercise-6.2" class="nav-link" data-scroll-target="#exercise-6.2">Exercise 6.2 (*)</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">1.</a></li>
   <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">2.</a></li>
   </ul></li>
   <li><a href="#exercise-6.3" id="toc-exercise-6.3" class="nav-link" data-scroll-target="#exercise-6.3">Exercise 6.3</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">1.</a></li>
   <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">2.</a></li>
   </ul></li>
   <li><a href="#exercise-6.4" id="toc-exercise-6.4" class="nav-link" data-scroll-target="#exercise-6.4">Exercise 6.4</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">1.</a></li>
   <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">2.</a></li>
   </ul></li>
   <li><a href="#exercise-6.5" id="toc-exercise-6.5" class="nav-link" data-scroll-target="#exercise-6.5">Exercise 6.5</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9">1.</a></li>
   <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10">2.</a></li>
+  </ul></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -1472,6 +1479,45 @@ Number of clusters:   343   Maximum cluster size: 1 </code></pre>
 <p>No code available - results are from: Andersen, P. K., Wandall, E. N. S., Pohar Perme, M. (2022). Inference for transition probabilities in non-Markov multi-state models. <em>Lifetime Data Analysis</em>, 28:585–604.</p>
 </section>
 </section>
+<section id="leader-cardiovascular-trial-in-type-2-diabetes" class="level2">
+<h2 class="anchored" data-anchor-id="leader-cardiovascular-trial-in-type-2-diabetes">LEADER cardiovascular trial in type 2 diabetes</h2>
+<p>#——————————————————————# #——- Chapter 6, R code, LEADER data —————————# #——————————————————————#</p>
+</section>
+<section id="set-working-directory---location-of-data" class="level1">
+<h1>Set working directory - location of data</h1>
+<p>setwd(“P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB”)</p>
+</section>
+<section id="load-required-packages-should-be-installed-if-not-already" class="level1">
+<h1>Load required packages (should be installed if not already)</h1>
+<p>require(survival) require(ggplot2) require(timereg) require(gridExtra) require(mets)</p>
+<p>leader &lt;- read.csv(“data/leader_mi_3p.csv”)</p>
+</section>
+<section id="one-data-set-per-endpoint-type" class="level1">
+<h1>One data set per endpoint type</h1>
+<p>leader_mi &lt;- subset(leader, type == “recurrent_mi”) leader_3p &lt;- subset(leader, type == “recurrent_comb_str_mi_cvdth”)</p>
+<p>#——————————————————————# # ——– General plotting style ———————————# #——————————————————————#</p>
+</section>
+<section id="general-theme" class="level1">
+<h1>General theme</h1>
+<p>theme_general &lt;- theme_bw() + theme(legend.position = “bottom”, text = element_text(size = 20), axis.text.x = element_text(size = 20), axis.text.y = element_text(size = 20))</p>
+<p>theme_general</p>
+<p>#——————————————————————# #—————- Figure 6.11 ————————————-# #——————————————————————#</p>
+<p>require(mets) require(ggpubr)</p>
+<p>np_ests &lt;- function(endpointdat){ # Fit NAa NAa_fit &lt;- survfit(Surv(start, stop, status == 1) ~ treat, data = endpointdat, id = id, ctype = 1) # Fit KM KM_fit &lt;- survfit(Surv(start, stop, status == 2) ~ treat, data = endpointdat, id = id, ctype = 1)</p>
+<pre><code># Adjust hat(mu)</code></pre>
+<p>mu_adj &lt;- c(cumsum(KM_fit<span class="math inline">\(surv[1:KM_fit\)</span>strata[[1]]] * c(0, diff(NAa_fit<span class="math inline">\(cumhaz[1:NAa_fit\)</span>strata[[1]]]))), cumsum(KM_fit<span class="math inline">\(surv[(KM_fit\)</span>strata[[1]] + 1):(KM_fit<span class="math inline">\(strata[[1]] + KM_fit\)</span>strata[[2]])] * c(0, diff(NAa_fit<span class="math inline">\(cumhaz[(NAa_fit\)</span>strata[[1]] + 1):(NAa_fit<span class="math inline">\(strata[[1]] + NAa_fit\)</span>strata[[2]])]))) )</p>
+<p>dat_adj &lt;- data.frame(mu = mu_adj, time = NAa_fit<span class="math inline">\(time,  treat = c(rep("Liraglutide", NAa_fit\)</span>strata[[1]]), rep(“Placebo”, NAa_fit<span class="math inline">\(strata[[2]])),  type = rep("Mortality taken into account (GL)", length(NAa_fit\)</span>time)))</p>
+<p>pdat &lt;- rbind(dat_adj)</p>
+<p>mu &lt;- ggplot(aes(x = time * 1 / (365.25 / 12), y = mu), data = pdat) + geom_step(aes(linetype = treat), size = 1.05) + xlab(“Time since randomization (months)”) + ylab(expression(hat(mu)* “(t)”)) + scale_linetype_discrete(“Treatment”) + theme_general + theme( legend.title=element_blank(), legend.text = element_text(size = 20), legend.key.size = unit(2,“line”), legend.direction = “horizontal”, legend.box = “horizontal”, legend.key.width = unit(1.5, “cm”)) + scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), limits = c(0, 65), breaks = seq(0, 65, by = 12)) + scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), limits = c(0, 0.12), breaks = seq(0, 0.12, by = 0.02))</p>
+<p>mu</p>
+<p>## S</p>
+<p>dat_S &lt;- data.frame(surv = KM_fit<span class="math inline">\(surv,  time = KM_fit\)</span>time, treat = c(rep(“Liraglutide”, KM_fit<span class="math inline">\(strata[[1]]), rep("Placebo", KM_fit\)</span>strata[[2]])))</p>
+<p>surv &lt;- ggplot(aes(x = time * 1 / (365.25 / 12), y = surv), data = dat_S) + geom_step(aes(linetype = treat), size = 1.05) + xlab(“Time since randomization (months)”) + ylab(expression(hat(S)* “(t)”)) + scale_linetype_discrete(“Treatment”) + theme_general + theme( legend.direction = “horizontal”, legend.box = “horizontal”, legend.key.width = unit(1.5, “cm”)) + scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), limits = c(0, 65), breaks = seq(0, 65, by = 12)) + scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), limits = c(0, 1), breaks = seq(0, 1, by = 0.1))</p>
+<p>surv</p>
+<p>both &lt;- ggarrange(mu, surv, common.legend = T, legend = “bottom”) both</p>
+<p>}</p>
+<p>fig611 &lt;- np_ests(endpointdat = leader_mi) fig611</p>
+<p>setwd(“c:/Users/hnrv/OneDrive - Novo Nordisk/Book/Julie programs copied 19Jun23/R programs”) ggsave(“figures/h_LEADERest.pdf”, plot = fig611, width = 29.7, height = 15, units = “cm”)</p>
 <section id="exercises" class="level2">
 <h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
 <p>The SAS solutions are available as a single file for download:</p>
@@ -1523,32 +1569,32 @@ Y_i(s)\frac{dN_h(s)}{\widehat{S}(s-)\widehat{G}(s-)Y(s)})\right)\]</span> which 
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-24_90035f65774ddb6483cee184850e0ef4">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cphholter.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cphholter.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We then load the relevant packages</p>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-25_afde1c9168add3ad411b33c6c91b5727">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#Data manipulations and plots</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival) <span class="co">#Core survival analysis routines</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer) <span class="co">#Plots of survival curves</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survRM2) <span class="co">#RMST </span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate) <span class="co">#probtrans, ELOS</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mets) <span class="co">#binreg</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pseudo)</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co">#Data manipulations and plots</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival) <span class="co">#Core survival analysis routines</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer) <span class="co">#Plots of survival curves</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survRM2) <span class="co">#RMST </span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mstate) <span class="co">#probtrans, ELOS</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mets) <span class="co">#binreg</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pseudo)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(geepack)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Finally, we will convert the time variables to years and add a time variable and status indicator for the composite end-point stroke-free survival.</p>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-26_76d24ff8b473a6e08d91e0c84264d0df">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> chs_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">timeafib =</span> timeafib<span class="sc">/</span><span class="fl">365.25</span>,</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timestroke =</span> timestroke<span class="sc">/</span><span class="fl">365.25</span>,</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timedeath =</span> timedeath<span class="sc">/</span><span class="fl">365.25</span>,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timestrokeordeath =</span> <span class="fu">ifelse</span>(stroke <span class="sc">==</span> <span class="dv">1</span>, timestroke, timedeath),</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">strokeordeath =</span> <span class="fu">ifelse</span>(stroke <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, death))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> chs_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">timeafib =</span> timeafib<span class="sc">/</span><span class="fl">365.25</span>,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timestroke =</span> timestroke<span class="sc">/</span><span class="fl">365.25</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timedeath =</span> timedeath<span class="sc">/</span><span class="fl">365.25</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">timestrokeordeath =</span> <span class="fu">ifelse</span>(stroke <span class="sc">==</span> <span class="dv">1</span>, timestroke, timedeath),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>                                <span class="at">strokeordeath =</span> <span class="fu">ifelse</span>(stroke <span class="sc">==</span><span class="dv">1</span>, <span class="dv">1</span>, death))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1556,30 +1602,30 @@ Y_i(s)\frac{dN_h(s)}{\widehat{S}(s-)\widehat{G}(s-)Y(s)})\right)\]</span> which 
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-27_dc925b589d03a3c6f9c5b95664b43ffe">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import out = chs_<span class="kw">data</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    datafile = <span class="st">'data/cphholter.csv'</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    dbms= csv <span class="kw">replace</span>;</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    getnames=yes;</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co">* We will convert the time variables, timeafib, timestroke, and timedeath, from days to years;</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    timeafib = timeafib/<span class="dv">365.25</span>;</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>    timestroke = timestroke/<span class="dv">365.25</span>;</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    timedeath = timedeath/<span class="dv">365.25</span>;</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="co">* Furthermore, we add variables for the composite end-point of stroke or death without stroke;</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    timestrokeordeath = timedeath;</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> timestrokeordeath = timestroke;</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>    strokeordeath = death;</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> strokeordeath = <span class="dv">1</span>;</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import out = chs_<span class="kw">data</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    datafile = <span class="st">'data/cphholter.csv'</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    dbms= csv <span class="kw">replace</span>;</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    getnames=yes;</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">* We will convert the time variables, timeafib, timestroke, and timedeath, from days to years;</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    timeafib = timeafib/<span class="dv">365.25</span>;</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    timestroke = timestroke/<span class="dv">365.25</span>;</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    timedeath = timedeath/<span class="dv">365.25</span>;</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co">* Furthermore, we add variables for the composite end-point of stroke or death without stroke;</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    timestrokeordeath = timedeath;</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> timestrokeordeath = timestroke;</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    strokeordeath = death;</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> strokeordeath = <span class="dv">1</span>;</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1597,17 +1643,17 @@ Y_i(s)\frac{dN_h(s)}{\widehat{S}(s-)\widehat{G}(s-)Y(s)})\right)\]</span> which 
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-28_3c6028b4e1a4a5d003e7bc94cc7659a4">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations </span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>pseudo631 <span class="ot">&lt;-</span> <span class="fu">pseudosurv</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath, <span class="at">event =</span> chs_data<span class="sc">$</span>strokeordeath, <span class="at">tmax =</span> <span class="dv">3</span>)<span class="sc">$</span>pseudo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations </span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>pseudo631 <span class="ot">&lt;-</span> <span class="fu">pseudosurv</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath, <span class="at">event =</span> chs_data<span class="sc">$</span>strokeordeath, <span class="at">tmax =</span> <span class="dv">3</span>)<span class="sc">$</span>pseudo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The cloglog model for experiencing stroke-free survival is fitted using the <strong>geese</strong> function from the <em>geepack</em> library where we must provide the arguments <strong>formula</strong>, <strong>data</strong> and <strong>mean.link</strong>. Since the cloglog link function is implemented as <span class="math inline">\(\log(-\log(1-x))\)</span> we must use 1 minus the pseudo observations as responses in the GEE. Furthermore, we must exclude the three observations with missing values of systolic blood pressure in the data argument.</p>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-29_6b1dfc2443c2eec6b911a7e7d3bcbd05">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting the GEE</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>fit631 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">-</span> pseudo631) <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit631)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting the GEE</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>fit631 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> <span class="fu">I</span>(<span class="dv">1</span> <span class="sc">-</span> pseudo631) <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit631)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1649,178 +1695,178 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-30_baf21271ac8ed7890fd273e8d6c93731">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">* We will compute the pseudo observations for the incompletely observed survival indicators I(T_i &gt; 3 years), i = 1,...,678 using </span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">  the pseudosurv MACRO.;</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co">* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being </span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co">  printed;</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudosurv(indata,time,dead,howmany,datatau,outdata);</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* The subsequent SAS code is adapted from that described by J.P.Klein,</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co">    M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R</span></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co">    functions to compute pseudo-values for censored data regression"</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */</span> </span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co">/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE KAPLAN-MEIER ESTIMATOR AT EACH</span></span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME</span></span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="co">      INPUTS:</span></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="co">      INDATA---INPUT DATA SET</span></span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME--TIME VARIABLE</span></span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="co">      DEAD---EVENT INDICATOR (1-EVENT, 0-CENSORED)</span></span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY---SAMPLE SIZE</span></span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="co">      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED DATA</span></span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="co">                SET HAS SINGLE VARIABLE TIME</span></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a><span class="co">      OUTDATA---OUTPUT DATA SET WHICH CONTAINS PSUK,K=1,...,HOWMANY THE PSEUDO</span></span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a><span class="co">      VALUES AT EACH TIME POINT (Note output data set includes orginal data sorted</span></span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a><span class="co">                           by time</span></span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-30"><a href="#cb44-30" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;indata;</span></span>
-<span id="cb44-31"><a href="#cb44-31" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="kw">&amp;time;</span></span>
-<span id="cb44-32"><a href="#cb44-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">keep</span>;  <span class="kw">set</span> <span class="kw">&amp;datatau;</span></span>
-<span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a>find=<span class="dv">1</span>;</span>
-<span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;time;</span></span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span>=<span class="dv">1</span>;</span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">merge</span> <span class="fu">point</span> <span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
-<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> find <span class="kw">keep</span>;</span>
-<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> useme;  <span class="kw">set</span> <span class="fu">point</span>;</span>
-<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> temp -<span class="dv">1</span>;</span>
-<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">keep</span> = <span class="dv">1</span> <span class="kw">then</span> temp=<span class="fu">time</span>;</span>
-<span id="cb44-48"><a href="#cb44-48" aria-hidden="true" tabindex="-1"></a>tuse=temp; </span>
-<span id="cb44-49"><a href="#cb44-49" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb44-50"><a href="#cb44-50" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;time=</span>tuse;</span>
-<span id="cb44-51"><a href="#cb44-51" aria-hidden="true" tabindex="-1"></a><span class="kw"> run</span>;</span>
-<span id="cb44-52"><a href="#cb44-52" aria-hidden="true" tabindex="-1"></a><span class="co">/* WORKING DATA SET THAT INCLUDE A SET OF N INDICATORS WHERE FOR THE KTH INDICATOR</span></span>
-<span id="cb44-53"><a href="#cb44-53" aria-hidden="true" tabindex="-1"></a><span class="co"> THE EVENT IS MISSING */</span></span>
-<span id="cb44-54"><a href="#cb44-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> newdat;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
-<span id="cb44-55"><a href="#cb44-55" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
-<span id="cb44-56"><a href="#cb44-56" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobs(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
-<span id="cb44-57"><a href="#cb44-57" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb44-58"><a href="#cb44-58" aria-hidden="true" tabindex="-1"></a>iobs(j)=<span class="kw">&amp;dead;</span></span>
-<span id="cb44-59"><a href="#cb44-59" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> j=id <span class="kw">then</span> iobs(j)=.;</span>
-<span id="cb44-60"><a href="#cb44-60" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb44-61"><a href="#cb44-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-62"><a href="#cb44-62" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> newdat;</span>
-<span id="cb44-63"><a href="#cb44-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-64"><a href="#cb44-64" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE KME FOR FULL SAMPLE */</span></span>
-<span id="cb44-65"><a href="#cb44-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-66"><a href="#cb44-66" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> lifetest<span class="kw"> data</span>=newdat noprint plots = none;</span>
-<span id="cb44-67"><a href="#cb44-67" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span> <span class="kw">&amp;TIME*&amp;dead(</span><span class="dv">0</span>);</span>
-<span id="cb44-68"><a href="#cb44-68" aria-hidden="true" tabindex="-1"></a>survival out=sall;</span>
-<span id="cb44-69"><a href="#cb44-69" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> sall;  <span class="kw">set</span> sall;</span>
-<span id="cb44-70"><a href="#cb44-70" aria-hidden="true" tabindex="-1"></a>sall=survival;</span>
-<span id="cb44-71"><a href="#cb44-71" aria-hidden="true" tabindex="-1"></a> <span class="kw">keep</span> <span class="kw">&amp;time </span>sall;</span>
-<span id="cb44-72"><a href="#cb44-72" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-73"><a href="#cb44-73" aria-hidden="true" tabindex="-1"></a><span class="kw">%do</span> ip=<span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb44-74"><a href="#cb44-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-75"><a href="#cb44-75" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE KME FOR REDUCED SAMPLE */</span></span>
-<span id="cb44-76"><a href="#cb44-76" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> lifetest<span class="kw"> data</span>=newdat noprint plots = none;</span>
-<span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span> <span class="kw">&amp;time*</span>dead<span class="kw">&amp;ip(</span><span class="dv">0</span>);</span>
-<span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a>survival out=stmp;</span>
-<span id="cb44-79"><a href="#cb44-79" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> stmp;  <span class="kw">set</span> stmp;</span>
-<span id="cb44-80"><a href="#cb44-80" aria-hidden="true" tabindex="-1"></a>s<span class="kw">&amp;ip=</span>survival;</span>
-<span id="cb44-81"><a href="#cb44-81" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;time </span>s<span class="kw">&amp;ip;</span></span>
-<span id="cb44-82"><a href="#cb44-82" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-83"><a href="#cb44-83" aria-hidden="true" tabindex="-1"></a><span class="co">/*merge KMEs AND COMPUTE PSEUDOVALUES FOR OBSERVATION IP*/</span></span>
-<span id="cb44-84"><a href="#cb44-84" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> pstmp; <span class="kw">merge</span> sall stmp;  <span class="kw">by</span> <span class="kw">&amp;time;</span></span>
-<span id="cb44-85"><a href="#cb44-85" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> stemp <span class="dv">1</span>;</span>
-<span id="cb44-86"><a href="#cb44-86" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> s<span class="kw">&amp;ip=</span>. <span class="kw">then</span> s<span class="kw">&amp;ip=</span>stemp;</span>
-<span id="cb44-87"><a href="#cb44-87" aria-hidden="true" tabindex="-1"></a>stemp=s<span class="kw">&amp;ip;</span></span>
-<span id="cb44-88"><a href="#cb44-88" aria-hidden="true" tabindex="-1"></a>psu<span class="kw">&amp;ip=&amp;howmany*</span>sall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*s<span class="kw">&amp;ip;</span></span>
-<span id="cb44-89"><a href="#cb44-89" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-90"><a href="#cb44-90" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out; <span class="kw">merge</span> out pstmp useme ;  <span class="kw">by</span> <span class="kw">&amp;time;</span></span>
-<span id="cb44-91"><a href="#cb44-91" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb44-92"><a href="#cb44-92" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;time </span>psu1-psu<span class="kw">&amp;ip;</span></span>
-<span id="cb44-93"><a href="#cb44-93" aria-hidden="true" tabindex="-1"></a><span class="kw">%end</span>;</span>
-<span id="cb44-94"><a href="#cb44-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-95"><a href="#cb44-95" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> out;</span>
-<span id="cb44-96"><a href="#cb44-96" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> dup -<span class="dv">1</span>;</span>
-<span id="cb44-97"><a href="#cb44-97" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">&amp;time=</span>dup <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb44-98"><a href="#cb44-98" aria-hidden="true" tabindex="-1"></a> <span class="kw">else</span> dup=<span class="kw">&amp;time;</span></span>
-<span id="cb44-99"><a href="#cb44-99" aria-hidden="true" tabindex="-1"></a> jd+<span class="dv">1</span>;</span>
-<span id="cb44-100"><a href="#cb44-100" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-101"><a href="#cb44-101" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> io;  <span class="kw">set</span> out;</span>
-<span id="cb44-102"><a href="#cb44-102" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> ps psu1-psu<span class="kw">&amp;howmany;</span></span>
-<span id="cb44-103"><a href="#cb44-103" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> id=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb44-104"><a href="#cb44-104" aria-hidden="true" tabindex="-1"></a>pseudo=ps(id);</span>
-<span id="cb44-105"><a href="#cb44-105" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;time;</span></span>
-<span id="cb44-106"><a href="#cb44-106" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span>;</span>
-<span id="cb44-107"><a href="#cb44-107" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb44-108"><a href="#cb44-108" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> id pseudo jd;</span>
-<span id="cb44-109"><a href="#cb44-109" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=io ;</span>
-<span id="cb44-110"><a href="#cb44-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">by</span> id;</span>
-<span id="cb44-111"><a href="#cb44-111" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb44-112"><a href="#cb44-112" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> a;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
-<span id="cb44-113"><a href="#cb44-113" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
-<span id="cb44-114"><a href="#cb44-114" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> io;  <span class="kw">merge</span> a io;  <span class="kw">by</span> id;</span>
-<span id="cb44-115"><a href="#cb44-115" aria-hidden="true" tabindex="-1"></a><span class="kw"> proc</span> sort<span class="kw"> data</span>=io;  <span class="kw">by</span> jd;</span>
-<span id="cb44-116"><a href="#cb44-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-117"><a href="#cb44-117" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datatau;</span></span>
-<span id="cb44-118"><a href="#cb44-118" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="fu">time</span>;</span>
-<span id="cb44-119"><a href="#cb44-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-120"><a href="#cb44-120" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> taus;  <span class="kw">set</span> <span class="kw">&amp;datatau </span>;</span>
-<span id="cb44-121"><a href="#cb44-121" aria-hidden="true" tabindex="-1"></a> jd+<span class="dv">1</span>;</span>
-<span id="cb44-122"><a href="#cb44-122" aria-hidden="true" tabindex="-1"></a> tpseudo=<span class="fu">time</span>;</span>
-<span id="cb44-123"><a href="#cb44-123" aria-hidden="true" tabindex="-1"></a> <span class="kw">keep</span> jd tpseudo;</span>
-<span id="cb44-124"><a href="#cb44-124" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-125"><a href="#cb44-125" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb44-126"><a href="#cb44-126" aria-hidden="true" tabindex="-1"></a><span class="kw">  data</span> <span class="kw">&amp;outdata;</span>  <span class="kw">merge</span> io taus;  <span class="kw">by</span> jd;</span>
-<span id="cb44-127"><a href="#cb44-127" aria-hidden="true" tabindex="-1"></a>  <span class="kw">drop</span> jd id <span class="kw">&amp;time &amp;dead;</span></span>
-<span id="cb44-128"><a href="#cb44-128" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span>;</span>
-<span id="cb44-129"><a href="#cb44-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-130"><a href="#cb44-130" aria-hidden="true" tabindex="-1"></a><span class="co">* Inside the MACRO a variable called 'id' is created which interferes with the 'id' variable in our data set, chs_data. Therefore,</span></span>
-<span id="cb44-131"><a href="#cb44-131" aria-hidden="true" tabindex="-1"></a><span class="co">  we will first rename the 'id' variable in the chs_data;</span></span>
-<span id="cb44-132"><a href="#cb44-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-133"><a href="#cb44-133" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>; </span>
-<span id="cb44-134"><a href="#cb44-134" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>; </span>
-<span id="cb44-135"><a href="#cb44-135" aria-hidden="true" tabindex="-1"></a>    ptno = id;</span>
-<span id="cb44-136"><a href="#cb44-136" aria-hidden="true" tabindex="-1"></a>    <span class="kw">drop</span> id;</span>
-<span id="cb44-137"><a href="#cb44-137" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>; </span>
-<span id="cb44-138"><a href="#cb44-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-139"><a href="#cb44-139" aria-hidden="true" tabindex="-1"></a><span class="co">* Then, we make a data set named 'timepoint' which contains one column 'time' with the timepoint where we wish the pseudo observations to</span></span>
-<span id="cb44-140"><a href="#cb44-140" aria-hidden="true" tabindex="-1"></a><span class="co">  be computed.;</span></span>
-<span id="cb44-141"><a href="#cb44-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-142"><a href="#cb44-142" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> timepoint;</span>
-<span id="cb44-143"><a href="#cb44-143" aria-hidden="true" tabindex="-1"></a>    <span class="kw">input</span> <span class="fu">time</span>;</span>
-<span id="cb44-144"><a href="#cb44-144" aria-hidden="true" tabindex="-1"></a><span class="ot">    datalines;</span></span>
-<span id="cb44-145"><a href="#cb44-145" aria-hidden="true" tabindex="-1"></a><span class="ot">    3</span></span>
-<span id="cb44-146"><a href="#cb44-146" aria-hidden="true" tabindex="-1"></a><span class="ot">    ;</span></span>
-<span id="cb44-147"><a href="#cb44-147" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb44-148"><a href="#cb44-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-149"><a href="#cb44-149" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudosurv MACRO is then called with 'chs_data', 'timestrokeordeath', 'strokeordeath', '678'. 'timepoint' and 'outdatadata631' </span></span>
-<span id="cb44-150"><a href="#cb44-150" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
-<span id="cb44-151"><a href="#cb44-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-152"><a href="#cb44-152" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata631' where the pseudo observations are stored in the column 'pseudo'.;</span></span>
-<span id="cb44-153"><a href="#cb44-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-154"><a href="#cb44-154" aria-hidden="true" tabindex="-1"></a>%pseudosurv(chs_data, timestrokeordeath, strokeordeath, 678, timepoint, outdata631);</span>
-<span id="cb44-155"><a href="#cb44-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-156"><a href="#cb44-156" aria-hidden="true" tabindex="-1"></a><span class="co">* The output of the MACRO 'outdata631' is then used as data when fitting the cloglog model using the genmod procedure.;</span></span>
-<span id="cb44-157"><a href="#cb44-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-158"><a href="#cb44-158" aria-hidden="true" tabindex="-1"></a><span class="co">* We must specify the link function and the inverse link function in the fwdlink and invlink statements;</span></span>
-<span id="cb44-159"><a href="#cb44-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-160"><a href="#cb44-160" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.3.1'</span>;</span>
-<span id="cb44-161"><a href="#cb44-161" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata631;</span>
-<span id="cb44-162"><a href="#cb44-162" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
-<span id="cb44-163"><a href="#cb44-163" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(_mean_));</span>
-<span id="cb44-164"><a href="#cb44-164" aria-hidden="true" tabindex="-1"></a>    invlink ilink=<span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
-<span id="cb44-165"><a href="#cb44-165" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> pseudo= esvea sex age sbp/dist=<span class="fu">normal</span> noscale;</span>
-<span id="cb44-166"><a href="#cb44-166" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
-<span id="cb44-167"><a href="#cb44-167" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb44-168"><a href="#cb44-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-169"><a href="#cb44-169" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus, we obtain the following model for stroke-free survival at three years including the covariates ESVEA, sex, age, and systolic </span></span>
-<span id="cb44-170"><a href="#cb44-170" aria-hidden="true" tabindex="-1"></a><span class="co">  blood pressure</span></span>
-<span id="cb44-171"><a href="#cb44-171" aria-hidden="true" tabindex="-1"></a><span class="co">  S(3|Z) = exp(-exp(-8.4177 + 0.2358*Z1 + 0.5525*Z2 +  0.0810*Z3 - 0.0019*Z4)),</span></span>
-<span id="cb44-172"><a href="#cb44-172" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">* We will compute the pseudo observations for the incompletely observed survival indicators I(T_i &gt; 3 years), i = 1,...,678 using </span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="co">  the pseudosurv MACRO.;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being </span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co">  printed;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudosurv(indata,time,dead,howmany,datatau,outdata);</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* The subsequent SAS code is adapted from that described by J.P.Klein,</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co">    M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">    functions to compute pseudo-values for censored data regression"</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */</span> </span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE KAPLAN-MEIER ESTIMATOR AT EACH</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="co">      INPUTS:</span></span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="co">      INDATA---INPUT DATA SET</span></span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME--TIME VARIABLE</span></span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a><span class="co">      DEAD---EVENT INDICATOR (1-EVENT, 0-CENSORED)</span></span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY---SAMPLE SIZE</span></span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="co">      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED DATA</span></span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co">                SET HAS SINGLE VARIABLE TIME</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a><span class="co">      OUTDATA---OUTPUT DATA SET WHICH CONTAINS PSUK,K=1,...,HOWMANY THE PSEUDO</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="co">      VALUES AT EACH TIME POINT (Note output data set includes orginal data sorted</span></span>
+<span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a><span class="co">                           by time</span></span>
+<span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
+<span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-30"><a href="#cb45-30" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;indata;</span></span>
+<span id="cb45-31"><a href="#cb45-31" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="kw">&amp;time;</span></span>
+<span id="cb45-32"><a href="#cb45-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-33"><a href="#cb45-33" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">keep</span>;  <span class="kw">set</span> <span class="kw">&amp;datatau;</span></span>
+<span id="cb45-34"><a href="#cb45-34" aria-hidden="true" tabindex="-1"></a>find=<span class="dv">1</span>;</span>
+<span id="cb45-35"><a href="#cb45-35" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
+<span id="cb45-36"><a href="#cb45-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-37"><a href="#cb45-37" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
+<span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;time;</span></span>
+<span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span>=<span class="dv">1</span>;</span>
+<span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-42"><a href="#cb45-42" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">merge</span> <span class="fu">point</span> <span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
+<span id="cb45-43"><a href="#cb45-43" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> find <span class="kw">keep</span>;</span>
+<span id="cb45-44"><a href="#cb45-44" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-45"><a href="#cb45-45" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> useme;  <span class="kw">set</span> <span class="fu">point</span>;</span>
+<span id="cb45-46"><a href="#cb45-46" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> temp -<span class="dv">1</span>;</span>
+<span id="cb45-47"><a href="#cb45-47" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">keep</span> = <span class="dv">1</span> <span class="kw">then</span> temp=<span class="fu">time</span>;</span>
+<span id="cb45-48"><a href="#cb45-48" aria-hidden="true" tabindex="-1"></a>tuse=temp; </span>
+<span id="cb45-49"><a href="#cb45-49" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb45-50"><a href="#cb45-50" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;time=</span>tuse;</span>
+<span id="cb45-51"><a href="#cb45-51" aria-hidden="true" tabindex="-1"></a><span class="kw"> run</span>;</span>
+<span id="cb45-52"><a href="#cb45-52" aria-hidden="true" tabindex="-1"></a><span class="co">/* WORKING DATA SET THAT INCLUDE A SET OF N INDICATORS WHERE FOR THE KTH INDICATOR</span></span>
+<span id="cb45-53"><a href="#cb45-53" aria-hidden="true" tabindex="-1"></a><span class="co"> THE EVENT IS MISSING */</span></span>
+<span id="cb45-54"><a href="#cb45-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> newdat;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
+<span id="cb45-55"><a href="#cb45-55" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
+<span id="cb45-56"><a href="#cb45-56" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobs(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
+<span id="cb45-57"><a href="#cb45-57" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb45-58"><a href="#cb45-58" aria-hidden="true" tabindex="-1"></a>iobs(j)=<span class="kw">&amp;dead;</span></span>
+<span id="cb45-59"><a href="#cb45-59" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> j=id <span class="kw">then</span> iobs(j)=.;</span>
+<span id="cb45-60"><a href="#cb45-60" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb45-61"><a href="#cb45-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-62"><a href="#cb45-62" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> newdat;</span>
+<span id="cb45-63"><a href="#cb45-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-64"><a href="#cb45-64" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE KME FOR FULL SAMPLE */</span></span>
+<span id="cb45-65"><a href="#cb45-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-66"><a href="#cb45-66" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> lifetest<span class="kw"> data</span>=newdat noprint plots = none;</span>
+<span id="cb45-67"><a href="#cb45-67" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span> <span class="kw">&amp;TIME*&amp;dead(</span><span class="dv">0</span>);</span>
+<span id="cb45-68"><a href="#cb45-68" aria-hidden="true" tabindex="-1"></a>survival out=sall;</span>
+<span id="cb45-69"><a href="#cb45-69" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> sall;  <span class="kw">set</span> sall;</span>
+<span id="cb45-70"><a href="#cb45-70" aria-hidden="true" tabindex="-1"></a>sall=survival;</span>
+<span id="cb45-71"><a href="#cb45-71" aria-hidden="true" tabindex="-1"></a> <span class="kw">keep</span> <span class="kw">&amp;time </span>sall;</span>
+<span id="cb45-72"><a href="#cb45-72" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-73"><a href="#cb45-73" aria-hidden="true" tabindex="-1"></a><span class="kw">%do</span> ip=<span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb45-74"><a href="#cb45-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-75"><a href="#cb45-75" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE KME FOR REDUCED SAMPLE */</span></span>
+<span id="cb45-76"><a href="#cb45-76" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> lifetest<span class="kw"> data</span>=newdat noprint plots = none;</span>
+<span id="cb45-77"><a href="#cb45-77" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span> <span class="kw">&amp;time*</span>dead<span class="kw">&amp;ip(</span><span class="dv">0</span>);</span>
+<span id="cb45-78"><a href="#cb45-78" aria-hidden="true" tabindex="-1"></a>survival out=stmp;</span>
+<span id="cb45-79"><a href="#cb45-79" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> stmp;  <span class="kw">set</span> stmp;</span>
+<span id="cb45-80"><a href="#cb45-80" aria-hidden="true" tabindex="-1"></a>s<span class="kw">&amp;ip=</span>survival;</span>
+<span id="cb45-81"><a href="#cb45-81" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;time </span>s<span class="kw">&amp;ip;</span></span>
+<span id="cb45-82"><a href="#cb45-82" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-83"><a href="#cb45-83" aria-hidden="true" tabindex="-1"></a><span class="co">/*merge KMEs AND COMPUTE PSEUDOVALUES FOR OBSERVATION IP*/</span></span>
+<span id="cb45-84"><a href="#cb45-84" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> pstmp; <span class="kw">merge</span> sall stmp;  <span class="kw">by</span> <span class="kw">&amp;time;</span></span>
+<span id="cb45-85"><a href="#cb45-85" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> stemp <span class="dv">1</span>;</span>
+<span id="cb45-86"><a href="#cb45-86" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> s<span class="kw">&amp;ip=</span>. <span class="kw">then</span> s<span class="kw">&amp;ip=</span>stemp;</span>
+<span id="cb45-87"><a href="#cb45-87" aria-hidden="true" tabindex="-1"></a>stemp=s<span class="kw">&amp;ip;</span></span>
+<span id="cb45-88"><a href="#cb45-88" aria-hidden="true" tabindex="-1"></a>psu<span class="kw">&amp;ip=&amp;howmany*</span>sall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*s<span class="kw">&amp;ip;</span></span>
+<span id="cb45-89"><a href="#cb45-89" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-90"><a href="#cb45-90" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out; <span class="kw">merge</span> out pstmp useme ;  <span class="kw">by</span> <span class="kw">&amp;time;</span></span>
+<span id="cb45-91"><a href="#cb45-91" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb45-92"><a href="#cb45-92" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;time </span>psu1-psu<span class="kw">&amp;ip;</span></span>
+<span id="cb45-93"><a href="#cb45-93" aria-hidden="true" tabindex="-1"></a><span class="kw">%end</span>;</span>
+<span id="cb45-94"><a href="#cb45-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-95"><a href="#cb45-95" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> out;</span>
+<span id="cb45-96"><a href="#cb45-96" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> dup -<span class="dv">1</span>;</span>
+<span id="cb45-97"><a href="#cb45-97" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">&amp;time=</span>dup <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb45-98"><a href="#cb45-98" aria-hidden="true" tabindex="-1"></a> <span class="kw">else</span> dup=<span class="kw">&amp;time;</span></span>
+<span id="cb45-99"><a href="#cb45-99" aria-hidden="true" tabindex="-1"></a> jd+<span class="dv">1</span>;</span>
+<span id="cb45-100"><a href="#cb45-100" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-101"><a href="#cb45-101" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> io;  <span class="kw">set</span> out;</span>
+<span id="cb45-102"><a href="#cb45-102" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> ps psu1-psu<span class="kw">&amp;howmany;</span></span>
+<span id="cb45-103"><a href="#cb45-103" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> id=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb45-104"><a href="#cb45-104" aria-hidden="true" tabindex="-1"></a>pseudo=ps(id);</span>
+<span id="cb45-105"><a href="#cb45-105" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;time;</span></span>
+<span id="cb45-106"><a href="#cb45-106" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span>;</span>
+<span id="cb45-107"><a href="#cb45-107" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb45-108"><a href="#cb45-108" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> id pseudo jd;</span>
+<span id="cb45-109"><a href="#cb45-109" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=io ;</span>
+<span id="cb45-110"><a href="#cb45-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">by</span> id;</span>
+<span id="cb45-111"><a href="#cb45-111" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb45-112"><a href="#cb45-112" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> a;  <span class="kw">set</span> <span class="kw">&amp;indata;</span></span>
+<span id="cb45-113"><a href="#cb45-113" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
+<span id="cb45-114"><a href="#cb45-114" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> io;  <span class="kw">merge</span> a io;  <span class="kw">by</span> id;</span>
+<span id="cb45-115"><a href="#cb45-115" aria-hidden="true" tabindex="-1"></a><span class="kw"> proc</span> sort<span class="kw"> data</span>=io;  <span class="kw">by</span> jd;</span>
+<span id="cb45-116"><a href="#cb45-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-117"><a href="#cb45-117" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datatau;</span></span>
+<span id="cb45-118"><a href="#cb45-118" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="fu">time</span>;</span>
+<span id="cb45-119"><a href="#cb45-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-120"><a href="#cb45-120" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> taus;  <span class="kw">set</span> <span class="kw">&amp;datatau </span>;</span>
+<span id="cb45-121"><a href="#cb45-121" aria-hidden="true" tabindex="-1"></a> jd+<span class="dv">1</span>;</span>
+<span id="cb45-122"><a href="#cb45-122" aria-hidden="true" tabindex="-1"></a> tpseudo=<span class="fu">time</span>;</span>
+<span id="cb45-123"><a href="#cb45-123" aria-hidden="true" tabindex="-1"></a> <span class="kw">keep</span> jd tpseudo;</span>
+<span id="cb45-124"><a href="#cb45-124" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-125"><a href="#cb45-125" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb45-126"><a href="#cb45-126" aria-hidden="true" tabindex="-1"></a><span class="kw">  data</span> <span class="kw">&amp;outdata;</span>  <span class="kw">merge</span> io taus;  <span class="kw">by</span> jd;</span>
+<span id="cb45-127"><a href="#cb45-127" aria-hidden="true" tabindex="-1"></a>  <span class="kw">drop</span> jd id <span class="kw">&amp;time &amp;dead;</span></span>
+<span id="cb45-128"><a href="#cb45-128" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span>;</span>
+<span id="cb45-129"><a href="#cb45-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-130"><a href="#cb45-130" aria-hidden="true" tabindex="-1"></a><span class="co">* Inside the MACRO a variable called 'id' is created which interferes with the 'id' variable in our data set, chs_data. Therefore,</span></span>
+<span id="cb45-131"><a href="#cb45-131" aria-hidden="true" tabindex="-1"></a><span class="co">  we will first rename the 'id' variable in the chs_data;</span></span>
+<span id="cb45-132"><a href="#cb45-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-133"><a href="#cb45-133" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>; </span>
+<span id="cb45-134"><a href="#cb45-134" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>; </span>
+<span id="cb45-135"><a href="#cb45-135" aria-hidden="true" tabindex="-1"></a>    ptno = id;</span>
+<span id="cb45-136"><a href="#cb45-136" aria-hidden="true" tabindex="-1"></a>    <span class="kw">drop</span> id;</span>
+<span id="cb45-137"><a href="#cb45-137" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>; </span>
+<span id="cb45-138"><a href="#cb45-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-139"><a href="#cb45-139" aria-hidden="true" tabindex="-1"></a><span class="co">* Then, we make a data set named 'timepoint' which contains one column 'time' with the timepoint where we wish the pseudo observations to</span></span>
+<span id="cb45-140"><a href="#cb45-140" aria-hidden="true" tabindex="-1"></a><span class="co">  be computed.;</span></span>
+<span id="cb45-141"><a href="#cb45-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-142"><a href="#cb45-142" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> timepoint;</span>
+<span id="cb45-143"><a href="#cb45-143" aria-hidden="true" tabindex="-1"></a>    <span class="kw">input</span> <span class="fu">time</span>;</span>
+<span id="cb45-144"><a href="#cb45-144" aria-hidden="true" tabindex="-1"></a><span class="ot">    datalines;</span></span>
+<span id="cb45-145"><a href="#cb45-145" aria-hidden="true" tabindex="-1"></a><span class="ot">    3</span></span>
+<span id="cb45-146"><a href="#cb45-146" aria-hidden="true" tabindex="-1"></a><span class="ot">    ;</span></span>
+<span id="cb45-147"><a href="#cb45-147" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb45-148"><a href="#cb45-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-149"><a href="#cb45-149" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudosurv MACRO is then called with 'chs_data', 'timestrokeordeath', 'strokeordeath', '678'. 'timepoint' and 'outdatadata631' </span></span>
+<span id="cb45-150"><a href="#cb45-150" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
+<span id="cb45-151"><a href="#cb45-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-152"><a href="#cb45-152" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata631' where the pseudo observations are stored in the column 'pseudo'.;</span></span>
+<span id="cb45-153"><a href="#cb45-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-154"><a href="#cb45-154" aria-hidden="true" tabindex="-1"></a>%pseudosurv(chs_data, timestrokeordeath, strokeordeath, 678, timepoint, outdata631);</span>
+<span id="cb45-155"><a href="#cb45-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-156"><a href="#cb45-156" aria-hidden="true" tabindex="-1"></a><span class="co">* The output of the MACRO 'outdata631' is then used as data when fitting the cloglog model using the genmod procedure.;</span></span>
+<span id="cb45-157"><a href="#cb45-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-158"><a href="#cb45-158" aria-hidden="true" tabindex="-1"></a><span class="co">* We must specify the link function and the inverse link function in the fwdlink and invlink statements;</span></span>
+<span id="cb45-159"><a href="#cb45-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-160"><a href="#cb45-160" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.3.1'</span>;</span>
+<span id="cb45-161"><a href="#cb45-161" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata631;</span>
+<span id="cb45-162"><a href="#cb45-162" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
+<span id="cb45-163"><a href="#cb45-163" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(_mean_));</span>
+<span id="cb45-164"><a href="#cb45-164" aria-hidden="true" tabindex="-1"></a>    invlink ilink=<span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
+<span id="cb45-165"><a href="#cb45-165" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> pseudo= esvea sex age sbp/dist=<span class="fu">normal</span> noscale;</span>
+<span id="cb45-166"><a href="#cb45-166" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
+<span id="cb45-167"><a href="#cb45-167" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb45-168"><a href="#cb45-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-169"><a href="#cb45-169" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus, we obtain the following model for stroke-free survival at three years including the covariates ESVEA, sex, age, and systolic </span></span>
+<span id="cb45-170"><a href="#cb45-170" aria-hidden="true" tabindex="-1"></a><span class="co">  blood pressure</span></span>
+<span id="cb45-171"><a href="#cb45-171" aria-hidden="true" tabindex="-1"></a><span class="co">  S(3|Z) = exp(-exp(-8.4177 + 0.2358*Z1 + 0.5525*Z2 +  0.0810*Z3 - 0.0019*Z4)),</span></span>
+<span id="cb45-172"><a href="#cb45-172" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1850,12 +1896,12 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-31_378518513da2d1c77ce4d30c754ed57f">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>pseudo641 <span class="ot">&lt;-</span> <span class="fu">pseudomean</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath,<span class="at">event =</span> chs_data<span class="sc">$</span>strokeordeath, <span class="at">tmax =</span> <span class="dv">3</span>)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting the GEE</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>fit641 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo641 <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"identity"</span>)</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit641)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>pseudo641 <span class="ot">&lt;-</span> <span class="fu">pseudomean</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath,<span class="at">event =</span> chs_data<span class="sc">$</span>strokeordeath, <span class="at">tmax =</span> <span class="dv">3</span>)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting the GEE</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>fit641 <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo641 <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"identity"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit641)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -1897,117 +1943,117 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-32_01e1ed3891b08f8fa32de0eeb2fff209">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudo observations for the 3 year restricted mean time to the composite end-point are computed using the pseudomean MACRO;</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudomean(indata,time,dead,howmany,tmax,outdata);</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a> <span class="co">/* MACRO ARGUMENTS</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co">      INDATA--NAME OF INPUT DATA SET</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME--NAME OF TIME VARIABLE</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co">      DEAD--NAME OF EVENT INDICATOR VARIABLE--(1-DEAD,0-CENSORED)</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY--SAMPLE SIZE</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co">      TMAX--UPPER LIMIT OF INTEGRATION FOR RESTRICTED MEAN</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co">      OUTDATA--NAME OF OUTPUT DATA SET WITH PSEUDOVALUES FPR RESTRICTED</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co">               MEAN IN VARIABLE "PSUMEAN"  */</span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a> <span class="co">/* CREATE A DATA SET WHERE EVERYTHING ABOVE TMAX IS CENSORED */</span></span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> work; <span class="kw">SET</span> <span class="kw">&amp;indata;</span></span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  restime = <span class="fu">MIN</span>(<span class="kw">&amp;tmax,</span> <span class="kw">&amp;time)</span>;</span>
-<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  resdead = <span class="kw">&amp;dead;</span></span>
-<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">IF</span> restime EQ <span class="kw">&amp;tmax THEN</span> resdead = <span class="dv">0</span>;</span>
-<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a><span class="co">/* CREATE DATA SET WITH SET OF INDICATORS DEADK THAT HAS MISSING VALUE</span></span>
-<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a><span class="co">     FOR KTH OBSERVATION, K=1,...,HOWMANY*/</span></span>
-<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> work;  <span class="kw">SET</span> work;</span>
-<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>   id+<span class="dv">1</span>;</span>
-<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>   <span class="kw">ARRAY</span> iobs(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
-<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a><span class="kw">   DO</span> j = <span class="dv">1</span> <span class="kw">TO</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>    iobs(j) = resdead;</span>
-<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> j = id <span class="kw">THEN</span> iobs(j) = .;</span>
-<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a><span class="kw">   END</span>;</span>
-<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE RESTRICTED MEAN FOR COMPLETE SAMPLE USING PROC LIFETEST */</span></span>
-<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a><span class="kw"> PROC</span> LIFETEST<span class="kw"> DATA</span> = work OUTSURV = km;</span>
-<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">TIME</span> restime*resdead(<span class="dv">0</span>);</span>
-<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>   ODS <span class="kw">SELECT</span> MEANS;</span>
-<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>   ODS <span class="kw">OUTPUT</span> MEANS = mall;</span>
-<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a><span class="kw"> RUN</span>;</span>
-<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> km; <span class="kw">SET</span> km;</span>
-<span id="cb47-38"><a href="#cb47-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> _CENSOR_ EQ <span class="dv">0</span>;</span>
-<span id="cb47-39"><a href="#cb47-39" aria-hidden="true" tabindex="-1"></a><span class="kw">  PROC</span> SORT<span class="kw"> DATA</span>=km;</span>
-<span id="cb47-40"><a href="#cb47-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">BY</span> restime;</span>
-<span id="cb47-41"><a href="#cb47-41" aria-hidden="true" tabindex="-1"></a><span class="kw">  RUN</span>; </span>
-<span id="cb47-42"><a href="#cb47-42" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> km; <span class="kw">SET</span> km<span class="kw"> END</span>=LAST;</span>
-<span id="cb47-43"><a href="#cb47-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> <span class="kw">NOT</span>(LAST) <span class="kw">THEN</span> <span class="kw">DELETE</span>;</span>
-<span id="cb47-44"><a href="#cb47-44" aria-hidden="true" tabindex="-1"></a>    area = (<span class="kw">&amp;tmax </span>- restime)*survival;</span>
-<span id="cb47-45"><a href="#cb47-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">KEEP</span> area;</span>
-<span id="cb47-46"><a href="#cb47-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-47"><a href="#cb47-47" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> psu; <span class="kw">MERGE</span> km mall;</span>
-<span id="cb47-48"><a href="#cb47-48" aria-hidden="true" tabindex="-1"></a>    meanall = <span class="fu">mean</span> + area;</span>
-<span id="cb47-49"><a href="#cb47-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">KEEP</span> meanall;</span>
-<span id="cb47-50"><a href="#cb47-50" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb47-51"><a href="#cb47-51" aria-hidden="true" tabindex="-1"></a> <span class="kw">%DO</span> ip = <span class="dv">1</span> <span class="kw">%TO</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb47-52"><a href="#cb47-52" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-53"><a href="#cb47-53" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* COMPUTE RESTRICTED MEAN FOR SAMPLE WITH IPTH OBSERVATION DELETED</span></span>
-<span id="cb47-54"><a href="#cb47-54" aria-hidden="true" tabindex="-1"></a><span class="co">      USING PROC LIFETEST */</span></span>
-<span id="cb47-55"><a href="#cb47-55" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-56"><a href="#cb47-56" aria-hidden="true" tabindex="-1"></a><span class="kw">   PROC</span> LIFETEST<span class="kw"> DATA</span> = work OUTSURV = km1;</span>
-<span id="cb47-57"><a href="#cb47-57" aria-hidden="true" tabindex="-1"></a>     <span class="fu">TIME</span> restime*dead<span class="kw">&amp;ip(</span><span class="dv">0</span>);</span>
-<span id="cb47-58"><a href="#cb47-58" aria-hidden="true" tabindex="-1"></a>     ODS <span class="kw">SELECT</span> means;</span>
-<span id="cb47-59"><a href="#cb47-59" aria-hidden="true" tabindex="-1"></a>     ODS <span class="kw">OUTPUT</span> MEANS = m1;</span>
-<span id="cb47-60"><a href="#cb47-60" aria-hidden="true" tabindex="-1"></a><span class="kw">   RUN</span>;</span>
-<span id="cb47-61"><a href="#cb47-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-62"><a href="#cb47-62" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">SET</span> km1;</span>
-<span id="cb47-63"><a href="#cb47-63" aria-hidden="true" tabindex="-1"></a>     <span class="kw">IF</span> _CENSOR_ EQ <span class="dv">0</span>;</span>
-<span id="cb47-64"><a href="#cb47-64" aria-hidden="true" tabindex="-1"></a><span class="kw">   PROC</span> SORT<span class="kw"> DATA</span> = km1;</span>
-<span id="cb47-65"><a href="#cb47-65" aria-hidden="true" tabindex="-1"></a>     <span class="kw">BY</span> restime;</span>
-<span id="cb47-66"><a href="#cb47-66" aria-hidden="true" tabindex="-1"></a><span class="kw">   RUN</span>;</span>
-<span id="cb47-67"><a href="#cb47-67" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">SET</span> km1<span class="kw"> END</span>=LAST;</span>
-<span id="cb47-68"><a href="#cb47-68" aria-hidden="true" tabindex="-1"></a>     <span class="kw">IF</span> <span class="kw">NOT</span>(LAST) <span class="kw">THEN</span> <span class="kw">DELETE</span>;</span>
-<span id="cb47-69"><a href="#cb47-69" aria-hidden="true" tabindex="-1"></a>     area = (<span class="kw">&amp;tmax </span>- restime)*survival;</span>
-<span id="cb47-70"><a href="#cb47-70" aria-hidden="true" tabindex="-1"></a>     <span class="kw">KEEP</span> area;</span>
-<span id="cb47-71"><a href="#cb47-71" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">MERGE</span> km1 m1;</span>
-<span id="cb47-72"><a href="#cb47-72" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mean</span> = <span class="fu">mean</span> + area;</span>
-<span id="cb47-73"><a href="#cb47-73" aria-hidden="true" tabindex="-1"></a>     <span class="kw">KEEP</span> <span class="fu">mean</span>;</span>
-<span id="cb47-74"><a href="#cb47-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-75"><a href="#cb47-75" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* COMPUTE PSEUDOVALUE FOR IPTH OBSERVATION*/</span></span>
-<span id="cb47-76"><a href="#cb47-76" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> psu; <span class="kw">MERGE</span> psu km1;</span>
-<span id="cb47-77"><a href="#cb47-77" aria-hidden="true" tabindex="-1"></a>     psu<span class="kw">&amp;ip=&amp;howmany*</span>meanall-(<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*<span class="fu">mean</span>;</span>
-<span id="cb47-78"><a href="#cb47-78" aria-hidden="true" tabindex="-1"></a> <span class="kw">%END</span>;</span>
-<span id="cb47-79"><a href="#cb47-79" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-80"><a href="#cb47-80" aria-hidden="true" tabindex="-1"></a> <span class="co">/* TRANSPOSE DATASET AND MERGE WITH RAW DATA*/</span></span>
-<span id="cb47-81"><a href="#cb47-81" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> out;  <span class="kw">SET</span> psu;</span>
-<span id="cb47-82"><a href="#cb47-82" aria-hidden="true" tabindex="-1"></a>   <span class="kw">ARRAY</span> y(<span class="kw">&amp;howmany)</span> psu1-psu<span class="kw">&amp;howmany;</span></span>
-<span id="cb47-83"><a href="#cb47-83" aria-hidden="true" tabindex="-1"></a><span class="kw">   DO</span> j = <span class="dv">1</span> <span class="kw">TO</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb47-84"><a href="#cb47-84" aria-hidden="true" tabindex="-1"></a>     psumean=y(j);</span>
-<span id="cb47-85"><a href="#cb47-85" aria-hidden="true" tabindex="-1"></a>     <span class="kw">OUTPUT</span>;</span>
-<span id="cb47-86"><a href="#cb47-86" aria-hidden="true" tabindex="-1"></a><span class="kw">   END</span>;</span>
-<span id="cb47-87"><a href="#cb47-87" aria-hidden="true" tabindex="-1"></a> <span class="kw">KEEP</span> psumean;</span>
-<span id="cb47-88"><a href="#cb47-88" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb47-89"><a href="#cb47-89" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> <span class="kw">&amp;outdata;</span> <span class="kw">MERGE</span> <span class="kw">&amp;indata </span>out;</span>
-<span id="cb47-90"><a href="#cb47-90" aria-hidden="true" tabindex="-1"></a><span class="kw"> run</span>; </span>
-<span id="cb47-91"><a href="#cb47-91" aria-hidden="true" tabindex="-1"></a><span class="kw">%MEND</span>;</span>
-<span id="cb47-92"><a href="#cb47-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-93"><a href="#cb47-93" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudomean MACRO is now called with 'chs_data', 'timestrokeordeath', 'strokeordeath', '678'. '3' and 'outdatadata641' </span></span>
-<span id="cb47-94"><a href="#cb47-94" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
-<span id="cb47-95"><a href="#cb47-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-96"><a href="#cb47-96" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata641' where the pseudo observations are stored in the column 'psumean'.;</span></span>
-<span id="cb47-97"><a href="#cb47-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-98"><a href="#cb47-98" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.4.1'</span>;</span>
-<span id="cb47-99"><a href="#cb47-99" aria-hidden="true" tabindex="-1"></a>%pseudomean(chs_data, timestrokeordeath, strokeordeath, 678, 3, outdata641);</span>
-<span id="cb47-100"><a href="#cb47-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-101"><a href="#cb47-101" aria-hidden="true" tabindex="-1"></a><span class="co">* The model is then fitted with the genmod procedure;</span> </span>
-<span id="cb47-102"><a href="#cb47-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-103"><a href="#cb47-103" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata641;</span>
-<span id="cb47-104"><a href="#cb47-104" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
-<span id="cb47-105"><a href="#cb47-105" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> psumean=esvea sex age sbp /dist=<span class="fu">normal</span>;</span>
-<span id="cb47-106"><a href="#cb47-106" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
-<span id="cb47-107"><a href="#cb47-107" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb47-108"><a href="#cb47-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-109"><a href="#cb47-109" aria-hidden="true" tabindex="-1"></a><span class="co">* We get the following model for the 3-year restricted mean time to the composite end-point stroke-free survival</span></span>
-<span id="cb47-110"><a href="#cb47-110" aria-hidden="true" tabindex="-1"></a><span class="co">  epsilon(3|Z) = 3.3552 - 0.0274*Z1 - 0.0540*Z2 - 0.0073*Z3 + 0.0005*Z4,</span></span>
-<span id="cb47-111"><a href="#cb47-111" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudo observations for the 3 year restricted mean time to the composite end-point are computed using the pseudomean MACRO;</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudomean(indata,time,dead,howmany,tmax,outdata);</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a> <span class="co">/* MACRO ARGUMENTS</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co">      INDATA--NAME OF INPUT DATA SET</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME--NAME OF TIME VARIABLE</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co">      DEAD--NAME OF EVENT INDICATOR VARIABLE--(1-DEAD,0-CENSORED)</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY--SAMPLE SIZE</span></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co">      TMAX--UPPER LIMIT OF INTEGRATION FOR RESTRICTED MEAN</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="co">      OUTDATA--NAME OF OUTPUT DATA SET WITH PSEUDOVALUES FPR RESTRICTED</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co">               MEAN IN VARIABLE "PSUMEAN"  */</span></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a> <span class="co">/* CREATE A DATA SET WHERE EVERYTHING ABOVE TMAX IS CENSORED */</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> work; <span class="kw">SET</span> <span class="kw">&amp;indata;</span></span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  restime = <span class="fu">MIN</span>(<span class="kw">&amp;tmax,</span> <span class="kw">&amp;time)</span>;</span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  resdead = <span class="kw">&amp;dead;</span></span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">IF</span> restime EQ <span class="kw">&amp;tmax THEN</span> resdead = <span class="dv">0</span>;</span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="co">/* CREATE DATA SET WITH SET OF INDICATORS DEADK THAT HAS MISSING VALUE</span></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="co">     FOR KTH OBSERVATION, K=1,...,HOWMANY*/</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> work;  <span class="kw">SET</span> work;</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a>   id+<span class="dv">1</span>;</span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>   <span class="kw">ARRAY</span> iobs(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a><span class="kw">   DO</span> j = <span class="dv">1</span> <span class="kw">TO</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    iobs(j) = resdead;</span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> j = id <span class="kw">THEN</span> iobs(j) = .;</span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="kw">   END</span>;</span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE RESTRICTED MEAN FOR COMPLETE SAMPLE USING PROC LIFETEST */</span></span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a><span class="kw"> PROC</span> LIFETEST<span class="kw"> DATA</span> = work OUTSURV = km;</span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">TIME</span> restime*resdead(<span class="dv">0</span>);</span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>   ODS <span class="kw">SELECT</span> MEANS;</span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>   ODS <span class="kw">OUTPUT</span> MEANS = mall;</span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a><span class="kw"> RUN</span>;</span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> km; <span class="kw">SET</span> km;</span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> _CENSOR_ EQ <span class="dv">0</span>;</span>
+<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a><span class="kw">  PROC</span> SORT<span class="kw"> DATA</span>=km;</span>
+<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">BY</span> restime;</span>
+<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a><span class="kw">  RUN</span>; </span>
+<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> km; <span class="kw">SET</span> km<span class="kw"> END</span>=LAST;</span>
+<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">IF</span> <span class="kw">NOT</span>(LAST) <span class="kw">THEN</span> <span class="kw">DELETE</span>;</span>
+<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>    area = (<span class="kw">&amp;tmax </span>- restime)*survival;</span>
+<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">KEEP</span> area;</span>
+<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a><span class="kw">  DATA</span> psu; <span class="kw">MERGE</span> km mall;</span>
+<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>    meanall = <span class="fu">mean</span> + area;</span>
+<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">KEEP</span> meanall;</span>
+<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a> <span class="kw">%DO</span> ip = <span class="dv">1</span> <span class="kw">%TO</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* COMPUTE RESTRICTED MEAN FOR SAMPLE WITH IPTH OBSERVATION DELETED</span></span>
+<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a><span class="co">      USING PROC LIFETEST */</span></span>
+<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a><span class="kw">   PROC</span> LIFETEST<span class="kw"> DATA</span> = work OUTSURV = km1;</span>
+<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a>     <span class="fu">TIME</span> restime*dead<span class="kw">&amp;ip(</span><span class="dv">0</span>);</span>
+<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a>     ODS <span class="kw">SELECT</span> means;</span>
+<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a>     ODS <span class="kw">OUTPUT</span> MEANS = m1;</span>
+<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a><span class="kw">   RUN</span>;</span>
+<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">SET</span> km1;</span>
+<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>     <span class="kw">IF</span> _CENSOR_ EQ <span class="dv">0</span>;</span>
+<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a><span class="kw">   PROC</span> SORT<span class="kw"> DATA</span> = km1;</span>
+<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>     <span class="kw">BY</span> restime;</span>
+<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a><span class="kw">   RUN</span>;</span>
+<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">SET</span> km1<span class="kw"> END</span>=LAST;</span>
+<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>     <span class="kw">IF</span> <span class="kw">NOT</span>(LAST) <span class="kw">THEN</span> <span class="kw">DELETE</span>;</span>
+<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>     area = (<span class="kw">&amp;tmax </span>- restime)*survival;</span>
+<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>     <span class="kw">KEEP</span> area;</span>
+<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> km1; <span class="kw">MERGE</span> km1 m1;</span>
+<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>     <span class="fu">mean</span> = <span class="fu">mean</span> + area;</span>
+<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a>     <span class="kw">KEEP</span> <span class="fu">mean</span>;</span>
+<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>   <span class="co">/* COMPUTE PSEUDOVALUE FOR IPTH OBSERVATION*/</span></span>
+<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a><span class="kw">   DATA</span> psu; <span class="kw">MERGE</span> psu km1;</span>
+<span id="cb48-77"><a href="#cb48-77" aria-hidden="true" tabindex="-1"></a>     psu<span class="kw">&amp;ip=&amp;howmany*</span>meanall-(<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*<span class="fu">mean</span>;</span>
+<span id="cb48-78"><a href="#cb48-78" aria-hidden="true" tabindex="-1"></a> <span class="kw">%END</span>;</span>
+<span id="cb48-79"><a href="#cb48-79" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-80"><a href="#cb48-80" aria-hidden="true" tabindex="-1"></a> <span class="co">/* TRANSPOSE DATASET AND MERGE WITH RAW DATA*/</span></span>
+<span id="cb48-81"><a href="#cb48-81" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> out;  <span class="kw">SET</span> psu;</span>
+<span id="cb48-82"><a href="#cb48-82" aria-hidden="true" tabindex="-1"></a>   <span class="kw">ARRAY</span> y(<span class="kw">&amp;howmany)</span> psu1-psu<span class="kw">&amp;howmany;</span></span>
+<span id="cb48-83"><a href="#cb48-83" aria-hidden="true" tabindex="-1"></a><span class="kw">   DO</span> j = <span class="dv">1</span> <span class="kw">TO</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb48-84"><a href="#cb48-84" aria-hidden="true" tabindex="-1"></a>     psumean=y(j);</span>
+<span id="cb48-85"><a href="#cb48-85" aria-hidden="true" tabindex="-1"></a>     <span class="kw">OUTPUT</span>;</span>
+<span id="cb48-86"><a href="#cb48-86" aria-hidden="true" tabindex="-1"></a><span class="kw">   END</span>;</span>
+<span id="cb48-87"><a href="#cb48-87" aria-hidden="true" tabindex="-1"></a> <span class="kw">KEEP</span> psumean;</span>
+<span id="cb48-88"><a href="#cb48-88" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb48-89"><a href="#cb48-89" aria-hidden="true" tabindex="-1"></a><span class="kw"> DATA</span> <span class="kw">&amp;outdata;</span> <span class="kw">MERGE</span> <span class="kw">&amp;indata </span>out;</span>
+<span id="cb48-90"><a href="#cb48-90" aria-hidden="true" tabindex="-1"></a><span class="kw"> run</span>; </span>
+<span id="cb48-91"><a href="#cb48-91" aria-hidden="true" tabindex="-1"></a><span class="kw">%MEND</span>;</span>
+<span id="cb48-92"><a href="#cb48-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-93"><a href="#cb48-93" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudomean MACRO is now called with 'chs_data', 'timestrokeordeath', 'strokeordeath', '678'. '3' and 'outdatadata641' </span></span>
+<span id="cb48-94"><a href="#cb48-94" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
+<span id="cb48-95"><a href="#cb48-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-96"><a href="#cb48-96" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata641' where the pseudo observations are stored in the column 'psumean'.;</span></span>
+<span id="cb48-97"><a href="#cb48-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-98"><a href="#cb48-98" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.4.1'</span>;</span>
+<span id="cb48-99"><a href="#cb48-99" aria-hidden="true" tabindex="-1"></a>%pseudomean(chs_data, timestrokeordeath, strokeordeath, 678, 3, outdata641);</span>
+<span id="cb48-100"><a href="#cb48-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-101"><a href="#cb48-101" aria-hidden="true" tabindex="-1"></a><span class="co">* The model is then fitted with the genmod procedure;</span> </span>
+<span id="cb48-102"><a href="#cb48-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-103"><a href="#cb48-103" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata641;</span>
+<span id="cb48-104"><a href="#cb48-104" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
+<span id="cb48-105"><a href="#cb48-105" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> psumean=esvea sex age sbp /dist=<span class="fu">normal</span>;</span>
+<span id="cb48-106"><a href="#cb48-106" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
+<span id="cb48-107"><a href="#cb48-107" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb48-108"><a href="#cb48-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-109"><a href="#cb48-109" aria-hidden="true" tabindex="-1"></a><span class="co">* We get the following model for the 3-year restricted mean time to the composite end-point stroke-free survival</span></span>
+<span id="cb48-110"><a href="#cb48-110" aria-hidden="true" tabindex="-1"></a><span class="co">  epsilon(3|Z) = 3.3552 - 0.0274*Z1 - 0.0540*Z2 - 0.0073*Z3 + 0.0005*Z4,</span></span>
+<span id="cb48-111"><a href="#cb48-111" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -2035,24 +2081,24 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-33_da529c754e7fb31c841c5c99032b7b2e">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Status indicator for death without stroke</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>death_wo_stroke <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_data<span class="sc">$</span>stroke <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, chs_data<span class="sc">$</span>death)</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Event variable</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_data<span class="sc">$</span>death_wo_stroke <span class="sc">==</span> <span class="dv">0</span>, chs_data<span class="sc">$</span>stroke, chs_data<span class="sc">$</span>death_wo_stroke<span class="sc">*</span><span class="dv">2</span>)</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>pseudo651 <span class="ot">&lt;-</span> <span class="fu">pseudoci</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath, <span class="at">event =</span> chs_data<span class="sc">$</span>event, <span class="at">tmax =</span> <span class="dv">3</span>)<span class="sc">$</span>pseudo</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> chs_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pseudo651_stroke =</span> pseudo651[[<span class="dv">1</span>]],</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">pseudo651_death =</span> pseudo651[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Status indicator for death without stroke</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>death_wo_stroke <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_data<span class="sc">$</span>stroke <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">0</span>, chs_data<span class="sc">$</span>death)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Event variable</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>chs_data<span class="sc">$</span>event <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(chs_data<span class="sc">$</span>death_wo_stroke <span class="sc">==</span> <span class="dv">0</span>, chs_data<span class="sc">$</span>stroke, chs_data<span class="sc">$</span>death_wo_stroke<span class="sc">*</span><span class="dv">2</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing the pseudo observations</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>pseudo651 <span class="ot">&lt;-</span> <span class="fu">pseudoci</span>(<span class="at">time =</span> chs_data<span class="sc">$</span>timestrokeordeath, <span class="at">event =</span> chs_data<span class="sc">$</span>event, <span class="at">tmax =</span> <span class="dv">3</span>)<span class="sc">$</span>pseudo</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>chs_data <span class="ot">&lt;-</span> chs_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">pseudo651_stroke =</span> pseudo651[[<span class="dv">1</span>]],</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>                                <span class="at">pseudo651_death =</span> pseudo651[[<span class="dv">2</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We then fit a cloglog model for the cumulative incidence of stroke at 3 years using the <strong>geese</strong> function.</p>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-34_1d52aa6fcec4a5833d0dac12628cae85">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting GEE for the end-point stroke</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>fit651_stroke <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo651_stroke <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit651_stroke)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fitting GEE for the end-point stroke</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>fit651_stroke <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo651_stroke <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit651_stroke)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -2091,8 +2137,8 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-35_2526b12b45bdceb8362522d4d748ccb5">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fit651_death <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo651_death <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit651_death)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>fit651_death <span class="ot">&lt;-</span> <span class="fu">geese</span>(<span class="at">formula =</span> pseudo651_death <span class="sc">~</span> esvea <span class="sc">+</span> sex <span class="sc">+</span> age <span class="sc">+</span> sbp, <span class="at">data =</span> <span class="fu">subset</span>(chs_data, <span class="sc">!</span><span class="fu">is.na</span>(sbp)), <span class="at">mean.link =</span> <span class="st">"cloglog"</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit651_death)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -2134,220 +2180,220 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <div class="cell" data-hash="Ch6_cache/html/unnamed-chunk-36_c375a318b261e7e92e151741a3094ca6">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudo observations for the cumulative incidences of stroke and death without stroke at three years are computed using the  pseudoci MACRO. To use this MACRO we must remember to include the cuminc MACRO.;</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> cuminc(datain,x,re,de,dataout,cir,cid);</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co">/*  THIS MACRO COMPUTES THE CUMULATIVE INCIDENCE FUNCTIONS FOR</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co">    BOTH COMPETING RISKS USING PROC PHREG OUTPUT</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="co">    INPUTS TO MACRO</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co">    DATAIN--NAME OF INPUT DATA SET CONTAINING </span></span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="co">        X--TIME TO EVENT</span></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="co">        RE--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)</span></span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co">        DE--INDICATOR OF SECOND COMPETING RISK</span></span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="co">    DATAOUT--NAME OF OUTPUT DATA SET CONTAINING</span></span>
-<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co">        CIR--CUMULATIVE INCIDENCE FUNCTION FOR 1ST COMPETING RISK</span></span>
-<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co">        CID--CUMULATIVE INCIDENCE FUNCTION FOR 2ST COMPETING RISK</span></span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> work;  <span class="kw">set</span> <span class="kw">&amp;datain;</span></span>
-<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>t=<span class="kw">&amp;x;</span></span>
-<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>r=<span class="kw">&amp;re;</span></span>
-<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>d=<span class="kw">&amp;de;</span></span>
-<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>zero=<span class="dv">0</span>;</span>
-<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR FIRST COMPETING RISK */</span></span>
-<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=work noprint; </span>
-<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> t*r(<span class="dv">0</span>)=zero;</span>
-<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span> out=rel  logsurv=chr  /method=emp;</span>
-<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR SECOND COMPETING RISK */</span></span>
-<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=work noprint; </span>
-<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> t*d(<span class="dv">0</span>)=zero;</span>
-<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span> out=dead  logsurv=chd  /method=emp;</span>
-<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-33"><a href="#cb53-33" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-34"><a href="#cb53-34" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE cumualtive incidence */</span></span>
-<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> both;  <span class="kw">merge</span> rel dead;  <span class="kw">by</span> t;</span>
-<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> s <span class="dv">1</span></span>
-<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cr <span class="dv">0</span>;</span>
-<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cd <span class="dv">0</span>;</span>
-<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cumincr <span class="dv">0</span>;</span>
-<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cumincd <span class="dv">0</span>;</span>
-<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>hr=-(cr+chr);</span>
-<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>hd=-(cd+chd);</span>
-<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a><span class="co">/* NOTE HR AND HD ARE THE JUMPS IN THE CUMUALTIVE CRUDE HAZARDS AT THIS TIME */</span></span>
-<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>cr=-chr;</span>
-<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>cd=-chd;</span>
-<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a>cir=cumincr+hr*s;</span>
-<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a>cumincr=cir;</span>
-<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a>cid=cumincd+hd*s;</span>
-<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>cumincd=cid;</span>
-<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>s=s*(<span class="dv">1</span>-hr-hd);</span>
-<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a><span class="co">/* NOTE S IS KAPLAN-MEIER ESTIMATE IGNORING CAUSE OF FAILURE */</span></span>
-<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">&amp;dataout;</span>  <span class="kw">set</span> both;</span>
-<span id="cb53-55"><a href="#cb53-55" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;x=</span>t;</span>
-<span id="cb53-56"><a href="#cb53-56" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;cir=</span>cir;  <span class="kw">&amp;cid=</span>cid;</span>
-<span id="cb53-57"><a href="#cb53-57" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;x &amp;cir &amp;cid;</span></span>
-<span id="cb53-58"><a href="#cb53-58" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span>;</span>
-<span id="cb53-59"><a href="#cb53-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-60"><a href="#cb53-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-61"><a href="#cb53-61" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudoci(datain,x,r,d,howmany,datatau,dataout);</span>
-<span id="cb53-62"><a href="#cb53-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-63"><a href="#cb53-63" aria-hidden="true" tabindex="-1"></a><span class="co">/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE CUMUALTIVE INCIDENCE FUNCTION</span></span>
-<span id="cb53-64"><a href="#cb53-64" aria-hidden="true" tabindex="-1"></a><span class="co">      FOR BOTH OF TWO COMPETING RISKS  </span></span>
-<span id="cb53-65"><a href="#cb53-65" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME</span></span>
-<span id="cb53-66"><a href="#cb53-66" aria-hidden="true" tabindex="-1"></a><span class="co">      INPUTS:</span></span>
-<span id="cb53-67"><a href="#cb53-67" aria-hidden="true" tabindex="-1"></a><span class="co">      DATAIN---INPUT DATA SET</span></span>
-<span id="cb53-68"><a href="#cb53-68" aria-hidden="true" tabindex="-1"></a><span class="co">      X--TIME VARIABLE</span></span>
-<span id="cb53-69"><a href="#cb53-69" aria-hidden="true" tabindex="-1"></a><span class="co">      R--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)</span></span>
-<span id="cb53-70"><a href="#cb53-70" aria-hidden="true" tabindex="-1"></a><span class="co">      D--INDICATOR OF SECOND COMPETING RISK</span></span>
-<span id="cb53-71"><a href="#cb53-71" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY---SAMPLE SIZE</span></span>
-<span id="cb53-72"><a href="#cb53-72" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
-<span id="cb53-73"><a href="#cb53-73" aria-hidden="true" tabindex="-1"></a><span class="co">      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED </span></span>
-<span id="cb53-74"><a href="#cb53-74" aria-hidden="true" tabindex="-1"></a><span class="co">                DATA SET HAS SINGLE VARIABLE "TIME"</span></span>
-<span id="cb53-75"><a href="#cb53-75" aria-hidden="true" tabindex="-1"></a><span class="co">                </span></span>
-<span id="cb53-76"><a href="#cb53-76" aria-hidden="true" tabindex="-1"></a><span class="co">      DATAOUT---OUTPUT DATA SET WHICH CONATINS PSUK,K=1,...,HOWMANY THE PSEUDO</span></span>
-<span id="cb53-77"><a href="#cb53-77" aria-hidden="true" tabindex="-1"></a><span class="co">                VALUES AT EACH TIME POINT (Note output data set</span></span>
-<span id="cb53-78"><a href="#cb53-78" aria-hidden="true" tabindex="-1"></a><span class="co">                 includes orginal data sorted by time)</span></span>
-<span id="cb53-79"><a href="#cb53-79" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
-<span id="cb53-80"><a href="#cb53-80" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
-<span id="cb53-81"><a href="#cb53-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-82"><a href="#cb53-82" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datain;</span>  <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
-<span id="cb53-83"><a href="#cb53-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-84"><a href="#cb53-84" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">keep</span>;  <span class="kw">set</span> <span class="kw">&amp;datatau;</span></span>
-<span id="cb53-85"><a href="#cb53-85" aria-hidden="true" tabindex="-1"></a>find=<span class="dv">1</span>;</span>
-<span id="cb53-86"><a href="#cb53-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-87"><a href="#cb53-87" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
-<span id="cb53-88"><a href="#cb53-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-89"><a href="#cb53-89" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">set</span> <span class="kw">&amp;datain;</span></span>
-<span id="cb53-90"><a href="#cb53-90" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;x;</span></span>
-<span id="cb53-91"><a href="#cb53-91" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span>=<span class="dv">1</span>;</span>
-<span id="cb53-92"><a href="#cb53-92" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">merge</span> <span class="fu">point</span> <span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
-<span id="cb53-93"><a href="#cb53-93" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> find <span class="kw">keep</span>;</span>
-<span id="cb53-94"><a href="#cb53-94" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-95"><a href="#cb53-95" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> useme;  <span class="kw">set</span> <span class="fu">point</span>;</span>
-<span id="cb53-96"><a href="#cb53-96" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> temp -<span class="dv">1</span>;</span>
-<span id="cb53-97"><a href="#cb53-97" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">keep</span> = <span class="dv">1</span> <span class="kw">then</span> temp=<span class="fu">time</span>;</span>
-<span id="cb53-98"><a href="#cb53-98" aria-hidden="true" tabindex="-1"></a>tuse=temp; </span>
-<span id="cb53-99"><a href="#cb53-99" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb53-100"><a href="#cb53-100" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;x=</span>tuse;</span>
-<span id="cb53-101"><a href="#cb53-101" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print;</span>
-<span id="cb53-102"><a href="#cb53-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-103"><a href="#cb53-103" aria-hidden="true" tabindex="-1"></a><span class="co">/* PREPARE DATA SET WITH MISSING VALUES FOR DEADK AND RELAPSEK TO BE USED IN COMPUTING</span></span>
-<span id="cb53-104"><a href="#cb53-104" aria-hidden="true" tabindex="-1"></a><span class="co">   ESTIMATED CUMULATIVE INCIDENCE WITH KTH OBSERVATION DELETED*/</span></span>
-<span id="cb53-105"><a href="#cb53-105" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datain;</span></span>
-<span id="cb53-106"><a href="#cb53-106" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="kw">&amp;x;</span></span>
-<span id="cb53-107"><a href="#cb53-107" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> newdat;  <span class="kw">set</span> <span class="kw">&amp;datain </span>;</span>
-<span id="cb53-108"><a href="#cb53-108" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
-<span id="cb53-109"><a href="#cb53-109" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobsd(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-110"><a href="#cb53-110" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobsr(<span class="kw">&amp;howmany)</span> relapse1-relapse<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-111"><a href="#cb53-111" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb53-112"><a href="#cb53-112" aria-hidden="true" tabindex="-1"></a>iobsd(j)=<span class="kw">&amp;d;</span></span>
-<span id="cb53-113"><a href="#cb53-113" aria-hidden="true" tabindex="-1"></a>iobsr(j)=<span class="kw">&amp;r;</span></span>
-<span id="cb53-114"><a href="#cb53-114" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> j=id <span class="kw">then do</span>; iobsr(j)=.; iobsd(j)=.<span class="kw">; end</span>;</span>
-<span id="cb53-115"><a href="#cb53-115" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb53-116"><a href="#cb53-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-117"><a href="#cb53-117" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> newdat;</span>
-<span id="cb53-118"><a href="#cb53-118" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> dead1-dead<span class="kw">&amp;howmany </span>relapse1-relapse<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-119"><a href="#cb53-119" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR FULL SAMPLE, STORE IN SALL*/</span></span>
-<span id="cb53-120"><a href="#cb53-120" aria-hidden="true" tabindex="-1"></a>%cuminc(newdat,&amp;x,&amp;r,&amp;d,sall,cirall,cidall);</span>
-<span id="cb53-121"><a href="#cb53-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-122"><a href="#cb53-122" aria-hidden="true" tabindex="-1"></a><span class="kw">%do</span> ip=<span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb53-123"><a href="#cb53-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-124"><a href="#cb53-124" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR REDUCED SAMPLE, STORE IN SIP*/</span></span>
-<span id="cb53-125"><a href="#cb53-125" aria-hidden="true" tabindex="-1"></a>%cuminc(newdat,&amp;x,relapse&amp;ip,dead&amp;ip,stemp,cir1,cid1);</span>
-<span id="cb53-126"><a href="#cb53-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-127"><a href="#cb53-127" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE PSEUDOVALUES FOR BOTH RISK AT EVERY DATA POINT AND ADD TO FILE */</span> </span>
-<span id="cb53-128"><a href="#cb53-128" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> ps; <span class="kw">merge</span> sall stemp;  <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
-<span id="cb53-129"><a href="#cb53-129" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cirtemp <span class="dv">0</span>;</span>
-<span id="cb53-130"><a href="#cb53-130" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cidtemp <span class="dv">0</span>;</span>
-<span id="cb53-131"><a href="#cb53-131" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> cir1=. <span class="kw">then</span> cir1=cirtemp;</span>
-<span id="cb53-132"><a href="#cb53-132" aria-hidden="true" tabindex="-1"></a>cirtemp=cir1;</span>
-<span id="cb53-133"><a href="#cb53-133" aria-hidden="true" tabindex="-1"></a>rpsu<span class="kw">&amp;ip=&amp;howmany*</span>cirall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*cir1;</span>
-<span id="cb53-134"><a href="#cb53-134" aria-hidden="true" tabindex="-1"></a> <span class="kw">if</span> cid1=. <span class="kw">then</span> cid1=cidtemp;</span>
-<span id="cb53-135"><a href="#cb53-135" aria-hidden="true" tabindex="-1"></a>cidtemp=cid1;</span>
-<span id="cb53-136"><a href="#cb53-136" aria-hidden="true" tabindex="-1"></a>dpsu<span class="kw">&amp;ip=&amp;howmany*</span>cidall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*cid1;</span>
-<span id="cb53-137"><a href="#cb53-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-138"><a href="#cb53-138" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out; <span class="kw">merge</span> out ps useme; <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
-<span id="cb53-139"><a href="#cb53-139" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb53-140"><a href="#cb53-140" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> rpsu1-rpsu<span class="kw">&amp;ip </span>dpsu1-dpsu<span class="kw">&amp;ip &amp;x;</span></span>
-<span id="cb53-141"><a href="#cb53-141" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb53-142"><a href="#cb53-142" aria-hidden="true" tabindex="-1"></a><span class="kw">%end</span>;</span>
-<span id="cb53-143"><a href="#cb53-143" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-144"><a href="#cb53-144" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> <span class="kw">&amp;dataout;</span>  <span class="kw">set</span> newdat; </span>
-<span id="cb53-145"><a href="#cb53-145" aria-hidden="true" tabindex="-1"></a> <span class="kw">drop</span> dead1-dead<span class="kw">&amp;howmany </span>relapse1-relapse<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-146"><a href="#cb53-146" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-147"><a href="#cb53-147" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> all;  <span class="kw">set</span> out;</span>
-<span id="cb53-148"><a href="#cb53-148" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb53-149"><a href="#cb53-149" aria-hidden="true" tabindex="-1"></a> <span class="kw">array</span> yr(<span class="kw">&amp;howmany)</span> rpsu1-rpsu<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-150"><a href="#cb53-150" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> yd(<span class="kw">&amp;howmany)</span> dpsu1-dpsu<span class="kw">&amp;howmany;</span></span>
-<span id="cb53-151"><a href="#cb53-151" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
-<span id="cb53-152"><a href="#cb53-152" aria-hidden="true" tabindex="-1"></a>rpseudo=yr(j);</span>
-<span id="cb53-153"><a href="#cb53-153" aria-hidden="true" tabindex="-1"></a>dpseudo=yd(j);</span>
-<span id="cb53-154"><a href="#cb53-154" aria-hidden="true" tabindex="-1"></a>id=j;</span>
-<span id="cb53-155"><a href="#cb53-155" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span>;</span>
-<span id="cb53-156"><a href="#cb53-156" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
-<span id="cb53-157"><a href="#cb53-157" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> id <span class="fu">time</span> rpseudo dpseudo;</span>
-<span id="cb53-158"><a href="#cb53-158" aria-hidden="true" tabindex="-1"></a><span class="kw"> proc</span> sort<span class="kw"> data</span>=all;  <span class="kw">by</span> id;</span>
-<span id="cb53-159"><a href="#cb53-159" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> <span class="kw">&amp;dataout;</span> <span class="kw">merge</span> <span class="kw">&amp;dataout </span>all;</span>
-<span id="cb53-160"><a href="#cb53-160" aria-hidden="true" tabindex="-1"></a> <span class="kw">by</span> id;</span>
-<span id="cb53-161"><a href="#cb53-161" aria-hidden="true" tabindex="-1"></a> <span class="kw">retain</span> otime -<span class="dv">1</span>;</span>
-<span id="cb53-162"><a href="#cb53-162" aria-hidden="true" tabindex="-1"></a> <span class="kw">retain</span> oid -<span class="dv">1</span>;</span>
-<span id="cb53-163"><a href="#cb53-163" aria-hidden="true" tabindex="-1"></a> <span class="kw">if</span> id eq oid <span class="kw">and</span> otime=<span class="fu">time</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
-<span id="cb53-164"><a href="#cb53-164" aria-hidden="true" tabindex="-1"></a> <span class="kw">else do</span>; oid=id; otime=<span class="fu">time</span><span class="kw">; end</span>;</span>
-<span id="cb53-165"><a href="#cb53-165" aria-hidden="true" tabindex="-1"></a> <span class="kw">%mend</span>;</span>
-<span id="cb53-166"><a href="#cb53-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-167"><a href="#cb53-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-168"><a href="#cb53-168" aria-hidden="true" tabindex="-1"></a><span class="co">* We must create a variable for the end-point death without stroke;</span></span>
-<span id="cb53-169"><a href="#cb53-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-170"><a href="#cb53-170" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
-<span id="cb53-171"><a href="#cb53-171" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
-<span id="cb53-172"><a href="#cb53-172" aria-hidden="true" tabindex="-1"></a>    death_wo_stroke = death;</span>
-<span id="cb53-173"><a href="#cb53-173" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> death_wo_stroke = <span class="dv">0</span>;</span>
-<span id="cb53-174"><a href="#cb53-174" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb53-175"><a href="#cb53-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-176"><a href="#cb53-176" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudoci MACRO is called with 'chs_data', 'timestrokeordeath', 'stroke', 'death_wo_stroke', '678'. 'timepoint' and 'outdatadata661'</span></span>
-<span id="cb53-177"><a href="#cb53-177" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
-<span id="cb53-178"><a href="#cb53-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-179"><a href="#cb53-179" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata661' where the pseudo observations for the end-point stroke are stored in the column 'rpseudo'</span></span>
-<span id="cb53-180"><a href="#cb53-180" aria-hidden="true" tabindex="-1"></a><span class="co">  and the pseudo observations for death without stroke are stored in the column 'dpseudo'.;</span></span>
-<span id="cb53-181"><a href="#cb53-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-182"><a href="#cb53-182" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.6.1'</span>;</span>
-<span id="cb53-183"><a href="#cb53-183" aria-hidden="true" tabindex="-1"></a> %pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata661);</span>
-<span id="cb53-184"><a href="#cb53-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-185"><a href="#cb53-185" aria-hidden="true" tabindex="-1"></a><span class="co">* We fit a cloglog model for the cumulative incidence of stroke with the genmod procedure where we specify the 'fwdlink' and 'invlink' </span></span>
-<span id="cb53-186"><a href="#cb53-186" aria-hidden="true" tabindex="-1"></a><span class="co">  statements;</span></span>
-<span id="cb53-187"><a href="#cb53-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-188"><a href="#cb53-188" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.5.1 - stroke'</span>;</span>
-<span id="cb53-189"><a href="#cb53-189" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata661;</span>
-<span id="cb53-190"><a href="#cb53-190" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
-<span id="cb53-191"><a href="#cb53-191" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(<span class="dv">1</span>-_mean_));</span>
-<span id="cb53-192"><a href="#cb53-192" aria-hidden="true" tabindex="-1"></a>    invlink ilink= <span class="dv">1</span> - <span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
-<span id="cb53-193"><a href="#cb53-193" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> rpseudo= esvea sex age sbp /dist=<span class="fu">normal</span>  noscale ; </span>
-<span id="cb53-194"><a href="#cb53-194" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
-<span id="cb53-195"><a href="#cb53-195" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb53-196"><a href="#cb53-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-197"><a href="#cb53-197" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus, we obtain the following model for the cumulative incidence of stroke at 3 years</span></span>
-<span id="cb53-198"><a href="#cb53-198" aria-hidden="true" tabindex="-1"></a><span class="co">  F_stroke(3|Z) = 1 - exp(-exp(-13.2294 + 0.0312*Z1 + 0.9711*Z2 + 0.1199*Z3  + 0.0040*Z4)),  </span></span>
-<span id="cb53-199"><a href="#cb53-199" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span>
-<span id="cb53-200"><a href="#cb53-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-201"><a href="#cb53-201" aria-hidden="true" tabindex="-1"></a><span class="co">* Likewise, we will fit a model for the cumulative incidence of death without stroke at 3 years;</span></span>
-<span id="cb53-202"><a href="#cb53-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-203"><a href="#cb53-203" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.5.1 - death without stroke'</span>;</span>
-<span id="cb53-204"><a href="#cb53-204" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata661;</span>
-<span id="cb53-205"><a href="#cb53-205" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
-<span id="cb53-206"><a href="#cb53-206" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(<span class="dv">1</span>-_mean_));</span>
-<span id="cb53-207"><a href="#cb53-207" aria-hidden="true" tabindex="-1"></a>    invlink ilink= <span class="dv">1</span> - <span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
-<span id="cb53-208"><a href="#cb53-208" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> dpseudo= esvea sex age sbp /dist=<span class="fu">normal</span> noscale ; </span>
-<span id="cb53-209"><a href="#cb53-209" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
-<span id="cb53-210"><a href="#cb53-210" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb53-211"><a href="#cb53-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-212"><a href="#cb53-212" aria-hidden="true" tabindex="-1"></a><span class="co">* We obtain the following model for the cumulative incidence of death without stroke at 3 years</span></span>
-<span id="cb53-213"><a href="#cb53-213" aria-hidden="true" tabindex="-1"></a><span class="co">  F_death(3|Z) = 1 - exp(-exp(-3.3924 + 0.2862*Z1 + 1.2618*Z2 + 0.0771*Z3 - 0.0442*Z4)), </span></span>
-<span id="cb53-214"><a href="#cb53-214" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudo observations for the cumulative incidences of stroke and death without stroke at three years are computed using the  pseudoci MACRO. To use this MACRO we must remember to include the cuminc MACRO.;</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> cuminc(datain,x,re,de,dataout,cir,cid);</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">/*  THIS MACRO COMPUTES THE CUMULATIVE INCIDENCE FUNCTIONS FOR</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co">    BOTH COMPETING RISKS USING PROC PHREG OUTPUT</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co">    INPUTS TO MACRO</span></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co">    DATAIN--NAME OF INPUT DATA SET CONTAINING </span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co">        X--TIME TO EVENT</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="co">        RE--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)</span></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">        DE--INDICATOR OF SECOND COMPETING RISK</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co">    DATAOUT--NAME OF OUTPUT DATA SET CONTAINING</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co">        CIR--CUMULATIVE INCIDENCE FUNCTION FOR 1ST COMPETING RISK</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co">        CID--CUMULATIVE INCIDENCE FUNCTION FOR 2ST COMPETING RISK</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> work;  <span class="kw">set</span> <span class="kw">&amp;datain;</span></span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>t=<span class="kw">&amp;x;</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>r=<span class="kw">&amp;re;</span></span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>d=<span class="kw">&amp;de;</span></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>zero=<span class="dv">0</span>;</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR FIRST COMPETING RISK */</span></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=work noprint; </span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> t*r(<span class="dv">0</span>)=zero;</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span> out=rel  logsurv=chr  /method=emp;</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR SECOND COMPETING RISK */</span></span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=work noprint; </span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> t*d(<span class="dv">0</span>)=zero;</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span> out=dead  logsurv=chd  /method=emp;</span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a> <span class="co">/* COMPUTE cumualtive incidence */</span></span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> both;  <span class="kw">merge</span> rel dead;  <span class="kw">by</span> t;</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> s <span class="dv">1</span></span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cr <span class="dv">0</span>;</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cd <span class="dv">0</span>;</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cumincr <span class="dv">0</span>;</span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cumincd <span class="dv">0</span>;</span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>hr=-(cr+chr);</span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>hd=-(cd+chd);</span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a><span class="co">/* NOTE HR AND HD ARE THE JUMPS IN THE CUMUALTIVE CRUDE HAZARDS AT THIS TIME */</span></span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>cr=-chr;</span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>cd=-chd;</span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>cir=cumincr+hr*s;</span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>cumincr=cir;</span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a>cid=cumincd+hd*s;</span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a>cumincd=cid;</span>
+<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a>s=s*(<span class="dv">1</span>-hr-hd);</span>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a><span class="co">/* NOTE S IS KAPLAN-MEIER ESTIMATE IGNORING CAUSE OF FAILURE */</span></span>
+<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">&amp;dataout;</span>  <span class="kw">set</span> both;</span>
+<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;x=</span>t;</span>
+<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;cir=</span>cir;  <span class="kw">&amp;cid=</span>cid;</span>
+<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">&amp;x &amp;cir &amp;cid;</span></span>
+<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span>;</span>
+<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-60"><a href="#cb54-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-61"><a href="#cb54-61" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> pseudoci(datain,x,r,d,howmany,datatau,dataout);</span>
+<span id="cb54-62"><a href="#cb54-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-63"><a href="#cb54-63" aria-hidden="true" tabindex="-1"></a><span class="co">/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE CUMUALTIVE INCIDENCE FUNCTION</span></span>
+<span id="cb54-64"><a href="#cb54-64" aria-hidden="true" tabindex="-1"></a><span class="co">      FOR BOTH OF TWO COMPETING RISKS  </span></span>
+<span id="cb54-65"><a href="#cb54-65" aria-hidden="true" tabindex="-1"></a><span class="co">      TIME</span></span>
+<span id="cb54-66"><a href="#cb54-66" aria-hidden="true" tabindex="-1"></a><span class="co">      INPUTS:</span></span>
+<span id="cb54-67"><a href="#cb54-67" aria-hidden="true" tabindex="-1"></a><span class="co">      DATAIN---INPUT DATA SET</span></span>
+<span id="cb54-68"><a href="#cb54-68" aria-hidden="true" tabindex="-1"></a><span class="co">      X--TIME VARIABLE</span></span>
+<span id="cb54-69"><a href="#cb54-69" aria-hidden="true" tabindex="-1"></a><span class="co">      R--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)</span></span>
+<span id="cb54-70"><a href="#cb54-70" aria-hidden="true" tabindex="-1"></a><span class="co">      D--INDICATOR OF SECOND COMPETING RISK</span></span>
+<span id="cb54-71"><a href="#cb54-71" aria-hidden="true" tabindex="-1"></a><span class="co">      HOWMANY---SAMPLE SIZE</span></span>
+<span id="cb54-72"><a href="#cb54-72" aria-hidden="true" tabindex="-1"></a><span class="co">     </span></span>
+<span id="cb54-73"><a href="#cb54-73" aria-hidden="true" tabindex="-1"></a><span class="co">      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED </span></span>
+<span id="cb54-74"><a href="#cb54-74" aria-hidden="true" tabindex="-1"></a><span class="co">                DATA SET HAS SINGLE VARIABLE "TIME"</span></span>
+<span id="cb54-75"><a href="#cb54-75" aria-hidden="true" tabindex="-1"></a><span class="co">                </span></span>
+<span id="cb54-76"><a href="#cb54-76" aria-hidden="true" tabindex="-1"></a><span class="co">      DATAOUT---OUTPUT DATA SET WHICH CONATINS PSUK,K=1,...,HOWMANY THE PSEUDO</span></span>
+<span id="cb54-77"><a href="#cb54-77" aria-hidden="true" tabindex="-1"></a><span class="co">                VALUES AT EACH TIME POINT (Note output data set</span></span>
+<span id="cb54-78"><a href="#cb54-78" aria-hidden="true" tabindex="-1"></a><span class="co">                 includes orginal data sorted by time)</span></span>
+<span id="cb54-79"><a href="#cb54-79" aria-hidden="true" tabindex="-1"></a><span class="co">      </span></span>
+<span id="cb54-80"><a href="#cb54-80" aria-hidden="true" tabindex="-1"></a><span class="co">*/</span></span>
+<span id="cb54-81"><a href="#cb54-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-82"><a href="#cb54-82" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datain;</span>  <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
+<span id="cb54-83"><a href="#cb54-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-84"><a href="#cb54-84" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="kw">keep</span>;  <span class="kw">set</span> <span class="kw">&amp;datatau;</span></span>
+<span id="cb54-85"><a href="#cb54-85" aria-hidden="true" tabindex="-1"></a>find=<span class="dv">1</span>;</span>
+<span id="cb54-86"><a href="#cb54-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-87"><a href="#cb54-87" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
+<span id="cb54-88"><a href="#cb54-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-89"><a href="#cb54-89" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">set</span> <span class="kw">&amp;datain;</span></span>
+<span id="cb54-90"><a href="#cb54-90" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>=<span class="kw">&amp;x;</span></span>
+<span id="cb54-91"><a href="#cb54-91" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span>=<span class="dv">1</span>;</span>
+<span id="cb54-92"><a href="#cb54-92" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="fu">point</span>;  <span class="kw">merge</span> <span class="fu">point</span> <span class="kw">keep</span>;  <span class="kw">by</span> <span class="fu">time</span>;</span>
+<span id="cb54-93"><a href="#cb54-93" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> find <span class="kw">keep</span>;</span>
+<span id="cb54-94"><a href="#cb54-94" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-95"><a href="#cb54-95" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> useme;  <span class="kw">set</span> <span class="fu">point</span>;</span>
+<span id="cb54-96"><a href="#cb54-96" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> temp -<span class="dv">1</span>;</span>
+<span id="cb54-97"><a href="#cb54-97" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="kw">keep</span> = <span class="dv">1</span> <span class="kw">then</span> temp=<span class="fu">time</span>;</span>
+<span id="cb54-98"><a href="#cb54-98" aria-hidden="true" tabindex="-1"></a>tuse=temp; </span>
+<span id="cb54-99"><a href="#cb54-99" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb54-100"><a href="#cb54-100" aria-hidden="true" tabindex="-1"></a><span class="kw">&amp;x=</span>tuse;</span>
+<span id="cb54-101"><a href="#cb54-101" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print;</span>
+<span id="cb54-102"><a href="#cb54-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-103"><a href="#cb54-103" aria-hidden="true" tabindex="-1"></a><span class="co">/* PREPARE DATA SET WITH MISSING VALUES FOR DEADK AND RELAPSEK TO BE USED IN COMPUTING</span></span>
+<span id="cb54-104"><a href="#cb54-104" aria-hidden="true" tabindex="-1"></a><span class="co">   ESTIMATED CUMULATIVE INCIDENCE WITH KTH OBSERVATION DELETED*/</span></span>
+<span id="cb54-105"><a href="#cb54-105" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=<span class="kw">&amp;datain;</span></span>
+<span id="cb54-106"><a href="#cb54-106" aria-hidden="true" tabindex="-1"></a><span class="kw">by</span> <span class="kw">&amp;x;</span></span>
+<span id="cb54-107"><a href="#cb54-107" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> newdat;  <span class="kw">set</span> <span class="kw">&amp;datain </span>;</span>
+<span id="cb54-108"><a href="#cb54-108" aria-hidden="true" tabindex="-1"></a>id+<span class="dv">1</span>;</span>
+<span id="cb54-109"><a href="#cb54-109" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobsd(<span class="kw">&amp;howmany)</span> dead1-dead<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-110"><a href="#cb54-110" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> iobsr(<span class="kw">&amp;howmany)</span> relapse1-relapse<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-111"><a href="#cb54-111" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb54-112"><a href="#cb54-112" aria-hidden="true" tabindex="-1"></a>iobsd(j)=<span class="kw">&amp;d;</span></span>
+<span id="cb54-113"><a href="#cb54-113" aria-hidden="true" tabindex="-1"></a>iobsr(j)=<span class="kw">&amp;r;</span></span>
+<span id="cb54-114"><a href="#cb54-114" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> j=id <span class="kw">then do</span>; iobsr(j)=.; iobsd(j)=.<span class="kw">; end</span>;</span>
+<span id="cb54-115"><a href="#cb54-115" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb54-116"><a href="#cb54-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-117"><a href="#cb54-117" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out;  <span class="kw">set</span> newdat;</span>
+<span id="cb54-118"><a href="#cb54-118" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> dead1-dead<span class="kw">&amp;howmany </span>relapse1-relapse<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-119"><a href="#cb54-119" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR FULL SAMPLE, STORE IN SALL*/</span></span>
+<span id="cb54-120"><a href="#cb54-120" aria-hidden="true" tabindex="-1"></a>%cuminc(newdat,&amp;x,&amp;r,&amp;d,sall,cirall,cidall);</span>
+<span id="cb54-121"><a href="#cb54-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-122"><a href="#cb54-122" aria-hidden="true" tabindex="-1"></a><span class="kw">%do</span> ip=<span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb54-123"><a href="#cb54-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-124"><a href="#cb54-124" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR REDUCED SAMPLE, STORE IN SIP*/</span></span>
+<span id="cb54-125"><a href="#cb54-125" aria-hidden="true" tabindex="-1"></a>%cuminc(newdat,&amp;x,relapse&amp;ip,dead&amp;ip,stemp,cir1,cid1);</span>
+<span id="cb54-126"><a href="#cb54-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-127"><a href="#cb54-127" aria-hidden="true" tabindex="-1"></a><span class="co">/* COMPUTE PSEUDOVALUES FOR BOTH RISK AT EVERY DATA POINT AND ADD TO FILE */</span> </span>
+<span id="cb54-128"><a href="#cb54-128" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> ps; <span class="kw">merge</span> sall stemp;  <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
+<span id="cb54-129"><a href="#cb54-129" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cirtemp <span class="dv">0</span>;</span>
+<span id="cb54-130"><a href="#cb54-130" aria-hidden="true" tabindex="-1"></a><span class="kw">retain</span> cidtemp <span class="dv">0</span>;</span>
+<span id="cb54-131"><a href="#cb54-131" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> cir1=. <span class="kw">then</span> cir1=cirtemp;</span>
+<span id="cb54-132"><a href="#cb54-132" aria-hidden="true" tabindex="-1"></a>cirtemp=cir1;</span>
+<span id="cb54-133"><a href="#cb54-133" aria-hidden="true" tabindex="-1"></a>rpsu<span class="kw">&amp;ip=&amp;howmany*</span>cirall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*cir1;</span>
+<span id="cb54-134"><a href="#cb54-134" aria-hidden="true" tabindex="-1"></a> <span class="kw">if</span> cid1=. <span class="kw">then</span> cid1=cidtemp;</span>
+<span id="cb54-135"><a href="#cb54-135" aria-hidden="true" tabindex="-1"></a>cidtemp=cid1;</span>
+<span id="cb54-136"><a href="#cb54-136" aria-hidden="true" tabindex="-1"></a>dpsu<span class="kw">&amp;ip=&amp;howmany*</span>cidall- (<span class="kw">&amp;howmany-</span><span class="dv">1</span>)*cid1;</span>
+<span id="cb54-137"><a href="#cb54-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-138"><a href="#cb54-138" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> out; <span class="kw">merge</span> out ps useme; <span class="kw">by</span> <span class="kw">&amp;x;</span></span>
+<span id="cb54-139"><a href="#cb54-139" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> find ne <span class="dv">1</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb54-140"><a href="#cb54-140" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="fu">time</span> rpsu1-rpsu<span class="kw">&amp;ip </span>dpsu1-dpsu<span class="kw">&amp;ip &amp;x;</span></span>
+<span id="cb54-141"><a href="#cb54-141" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-142"><a href="#cb54-142" aria-hidden="true" tabindex="-1"></a><span class="kw">%end</span>;</span>
+<span id="cb54-143"><a href="#cb54-143" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-144"><a href="#cb54-144" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> <span class="kw">&amp;dataout;</span>  <span class="kw">set</span> newdat; </span>
+<span id="cb54-145"><a href="#cb54-145" aria-hidden="true" tabindex="-1"></a> <span class="kw">drop</span> dead1-dead<span class="kw">&amp;howmany </span>relapse1-relapse<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-146"><a href="#cb54-146" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-147"><a href="#cb54-147" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> all;  <span class="kw">set</span> out;</span>
+<span id="cb54-148"><a href="#cb54-148" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-149"><a href="#cb54-149" aria-hidden="true" tabindex="-1"></a> <span class="kw">array</span> yr(<span class="kw">&amp;howmany)</span> rpsu1-rpsu<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-150"><a href="#cb54-150" aria-hidden="true" tabindex="-1"></a><span class="kw">array</span> yd(<span class="kw">&amp;howmany)</span> dpsu1-dpsu<span class="kw">&amp;howmany;</span></span>
+<span id="cb54-151"><a href="#cb54-151" aria-hidden="true" tabindex="-1"></a><span class="kw">do</span> j=<span class="dv">1</span> <span class="kw">to</span> <span class="kw">&amp;howmany;</span></span>
+<span id="cb54-152"><a href="#cb54-152" aria-hidden="true" tabindex="-1"></a>rpseudo=yr(j);</span>
+<span id="cb54-153"><a href="#cb54-153" aria-hidden="true" tabindex="-1"></a>dpseudo=yd(j);</span>
+<span id="cb54-154"><a href="#cb54-154" aria-hidden="true" tabindex="-1"></a>id=j;</span>
+<span id="cb54-155"><a href="#cb54-155" aria-hidden="true" tabindex="-1"></a><span class="kw">output</span>;</span>
+<span id="cb54-156"><a href="#cb54-156" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span>;</span>
+<span id="cb54-157"><a href="#cb54-157" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> id <span class="fu">time</span> rpseudo dpseudo;</span>
+<span id="cb54-158"><a href="#cb54-158" aria-hidden="true" tabindex="-1"></a><span class="kw"> proc</span> sort<span class="kw"> data</span>=all;  <span class="kw">by</span> id;</span>
+<span id="cb54-159"><a href="#cb54-159" aria-hidden="true" tabindex="-1"></a><span class="kw"> data</span> <span class="kw">&amp;dataout;</span> <span class="kw">merge</span> <span class="kw">&amp;dataout </span>all;</span>
+<span id="cb54-160"><a href="#cb54-160" aria-hidden="true" tabindex="-1"></a> <span class="kw">by</span> id;</span>
+<span id="cb54-161"><a href="#cb54-161" aria-hidden="true" tabindex="-1"></a> <span class="kw">retain</span> otime -<span class="dv">1</span>;</span>
+<span id="cb54-162"><a href="#cb54-162" aria-hidden="true" tabindex="-1"></a> <span class="kw">retain</span> oid -<span class="dv">1</span>;</span>
+<span id="cb54-163"><a href="#cb54-163" aria-hidden="true" tabindex="-1"></a> <span class="kw">if</span> id eq oid <span class="kw">and</span> otime=<span class="fu">time</span> <span class="kw">then</span> <span class="kw">delete</span>;</span>
+<span id="cb54-164"><a href="#cb54-164" aria-hidden="true" tabindex="-1"></a> <span class="kw">else do</span>; oid=id; otime=<span class="fu">time</span><span class="kw">; end</span>;</span>
+<span id="cb54-165"><a href="#cb54-165" aria-hidden="true" tabindex="-1"></a> <span class="kw">%mend</span>;</span>
+<span id="cb54-166"><a href="#cb54-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-167"><a href="#cb54-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-168"><a href="#cb54-168" aria-hidden="true" tabindex="-1"></a><span class="co">* We must create a variable for the end-point death without stroke;</span></span>
+<span id="cb54-169"><a href="#cb54-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-170"><a href="#cb54-170" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> chs_<span class="kw">data</span>;</span>
+<span id="cb54-171"><a href="#cb54-171" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> chs_<span class="kw">data</span>;</span>
+<span id="cb54-172"><a href="#cb54-172" aria-hidden="true" tabindex="-1"></a>    death_wo_stroke = death;</span>
+<span id="cb54-173"><a href="#cb54-173" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> stroke = <span class="dv">1</span> <span class="kw">then</span> death_wo_stroke = <span class="dv">0</span>;</span>
+<span id="cb54-174"><a href="#cb54-174" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-175"><a href="#cb54-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-176"><a href="#cb54-176" aria-hidden="true" tabindex="-1"></a><span class="co">* The pseudoci MACRO is called with 'chs_data', 'timestrokeordeath', 'stroke', 'death_wo_stroke', '678'. 'timepoint' and 'outdatadata661'</span></span>
+<span id="cb54-177"><a href="#cb54-177" aria-hidden="true" tabindex="-1"></a><span class="co">  as arguments;</span></span>
+<span id="cb54-178"><a href="#cb54-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-179"><a href="#cb54-179" aria-hidden="true" tabindex="-1"></a><span class="co">* The MACRO returns a data set 'outdata661' where the pseudo observations for the end-point stroke are stored in the column 'rpseudo'</span></span>
+<span id="cb54-180"><a href="#cb54-180" aria-hidden="true" tabindex="-1"></a><span class="co">  and the pseudo observations for death without stroke are stored in the column 'dpseudo'.;</span></span>
+<span id="cb54-181"><a href="#cb54-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-182"><a href="#cb54-182" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.6.1'</span>;</span>
+<span id="cb54-183"><a href="#cb54-183" aria-hidden="true" tabindex="-1"></a> %pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata661);</span>
+<span id="cb54-184"><a href="#cb54-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-185"><a href="#cb54-185" aria-hidden="true" tabindex="-1"></a><span class="co">* We fit a cloglog model for the cumulative incidence of stroke with the genmod procedure where we specify the 'fwdlink' and 'invlink' </span></span>
+<span id="cb54-186"><a href="#cb54-186" aria-hidden="true" tabindex="-1"></a><span class="co">  statements;</span></span>
+<span id="cb54-187"><a href="#cb54-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-188"><a href="#cb54-188" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.5.1 - stroke'</span>;</span>
+<span id="cb54-189"><a href="#cb54-189" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata661;</span>
+<span id="cb54-190"><a href="#cb54-190" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
+<span id="cb54-191"><a href="#cb54-191" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(<span class="dv">1</span>-_mean_));</span>
+<span id="cb54-192"><a href="#cb54-192" aria-hidden="true" tabindex="-1"></a>    invlink ilink= <span class="dv">1</span> - <span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
+<span id="cb54-193"><a href="#cb54-193" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> rpseudo= esvea sex age sbp /dist=<span class="fu">normal</span>  noscale ; </span>
+<span id="cb54-194"><a href="#cb54-194" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
+<span id="cb54-195"><a href="#cb54-195" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-196"><a href="#cb54-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-197"><a href="#cb54-197" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus, we obtain the following model for the cumulative incidence of stroke at 3 years</span></span>
+<span id="cb54-198"><a href="#cb54-198" aria-hidden="true" tabindex="-1"></a><span class="co">  F_stroke(3|Z) = 1 - exp(-exp(-13.2294 + 0.0312*Z1 + 0.9711*Z2 + 0.1199*Z3  + 0.0040*Z4)),  </span></span>
+<span id="cb54-199"><a href="#cb54-199" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span>
+<span id="cb54-200"><a href="#cb54-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-201"><a href="#cb54-201" aria-hidden="true" tabindex="-1"></a><span class="co">* Likewise, we will fit a model for the cumulative incidence of death without stroke at 3 years;</span></span>
+<span id="cb54-202"><a href="#cb54-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-203"><a href="#cb54-203" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'6.5.1 - death without stroke'</span>;</span>
+<span id="cb54-204"><a href="#cb54-204" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=outdata661;</span>
+<span id="cb54-205"><a href="#cb54-205" aria-hidden="true" tabindex="-1"></a>    class ptno;</span>
+<span id="cb54-206"><a href="#cb54-206" aria-hidden="true" tabindex="-1"></a>    fwdlink <span class="kw">link</span>=<span class="fu">log</span>(-<span class="fu">log</span>(<span class="dv">1</span>-_mean_));</span>
+<span id="cb54-207"><a href="#cb54-207" aria-hidden="true" tabindex="-1"></a>    invlink ilink= <span class="dv">1</span> - <span class="fu">exp</span>(-<span class="fu">exp</span>(_xbeta_));</span>
+<span id="cb54-208"><a href="#cb54-208" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> dpseudo= esvea sex age sbp /dist=<span class="fu">normal</span> noscale ; </span>
+<span id="cb54-209"><a href="#cb54-209" aria-hidden="true" tabindex="-1"></a>    repeated subject=ptno/corr=ind;</span>
+<span id="cb54-210"><a href="#cb54-210" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-211"><a href="#cb54-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-212"><a href="#cb54-212" aria-hidden="true" tabindex="-1"></a><span class="co">* We obtain the following model for the cumulative incidence of death without stroke at 3 years</span></span>
+<span id="cb54-213"><a href="#cb54-213" aria-hidden="true" tabindex="-1"></a><span class="co">  F_death(3|Z) = 1 - exp(-exp(-3.3924 + 0.2862*Z1 + 1.2618*Z2 + 0.0771*Z3 - 0.0442*Z4)), </span></span>
+<span id="cb54-214"><a href="#cb54-214" aria-hidden="true" tabindex="-1"></a><span class="co">  where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -2365,6 +2411,7 @@ Number of clusters:   675   Maximum cluster size: 1 </code></pre>
 <p>Comparison with Exercise 5.8 is not meaningful - sorry!</p>
 
 
+</section>
 </section>
 </section>
 </section>
@@ -2570,7 +2617,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">Models for Multi-State Survival Data: Rates, Risks, and Pseudo-Values</div>   
-    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a> and <a href="https://https://posit.co/downloads/">RStudio</a></div>
+    <div class="nav-footer-right">Built with <a href="https://quarto.org/">Quarto</a> and <a href="https://posit.co/products/open-source/rstudio/">RStudio</a></div>
   </div>
 </footer>
 

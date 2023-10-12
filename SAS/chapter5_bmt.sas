@@ -4,43 +4,27 @@
 
 * Load data; 
 proc import out=bmt
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/bmt.csv"
+	datafile="data/bmt.csv" 
 	dbms=csv replace;
 run;
-
-* Summarise data set; 
-proc contents 
-	data=bmt; 
-run;
-
 * Add extra variables;
 data bmt; 
-set bmt;
-	intxsurv=timedeath; dead=death;
-	if rel=1 then intxrel=timerel; if rel=0 then intxrel=timedeath;
-	trm=0; if rel=0 and death=1 then trm=1;
+  set bmt;
+	intxsurv=timedeath;
+	dead=death;
+	if rel=1 then intxrel=timerel;
+	if rel=0 then intxrel=timedeath;
+	trm=0;
+	if rel=0 and death=1 then trm=1;
 	state0=rel+2*trm;
-	if gvhd=1 then tgvhd=timegvhd; if gvhd=0 then tgvhd=intxrel;
-
-	dytxanc5 = timeanc500 * 30; 
+	if gvhd=1 then tgvhd=timegvhd;
+	if gvhd=0 then tgvhd=intxrel;
+	dytxanc5=timeanc500*30; 
 run;
 
 *---------------------------------------------------------------;
 *--------------------- Table 5.1 -------------------------------;
 *---------------------------------------------------------------;
-
-/* Landmarking using GvHD and ANC 500 */
-proc freq data=bmt; tables anc500 gvhd; run;
-
-proc univariate data=bmt;
-where gvhd=1; var tgvhd; run;
-
-proc univariate data=bmt;
-where anc500=1; var dytxanc5; run;
-
-proc univariate data=bmt;
-where anc500=0; var intxrel state0; run;
-
 
 * landmarks at 0.5 ...  2.5 mo. horizon 6 mo. ahead;
 data landmark; set bmt;
@@ -80,9 +64,8 @@ data landmark; set bmt;
 		gvh=0; if gvhd=1 and tgvhd<=2.5 then gvh=1;
 	output; end;
 run;
-
 proc freq data=landmark; 
-	tables anc*landmark gvh*landmark; 
+	tables anc*landmark gvh*landmark/ nocol norow nopercent; 
 run;
 
 
@@ -94,7 +77,6 @@ data cov1;
 	anc05=0; anc1=0; anc15=0; anc2=0; anc25=0; 
 	gvh05=0; gvh1=0; gvh15=0; gvh2=0; gvh25=0;
 run;
-
 proc phreg data=landmark covs(aggregate);
 	class landmark;
 	model time*status(0)=anc05 anc1 anc15 anc2 anc25 
@@ -114,6 +96,7 @@ run;
 *-------------------- Figure 5.1 -------------------------------;
 *---------------------------------------------------------------;
 
+title 'Figure 5.1 (a)';
 proc gplot data=base1;
 	plot km0*time=landmark/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 9 by 1 minor=none label=('Months');
@@ -125,6 +108,7 @@ proc gplot data=base1;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run;
+quit;
 
 data base1; set base1;
 	if landmark=0.5 then km1=km0**exp(-0.33460+0.70277);
@@ -134,7 +118,7 @@ data base1; set base1;
 	if landmark=2.5 then km1=km0**exp(-3.35448+0.83065);
 run;
 
-
+title 'Figure 5.1 (b)';
 proc gplot data=base1;
 	plot km1*time=landmark/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 9 by 1 minor=none label=('Months');
@@ -146,6 +130,7 @@ proc gplot data=base1;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 5.3 -------------------------------;
@@ -155,7 +140,6 @@ data cov2;
 	anc=0; anctime=0; anctime2=0;  
 	gvh=0; gvhtime=0; gvhtime2=0; 
 run;
-
 proc phreg data=landmark covs(aggregate);
 	model time*status(0)=anc anctime anctime2 
 	                     gvh gvhtime gvhtime2/entry=entry;
@@ -165,7 +149,6 @@ proc phreg data=landmark covs(aggregate);
 	id id;
 	baseline out=base2 covariates=cov2 survival=km0;
 run;
-
 data regn;
 	do i=1 to 5;
 	b1=-0.33460; b2=-0.60851; b3=-1.68550; b4=-2.96384; b5=-3.35448; 
@@ -211,7 +194,7 @@ proc gplot data=base2;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run;
-
+quit;
 
 data base2; set base2;
 	lp=-0.32202+(-1.19065)*(landmark-0.5)/2
@@ -232,7 +215,7 @@ proc gplot data=base2;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 5.3 ------------------------------;
