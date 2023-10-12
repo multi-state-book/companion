@@ -1,24 +1,29 @@
-#------------------------------------------------------------------#
-#------- Chapter 5, R code, PROVA data ----------------------------#
-#------------------------------------------------------------------#
+### Table 5.4
 
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-require(dplyr)
+::: {.panel-tabset}
 
+## R
+
+```{r}
+#| label: table-5.4-r
+# Load packages
+library(survival) #Cox models, Kaplan-Meier, ect. 
+library(tidyverse) #Plots
+library(data.table) #Faster aggregation of data
+library(Epi) #Lexis
+library(gridExtra) #Combine multiple plots 
+library(ggpubr) #Multiple plots, ggarrange
+library(mstate)
+library(xtable)
+library(ggplot2)
+library(timereg)
+
+# read prova data
 prova <- read.csv("data/prova.csv", na.strings = c("."))
-head(prova)
-
 prova <- data.frame(prova)
 prova <- prova %>% mutate(timebleed = ifelse(bleed == 1, timebleed, timedeath),
                           outof0 = ifelse(bleed ==1, 1, death),
                           wait = ifelse(bleed ==1, timedeath - timebleed, NA))
-
-# Faster processing
-require(data.table)
 prova <- setDT(prova)
 
 # Setting start times, s = 1 year and s = 2 years
@@ -29,46 +34,13 @@ s2 = 2*365.25
 cens_outof0 <- 1509
 cens_wait <- 1363
 
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------#
-#------------------------------------------------------------------#
-
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom",
-        text = element_text(size = 20),
-        axis.text.x = element_text(size = 20),
-        axis.text.y = element_text(size = 20))
-
-
-#------------------------------------------------------------------#
-#---------------- Table 5.4 ---------------------------------------#
-#------------------------------------------------------------------#
-#------------------------------------------------------------------#
-#---------------- Figure 5.5-5.9-----------------------------------#
-#------------------------------------------------------------------#
-
-
-#### EVA'S CODE ####
-
-###################################### PACKAGES ##################################################################################
-library(survival) #Cox models, Kaplan-Meier, ect. 
-library(tidyverse) #Plots
-library(data.table) #Faster aggregation of data
-library(Epi) #Lexis
-library(gridExtra) #Combine multiple plots 
-library(ggpubr) #Multiple plots, ggarrange
-library(mstate)
-library(xtable)
-
-
-
-############################################## AALEN-JOHANSEN ESTIMATOR ################################################################
+# AALEN-JOHANSEN ESTIMATOR #####################################################
 
 # Transition matrix for irreversible illness-death model
 tmat <- trans.illdeath(names = c("Non-bleeding", "Bleeding", "Dead"))
 
 # Converting data to long format
-long_format <- msprep(time = c(NA, "timebleed", "timedeath"), status = c(NA, "bleed", "death"), data = as.data.frame(prova), trans = tmat)
+long_format <- msprep(time = c(NA, "timebleed", "timedeath"),status = c(NA, "bleed", "death"), data = as.data.frame(prova), trans = tmat)
 
 # Cox model
 cox <- coxph(Surv(Tstart,Tstop,status) ~ strata(trans), data =long_format, method = "breslow")
@@ -81,7 +53,7 @@ AaJ_ELOS_function <- function(t){
   mat <- ELOS(pt =probtrans(msfit, predt = 0), t)
   return(mat[1,2])}
 
-######################################### MICROSIMULATION WITHOUT COVARIATES #######################################################################
+# MICROSIMULATION WITHOUT COVARIATES ###########################################
 
 #Setting up data with Epi packages
 #One time  scale: tsr (time since randomization), two states: No bleeding - dead
@@ -188,16 +160,15 @@ sigma02 <- vcov(poisson02)
 beta12 <- summary(poisson12)$coefficients[,1]
 sigma12 <- vcov(poisson12)
 
-
 #Time intervals for 0->1 and 0->2 transitions (censoring at 1509 days)
 time0h_int <- unique(c(intervals01, intervals02, cens_outof0))
 #Time intervals for 1->2 transitions (censoring duration in state 1 after 1363)
 time12_int <- unique(c(intervals12, cens_wait))
 
 
-#Microsimulation function. 'N' is number of subjects to simulate, 'seed' is random seed and 
-#if 'sample = TRUE' new parameters for the Poisson models are drawn from 
-# multivariate normal distributions
+# Microsimulation function. 'N' is number of subjects to simulate, 'seed' is
+# random seed and # if 'sample = TRUE' new parameters for the Poisson models 
+# are drawn from  multivariate normal distributions
 microsim_fct <- function(N, seed, sample = FALSE){
   set.seed(seed) #Setting the random seed 
   glm01 <- beta01 #Original alpha01 hazard
@@ -276,6 +247,57 @@ Q1_sd <- function(N,B,t, sd = FALSE){ #Default is to return variance, not SD est
       colnames(res) <- c("Qhat", "SD")}}
   return(res)}
 
+# Table 5.4 
+
+# Estimation of transition probabilities (Q_1(t)) under Markov assumption
+AaJ_Q1_data <- probtrans(msfit, predt = 0)[[1]] #P(V(t) = 1 | V(1) = 0)
+AaJ_Q1_data <- as.data.frame(cbind(AaJ_Q1_data$time, AaJ_Q1_data$pstate2, AaJ_Q1_data$se2, "AaJ"))
+
+#Function returning Q1(t) and SD based on the Aalen Johansen estimator
+AaJ_Q1_function <- function(t){
+  x <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V2, n = 1)
+  y <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V3, n = 1)
+  return(c(x,y))}
+
+# Q1(t) for t \in {0.5,1,...,4}
+time_s1 <- seq(0.5,4.,0.5)*365.25
+AaJ_Q1 <- t(sapply(time_s1, AaJ_Q1_function))
+rownames(AaJ_Q1) <- seq(0.5,4.,0.5)
+colnames(AaJ_Q1) <- c("Q1(t) estimate", "SD")
+
+
+# SD estimate for Q1(t) based on micro-simulation for t \in {0.5,1,...,4}. 
+# Takes approximately 5 min
+MS_Q1_est <- Q1_sd(N = 1000,B = 1000,t = time_s1, sd = TRUE)
+
+#Making table in LaTeX format of SD estimates of Q1(t)
+tab54 <- cbind(AaJ_Q1, MS_Q1_est)
+colnames(tab54) <- c("AaJ_est", "AaJ_SD", "MS_est", "MS_SD")
+class(tab54) <- "numeric"
+
+#Table for LaTeX
+print(xtable(tab54, digits = c(1,3,3,3,4), caption = "Q_{1}(t), t > 0"), include.rownames = TRUE) #output for LaTeX
+```
+## SAS-NA
+
+:::
+
+
+
+### Figure 5.5
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.5-r
+theme_general <- theme_bw() +
+  theme(legend.position = "bottom",
+        text = element_text(size = 20),
+        axis.text.x = element_text(size = 20),
+        axis.text.y = element_text(size = 20))
+
 #Function returning list of B estimates of Q1(2) each based on simulation of N subjects 
 Q1_hist2 <- function(N,B){
   Q1b <- rep(0, length(B))
@@ -285,17 +307,81 @@ Q1_hist2 <- function(N,B){
     Q1b[i] <- Y1/N}
   return(Q1b)}
 
+# N=B=1000 
+#hist_Q1 <- Q1_hist2(1000,1000) 
+#hist_Q1 <- as.data.frame(hist_Q1)
+hist_Q1 <- read.csv("temp/datafig55.csv")
 
+# Histogram of Q1(2) with ggplot
+fig5.5 <- ggplot() +
+  geom_histogram(aes(x = hist_Q1$hist_Q1,y = stat(count) / sum(count)),
+                 fill = "grey", color = "black", bins = 30) +
+  theme_bw() + 
+  geom_vline(xintercept = mean(hist_Q1$hist_Q1), color = "black", 
+             size = 1, linetype = "dashed") +
+  ylab("Density") + xlab(expression(Q[1]*(2))) +
+  theme_general
+fig5.5
+```
+
+## SAS-NA
+
+:::
+
+
+### Figure 5.6
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.6-r
 #Expected length of stay in state 1, epsilon1(tau)
 sim_prova <- microsim_fct(N = 10000, seed = 1)
-
 MS_ELOS <- function(tau,N, seed){
   bleed_sub <- subset(subset(sim_prova, bleed ==1), time0h < tau)
   t12 <- pmin(tau, bleed_sub$time12) #returns minimum of tau and time12 for each simulated subject
   t01 <- bleed_sub$time0h
   return((1/nrow(sim_prova))*sum(t12 - t01))}
 
-######################### MICROSIMULATION INCLUDING SCLEROTHERAPY AS COVARIATE #########################################################################
+# Creating data
+time_elos <- seq(0,4*365.25,1)
+#elos_aj <- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))
+#elos_ms <- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) 
+
+#Plot comparing epsilon1(tau) based on AaJ and micro-simulation (based on N = 10.000)
+elos_aj <- read.csv("temp/datafig56a.csv")
+elos_ms <- read.csv("temp/datafig56b.csv")
+
+fig5.6 <- ggplot() +
+  geom_step(data = elos_aj, aes(x =time_elos/365.25, y = V2/365.25, linetype = "Aalen-Johansen"), size =0.9) + 
+  geom_line(data =elos_ms, aes(x = time_elos/365.25, y = V2/365.25, linetype = "Micro-simulation"), size =0.9)+ 
+  theme_bw()  + xlab("Time since randomization (years)") +
+  ylab(expression(epsilon[1] * (t))) +
+  theme_general +
+  scale_linetype_manual("Estimator", values = c("solid", "dashed")) +
+  theme(legend.position = "bottom",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 20),
+        legend.key.size = unit(1.5, 'cm'))
+fig5.6
+```
+
+## SAS-NA
+
+:::
+
+
+### Figure 5.7
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.7-r
+# MICROSIMULATION INCLUDING SCLEROTHERAPY AS COVARIATE #########################
 
 #Poisson model for alpha01
 poisson01_scle <- glm(case.bleed ~ tsr.cat + offset(log(pyar)) +  factor(scle) -1 , family = poisson(), data = subset(SplitLexis01, lex.Cst == "NoBleeding"))
@@ -441,7 +527,40 @@ Q1_hist2_scle <- function(N,B, scle){
     Q1b[i] <- Y1/N}
   return(Q1b)}
 
-################################ P01(1,t) LANDMARK PEPE ################################################################################################
+# Data for histogram. 
+# Takes approx. 10 min
+#hist_Q1_scle0 <- Q1_hist2_scle(1000,1000, 0)
+#hist_Q1_scle1 <- Q1_hist2_scle(1000,1000, 1)
+
+hist_Q1_scle0 <- read.csv("temp/datafig57a.csv")$x
+hist_Q1_scle1 <- read.csv("temp/datafig57b.csv")$x
+
+fills <- c("0" = "lightgrey", "1" = "darkgrey")
+
+fig5.7 <- ggplot() + 
+  geom_histogram(aes(x = as.numeric(hist_Q1_scle1), y = stat(count) / sum(count), fill = "1"), color = "black", bins = 40) +
+  geom_vline(xintercept = mean(hist_Q1_scle1), color = "black", size = 1, linetype = "dashed") + 
+  geom_histogram(aes(x = as.numeric(hist_Q1_scle0), y = stat(count) / sum(count), fill = "0"), color = "black", bins = 40) +
+  geom_vline(xintercept = mean(hist_Q1_scle0), color = "black", size = 1, linetype = "dashed") + 
+  ylab("Density") + xlab(expression(Q[1]*(2 * " | " * Z))) + scale_fill_manual("Z", values = fills) + 
+  theme_general
+fig5.7
+```
+
+## SAS-NA
+
+:::
+
+### Figure 5.8
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.8-r
+
+# P01(1,t) LANDMARK PEPE #######################################################
 
 #S_01, Kaplan-Meier for being in state 0 or 1 among patients in state 0 at time 1 year
 S01_s1 <- survfit(Surv(timedeath, death) ~1, data = prova[timebleed > s1]) 
@@ -459,7 +578,7 @@ pepe01_s1 <- function(t){
   Pepe_est <- S01t - S0t
   return(Pepe_est)}
 
-################################## P01(1,t) LANDMARK TITMAN ##############################################################################################
+# P01(1,t) LANDMARK TITMAN #####################################################
 
 #P(X(t) =1 | Z_s(1) = 0, X(1) = 0)
 little_p_hat_s1 <- function(t){
@@ -475,7 +594,7 @@ titman01_s1 <- function(end){
   titman <- S01t*little_p_hat_s1(end)
   return(titman)}
 
-############################### P_00(1,u -)*alpha_01(u) #########################################################################################
+# P_00(1,u -)*alpha_01(u) ######################################################
 
 # Y0, patients in state 0 at time t-
 patients_in_0 <- function(t){
@@ -510,7 +629,7 @@ p00alpha01[, 3] <- sapply(p00alpha01[,1], alpha01) #alpha01(u)
 p00alpha01[, 4] <- p00alpha01[,2]*p00alpha01[,3] #P00(1,u -)*alpha01(u)
 
 
-################################# P01(1,t) SEMI-MARKOV ESTIMATOR #######################################################################################
+# P01(1,t) SEMI-MARKOV ESTIMATOR ###############################################
 
 # Y*1(d), patients with duration in state 1 longer than d-
 patients_in_1_dur <- function(d){
@@ -540,7 +659,7 @@ semi01 <- function(end){
   return(prob01)}
 
 
-############# P01(1,t) WITH A PIECEWISE CONSTANT EFFECT OF WAIT (0-5 days, 5-10 days, +10 days) ######################################################################
+# P01(1,t) WITH A PIECEWISE CONSTANT EFFECT OF WAIT (0-5 days, 5-10 days, +10 days) 
 
 # Creating new data for estimation with piecewise constant effect of duration in state 1
 # Splitting data set at wait < 5 days, wait \in [5,10) days and wait <=10 days
@@ -591,7 +710,7 @@ pcw01 <- function(end){
 
 
 
-################################ P01(1,t) LINEAR EFFECT OF WAIT ######################################################################################
+# P01(1,t) LINEAR EFFECT OF WAIT ###############################################
 
 # Cox model with linear effect of duration in state 1 as time-dependent covariat
 cox_lwe <- coxph(Surv(timebleed, timedeath, death) ~ tt(timebleed), tt = function(x,t, ...) t - x, data = prova[bleed ==1], ties = "breslow")
@@ -627,7 +746,7 @@ lw01 <- function(end){
     prob01 <- sum(p01*p11)} # P_00(s,u-)alpha01(u)*P_11(u,t)
   return(prob01)}
 
-########################## P01(1,t) DETAILED EFFECT OF WAIT ####################################################################################################################
+# P01(1,t) DETAILED EFFECT OF WAIT #############################################
 
 # Cox model with detailed effect of duration in state 1 (d) as covariate (d + d^2 + d^3 + log(d))
 cox_dwe <- coxph(Surv(timebleed, timedeath, death) ~ tt(timebleed), tt = function(x,t, ...){
@@ -666,116 +785,6 @@ dw01 <- function(end){
     prob01 <- sum(p01*p11)}
   return(prob01)}
 
-
-################################################## Table 5.4 ###########################################################################
-
-# Estimation of transition probabilities (Q_1(t)) under Markov assumption
-AaJ_Q1_data <- probtrans(msfit, predt = 0)[[1]] #P(V(t) = 1 | V(1) = 0)
-AaJ_Q1_data <- as.data.frame(cbind(AaJ_Q1_data$time, AaJ_Q1_data$pstate2, AaJ_Q1_data$se2, "AaJ"))
-
-#Function returning Q1(t) and SD based on the Aalen Johansen estimator
-AaJ_Q1_function <- function(t){
-  x <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V2, n = 1)
-  y <- tail(AaJ_Q1_data[which(as.numeric(AaJ_Q1_data$V1) <= t), ]$V3, n = 1)
-  return(c(x,y))}
-
-# Q1(t) for t \in {0.5,1,...,4}
-time_s1 <- seq(0.5,4.,0.5)*365.25
-AaJ_Q1 <- t(sapply(time_s1, AaJ_Q1_function))
-rownames(AaJ_Q1) <- time_s1
-colnames(AaJ_Q1) <- c("Q1(t) estimate", "SD")
-
-
-# SD estimate for Q1(t) based on micro-simulation for t \in {0.5,1,...,4}. 
-# Takes approximately 5 min
-MS_Q1_est <- Q1_sd(N = 1000,B = 1000,t = time_s1, sd = TRUE)
-
-#Making table in LaTeX format of SD estimates of Q1(t)
-tab54 <- cbind(AaJ_Q1, MS_Q1_est)
-colnames(tab54) <- c("AaJ_est", "AaJ_SD", "MS_est", "MS_SD")
-class(tab54) <- "numeric"
-
-#Table for LaTeX
-print(xtable(tab54, digits = c(1,3,3,3,4), caption = "Q_{1}(t), t > 0"), include.rownames = TRUE) #output for LaTeX
-
-################################################## Figure 5.5 ###########################################################################
-
-# N=B=1000 
-#Takes approx. 5 min
-#hist_Q1 <- Q1_hist2(1000,1000) 
-#hist_Q1 <- as.data.frame(hist_Q1)
-
-hist_Q1 <- read.csv("data/datafig55.csv")
-
-# Histogram of Q1(2) with ggplot
-fig55 <- ggplot() + geom_histogram(aes(x = hist_Q1$hist_Q1,y = stat(count) / sum(count)), fill = "grey", color = "black", bins = 30) +
-  theme_bw() + geom_vline(xintercept = mean(hist_Q1$hist_Q1), color = "black", size = 1, linetype = "dashed") +
-  ylab("Density") + xlab(expression(Q[1]*(2))) +
-  theme_general
-fig55
-
-
-ggsave("figures/j_hist(N=B=1000).pdf", plot = fig55,
-       width = 29.7, height = 21, units = "cm")
-
-
-################################################## Figure 5.6 ###########################################################################
-
-# Creating data
-# Takes approximately 2 minutes
-# time_elos <- seq(0,4*365.25,1)
-# elos_aj <- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))
-# elos_ms <- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) 
-
-#Plot comparing epsilon1(tau) based on AaJ and micro-simulation (based on N = 10.000)
-elos_aj <- read.csv("data/datafig56a.csv")
-elos_ms <- read.csv("data/datafig56b.csv")
-
-fig56 <- ggplot() +
-  geom_step(data = elos_aj, aes(x =time_elos/365.25, y = V2/365.25, linetype = "Aalen-Johansen"), size =0.9) + 
-  geom_line(data =elos_ms, aes(x = time_elos/365.25, y = V2/365.25, linetype = "Micro-simulation"), size =0.9)+ 
-  theme_bw()  + xlab("Time since randomization (years)") +
-  ylab(expression(epsilon[1] * (t))) +
-  theme_general +
-  scale_linetype_manual("Estimator", values = c("solid", "dashed")) +
-  theme(legend.position = "bottom",
-        legend.title=element_blank(),
-        legend.text = element_text(size = 20),
-        legend.key.size = unit(1.5, 'cm'))
-fig56
-
-ggsave("figures/h_epsilon_plot.pdf", plot = fig56,
-       width = 29.7, height = 21, units = "cm")
-
-
-################################################## Figure 5.7 ###########################################################################
-
-# Data for histogram. 
-# Takes approx. 10 min
-# hist_Q1_scle0 <- Q1_hist2_scle(1000,1000, 0)
-# hist_Q1_scle1 <- Q1_hist2_scle(1000,1000, 1)
-
-hist_Q1_scle0 <- read.csv("data/datafig57a.csv")$x
-hist_Q1_scle1 <- read.csv("data/datafig57b.csv")$x
-
-fills <- c("0" = "lightgrey", "1" = "darkgrey")
-
-fig57 <- ggplot() + 
-  geom_histogram(aes(x = as.numeric(hist_Q1_scle1), y = stat(count) / sum(count), fill = "1"), color = "black", bins = 40) +
-  geom_vline(xintercept = mean(hist_Q1_scle1), color = "black", size = 1, linetype = "dashed") + 
-  geom_histogram(aes(x = as.numeric(hist_Q1_scle0), y = stat(count) / sum(count), fill = "0"), color = "black", bins = 40) +
-  geom_vline(xintercept = mean(hist_Q1_scle0), color = "black", size = 1, linetype = "dashed") + 
-  ylab("Density") + xlab(expression(Q[1]*(2 * " | " * Z))) + scale_fill_manual("Z", values = fills) + 
-  theme_general
-fig57
-
-
-ggsave("figures/j_hist_skle(2xN=B=1000).pdf", plot = fig57,
-       width = 29.7, height = 21, units = "cm")
-
-
-################################################## Figure 5.8 ###########################################################################
-
 # Estimation of transition probabilities under Markov assumption
 # (AaJ1 <- probtrans(msfit, predt = s1)[[1]]) #P(V(t) = 1 | V(1) = 0)
 # 
@@ -804,10 +813,10 @@ ggsave("figures/j_hist_skle(2xN=B=1000).pdf", plot = fig57,
 # data_LMs1$p01 <- as.numeric(data_LMs1$p01)
 # data_LMs1$estimator <- factor(data_LMs1$estimator, levels = c("AaJ", "LM AaJ", "LM Pepe", "LM Titman"))
 
-data_LMs1 <- read.csv("data/datafig58.csv")
+data_LMs1 <- read.csv("temp/datafig58.csv")
 
-# Figure 5.8 
-fig58 <- ggplot(data_LMs1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
+### Figure 5.8 
+fig5.8 <- ggplot(data_LMs1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
   geom_step(size = 1) +
   xlab("Time since randomization (years)") +
   ylab("Probability") + 
@@ -821,14 +830,22 @@ fig58 <- ggplot(data_LMs1,aes(x = time/365.25, y = p01, linetype = estimator)) +
         legend.title=element_blank(),
         legend.text = element_text(size = 20)) + 
   guides(linetype = guide_legend(nrow = 2, byrow = TRUE))
-fig58
+fig5.8
+```
 
-ggsave("figures/h_PROVA-LM-s1.pdf", plot = fig58,
-       width = 29.7, height = 21, units = "cm")
+## SAS-NA
+
+:::
 
 
-################################################## Figure 5.9 ###########################################################################
+### Figure 5.9 
 
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.9-r
 # Creating data frame
 # pstate2_semi <- sapply(time_in_days, semi01)
 # pstate2_tbase_pcwe <- sapply(time_in_days, pcw01)
@@ -850,11 +867,9 @@ ggsave("figures/h_PROVA-LM-s1.pdf", plot = fig58,
 # data_dur1$p01 <- as.numeric(data_dur1$p01)
 # data_dur1$estimator <- factor(data_dur1$estimator, levels = c("AaJ", "LM AaJ", "Semi", "PWCD", "LD", "FPD"))
 
+data_dur1 <- read.csv("temp/datafig59.csv")
 
-data_dur1 <- read.csv("data/datafig59.csv")
-
-# Figure 5.9
-fig59 <- ggplot(data_dur1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
+fig5.9 <- ggplot(data_dur1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
   geom_step(size = 1) +
   xlab("Time since randomization (years)") +
   ylab("Probability") +
@@ -867,8 +882,9 @@ fig59 <- ggplot(data_dur1,aes(x = time/365.25, y = p01, linetype = estimator)) +
         legend.title=element_blank(),
         legend.text = element_text(size = 20)) + 
   guides(linetype = guide_legend(nrow = 2, byrow = TRUE))
-fig59
+fig5.9
+```
 
-ggsave("figures/h_PROVA-tbase+semi.pdf", plot = fig59,
-       width = 29.7, height = 21, units = "cm")
+## SAS-NA
 
+:::

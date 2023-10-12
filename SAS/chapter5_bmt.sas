@@ -297,6 +297,7 @@ proc gplot data=base3slut;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run; 
+quit;
 
 proc gplot data=base3slut;
 	plot km1*time=landmark/haxis=axis1 vaxis=axis2;
@@ -309,6 +310,5 @@ proc gplot data=base3slut;
 	symbol4 v=none i=stepjl c=green;
 	symbol5 v=none i=stepjl c=orange;
 run; 
- 
- 
- 
+quit;
+

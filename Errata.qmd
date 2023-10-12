@@ -9,7 +9,16 @@
 -   Section 3.3, p. 76: A right bracket was missing before $dt$ in $$\sum_i\left(\int_0^{\infty}\log\bigl(Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigr)dN_i(t)-\int_0^{\infty}Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)$$
 -   Exercise 3.12, p. 116: Replace Table 2.12 by Table 3.2
 
+## Chapter 4
+
+-   Section 4.1.1, p. 119: The first sum in the first equation should also be $u\leq t$, i.e., 
+$$-\log(S(t))=\sum_{u\leq t}-\log(1-\alpha(u)\Delta) \approx \sum_{u\leq t}\alpha(u)\Delta$$
+
+
+
 ## Chapter 5
+
+-   P. 170, l. 5: Section (2.3) should be Section (2.5)
 
 -   Section 5.1.3, p. 168: The equation for $\frac{\partial}{\partial t}P_{01}(s,t)$ should read $$\frac{\partial}{\partial t}P_{01}(s,t)=P_{00}(s,t)\alpha_{01}(t)-P_{01}(s,t)\alpha_{12}(t)$$
 

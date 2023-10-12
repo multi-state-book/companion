@@ -1,48 +1,5 @@
 # Intuition for marginal models
-
-### Figure 4.3
-::: {.panel-tabset}
-## R
-```{r}
-#| label: figure-4.3-r
-#| fig-width: 8.27
-#| fig-height: 8.27
-#| out-width: 66%
-
-# Plot content
-x  <- seq(0, 1, by = 0.001)
-y1 <- -log(1-x)
-
-# Plot data 
-pdata <- data.frame(x  = x,
-                    y2 = x,
-                    y1 = y1)
-
-# General plotting style 
-library(ggplot2)
-theme_general <- theme_bw() +
-  theme(text = element_text(size = 20), 
-        axis.text.x = element_text(size = 20), 
-        axis.text.y = element_text(size = 20),
-        legend.position = "none")
-
-# Create the plot
-fig4.3 <- ggplot(aes(x = x, y = y2), data = pdata) +
-  geom_line(size = 1) +
-  geom_line(aes(x = x, y = y1), data = pdata, size = 1) +
-  ylab("-log(1-x)") +
-  xlab("x") +
-  scale_y_continuous(expand = expansion(mult = c(0.05, 0.05)), 
-                     limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
-  scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), 
-                     limits = c(0, 1), breaks = seq(0, 1, 0.2)) +
-  theme_general
-
-fig4.3
-```
-## SAS - NA
-
-:::
+{{< include R/chapter4_figure_4_3.qmd >}}
 
 ## PBC3 trial in liver cirrhosis
 {{< include R/chapter4_pbc3.qmd >}}

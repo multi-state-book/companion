@@ -344,7 +344,13 @@ run;
 
 ## 1.6 LEADER cardiovascular trial in type 2 diabetes
 
-Data not available for download.
+Data not available for download. 
+
+Two data sets are used in the code:
+
+### Recurrent MI: `leader_mi` 
+
+Recurrent myocardial infarction (MI) with all-cause death as competing risk.
 
 | Variable name | Description |
 |:-----------|:----------------------------------------------------------------------|
@@ -353,22 +359,38 @@ Data not available for download.
 | `stop`        | stop time (days since randomization)            |
 | `status`      | status at `stop`:|
 |               | 0 = censoring |
-|               | 1 = recurrent event |
-|               | 2 = death  |
-| `type`        | type of recurrent event:
-|               |'recurrent_mi' =  myocardial infarction
-|               |'recurrent_comb' = 3-point MACE |
+|               | 1 = recurrent myocardial infarction |
+|               | 2 = all cause death  |
 | `eventno`     | event number (1, 2, 3, ...) |
 | `treat`       | randomized treatment: 0 = placebo, 1 = liraglutide|
+
+### Recurrent 3-p MACE: `leader_3p`  
+
+Recurrent events of a 3-point MACE (major adverse cardiovascular events) consisting of non-fatal myocardial infarction, non-fatal stroke, or cardiovascular death.
+
+| Variable name | Description |
+|:-----------|:----------------------------------------------------------------------|
+| `id`          | patient id  |
+| `start`       | start time to event (days since randomization) |
+| `stop`        | stop time (days since randomization)            |
+| `status`      | status at `stop`:|
+|               | 0 = censoring |
+|               | 1 = recurrent myocardial infarction |
+|               | 2 = recurrent stroke |
+|               | 3 = cardiovascular death |
+|               | 4 = non-cardiovascular death |
+| `eventno`     | event number (1, 2, 3, ...) |
+| `treat`       | randomized treatment: 0 = placebo, 1 = liraglutide |
 
 
 ### Read data and Table 1.3
 
 ```{r}
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+leader_mi <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
+leader_3p <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_3p.csv")
 ```
-Assume that the LEADER data set is loaded in data set `leader`.
+Assume that the LEADER data sets are loaded.
 
 ::: {.panel-tabset}
 
@@ -376,20 +398,17 @@ Assume that the LEADER data set is loaded in data set `leader`.
 
 ```{r}
 #| label: leader-r
-# One data set per recurrent endpoint type
-leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb")
 
 # For recurrent MI
 length(unique(leader_mi$id)) # n randomized
-with(subset(leader_mi,treat==1), length(unique(id))) # n for liraglutid
+with(subset(leader_mi,treat==1), length(unique(id))) # n for liraglutide
 with(subset(leader_mi,treat==0), length(unique(id))) # n for placebo
 with(subset(leader_mi, eventno==1), table(status, treat))  # >=1 event and dead/censored before 1st event
 with(subset(leader_mi, status==1), table(treat)) # Total events
 
 # For recurrent 3p MACE
 length(unique(leader_3p$id)) # n randomized
-with(subset(leader_3p,treat==1), length(unique(id))) # n for liraglutid
+with(subset(leader_3p,treat==1), length(unique(id))) # n for liraglutide
 with(subset(leader_3p,treat==0), length(unique(id))) # n for placebo
 with(subset(leader_3p, eventno==1), table(status, treat))  # >=1 event and dead/censored before 1st event
 with(subset(leader_3p, status==1), table(treat)) # Total events

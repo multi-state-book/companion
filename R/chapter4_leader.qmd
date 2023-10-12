@@ -1,11 +1,7 @@
 ```{r}
-#| label: read-leader-r
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
-leader_mi <- subset(leader, type == "recurrent_mi")
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
 ```
-
-### Read data
 
 Assume that the LEADER data set is loaded in data set `leader_mi`.
 

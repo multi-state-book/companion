@@ -1,36 +1,10 @@
 ```{r}
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
 ```
 
-### Read data
+Assume that the LEADER data set is loaded in data set `leader_mi`.
 
-Assume that the LEADER data set is loaded in data set `leader`.
-
-::: {.panel-tabset}
-
-## R
-
-```{r}
-#| label: read-leader-r
-# One data set per recurrent endpoint type
-leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb")
-```
-
-## SAS
-```{sas}
-#| label: read-leader-sas
-#| eval: false 
-#| output: false
-
-data leader_mi; 
-	set leader; 
-	where type = "recurrent_mi"; 
-run; 
-
-```
-:::
 
 ### Table 3.16
 

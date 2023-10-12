@@ -2,58 +2,76 @@
 *------- Chapter 5, SAS code, LEADER data  ------------------------;
 *------------------------------------------------------------------;
 
-* Load data; 
-proc import out=leader_mi_3p
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/leader_mi_3p.csv"
+
+proc import out=leader_mi
+	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv"
 	dbms=csv replace;
 run;
 
-* Summarise data set; 
-proc contents 
-	data=leader_mi_3p; 
+proc import out=leader_3p
+	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_3p.csv"
+	dbms=csv replace;
 run;
 
-* Make a data set per endpoint; 
-data leader_mi; 
-	set leader_mi_3p; 
-	where type = "recurrent_mi"; 
-run; 
-
-data leader_3p; 
-	set leader_mi_3p; 
-	where type = "recurrent_comb"; 
-run; 
-
 *---------------------------------------------------------------;
-*----------- In-text, p. 213: Mao-Lin models -------------------;
+*-------- Section 5.8.3, p. 213: Mao-Lin models ----------------;
 *---------------------------------------------------------------;
 
-data leader_mi; 
-	set leader_mi; 
-
-	if status = 2 then status = 1; 
-run;
-
-data leader_mi_ml; 
+* recurrent MI+death;
+* Death are defined as part of composite and add an extra record with (start,stop)
+  of length 0.5 for death events as to be able to trick phreq to estimate Mao-Lin model:
+  Mi and deaths count as events and death also as competing risk;
+data mi; 
 	set leader_mi;
-
-	if death=1 then do; 
-		id = id; 
-	    start = stop; 
-		stop = start +1; 
-		status = 2; 
-	output;
-	end; 
+	event=status in (1 2);
+  output;
+	if status=2 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model for recurrent MI+death ; 
+proc phreg data=mi covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl  convergelike=1E-9; 
+  id id;
 run;
 
-data leader_mi_ml_extra;
-	set leader_mi leader_mi_ml; 
+* recurrent 3p-MACE non-CV deaths incorrectly treated as censoring;
+data macecens; 
+	set leader_3p;
+	event=status in (1 2 3);
+  if status=4 then event=0;
+  output;
+	if status=3 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model and non-CV deaths incorrectly treated as censoring; 
+proc phreg data=macecens covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl  convergelike=1E-9; 
+  id id;
 run;
 
-* Mao-Lin model; 
-proc phreg data=leader_mi_ml_extra covs(aggregate);
-  class treat(ref="0");
-  model (start, stop)*status(0) = treat/ 
-			ties=breslow eventcode=1 CONVERGELIKE=1E-9; 
+* recurrent 3p-MACE;
+data mace; 
+	set leader_3p;
+	event=status in (1 2 3);
+  if status=4 then event=2;
+  output;
+	if status=3 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model for 3p-MACE and non-CV deaths treated as competing risks;
+proc phreg data=mace covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl convergelike=1E-9;
   id id;
 run;

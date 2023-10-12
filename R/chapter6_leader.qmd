@@ -1,9 +1,10 @@
-#------------------------------------------------------------------#
-#------- Chapter 6, R code, LEADER data ---------------------------#
-#------------------------------------------------------------------#
+```{r}
+#| echo: false
+leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
+```
 
-# Set working directory - location of data
-setwd("P:/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB")
+Assume that the LEADER data set is loaded in data set `leader_mi`.
+
 
 # Load required packages (should be installed if not already)
 require(survival)
@@ -12,8 +13,6 @@ require(timereg)
 require(gridExtra)
 require(mets)
 
-
-leader <- read.csv("data/leader_mi_3p.csv")
 
 # One data set per endpoint type
 leader_mi <- subset(leader, type == "recurrent_mi")
@@ -109,7 +108,3 @@ np_ests <- function(endpointdat){
 
 fig611 <- np_ests(endpointdat = leader_mi)
 fig611
-
-setwd("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/Julie programs copied 19Jun23/R programs")
-ggsave("figures/h_LEADERest.pdf", plot = fig611, 
-       width = 29.7, height = 15, units = "cm")

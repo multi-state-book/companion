@@ -1,0 +1,51 @@
+### Figure 5.4
+
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: figure-5.4-r
+#| out-width: 90%
+library(ggplot2)
+theme_general <- theme_bw() +
+  theme(text = element_text(size = 20), 
+        axis.text.x = element_text(size = 20), 
+        axis.text.y = element_text(size = 20),
+        legend.position = "bottom", 
+        legend.title=element_blank(),
+        legend.text = element_text(size = 20),
+        legend.key.size = unit(2,"line"))
+
+# Create mock survival data
+surv0 <- function(t) exp(-t*0.6)
+surv1 <- function(t) exp(-t*0.2)
+ts <- (1:10-1) + (1:100-1)/100
+pdata <- data.frame(type = c(rep("0", length(ts)), rep("1", length(ts))),
+                    surv = c(surv0(ts), surv1(ts)), 
+                    ts = c(ts, ts))
+
+# Create the plot
+fig5.4 <- ggplot(aes(x = ts, y = surv, linetype = type), data = pdata) +
+  geom_line(size = 1) +
+  ylab("Survival probability, U") +
+  xlab("Survival time, T") +
+  scale_y_continuous(expand = expansion(mult = c(0.005, 0.005)), 
+                     limits = c(0, 1), breaks = seq(0, 1, 0.1)) +
+  scale_x_continuous(expand = expansion(mult = c(0.005, 0.015)), 
+                     limits = c(0, 10), breaks = seq(0, 10, 1)) +
+  theme_general + 
+  theme(legend.position = "none") + 
+  geom_segment(aes(x=0, xend=-log(0.4)/0.2, y=0.4, yend=0.4), color = "grey", size = 1) + 
+  geom_segment(aes(x=0, xend=pmin(10, -log(0.1)/0.2), y=0.1, yend=0.1), color = "grey", size = 1) + 
+  geom_segment(aes(x=-log(0.4)/0.2, xend=-log(0.4)/0.2, y=0.4, yend=0), color = "grey", size = 1) +
+  geom_segment(aes(x=-log(0.4)/0.6, xend=-log(0.4)/0.6, y=0.4, yend=0), color = "grey", size = 1) +
+  geom_segment(aes(x=-log(0.1)/0.6, xend=-log(0.1)/0.6, y=0.1, yend=0), color = "grey", size = 1) +
+  geom_segment(aes(x=pmin(10,-log(0.1)/0.2), xend=pmin(10,-log(0.1)/0.2), y=0.1, yend=0), color = "grey", size = 1) 
+
+fig5.4
+```
+
+## SAS-NA
+
+:::

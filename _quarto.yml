@@ -19,7 +19,6 @@ book:
   favicon: corvos.png
   repo-actions: issue
   repo-url: https://github.com/multi-state-book/companion
-  sharing: [linkedin, twitter, facebook]
   chapters: 
     - index.qmd
     - Ch1.qmd

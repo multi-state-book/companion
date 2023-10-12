@@ -29,7 +29,7 @@ run;
 
 * Death are defined as part of composite and add an extra record with (prev,stop) length 0.5 for
   death events as to be able to trick phreq to estimate Mao-Lin model:
-  Mi and deaths count as events and death also as competing risk;
+  episodes and deaths count as events and death also as competing risk;
 data angstML;
 	set data510;
 	if status ne 2 then output;

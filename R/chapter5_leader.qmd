@@ -1,54 +1,96 @@
+### Section 5.8.3, p. 213: Mao-Lin models
+
 ```{r}
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv")
+leader_mi <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
+leader_3p <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_3p.csv")
 ```
+Assume that the LEADER data sets are loaded.
 
-# One data set per endpoint type
-leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb")
+::: {.panel-tabset}
 
+## R
 
-#------------------------------------------------------------------#
-#---------------- In-text, p. 213: Mao-Lin models -----------------#
-#------------------------------------------------------------------#
-
+```{r}
+#| label: leader-r
 library(mets)
+options(contrasts=c("contr.treatment", "contr.poly"))
+# Mao-Lin model for recurrent MI+death 
 fitML_mi <- recreg(Event(start, stop, status) ~ factor(treat) + cluster(id),
                data = leader_mi, cause = c(1,2), cens.code = 0, death.code = 2)
 summary(fitML_mi)
 
-table(leader_3p$status)
-fit_3p <- recreg(Event(start, stop, status) ~ treat + cluster(id),
-               data = leader_3p, cause = 1, cens.code = c(0,2), death.code = 3)
-summary(fit_3p)
+# Mao-Lin model and non-CV deaths incorrectly treated as censoring 
+fit_3pCENS <- recreg(Event(start, stop, status) ~ treat + cluster(id),
+               data = leader_3p, cause = c(1,2,3), cens.code = c(0,4), death.code = 3)
+summary(fit_3pCENS)
 
-fit_3p <- recreg(Event(start, stop, status) ~ treat + cluster(id),
-               data = leader_3p, cause = 1, cens.code = c(0,2), death.code = 2)
-summary(fit_3p)
+# Mao-Lin model for 3p-MACE and non-CV deaths treated as competing risks
+fit_3pCR <- recreg(Event(start, stop, status) ~ treat + cluster(id),
+               data = leader_3p, cause = c(1,2,3), cens.code = 0, death.code = c(3,4))
+summary(fit_3pCR)
+```
 
+## SAS
 
-# Make a small hack to make data ready for analysis
-# Death = 1, recurrent MI = 2, cens = 0
-leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
-leader_mi1 <- leader_mi
-leader_mi1$status <- ifelse(leader_mi1$status == 1, 2, leader_mi1$status)
+```{sas}
+#| label: leader-sas
+#| eval: false 
+#| output: false
+* recurrent MI+death;
+data mi; 
+	set leader_mi;
+	event=status in (1 2);
+  output;
+	if status=2 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model for recurrent MI+death ; 
+proc phreg data=mi covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl  convergelike=1E-9; 
+  id id;
+run;
 
-require(dplyr)
-leader_mi2 <- leader_mi %>% 
-              filter(death == 1) %>% 
-              mutate(start = stop, 
-                     stop = start + 1,
-                     status = 1)
+* recurrent 3p-MACE non-CV deaths incorrectly treated as censoring;
+data macecens; 
+	set leader_3p;
+	event=status in (1 2 3);
+  if status=4 then event=0;
+  output;
+	if status=3 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model and non-CV deaths incorrectly treated as censoring; 
+proc phreg data=macecens covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl  convergelike=1E-9; 
+  id id;
+run;
 
-leader_mi_hack <- rbind(leader_mi1, leader_mi2) %>% arrange(id, start)
-head(leader_mi_hack, 10)
-
-require(Wcompo)
-
-mlfit <- CompoML(id = leader_mi_hack$id, 
-                 time = leader_mi_hack$stop, 
-                 status = leader_mi_hack$status, 
-                 Z = leader_mi_hack[,c("treat")])
-
-mlfit
-summary(mlfit)
+* recurrent 3p-MACE;
+data mace; 
+	set leader_3p;
+	event=status in (1 2 3);
+  if status=4 then event=2;
+  output;
+	if status=3 then do;
+		event=2;
+    start=stop;
+    stop=stop+0.5;
+		output;
+	end;
+run;
+* Mao-Lin model for 3p-MACE and non-CV deaths treated as competing risks; 
+proc phreg data=mace covs(aggregate);
+  model (start, stop)*event(0) = treat / eventcode=1 rl convergelike=1E-9;
+  id id;
+run;
+```
+:::

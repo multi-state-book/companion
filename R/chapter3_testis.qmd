@@ -154,15 +154,6 @@ lrtest(poisfull,poiscohort)
 poisinteract<-glm(cases ~ offset(lpyrs) + par2 + age + motherage + cohort + par2*age, 
                   data = testis, family = poisson)
 lrtest(poisfull,poisinteract)
-
-# HR for seminomas
-tidy(glm(semi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
-         data = testis, family = poisson),
-     exponentiate = T, conf.int = T)
-# HR for non-seminomas
-tidy(glm(nonsemi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
-         data = testis, family = poisson),
-     exponentiate = T, conf.int = T)
 ```
 
 ## SAS
@@ -188,6 +179,32 @@ proc genmod;
 	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
 	model cases=par2 age motherage cohort par2*age/dist=poi offset=lpyrs type3;
 run;
+```
+:::
+
+
+### In-text, p. 86: Cox models for seminomas and non-seminomas
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| label: in-text-r
+# HR for seminomas
+tidy(glm(semi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
+         data = testis, family = poisson),
+     exponentiate = T, conf.int = T)
+# HR for non-seminomas
+tidy(glm(nonsemi ~ offset(lpyrs) + par2 + age + motherage + cohort, 
+         data = testis, family = poisson),
+     exponentiate = T, conf.int = T)
+```
+
+## SAS
+```{sas}
+#| label: in-text-sas
+#| eval: false 
+#| output: false
 * seminomas;
 proc genmod;
 	class age (ref='20') motherage(ref='30') cohort(ref='1973') par2 (ref='1');
@@ -201,4 +218,6 @@ proc genmod;
 	estimate 'RR' par2 1 -1/exp;
 run;
 ```
+
 :::
+  
