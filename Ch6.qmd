@@ -7,7 +7,7 @@
 {{< include R/chapter6_prova.qmd >}}
 
 ## LEADER cardiovascular trial in type 2 diabetes
-{{< include R/chapter6_leader.qmd >}}
+<!-- {{< include R/chapter6_leader.qmd >}} -->
 
 ## Exercises
 
