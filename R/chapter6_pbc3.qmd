@@ -1,4 +1,4 @@
-### Read data
+### Read data and SAS macro
 
 ::: {.panel-tabset}
 ## R
@@ -20,20 +20,162 @@ proc import out=pbc3
 	dbms=csv replace;
 run;
 	
+* NB: Inside the macros below a variable called `id` is created which will interfere 
+  with your identification variable if it is also called `id` in your data set,
+  in which case you will need to rename your `id` variable. We have to do it for pbc3;
+
 data pbc3; 
 	set pbc3;
+	fail=(status>0); 
 	log2bili=log2(bili);
+	years=days/365.25;
+	rename id=ptno;
 run;
 ```
-:::
 
-<!-- # Load required packages (should be installed if not already) -->
-<!-- library(haven) -->
-<!-- library(survival) -->
-<!-- library(timereg) -->
-<!-- library(gridExtra) -->
-<!-- library(mets) -->
-<!-- library(cmprsk) -->
+#### Macro `pseudosurv`
+
+This SAS macro computes pseudo-values based on Kaplan-Meier estimates and is adapted from that described by:
+
+-   J.P.Klein, M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R functions to compute pseudo-values for censored data regression" Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
+
+NB: Inside the macros below a variable called `id` is created which will interfere with your identification variable if it is also called `id` in your data set, in which case you will need to rename your `id` variable. We have to do it for pbc3.
+
+```{sas}
+#| label: macro-pseudosurv-sas
+#| eval: false 
+#| output: false
+
+* Can also be found on: http://192.38.117.59/~linearpredictors/datafiles/pseudosurv.sas; 
+
+* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being printed;
+
+%macro pseudosurv(indata,time,dead,howmany,datatau,outdata);
+
+/* The subsequent SAS code is adapted from that described by J.P.Klein,
+    M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R
+    functions to compute pseudo-values for censored data regression"
+    Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
+
+/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE KAPLAN-MEIER ESTIMATOR AT EACH
+      TIME
+      INPUTS:
+      INDATA---INPUT DATA SET
+      TIME--TIME VARIABLE
+      DEAD---EVENT INDICATOR (1-EVENT, 0-CENSORED)
+      HOWMANY---SAMPLE SIZE
+      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED DATA
+                SET HAS SINGLE VARIABLE TIME
+     
+      OUTDATA---OUTPUT DATA SET WHICH CONTAINS PSUK,K=1,...,HOWMANY THE PSEUDO
+      VALUES AT EACH TIME POINT (Note output data set includes orginal data sorted
+                           by time
+      
+*/
+ 
+proc sort data=&indata;
+by &time;
+
+data keep;  set &datatau;
+find=1;
+proc sort data=keep;  by time;
+
+data point;  set &indata;
+time=&time;
+keep=1;
+ 
+
+data point;  merge point keep;  by time;
+keep time find keep;
+ 
+data useme;  set point;
+retain temp -1;
+if keep = 1 then temp=time;
+tuse=temp; 
+if find ne 1 then delete;
+&time=tuse;
+ run;
+/* WORKING DATA SET THAT INCLUDE A SET OF N INDICATORS WHERE FOR THE KTH INDICATOR
+ THE EVENT IS MISSING */
+data newdat;  set &indata;
+id+1;
+array iobs(&howmany) dead1-dead&howmany;
+do j=1 to &howmany;
+iobs(j)=&dead;
+if j=id then iobs(j)=.;
+end;
+
+data out;  set newdat;
+
+/* COMPUTE KME FOR FULL SAMPLE */
+
+proc lifetest data=newdat noprint plots = none;
+time &TIME*&dead(0);
+survival out=sall;
+data sall;  set sall;
+sall=survival;
+ keep &time sall;
+ 
+%do ip=1 %to &howmany;
+
+/* COMPUTE KME FOR REDUCED SAMPLE */
+proc lifetest data=newdat noprint plots = none;
+time &time*dead&ip(0);
+survival out=stmp;
+data stmp;  set stmp;
+s&ip=survival;
+keep &time s&ip;
+ 
+/*merge KMEs AND COMPUTE PSEUDOVALUES FOR OBSERVATION IP*/
+data pstmp; merge sall stmp;  by &time;
+retain stemp 1;
+if s&ip=. then s&ip=stemp;
+stemp=s&ip;
+psu&ip=&howmany*sall- (&howmany-1)*s&ip;
+ 
+data out; merge out pstmp useme ;  by &time;
+if find ne 1 then delete;
+keep &time psu1-psu&ip;
+%end;
+
+data out;  set out;
+retain dup -1;
+if &time=dup then delete;
+ else dup=&time;
+ jd+1;
+ 
+data io;  set out;
+array ps psu1-psu&howmany;
+do id=1 to &howmany;
+pseudo=ps(id);
+time=&time;
+output;
+end;
+keep time id pseudo jd;
+proc sort data=io ;
+  by id;
+  
+data a;  set &indata;
+id+1;
+data io;  merge a io;  by id;
+ proc sort data=io;  by jd;
+
+proc sort data=&datatau;
+by time;
+
+data taus;  set &datatau ;
+ jd+1;
+ tpseudo=time;
+ keep jd tpseudo;
+ 
+ 
+  data &outdata;  merge io taus;  by jd;
+  drop jd id &time &dead;
+	run;
+%mend;
+```
+
+:::
 
 ### Figure 6.1
 
@@ -91,7 +233,7 @@ fig6.1 <- ggplot(aes(x = tpseudo, y = pseudo, linetype = id),
 fig6.1
 ```
 
-## SAS
+## SAS-NA
 ```{sas}
 #| label: figure-6.1-sas
 #| eval: false 
@@ -210,6 +352,50 @@ fig6.2c
 #| label: figure-6.2-sas
 #| eval: false 
 #| output: false
+data timepoints;
+	input time;
+	datalines;
+	366
+	743
+	1105
+	;
+run;
+%pseudosurv(pbc3, days, fail, 349, timepoints, outdata);
+
+data outdata; 
+	set outdata;
+	fail=(status>0); 
+run;
+
+proc gplot data=outdata;
+	where time=366;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
+	symbol1  v=x i=none c=black;
+	symbol2  v=o i=none c=black;
+run;
+quit;
+
+proc gplot data=outdata;
+	where time=743;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
+	symbol1  v=x i=none c=black;
+	symbol2  v=o i=none c=black;
+run;
+quit;
+
+proc gplot data=outdata;
+	where time=1105;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
+	symbol1  v=x i=none c=black;
+	symbol2  v=o i=none c=black;
+run;
+quit;
 ```
 
 :::
@@ -288,6 +474,40 @@ fig6.3right
 #| label: figure-6.3-sas
 #| eval: false 
 #| output: false
+proc sort data=outdata; 
+	by bili;
+run;
+
+* Left plot; 
+proc gplot data=outdata;
+	where time=743;
+	plot pseudo*bili/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
+	axis2 order=-0.4 to 1.2 by 0.2 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=x i=sm70; * i=sm70 specifies that a smooth line is fit to data;
+run;
+quit;
+
+* Right plot; 
+proc loess data=outdata;
+	where time=743;
+	model pseudo=bili/smooth=0.7;
+	output out=smbili p=smooth;
+run;
+data smbili; 
+	set smbili;
+	line=log(-log(smooth));
+run;
+proc sort data=smbili; 
+	by bili; 
+run;
+proc gplot data=smbili;
+	plot line*bili/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
+	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=none i=join;
+run;
+quit;
 ```
 
 :::
@@ -354,6 +574,36 @@ fig6.4right
 #| label: figure-6.4-sas
 #| eval: false 
 #| output: false
+* Left plot; 
+proc gplot data=outdata;
+	where time=743;
+	plot pseudo*log2bili/haxis=axis1 vaxis=axis2;
+	axis1 order=1 to 9 by 1 minor=none label=('log2(bilirubin)');
+	axis2 order=-0.4 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=x i=sm70;* i=sm70 specifies that a smooth line is fit to data;
+run;
+quit;
+
+* Right plot; 
+proc loess data=outdata;
+	where time=743;
+	model pseudo=log2bili/smooth=0.7;
+	output out=smlogbili p=smooth;
+run;
+data smlogbili; 
+	set smlogbili;
+	line=log(-log(smooth));
+run;
+proc sort data=smlogbili; 
+	by bili; 
+run; 
+proc gplot data=smlogbili;
+	plot line*log2bili/haxis=axis1 vaxis=axis2;
+	axis1 order=1 to 9 by 1 minor=none label=('log2(Bilirubin)');
+	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=none i=join;
+run;
+quit;
 ```
 
 :::
@@ -512,150 +762,6 @@ summary(egfit3xx)
 
 ## SAS
 
-#### Macro `pseudosurv`
-
-This SAS macro computes pseudo-values based on Kaplan-Meier estimates and is adapted from that described by:
-
--   J.P.Klein, M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R functions to compute pseudo-values for censored data regression" Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
-
-NB: Inside the macro a variable called `id` is created which will interfere with your identification variable is called `id` in your data set, in which case you will need to rename your `id` variable. 
-
-```{sas}
-#| label: macro-pseudosurv-sas
-#| eval: false 
-#| output: false
-
-* Can also be found on: http://192.38.117.59/~linearpredictors/datafiles/pseudosurv.sas; 
-
-* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being printed;
-
-%macro pseudosurv(indata,time,dead,howmany,datatau,outdata);
-
-/* The subsequent SAS code is adapted from that described by J.P.Klein,
-    M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R
-    functions to compute pseudo-values for censored data regression"
-    Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
-
-/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE KAPLAN-MEIER ESTIMATOR AT EACH
-      TIME
-      INPUTS:
-      INDATA---INPUT DATA SET
-      TIME--TIME VARIABLE
-      DEAD---EVENT INDICATOR (1-EVENT, 0-CENSORED)
-      HOWMANY---SAMPLE SIZE
-      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED DATA
-                SET HAS SINGLE VARIABLE TIME
-     
-      OUTDATA---OUTPUT DATA SET WHICH CONTAINS PSUK,K=1,...,HOWMANY THE PSEUDO
-      VALUES AT EACH TIME POINT (Note output data set includes orginal data sorted
-                           by time
-      
-*/
- 
-proc sort data=&indata;
-by &time;
-
-data keep;  set &datatau;
-find=1;
-proc sort data=keep;  by time;
-
-data point;  set &indata;
-time=&time;
-keep=1;
- 
-
-data point;  merge point keep;  by time;
-keep time find keep;
- 
-data useme;  set point;
-retain temp -1;
-if keep = 1 then temp=time;
-tuse=temp; 
-if find ne 1 then delete;
-&time=tuse;
- run;
-/* WORKING DATA SET THAT INCLUDE A SET OF N INDICATORS WHERE FOR THE KTH INDICATOR
- THE EVENT IS MISSING */
-data newdat;  set &indata;
-id+1;
-array iobs(&howmany) dead1-dead&howmany;
-do j=1 to &howmany;
-iobs(j)=&dead;
-if j=id then iobs(j)=.;
-end;
-
-data out;  set newdat;
-
-/* COMPUTE KME FOR FULL SAMPLE */
-
-proc lifetest data=newdat noprint plots = none;
-time &TIME*&dead(0);
-survival out=sall;
-data sall;  set sall;
-sall=survival;
- keep &time sall;
- 
-%do ip=1 %to &howmany;
-
-/* COMPUTE KME FOR REDUCED SAMPLE */
-proc lifetest data=newdat noprint plots = none;
-time &time*dead&ip(0);
-survival out=stmp;
-data stmp;  set stmp;
-s&ip=survival;
-keep &time s&ip;
- 
-/*merge KMEs AND COMPUTE PSEUDOVALUES FOR OBSERVATION IP*/
-data pstmp; merge sall stmp;  by &time;
-retain stemp 1;
-if s&ip=. then s&ip=stemp;
-stemp=s&ip;
-psu&ip=&howmany*sall- (&howmany-1)*s&ip;
- 
-data out; merge out pstmp useme ;  by &time;
-if find ne 1 then delete;
-keep &time psu1-psu&ip;
-%end;
-
-data out;  set out;
-retain dup -1;
-if &time=dup then delete;
- else dup=&time;
- jd+1;
- 
-data io;  set out;
-array ps psu1-psu&howmany;
-do id=1 to &howmany;
-pseudo=ps(id);
-time=&time;
-output;
-end;
-keep time id pseudo jd;
-proc sort data=io ;
-  by id;
-  
-data a;  set &indata;
-id+1;
-data io;  merge a io;  by id;
- proc sort data=io;  by jd;
-
-proc sort data=&datatau;
-by time;
-
-data taus;  set &datatau ;
- jd+1;
- tpseudo=time;
- keep jd tpseudo;
- 
- 
-  data &outdata;  merge io taus;  by jd;
-  drop jd id &time &dead;
-	run;
-%mend;
-```
-
-#### Table
-
 ```{sas}
 #| label: table-6.1-sas
 #| eval: false 
@@ -808,6 +914,28 @@ fig6.5
 #| label: figure-6.5-sas
 #| eval: false 
 #| output: false
+
+data fig6_5; set outdata;
+	if time=366 then do;
+	linpred=-2.4746+0.6841*log2bili-0.0939*alb-0.5985*tment;
+	pred=exp(-exp(linpred)); res=pseudo-pred; end;
+	if time=743 then do;
+	linpred=-1.5540+0.6841*log2bili-0.0939*alb-0.5985*tment;
+	pred=exp(-exp(linpred)); res=pseudo-pred; end;
+	if time=1105 then do;
+	linpred=-1.1232+0.6841*log2bili-0.0939*alb-0.5985*tment;
+	pred=exp(-exp(linpred)); res=pseudo-pred; end;
+run;
+
+proc gplot data=fig6_5;
+	plot res*log2bili=time/haxis=axis1 vaxis=axis2;
+	axis1 order=1 to 9 by 1 minor=none label=('log2(Bilirubin)');
+	axis2 order=-2 to 1 by 1 minor=none label=(a=90 'Pseudo-residuals');;
+	symbol1 v=x i=sm50;
+	symbol2 v=o i=sm50;
+	symbol3 v=+ i=sm50;
+run;
+quit;
 ```
 
 :::
@@ -910,6 +1038,39 @@ fig6.6right
 #| label: figure-6.6-sas
 #| eval: false 
 #| output: false
+* Right plot; 
+proc sort data=outdata; 
+	by bili; 
+run;
+proc gplot data=outdata;
+	where time=743;
+	plot pseudo*bili/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
+	axis2 order=-0.4 to 1.2 by 0.2 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=x i=sm70;
+run;
+quit;
+
+* Left plot; 
+proc loess data=outdata;
+	where time=743;
+	model pseudo=bili/smooth=0.7;
+	output out=smbili p=smooth;
+run;
+data smbili; 
+	set smbili;
+	line=-log(smooth);
+run;
+proc sort data=smbili; 
+	by bili; 
+run;
+proc gplot data=smbili;
+	plot line*bili/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
+	axis2 order=-1 to 3 by 1 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=none i=join;
+run;
+quit;
 ```
 
 :::
@@ -1000,6 +1161,28 @@ fig6.7
 #| label: figure-6.7-sas
 #| eval: false 
 #| output: false
+data fig6_7; 
+	set outdata;
+	if time=366 then do;
+	linpred2=0.3403+0.0042*bili-0.0097*alb-0.0484*tment;
+	pred2=exp(-linpred2); res2=pseudo-pred2; end;
+	if time=743 then do;
+	linpred2=0.4120+0.0042*bili-0.0097*alb-0.0484*tment;
+	pred2=exp(-linpred2); res2=pseudo-pred2; end;
+	if time=1105 then do;
+	linpred2=0.5075+0.0042*bili-0.0097*alb-0.0484*tment;
+	pred2=exp(-linpred2); res2=pseudo-pred2; end;
+run;
+
+proc gplot data=fig6_7;
+	plot res2*bili=time/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 100 minor=none label=('Bilirubin');
+	axis2 order=-2 to 1 by 1 minor=none label=(a=90 'Pseudo-residuals');;
+	symbol1 v=x i=sm50;
+	symbol2 v=o i=sm50;
+	symbol3 v=+ i=sm50;
+run;
+quit;
 ```
 
 :::
@@ -1217,6 +1400,20 @@ fig6.8
 #| label: figure-6.8-sas
 #| eval: false 
 #| output: false
+
+* see %pseudomean(pbc3,years,fail,349,3,outmean3) above for table 6.3;
+
+proc sort data=outmean3; 
+	by years; 
+run;
+proc gplot data=outmean3;
+	plot psumean*years=fail/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=0 to 4 by 1 minor=none label=(a=90 'Pseudo-values');
+	symbol1  v=x i=none c=black;
+	symbol2  v=o i=none c=black;
+run;
+quit;
 ```
 
 :::
@@ -1361,6 +1558,16 @@ fig6.9
 #| label: figure-6.9-sas
 #| eval: false 
 #| output: false
+proc sort data=outmean3; 
+	by bili; 
+run;
+proc gplot data=outmean3;
+	plot psumean*log2bili/haxis=axis1 vaxis=axis2;
+	axis1 order=1 to 9 by 1 minor=none label=('log2(bilirubin)');
+	axis2 order=0 to 4 by 1 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=x i=sm70;
+run;
+quit;
 ```
 
 :::
@@ -1868,9 +2075,9 @@ fig6.11right
 ```
 
 
-## SAS
+## SAS-NA
 ```{sas}
-#| label: figure-6.11-sas
+#| label: figure-6.12-sas
 #| eval: false 
 #| output: false
 ```

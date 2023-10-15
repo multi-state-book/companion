@@ -8,8 +8,8 @@ proc import out=pbc3
 	dbms=csv replace;
 run;
 * NB: Inside the macros below a variable called `id` is created which will interfere 
-  with your identification variable is called `id` in your data set,
-  in which case you will need to rename your `id` variable; 
+  with your identification variable if it is also called `id` in your data set,
+  in which case you will need to rename your `id` variable. We have to do it for pbc3;
 data pbc3; 
 	set pbc3;
 	fail=(status>0); 
@@ -168,7 +168,6 @@ data timepoints;
 	1105
 	;
 run;
-
 %pseudosurv(pbc3, days, fail, 349, timepoints, outdata);
 
 * Pseudo-values for S(t) at ~1 2 3 years are computed and stored in permanent data set;
@@ -280,9 +279,37 @@ quit;
 *--------------------- Figure 6.2 ------------------------------;
 *---------------------------------------------------------------;
 
+* Load pbc data; 
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+data pbc3; 
+	set pbc3;
+	fail=(status>0); 
+	log2bili=log2(bili);
+	years=days/365.25;
+	rename id=ptno;
+run;
+
+data timepoints;
+	input time;
+	datalines;
+	366
+	743
+	1105
+	;
+run;
+%pseudosurv(pbc3, days, fail, 349, timepoints, outdata);
+
+data outdata; 
+	set outdata;
+	fail=(status>0); 
+run;
+
 proc gplot data=outdata;
 	where time=366;
-	plot pseudo*days=fail/haxis=axis1 vaxis=axis2;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
 	symbol1  v=x i=none c=black;
@@ -292,7 +319,7 @@ quit;
 
 proc gplot data=outdata;
 	where time=743;
-	plot pseudo*followup=fail/haxis=axis1 vaxis=axis2;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
 	symbol1  v=x i=none c=black;
@@ -302,7 +329,7 @@ quit;
 
 proc gplot data=outdata;
 	where time=1105;
-	plot pseudo*followup=fail/haxis=axis1 vaxis=axis2;
+	plot pseudo*years = fail / haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
 	symbol1  v=x i=none c=black;
@@ -318,31 +345,29 @@ proc sort data=outdata;
 	by bili;
 run;
 
-* Top plot; 
+* Left plot; 
 proc gplot data=outdata;
 	where time=743;
 	plot pseudo*bili/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
 	axis2 order=-0.4 to 1.2 by 0.2 minor=none label=(a=90 'Pseudo-values');
-	symbol1 v=x i=sm70;
+	symbol1 v=x i=sm70; * i=sm70 specifies that a smooth line is fit to data;
 run;
+quit;
 
-* Bottom plot; 
+* Right plot; 
 proc loess data=outdata;
 	where time=743;
 	model pseudo=bili/smooth=0.7;
 	output out=smbili p=smooth;
 run;
-
 data smbili; 
 	set smbili;
 	line=log(-log(smooth));
 run;
-
 proc sort data=smbili; 
 	by bili; 
 run;
-
 proc gplot data=smbili;
 	plot line*bili/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
@@ -362,25 +387,21 @@ proc gplot data=outdata;
 	plot pseudo*log2bili/haxis=axis1 vaxis=axis2;
 	axis1 order=1 to 9 by 1 minor=none label=('log2(bilirubin)');
 	axis2 order=-0.4 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
-	symbol1 v=x i=sm70;
+	symbol1 v=x i=sm70;* i=sm70 specifies that a smooth line is fit to data;
 run;
 quit;
-
 proc loess data=outdata;
 	where time=743;
 	model pseudo=log2bili/smooth=0.7;
 	output out=smlogbili p=smooth;
 run;
-
 data smlogbili; 
 	set smlogbili;
 	line=log(-log(smooth));
 run;
-
 proc sort data=smlogbili; 
 	by bili; 
 run; 
-
 proc gplot data=smlogbili;
 	plot line*log2bili/haxis=axis1 vaxis=axis2;
 	axis1 order=1 to 9 by 1 minor=none label=('log2(Bilirubin)');
@@ -397,7 +418,7 @@ proc gplot data=smlogbili;
 	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=none i=join;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 6.1 -------------------------------;
@@ -426,7 +447,7 @@ run;
 *--------------------- Figure 6.5 ------------------------------;
 *---------------------------------------------------------------;
 
-data outdata; set outdata;
+data fig6_5; set outdata;
 	if time=366 then do;
 	linpred=-2.4746+0.6841*log2bili-0.0939*alb-0.5985*tment;
 	pred=exp(-exp(linpred)); res=pseudo-pred; end;
@@ -438,7 +459,7 @@ data outdata; set outdata;
 	pred=exp(-exp(linpred)); res=pseudo-pred; end;
 run;
 
-proc gplot data=outdata;
+proc gplot data=fig6_5;
 	plot res*log2bili=time/haxis=axis1 vaxis=axis2;
 	axis1 order=1 to 9 by 1 minor=none label=('log2(Bilirubin)');
 	axis2 order=-2 to 1 by 1 minor=none label=(a=90 'Pseudo-residuals');;
@@ -446,6 +467,7 @@ proc gplot data=outdata;
 	symbol2 v=o i=sm50;
 	symbol3 v=+ i=sm50;
 run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 6.2 -------------------------------;
@@ -465,47 +487,46 @@ run;
 *--------------------- Figure 6.6 ------------------------------;
 *---------------------------------------------------------------;
 
+* Right plot; 
+proc sort data=outdata; 
+	by bili; 
+run;
+proc gplot data=outdata;
+	where time=743;
+	plot pseudo*bili/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
+	axis2 order=-0.4 to 1.2 by 0.2 minor=none label=(a=90 'Pseudo-values');
+	symbol1 v=x i=sm70;
+run;
+quit;
+
+* Left plot; 
 proc loess data=outdata;
 	where time=743;
 	model pseudo=bili/smooth=0.7;
 	output out=smbili p=smooth;
 run;
-
 data smbili; 
 	set smbili;
 	line=-log(smooth);
 run;
-
 proc sort data=smbili; 
 	by bili; 
 run;
-
 proc gplot data=smbili;
 	plot line*bili/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
 	axis2 order=-1 to 3 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=none i=join;
 run;
-
-proc sort data=outdata; 
-	by bili; 
-run;
-
-proc gplot data=outdata;
-	where time=743;
-	plot pseudo*bili/haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 500 by 50 minor=none label=('Bilirubin');
-	axis2 order=-0.4 to 1.2 by 0.2 minor=none label=(a=90 'Pseudo-values');
-	symbol1 v=x i=;
-run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 6.7 ------------------------------;
 *---------------------------------------------------------------;
 
-data outdata; 
-set outdata;
+data fig6_7; 
+	set outdata;
 	if time=366 then do;
 	linpred2=0.3403+0.0042*bili-0.0097*alb-0.0484*tment;
 	pred2=exp(-linpred2); res2=pseudo-pred2; end;
@@ -517,7 +538,7 @@ set outdata;
 	pred2=exp(-linpred2); res2=pseudo-pred2; end;
 run;
 
-proc gplot data=outdata;
+proc gplot data=fig6_7;
 	plot res2*bili=time/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 500 by 100 minor=none label=('Bilirubin');
 	axis2 order=-2 to 1 by 1 minor=none label=(a=90 'Pseudo-residuals');;
@@ -525,7 +546,7 @@ proc gplot data=outdata;
 	symbol2 v=o i=sm50;
 	symbol3 v=+ i=sm50;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 6.3 -------------------------------;
@@ -640,17 +661,16 @@ run;
 *---------------------------------------------------------------;
 
 proc sort data=outmean3; 
-	by followup; 
+	by years; 
 run;
-
 proc gplot data=outmean3;
-	plot psumean*followup=fail/haxis=axis1 vaxis=axis2;
+	plot psumean*years=fail/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=0 to 4 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1  v=x i=none c=black;
 	symbol2  v=o i=none c=black;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 6.9 ------------------------------;
@@ -659,14 +679,13 @@ run;
 proc sort data=outmean3; 
 	by bili; 
 run;
-
 proc gplot data=outmean3;
 	plot psumean*log2bili/haxis=axis1 vaxis=axis2;
 	axis1 order=1 to 9 by 1 minor=none label=('log2(bilirubin)');
 	axis2 order=0 to 4 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=x i=sm70;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 6.4 -------------------------------;
