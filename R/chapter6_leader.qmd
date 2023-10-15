@@ -1,43 +1,27 @@
+Only R code available.
+
+### Figure 6.11
+
+::: {.panel-tabset}
+
+## R
+
 ```{r}
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
+leader_mi <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
 ```
 
 Assume that the LEADER data set is loaded in data set `leader_mi`.
 
-
-# Load required packages (should be installed if not already)
-require(survival)
-require(ggplot2)
-require(timereg)
-require(gridExtra)
-require(mets)
-
-
-# One data set per endpoint type
-leader_mi <- subset(leader, type == "recurrent_mi")
-leader_3p <- subset(leader, type == "recurrent_comb_str_mi_cvdth")
-
-#------------------------------------------------------------------#
-# -------- General plotting style ---------------------------------# 
-#------------------------------------------------------------------#
-
-# General theme
-theme_general <- theme_bw() +
-  theme(legend.position = "bottom", 
-        text = element_text(size = 20), 
-        axis.text.x = element_text(size = 20), 
-        axis.text.y = element_text(size = 20)) 
-
-theme_general
-
-#------------------------------------------------------------------#
-#---------------- Figure 6.11 -------------------------------------#
-#------------------------------------------------------------------#
-
-require(mets)
-require(ggpubr)
-
+```{r}
+#| echo: false
+#| fig-width: 14
+#| fig-height: 7
+#| out-width: 90%
+library(survival)
+library(ggplot2)
+library(mets)
+library(ggpubr)
 np_ests <- function(endpointdat){
   # Fit NAa
   NAa_fit <- survfit(Surv(start, stop, status == 1) ~ treat, 
@@ -47,12 +31,10 @@ np_ests <- function(endpointdat){
   KM_fit <- survfit(Surv(start, stop, status == 2) ~ treat,
                     data = endpointdat, id = id,
                     ctype = 1)
-
-    # Adjust hat(mu)
-  mu_adj <- c(cumsum(KM_fit$surv[1:KM_fit$strata[[1]]] * c(0, diff(NAa_fit$cumhaz[1:NAa_fit$strata[[1]]]))),
+  # Adjust hat(mu)
+  mu_adj <- c(cumsum(KM_fit$surv[1:KM_fit$strata[[1]]] * c(0,diff(NAa_fit$cumhaz[1:NAa_fit$strata[[1]]]))),
               cumsum(KM_fit$surv[(KM_fit$strata[[1]] + 1):(KM_fit$strata[[1]] + KM_fit$strata[[2]])] * 
-                       c(0, diff(NAa_fit$cumhaz[(NAa_fit$strata[[1]] + 1):(NAa_fit$strata[[1]] + NAa_fit$strata[[2]])])))
-  )
+                       c(0, diff(NAa_fit$cumhaz[(NAa_fit$strata[[1]] + 1):(NAa_fit$strata[[1]] + NAa_fit$strata[[2]])]))))
   
   dat_adj <- data.frame(mu = mu_adj, 
                         time = NAa_fit$time, 
@@ -66,18 +48,21 @@ np_ests <- function(endpointdat){
     xlab("Time since randomization (months)") + 
     ylab(expression(hat(mu)* "(t)")) + 
     scale_linetype_discrete("Treatment") + 
-    theme_general + 
-    theme( legend.title=element_blank(), legend.text = element_text(size = 20), legend.key.size = unit(2,"line"),
-      legend.direction = "horizontal", 
-      legend.box = "horizontal",
-      legend.key.width = unit(1.5, "cm")) + 
+    theme_bw() +
+    theme(text = element_text(size = 20), 
+          axis.text.x = element_text(size = 20), 
+          axis.text.y = element_text(size = 20),
+          legend.position = "bottom", 
+          legend.title=element_blank(),
+          legend.text = element_text(size = 20),
+          legend.key.size = unit(2,"line"),
+          legend.direction = "horizontal", 
+          legend.box = "horizontal",
+          legend.key.width = unit(1.5, "cm")) + 
     scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
                        limits = c(0, 65), breaks = seq(0, 65, by = 12)) + 
     scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
                        limits = c(0, 0.12), breaks = seq(0, 0.12, by = 0.02))
-  
-  mu
-  
   ## S
   
   dat_S <- data.frame(surv = KM_fit$surv, 
@@ -89,22 +74,31 @@ np_ests <- function(endpointdat){
     xlab("Time since randomization (months)") + 
     ylab(expression(hat(S)* "(t)")) + 
     scale_linetype_discrete("Treatment") + 
-    theme_general + 
-    theme( 
-      legend.direction = "horizontal", 
-      legend.box = "horizontal",
-      legend.key.width = unit(1.5, "cm")) + 
+    theme_bw() +
+    theme(text = element_text(size = 20), 
+          axis.text.x = element_text(size = 20), 
+          axis.text.y = element_text(size = 20),
+          legend.position = "bottom", legend.direction = "horizontal", 
+          legend.box = "horizontal",
+          legend.key.width = unit(1.5, "cm")) + 
     scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)), 
                        limits = c(0, 65), breaks = seq(0, 65, by = 12)) + 
     scale_y_continuous(expand = expansion(mult = c(0.005, 0.05)), 
                        limits = c(0, 1), breaks = seq(0, 1, by = 0.1))
   
-  surv
-  
   both <- ggarrange(mu, surv, common.legend = T, legend = "bottom")
   both
-  
 }
+fig6.11 <- np_ests(endpointdat = leader_mi)
+fig6.11
+```
+:::
 
-fig611 <- np_ests(endpointdat = leader_mi)
-fig611
+### Table 6.8
+
+::: {.panel-tabset}
+
+## R
+
+
+:::

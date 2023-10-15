@@ -570,7 +570,7 @@ run;
   F_death(3|Z) = 1 - exp(-exp(-3.3924 + 0.2862*Z1 + 1.2618*Z2 + 0.0771*Z3 - 0.0442*Z4)), 
   where Z1, Z2, Z3, and Z4 are ESVEA, sex, age, and systolic blood pressure, respectively.;
 
-*----------------------------------------------  6.6.2 ----------------------------------------------------------------------------;
+*----------------------------------------------  6.5.2 ----------------------------------------------------------------------------;
 
 * In Exercise 4.5 we used Fine-Gray models to estimate the cumulative incidence functions for stroke and death without stroke. 
   For the end-point stroke we obtained the following coefficients

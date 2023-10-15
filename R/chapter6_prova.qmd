@@ -1,59 +1,44 @@
-### Read data
+Only R code available.
 
+### Figure 6.10
+
+::: {.panel-tabset}
+
+## R
 ```{r}
-#| label: read-prova
+#| label: figure-6.10
+#| out-width: 90%
+
 prova <- read.csv("data/prova.csv", na.strings = c("."))
-# Treatment 2x2 factorial
-prova$beh <- with(prova, as.factor(scle + beta*2))
 library(tidyverse)
 prova <- prova %>% mutate(timebleed = ifelse(bleed == 1, timebleed, timedeath),
                           outof0 = ifelse(bleed ==1, 1, death),
                           wait = ifelse(bleed ==1, timedeath - timebleed, NA))
 
-# Faster processing
-require(data.table)
-prova <- setDT(prova)
-
-# Setting start times, s = 1 year and s = 2 years
-s1 = 365.25
-s2 = 2*365.25
-
-#Censoring times
-cens_outof0 <- 1509
-cens_wait <- 1363
-```
-
-### Figure 6.10
-
-TODO: get program to make data file `datafig610.csv`
-
-```{r}
-#| label: figure-6.10
-#| out-width: 90%
-
-library(mstate)
-library(survival)
-library(data.table) #Faster aggregation of data
-
-# Creating data frame
-# Converting data to long format
-# Transition matrix for irreversible illness-death model
+library(mstate) # LMAJ
+# transition matrix for irreversible illness-death model
 tmat <- trans.illdeath(names = c("Non-bleeding", "Bleeding", "Dead"))
-long_format_scle0 <- msprep(time = c(NA, "timebleed", "timedeath"), status = c(NA, "bleed", "death"), data = subset(as.data.frame(prova), scle ==0), trans = tmat, keep = "scle")
-long_format_scle1 <- msprep(time = c(NA, "timebleed", "timedeath"), status = c(NA, "bleed", "death"), data = subset(as.data.frame(prova), scle ==1), trans = tmat, keep = "scle")
+
+long_format_scle0 <- msprep(time = c(NA, "timebleed", "timedeath"),
+                            status = c(NA, "bleed", "death"), 
+                            data = subset(as.data.frame(prova), scle ==0), 
+                            trans = tmat, keep = "scle")
+
+long_format_scle1 <- msprep(time = c(NA, "timebleed", "timedeath"),
+                            status = c(NA, "bleed", "death"), 
+                            data = subset(as.data.frame(prova), scle ==1), 
+                            trans = tmat, keep = "scle")
 
 # Estimation of transition probabilities with the Landmark Aalen-Johansen estimator
 # Warning is not related to the estimate of pstate2
-LMAaJ_scle0 <- LMAJ(long_format_scle0, s = s1, from = 1) #P(V(t) = 1 | V(1) = 0)
-LMAaJ_scle1 <- LMAJ(long_format_scle1, s = s1, from = 1) #P(V(t) = 1 | V(1) = 0)
+LMAaJ_scle0 <- LMAJ(long_format_scle0, s = 365.25, from = 1) #P(V(t) = 1 | V(1) = 0)
+LMAaJ_scle1 <- LMAJ(long_format_scle1, s = 365.25, from = 1) #P(V(t) = 1 | V(1) = 0)
 
-LMAJ_scle0_data <- as.data.frame(cbind(LMAaJ_scle0$time, LMAaJ_scle0$pstate2, "No"))
+LMAJ_scle0_data <- as.data.frame(cbind(LMAaJ_scle0$time,LMAaJ_scle0$pstate2, "No"))
 colnames(LMAJ_scle0_data) <- c("time", "p01", "Sclerotherapy")
 LMAJ_scle1_data <- as.data.frame(cbind(LMAaJ_scle1$time, LMAaJ_scle1$pstate2, "Yes"))
 colnames(LMAJ_scle1_data) <- c("time", "p01", "Sclerotherapy")
-
 LMAJ_scle <- as.data.frame(rbind(LMAJ_scle0_data, LMAJ_scle1_data))
-LMAJ_scle <- read.csv("R/data/datafig610.csv")
 
 library(ggplot2)
 theme_general <- theme_bw() +
@@ -62,7 +47,8 @@ theme_general <- theme_bw() +
         axis.text.x = element_text(size = 20),
         axis.text.y = element_text(size = 20))
 
-fig6.10 <- ggplot(LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01), group = Sclerotherapy)) + 
+fig6.10 <- ggplot(
+  LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01), group = Sclerotherapy)) + 
   geom_step(size = 1) +
   xlab("Time since randomization (years)") +
   ylab("Probability") + 
@@ -73,6 +59,7 @@ fig6.10 <- ggplot(LMAJ_scle,aes(x = as.numeric(time)/365.25, y = as.numeric(p01)
 fig6.10
 
 ```
+:::
 
 ### Table 6.7
 

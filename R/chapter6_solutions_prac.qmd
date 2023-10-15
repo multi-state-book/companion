@@ -22,7 +22,7 @@ library(tidyverse) #Data manipulations and plots
 library(survival) #Core survival analysis routines
 library(survminer) #Plots of survival curves
 library(survRM2) #RMST 
-library(mstate) #probtrans, ELOS
+library(mstate) #probtrans, LMAJ, ELOS
 library(mets) #binreg
 library(pseudo)
 library(geepack)

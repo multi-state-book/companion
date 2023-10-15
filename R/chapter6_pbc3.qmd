@@ -1,11 +1,31 @@
 ### Read data
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: read-pbc3
+#| label: read-pbc3-r
 pbc3 <- read.csv("data/pbc3.csv")
 pbc3$fail <- as.numeric(with(pbc3, status > 0))
 pbc3$log2bili <- with(pbc3, log2(bili))
+
 ```
+
+## SAS
+```{sas}
+#| label: read-pbc3-sas
+#| eval: false 
+#| output: false
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+	
+data pbc3; 
+	set pbc3;
+	log2bili=log2(bili);
+run;
+```
+:::
 
 <!-- # Load required packages (should be installed if not already) -->
 <!-- library(haven) -->
@@ -17,8 +37,10 @@ pbc3$log2bili <- with(pbc3, log2(bili))
 
 ### Figure 6.1
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-6.1
+#| label: figure-6.1-r
 #| out-width: 90%
 
 # General plotting style
@@ -30,7 +52,8 @@ theme_general <- theme_bw() +
         axis.text.y = element_text(size = 20)) 
 
 # Calculate pseudo-observations of the survival function for subjects
-# The subjects with ptno=415 and ptno=458 are selected
+# The subjects with id=415 and 458 are selected
+# The subjects with id=305 and 325 are selected
 library(pseudo)
 pseudo_allt <- pseudosurv(pbc3$days, pbc3$fail)
 
@@ -68,12 +91,24 @@ fig6.1 <- ggplot(aes(x = tpseudo, y = pseudo, linetype = id),
 fig6.1
 ```
 
+## SAS
+```{sas}
+#| label: figure-6.1-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Figure 6.2
+
+::: {.panel-tabset}
+## R
 
 #### (a)
 
 ```{r}
-#| label: figure-6.2a
+#| label: figure-6.2a-r
 #| out-width: 90%
 
 theme_general_1 <- theme_bw() +
@@ -112,7 +147,7 @@ fig6.2
 #### (b)
 
 ```{r}
-#| label: figure-6.2b
+#| label: figure-6.2b-r
 #| out-width: 90%
 
 # At 2 years
@@ -142,7 +177,7 @@ fig6.2b
 #### (c)
 
 ```{r}
-#| label: figure-6.2c
+#| label: figure-6.2c-r
 #| out-width: 90%
 
 # At 3 years
@@ -170,17 +205,30 @@ fig6.2c <- ggplot(aes(x = days/365.25, y = pseudo, shape = failtype),
 fig6.2c
 ```
 
+## SAS
+```{sas}
+#| label: figure-6.2-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
+
 ### Figure 6.3
+
+::: {.panel-tabset}
+## R
 
 #### Left
 
 ```{r}
-#| label: figure-6.3left
+#| label: figure-6.3left-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
 
-# Collect data for plot
+# Collect data for plot year=2
 pseudodata <- data.frame(tpseudo = pseudo_t2$tpseudo / 365.25, 
                          days = pseudo_t2$days,
                          pseudo = pseudo_t2$pseudo, 
@@ -200,7 +248,7 @@ pseudodata$t_loesspred <- with(
 
 fig6.3left <- ggplot(aes(x = bili, y = pseudo), data = pseudodata) + 
   geom_point(size = 4, shape = 4) + 
-  geom_line(aes(x = bili, y = loesspred), size = 1) +
+  geom_line(aes(x = bili, y = loesspred), linewidth = 1) +
   xlab("Bilirubin") +  
   ylab("Pseudo-values") + 
   scale_x_continuous(expand = expansion(mult = c(0.05, 0.05))) + 
@@ -215,7 +263,7 @@ fig6.3left
 #### Right
 
 ```{r}
-#| label: figure-6.3right
+#| label: figure-6.3right-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -234,12 +282,25 @@ fig6.3right
 ```
 
 
+
+## SAS
+```{sas}
+#| label: figure-6.3-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Figure 6.4
+
+::: {.panel-tabset}
+## R
 
 #### Left
 
 ```{r}
-#| label: figure-6.4left
+#| label: figure-6.4left-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -253,7 +314,7 @@ pseudodata$t_log2bili_loesspred <- with(pseudodata,
 
 fig6.4left <- ggplot(aes(x = log2bili, y = pseudo), data = pseudodata) +
   geom_point(size = 4, shape = 4) +
-  geom_line(aes(x = log2bili, y = log2bili_loesspred), size = 1) +
+  geom_line(aes(x = log2bili, y = log2bili_loesspred), linewidth = 1) +
   xlab(expression("log" [2] * "(bilirubin)")) +
   ylab("Pseudo-values") +
   scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), limits = c(1, 9),
@@ -267,13 +328,13 @@ fig6.4left
 
 #### Right
 ```{r}
-#| label: figure-6.4right
+#| label: figure-6.4right-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
 
 fig6.4right <- ggplot(aes(x = log2bili, y = t_log2bili_loesspred), data = pseudodata) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   xlab(expression("log" [2] * "(bilirubin)")) +
   ylab("log(-log(predicted pseudo-values))") +
   scale_x_continuous(expand = expansion(mult = c(0.05, 0.05)), limits = c(1, 9),
@@ -287,51 +348,65 @@ fig6.4right
 
 
 
+
+## SAS
+```{sas}
+#| label: figure-6.4-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Table 6.1
 
-TODO: SDs for the three time points model are not as in table in Book
+Estimates and SD in the book are from SAS `proc genmod`.
+
+::: {.panel-tabset}
+## R
+
+In R we have at least three ways to estimate: 
+
+-   When using `geese` from `geepack` package for the three time points model the SDs are smaller compared to SAS
+-   Using `svyglm` from `survey` package gives comparable SDs to SAS
+-   Package `eventglm` is another option with other issues -- see comments in the R code
+
+#### Function `geese` from `geepack`package
 
 ```{r}
-#| label: table-6.1
+#| label: table-6.1-geese-r
 
-posumm<-function(pofit,d=6){ 
+library(geepack)
+
+# summary function for pseudo-value regression from a geese fit
+summgeese<-function(pofit,d=6){
+  beta<-pofit$beta
+  SD = sqrt(diag(pofit$vbeta))
   round(cbind(
-    Est = pofit$beta, 
-    SD = sqrt(diag(pofit$vbeta)), 
-    lo.ci = pofit$beta-1.96*sqrt(diag(pofit$vbeta)), 
-    up.ci = pofit$beta+1.96*sqrt(diag(pofit$vbeta)), 
-    Wald = (pofit$beta/sqrt(diag(pofit$vbeta)))^2, 
-    PVal = 2-2*pnorm(abs(pofit$beta/sqrt(diag(pofit$vbeta))))),d) 
+    beta = beta, 
+    SD.robust = SD, 
+    exp.beta = exp(beta), 
+    exp.lci  = exp(beta-1.96*SD), 
+    exp.uci  = exp(beta+1.96*SD), 
+    PVal.N = 2-2*pnorm(abs(beta/SD))),d) 
 }
 
-posummExp<-function(pofit,d=6){
-  round(cbind(
-    est = pofit$beta, 
-    SD = sqrt(diag(pofit$vbeta)), 
-    exp.est = exp(pofit$beta), 
-    exp.lo.ci = exp(pofit$beta-1.96*sqrt(diag(pofit$vbeta))), 
-    exp.up.ci = exp(pofit$beta+1.96*sqrt(diag(pofit$vbeta))), 
-    PVal = 2-2*pnorm(abs(pofit$beta/sqrt(diag(pofit$vbeta))))),d) 
-}
-
-
-# At time year 2
-fit1 <- geese(formula = I(1 - pseudo) ~ tment +alb + log2bili,
+# At day 743
+# data frame pseudodata countains pseudo-observations day 743
+geefit1 <- geese(formula = I(1 - pseudo) ~ tment +alb + log2bili,
               data = subset(pseudodata, !is.na(alb)),
               id = id,
               mean.link = "cloglog")
-posummExp(fit1)
+summgeese(geefit1)
 
-# At time year c(1, 2, 3)
+# At days 366, 743, 1105 
 # Select the pseudo-observations at times
 times <- c(366, 743, 1105)
 pseudo_t1 <- subset(pseudo_alltid, tpseudo == times[1])
 pseudo_t2 <- subset(pseudo_alltid, tpseudo == times[2])
 pseudo_t3 <- subset(pseudo_alltid, tpseudo == times[3])
-
 pseudo_t <- rbind(pseudo_t1, pseudo_t2, pseudo_t3)
-
-pseudodata_t <- data.frame(tpseudo = pseudo_t$tpseudo / 365.25,
+pseudodata_t <- data.frame(tpseudo = pseudo_t$tpseudo,
                          days = pseudo_t$days,
                          pseudo = pseudo_t$pseudo,
                          log2bili =  pseudo_t$log2bili,
@@ -340,21 +415,325 @@ pseudodata_t <- data.frame(tpseudo = pseudo_t$tpseudo / 365.25,
                          tment = pseudo_t$tment,
                          id = pseudo_t$id,
                          failtype = as.factor(pseudo_t$fail))
-
-# At time year c(1, 2, 3)
-fit2 <- geese(formula = I(1 - pseudo) ~ tment + alb + log2bili + as.factor(tpseudo) -1,
+geefit3 <- geese(formula = I(1 - pseudo) ~ tment +alb + log2bili + factor(tpseudo)-1,
               data = subset(pseudodata_t, !is.na(alb)),
               id = id,
-              mean.link = "cloglog",
-              corstr="independence")
-posummExp(fit2)
+              mean.link = "cloglog")
+summgeese(geefit3) 
 ```
 
 
-### Figure 6.5
+#### Function `svyglm` from `survey` package
 
 ```{r}
-#| label: figure-6.5
+#| label: table-6.1-survey-r
+
+library(survey)
+library(survival) # get bcloglog()
+
+# Thanks to Terry Therneau for this comment:
+# It needs one more line to set up compaed to geese, but has 3 advantages: 
+# 1: naturally deals with missing values in the data
+# 2: results follow standard R nomenclature, e.g., the coef and vcov functions work as expected
+# 3: geese gives incorrect answers, without warning, if the data set is not sorted in exactly the order it expects
+# Also: The bounded cloglog link, bcloglog(), avoid an error message in glm's initial values step. It's found in the survival package.
+
+
+# summary function for pseudo-value regression from a svyglm fit
+summsvy<-function(pofit,d=5){
+  beta<-pofit$coefficient
+  SD<-sqrt(diag(pofit$cov.unscaled))
+  round(cbind(
+    beta = beta, 
+    SD.robust = SD,
+    exp.beta = exp(beta), 
+    exp.lci = exp(beta-1.96*SD), 
+    exp.uci = exp(beta+1.96*SD), 
+    PVal.N = 2-2*pnorm(abs(beta/SD))),d)
+}
+
+# At days 743
+svydata <- svydesign(~id, variables= ~., data=pseudodata, weight= ~1)
+svyfit1 <- svyglm(I(1 - pseudo) ~ tment + alb + log2bili,
+               design=svydata, family= gaussian(link= bcloglog()))
+summsvy(svyfit1)
+
+# At days 366, 743, 1105 
+svydata3 <- svydesign(~id, variables= ~., data=pseudodata_t, weight= ~1)
+svyfit3 <- svyglm(I(1 - pseudo) ~ tment + alb + log2bili+factor(tpseudo)-1,
+                 design=svydata3, family= gaussian(link= bcloglog()))
+summsvy(svyfit3)
+```
+
+#### Function `cumincglm` from `eventglm`package
+
+Now, using `eventglm` package. Handling of missing values (here for variable `alb`) causes some issue, see comment in R code below.
+
+```{r}
+#| label: table-6.1-eventglm-r
+
+library(eventglm)
+# At day 743
+# SD differ a bit from from than SAS, geese, and svyglm
+egfit1 <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = 743,
+                    data = pbc3, link="cloglog")
+summary(egfit1)
+
+# Use of argument subset gives the same
+egfit1x <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = 743,
+                    data = pbc3, subset=!is.na(alb), link="cloglog")
+summary(egfit1x)
+
+# Sub-setting the data is not the way:
+# When sub-setting, the pseudo-values are calculated base on the sub-sample,
+# which is different from all the above where the full sample is used to
+# calculate the pseudo-values
+egfit1xx <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = 743,
+                    data = subset(pbc3,!is.na(alb)), link="cloglog")
+summary(egfit1xx)
+
+# At days 366, 743, 1105 
+# For multiple time points we get an error for this code:
+# egfit3 <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = c(366, 743, 1105),
+#                    data = pbc3, link="cloglog")
+# Error in model.frame.default(formula = formula2i, data = newdatasrt, weights = weights,  : 
+# variable lengths differ (found for '(weights)')
+# Try to use argument subset, but get same error
+# egfit3x <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = c(366, 743, 1105),
+#                    data = pbc3, subset=!is.na(alb), link="cloglog")
+
+# Have to do sub-setting on data, but this is not the way to do it
+# but is in this case VERY close to svyglm results
+egfit3xx <- cumincglm(Surv(days, fail) ~ tment + alb + log2bili, time = c(366, 743, 1105),
+                    data = subset(pbc3,!is.na(alb)), link="cloglog")
+summary(egfit3xx)
+```
+
+
+## SAS
+
+#### Macro `pseudosurv`
+
+This SAS macro computes pseudo-values based on Kaplan-Meier estimates and is adapted from that described by:
+
+-   J.P.Klein, M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R functions to compute pseudo-values for censored data regression" Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
+
+NB: Inside the macro a variable called `id` is created which will interfere with your identification variable is called `id` in your data set, in which case you will need to rename your `id` variable. 
+
+```{sas}
+#| label: macro-pseudosurv-sas
+#| eval: false 
+#| output: false
+
+* Can also be found on: http://192.38.117.59/~linearpredictors/datafiles/pseudosurv.sas; 
+
+* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being printed;
+
+%macro pseudosurv(indata,time,dead,howmany,datatau,outdata);
+
+/* The subsequent SAS code is adapted from that described by J.P.Klein,
+    M.Gerster, P.K.Andersen, S.Tarima, M.Pohar Perme (2008): "SAS and R
+    functions to compute pseudo-values for censored data regression"
+    Comp. Meth. Progr. Biomed., vol. 89,pp. 289-300. */ 
+
+/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE KAPLAN-MEIER ESTIMATOR AT EACH
+      TIME
+      INPUTS:
+      INDATA---INPUT DATA SET
+      TIME--TIME VARIABLE
+      DEAD---EVENT INDICATOR (1-EVENT, 0-CENSORED)
+      HOWMANY---SAMPLE SIZE
+      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED DATA
+                SET HAS SINGLE VARIABLE TIME
+     
+      OUTDATA---OUTPUT DATA SET WHICH CONTAINS PSUK,K=1,...,HOWMANY THE PSEUDO
+      VALUES AT EACH TIME POINT (Note output data set includes orginal data sorted
+                           by time
+      
+*/
+ 
+proc sort data=&indata;
+by &time;
+
+data keep;  set &datatau;
+find=1;
+proc sort data=keep;  by time;
+
+data point;  set &indata;
+time=&time;
+keep=1;
+ 
+
+data point;  merge point keep;  by time;
+keep time find keep;
+ 
+data useme;  set point;
+retain temp -1;
+if keep = 1 then temp=time;
+tuse=temp; 
+if find ne 1 then delete;
+&time=tuse;
+ run;
+/* WORKING DATA SET THAT INCLUDE A SET OF N INDICATORS WHERE FOR THE KTH INDICATOR
+ THE EVENT IS MISSING */
+data newdat;  set &indata;
+id+1;
+array iobs(&howmany) dead1-dead&howmany;
+do j=1 to &howmany;
+iobs(j)=&dead;
+if j=id then iobs(j)=.;
+end;
+
+data out;  set newdat;
+
+/* COMPUTE KME FOR FULL SAMPLE */
+
+proc lifetest data=newdat noprint plots = none;
+time &TIME*&dead(0);
+survival out=sall;
+data sall;  set sall;
+sall=survival;
+ keep &time sall;
+ 
+%do ip=1 %to &howmany;
+
+/* COMPUTE KME FOR REDUCED SAMPLE */
+proc lifetest data=newdat noprint plots = none;
+time &time*dead&ip(0);
+survival out=stmp;
+data stmp;  set stmp;
+s&ip=survival;
+keep &time s&ip;
+ 
+/*merge KMEs AND COMPUTE PSEUDOVALUES FOR OBSERVATION IP*/
+data pstmp; merge sall stmp;  by &time;
+retain stemp 1;
+if s&ip=. then s&ip=stemp;
+stemp=s&ip;
+psu&ip=&howmany*sall- (&howmany-1)*s&ip;
+ 
+data out; merge out pstmp useme ;  by &time;
+if find ne 1 then delete;
+keep &time psu1-psu&ip;
+%end;
+
+data out;  set out;
+retain dup -1;
+if &time=dup then delete;
+ else dup=&time;
+ jd+1;
+ 
+data io;  set out;
+array ps psu1-psu&howmany;
+do id=1 to &howmany;
+pseudo=ps(id);
+time=&time;
+output;
+end;
+keep time id pseudo jd;
+proc sort data=io ;
+  by id;
+  
+data a;  set &indata;
+id+1;
+data io;  merge a io;  by id;
+ proc sort data=io;  by jd;
+
+proc sort data=&datatau;
+by time;
+
+data taus;  set &datatau ;
+ jd+1;
+ tpseudo=time;
+ keep jd tpseudo;
+ 
+ 
+  data &outdata;  merge io taus;  by jd;
+  drop jd id &time &dead;
+	run;
+%mend;
+```
+
+#### Table
+
+```{sas}
+#| label: table-6.1-sas
+#| eval: false 
+#| output: false
+
+# Rename the id variable ;
+data pbc3; 
+	set pbc3; 
+	rename id=ptno;
+run; 
+proc sort data=pbc3; 
+	by days; 
+run;
+
+data timepoints;
+	input time;
+	datalines;
+	366
+	743
+	1105
+	;
+run;
+
+%pseudosurv(pbc3, days, fail, 349, timepoints, outdata);
+
+* At day 743 ----------------------------------------------------------------;
+proc genmod data=outdata;
+	where time=743;
+	class ptno;
+	fwdlink link=log(-log(_mean_));
+	invlink ilink=exp(-exp(_xbeta_));
+	model pseudo=tment alb log2bili / dist=normal noscale;
+	repeated subject=ptno/corr=ind;
+run;
+
+              Analysis Of GEE Parameter Estimates
+               Empirical Standard Error Estimates
+
+                    Standard   95% Confidence
+ Parameter Estimate    Error       Limits            Z Pr > |Z|
+
+ Intercept  -2.1167   1.3270  -4.7175   0.4842   -1.60   0.1107
+ tment      -0.7051   0.3693  -1.4289   0.0188   -1.91   0.0563
+ alb        -0.1051   0.0342  -0.1720  -0.0381   -3.08   0.0021
+ log2bili    0.8357   0.1404   0.5605   1.1110    5.95   <.0001
+
+* At days 366 , 743, 1105 ----------------------------------------------------;
+proc genmod data=outdata;
+	class ptno time;
+	fwdlink link=log(-log(_mean_));
+	invlink ilink=exp(-exp(_xbeta_));
+	model pseudo=tment alb log2bili time / dist=normal noscale noint;
+	repeated subject=ptno/corr=ind;
+run;
+
+                 Analysis Of GEE Parameter Estimates
+                 Empirical Standard Error Estimates
+
+                         Standard   95% Confidence
+ Parameter      Estimate    Error       Limits            Z Pr > |Z|
+
+ Intercept        0.0000   0.0000   0.0000   0.0000     .      .
+ tment           -0.5985   0.2870  -1.1610  -0.0361   -2.09   0.0370
+ alb             -0.0939   0.0263  -0.1454  -0.0424   -3.58   0.0003
+ log2bili         0.6841   0.0919   0.5040   0.8642    7.44   <.0001
+ time      366   -2.4746   1.1423  -4.7135  -0.2357   -2.17   0.0303
+ time      743   -1.5540   1.1211  -3.7514   0.6434   -1.39   0.1657
+ time      1105  -1.1232   1.1256  -3.3293   1.0829   -1.00   0.3183
+```
+
+:::
+
+### Figure 6.5
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: figure-6.5-r
 #| out-width: 90%
 
 # At time year c(1, 2, 3) 
@@ -401,7 +780,7 @@ log2bili_res_pred_3 <- predict(log2bili_res_loess_3, newdata = subset(pseudodata
 pseudodata_t$log2bili_res_pred <- c(log2bili_res_pred_1, log2bili_res_pred_2, log2bili_res_pred_3)
 
 fig6.5 <- ggplot(aes(x = log2bili, y = res, shape = time), data = pseudodata_t) + 
-  geom_line(aes(x = log2bili, y = log2bili_res_pred , linetype = time), size = 1) +
+  geom_line(aes(x = log2bili, y = log2bili_res_pred , linetype = time), linewidth = 1) +
   geom_point(size = 3) + 
   scale_shape_manual("Year", values = c(4, 2, 0), labels = c("1", "2", "3")) +
   scale_linetype_manual("Year", values = c("dashed", "solid", "dotted"), labels = c("1", "2", "3")) +
@@ -423,31 +802,71 @@ fig6.5
 ```
 
 
-### Table 6.2
 
-```{r}
-#| label: table-6.2
-
-# At time year c(1, 2, 3) using log-link instead
-fit2 <- geese(formula = pseudo ~ as.factor(tpseudo) + bili + alb + tment - 1,
-              data = subset(pseudodata_t, !is.na(alb)),
-              id = id,
-              mean.link = "log",
-              variance = "gaussian",
-              scale.value = 0,
-              scale.fix = 1, maxit = 50)
-summary(fit2)
-
-## - log scale used as link in Table 6.2 (add "-" in front of all estimates)
-# No default "-log(x)" link function in R
+## SAS
+```{sas}
+#| label: figure-6.5-sas
+#| eval: false 
+#| output: false
 ```
 
+:::
+
+### Table 6.2
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-6.2-r
+
+# At days 366 , 743, 1105 using link function "-log"
+# No default link function "-log" R, thus add "-" in front of all beta estimates
+summsvy(svyglm(pseudo ~ tment + alb + bili + factor(tpseudo)-1 , 
+                design=svydata3, family=gaussian(link=blog())))
+```
+
+
+## SAS
+```{sas}
+#| label: table-6.2-sas
+#| eval: false 
+#| output: false
+#| 
+*  At days 366 , 743, 1105 using link function "-log"; 
+proc genmod data=outdata;
+	class ptno time;
+	fwdlink link=-log(_mean_);
+	invlink ilink=exp(-_xbeta_);
+	model pseudo=tment alb bili time  /dist=normal noscale noint;
+	repeated subject=ptno / corr=ind;
+run;
+
+                Analysis Of GEE Parameter Estimates
+                Empirical Standard Error Estimates
+
+                          Standard   95% Confidence
+  Parameter      Estimate    Error       Limits            Z Pr > |Z|
+
+  Intercept        0.0000   0.0000   0.0000   0.0000     .      .
+  tment           -0.0484   0.0311  -0.1093   0.0125   -1.56   0.1194
+  alb             -0.0097   0.0032  -0.0159  -0.0034   -3.04   0.0024
+  bili             0.0042   0.0008   0.0026   0.0057    5.29   <.0001
+  time      366    0.3403   0.1422   0.0616   0.6189    2.39   0.0167
+  time      743    0.4120   0.1450   0.1278   0.6963    2.84   0.0045
+  time      1105   0.5075   0.1468   0.2199   0.7952    3.46   0.0005
+```
+
+:::
+
 ### Figure 6.6
+
+::: {.panel-tabset}
+## R
 
 #### Left
 
 ```{r}
-#| label: figure-6.6left
+#| label: figure-6.6left-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -460,7 +879,7 @@ fig6.6left
 #### Right
 
 ```{r}
-#| label: figure-6.6right
+#| label: figure-6.6right-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -474,7 +893,7 @@ pseudodata$log_loesspred <- with(pseudodata,
                                ifelse(loesspred > 0 , -log(loesspred), NA))
 
 fig6.6right <- ggplot(aes(x = bili, y = log_loesspred), data = pseudodata) +
-  geom_line(size = 1) +
+  geom_line(linewidth = 1) +
   xlab("Bilirubin") +
   ylab("-log(predicted pseudo-values)") +
   scale_x_continuous(expand = expansion(mult = c(0.05, 0.05))) +
@@ -485,10 +904,22 @@ fig6.6right <- ggplot(aes(x = bili, y = log_loesspred), data = pseudodata) +
 fig6.6right
 ```
 
+
+## SAS
+```{sas}
+#| label: figure-6.6-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Figure 6.7
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-6.7
+#| label: figure-6.7-r
 #| out-width: 90%
 
 # Use regression estimates from fit2
@@ -538,7 +969,7 @@ pseudodata_t$bili_res_pred <- c(bili_res_pred_1,
 
 # Create Figure
 fig6.7 <- ggplot(aes(x = bili, y = res, shape = time), data = pseudodata_t) +
-  geom_line(aes(x = bili, y = bili_res_pred , linetype = time), size = 1) +
+  geom_line(aes(x = bili, y = bili_res_pred , linetype = time), linewidth = 1) +
   geom_point(size = 3) +
   scale_shape_manual("Year", values = c(4, 2, 0), 
                      labels = c("1", "2", "3")) +
@@ -563,30 +994,202 @@ fig6.7
 ```
 
 
+
+## SAS
+```{sas}
+#| label: figure-6.7-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Table 6.3
 
-```{r}
-#| label: table-6.3
+::: {.panel-tabset}
+## R
 
-# Calculate pseudo-observations of the restricted mean for subjects
-pseudo_allt <- pseudomean(pbc3$days / 365.25, pbc3$fail, tmax = 3)
-# Re-arrange the data into a long data set
-a <- cbind(pbc3, pseudo = pseudo_allt)
-outmean3 <- a
-# Fit model
-fit_resm <- geese(pseudo ~ tment  + alb+ log2bili, id = id,
-                  data = subset(outmean3, !is.na(alb)),
-                  mean.link = "identity", corstr = "independence",
-                  scale.fix = FALSE,
-                  family = "gaussian")
-posumm(fit_resm)
+Here, `geese`, `svyglm`, and `rmeanglm` (from package `eventglm`) give very similar results.
+
+```{r}
+#| label: table-6.3-r
+
+# Calculate pseudo-observations of the restricted mean and merge with pbc3
+datarmean3<-cbind(pbc3,pseudormean=pseudomean(pbc3$days/365.25,pbc3$fail,tmax = 3))
+
+# geese
+summgeese(geese(pseudormean ~ tment + alb + log2bili, id = id,
+                data = subset(datarmean3, !is.na(alb)),
+                family = "gaussian", mean.link = "identity",
+                corstr = "independence"))
+# svyglm
+svydata <- svydesign(~id, variables= ~., data=datarmean3, weight= ~1)
+summsvy(svyglm(pseudormean ~ tment + alb + log2bili, design=svydata,
+               family= gaussian(link="identity")))
+
+# rmeanglm from package eventglm
+summary(rmeanglm(Surv(days/365.25, fail) ~ tment + alb + log2bili,time = 3,
+                 data = pbc3, link="identity"))
+```
+
+## SAS
+
+#### `proc rmstreg`
+
+```{sas}
+#| label: rmstreg-sas
+#| eval: false 
+#| output: false
+proc rmstreg data=pbc3 tau=3;
+   model years*status(0)=tment alb log2bili / link=linear;
+run;
+                            Analysis of Parameter Estimates
+
+                               Standard       95% Confidence          Chi-
+Parameter    DF    Estimate       Error           Limits            Square    Pr > ChiSq
+
+Intercept     1      2.8263      0.3467      2.1469      3.5058      66.47        <.0001
+tment         1      0.1480      0.0730      0.0048      0.2911       4.11        0.0427
+alb           1      0.0225      0.0068      0.0092      0.0359      10.92        0.0010
+log2bili      1     -0.2435      0.0320     -0.3063     -0.1808      57.83        <.0001
 ```
 
 
+#### Macro `pseudomean`
+
+SAS macro for computing pseudo-values of the restricted mean based on Kaplan-Meier estimates.
+
+NB: Inside the macro a variable called `id` is created which will interfere with your identification variable is called `id` in your data set, in which case you will need to rename your `id` variable. 
+
+```{sas}
+#| label: macro-pseudomean-sas
+#| eval: false 
+#| output: false
+%macro pseudomean(indata,time,dead,howmany,tmax,outdata);
+ /* MACRO ARGUMENTS
+      INDATA--NAME OF INPUT DATA SET
+      TIME--NAME OF TIME VARIABLE
+      DEAD--NAME OF EVENT INDICATOR VARIABLE--(1-DEAD,0-CENSORED)
+      HOWMANY--SAMPLE SIZE
+      TMAX--UPPER LIMIT OF INTEGRATION FOR RESTRICTED MEAN
+      OUTDATA--NAME OF OUTPUT DATA SET WITH PSEUDOVALUES FPR RESTRICTED
+               MEAN IN VARIABLE "PSUMEAN"  */
+ 
+ /* CREATE A DATA SET WHERE EVERYTHING ABOVE TMAX IS CENSORED */
+ DATA work; SET &indata;
+  restime = MIN(&tmax, &time);
+  resdead = &dead;
+  IF restime EQ &tmax THEN resdead = 0;
+
+/* CREATE DATA SET WITH SET OF INDICATORS DEADK THAT HAS MISSING VALUE
+     FOR KTH OBSERVATION, K=1,...,HOWMANY*/
+ DATA work;  SET work;
+   id+1;
+   ARRAY iobs(&howmany) dead1-dead&howmany;
+   DO j = 1 TO &howmany;
+    iobs(j) = resdead;
+    IF j = id THEN iobs(j) = .;
+   END;
+ 
+ /* COMPUTE RESTRICTED MEAN FOR COMPLETE SAMPLE USING PROC LIFETEST */
+ 
+ PROC LIFETEST DATA = work OUTSURV = km ;
+   TIME restime*resdead(0);
+   ODS SELECT MEANS;
+   ODS OUTPUT MEANS = mall;
+ RUN;
+
+  DATA km; SET km;
+    IF _CENSOR_ EQ 0;
+  PROC SORT DATA=km;
+    BY restime;
+  RUN; 
+  DATA km; SET km END=LAST;
+    IF NOT(LAST) THEN DELETE;
+    area = (&tmax - restime)*survival;
+    KEEP area;
+
+  DATA psu; MERGE km mall;
+    meanall = mean + area;
+    KEEP meanall;
+    
+ %DO ip = 1 %TO &howmany;
+ 
+   /* COMPUTE RESTRICTED MEAN FOR SAMPLE WITH IPTH OBSERVATION DELETED
+      USING PROC LIFETEST */
+ 
+   PROC LIFETEST DATA = work OUTSURV = km1 ;
+     TIME restime*dead&ip(0);
+     ODS SELECT means;
+     ODS OUTPUT MEANS = m1;
+   RUN;
+
+   DATA km1; SET km1;
+     IF _CENSOR_ EQ 0;
+   PROC SORT DATA = km1;
+     BY restime;
+   RUN;
+   DATA km1; SET km1 END=LAST;
+     IF NOT(LAST) THEN DELETE;
+     area = (&tmax - restime)*survival;
+     KEEP area;
+   DATA km1; MERGE km1 m1;
+     mean = mean + area;
+     KEEP mean;
+
+   /* COMPUTE PSEUDOVALUE FOR IPTH OBSERVATION*/
+   DATA psu; MERGE psu km1;
+     psu&ip=&howmany*meanall-(&howmany-1)*mean;
+ %END;
+ 
+ /* TRANSPOSE DATASET AND MERGE WITH RAW DATA*/
+ DATA out;  SET psu;
+   ARRAY y(&howmany) psu1-psu&howmany;
+   DO j = 1 TO &howmany;
+     psumean=y(j);
+     OUTPUT;
+   END;
+ KEEP psumean;
+ 
+ DATA &outdata; MERGE &indata out;
+ run; 
+%MEND;
+```
+
+#### Table
+
+```{sas}
+#| label: table-6.3-sas
+#| eval: false 
+#| output: false
+%pseudomean(pbc3,years,fail,349,3,outmean3);
+
+proc genmod data=outmean3;
+	class ptno;
+	model psumean = tment alb log2bili /dist=normal;
+	repeated subject=ptno / corr=ind;
+run;
+
+              Analysis Of GEE Parameter Estimates
+               Empirical Standard Error Estimates
+
+                    Standard   95% Confidence
+ Parameter Estimate    Error       Limits            Z Pr > |Z|
+
+ Intercept   2.8256   0.3461   2.1472   3.5040    8.16   <.0001
+ tment       0.1478   0.0729   0.0049   0.2908    2.03   0.0427
+ alb         0.0225   0.0068   0.0092   0.0359    3.31   0.0009
+ log2bili   -0.2431   0.0320  -0.3058  -0.1804   -7.60   <.0001
+```
+
+:::
+
 ### Figure 6.8
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-6.8
+#| label: figure-6.8-r
 #| out-width: 90%
 
 # Collect data for plot
@@ -608,10 +1211,22 @@ fig6.8 <- ggplot(aes(x = days / 365.25, y = pseudo, shape = failtype), data = ps
 fig6.8
 ```
 
+
+## SAS
+```{sas}
+#| label: figure-6.8-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
 ### Figure 6.9
 
+::: {.panel-tabset}
+## R
 ```{r}
-#| label: figure-6.9
+#| label: figure-6.9-r
 #| out-width: 90%
 
 # Loess for log2 bili
@@ -624,7 +1239,7 @@ outmean3$log2bili_loesspred <- predict(log2bili_loess)
 
 fig6.9 <- ggplot(aes(x = log2bili, y = pseudo), data = outmean3) +
   geom_point(size = 6, shape = 4) +
-  geom_line(aes(x = log2bili, y = log2bili_loesspred), size = 1) +
+  geom_line(aes(x = log2bili, y = log2bili_loesspred), linewidth = 1) +
   xlab(expression("log" [2] * "(bilirubin)")) +
   ylab("Pseudo-values") +
   scale_x_continuous(expand = expansion(mult = c(0.01, 0.05)), limits = c(1, 9),
@@ -740,46 +1355,463 @@ fig6.9
 <!-- summary(fit10) -->
 <!-- ``` -->
 
-### Table 6.6
+
+## SAS
+```{sas}
+#| label: figure-6.9-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+
+### Table 6.4
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| label: table-6.4-r
+
+# Calculate pseudo-values based on Aalen-Johansen estimates using pseudoci()
+# and merge with pbc3 data
+ci2 <- pseudoci(pbc3$days/365.25, pbc3$status,tmax = 2)
+dataci2 <- cbind(pbc3,
+               pseudo.trans = as.vector(ci2$pseudo[[1]]),
+               pseudo.death = as.vector(ci2$pseudo[[2]]))
+
+# Fit models
+geese_logit <- geese(pseudo.death ~ tment , id = id,
+                     data = dataci2,
+                     family = "gaussian", mean.link = "logit",
+                     corstr = "independence", scale.fix = FALSE)
+summgeese(geese_logit)
+geese_cloglog <- geese(pseudo.death ~ tment, id = id,
+                     data = dataci2,
+                     family = "gaussian", mean.link = "cloglog",
+                     corstr = "independence", scale.fix = FALSE)
+summgeese(geese_cloglog)
+
+geese_logit <- geese(pseudo.death ~ tment + alb + log2bili, id = id,
+                     data = subset(dataci2, !is.na(alb)),
+                     family = "gaussian", mean.link = "logit",
+                     corstr = "independence", scale.fix = FALSE)
+summgeese(geese_logit)
+geese_cloglog <- geese(pseudo.death ~ tment + alb + log2bili, id = id,
+                     data = subset(dataci2, !is.na(alb)),
+                     family = "gaussian", mean.link = "cloglog",
+                     corstr = "independence", scale.fix = FALSE)
+summgeese(geese_cloglog)
+
+svydata <- svydesign(~id, variables= ~., data=dataci2, weight= ~1)
+
+svyfit_logit <- svyglm(pseudo.death ~ tment,
+                design=svydata, family= gaussian(link=blogit()))
+summsvy(svyfit_logit)
+
+svyfit_cloglog <- svyglm(pseudo.death ~ tment,
+                design=svydata, family= gaussian(link=bcloglog()))
+summsvy(svyfit_cloglog)
+
+
+svyfit_logit <- svyglm(pseudo.death ~ tment + alb + log2bili,
+                design=svydata, family= gaussian(link=blogit()))
+summsvy(svyfit_logit)
+
+svyfit_cloglog <- svyglm(pseudo.death ~ tment + alb + log2bili,
+                design=svydata, family= gaussian(link=bcloglog()))
+summsvy(svyfit_cloglog)
+
+```
+
+## SAS
+
+#### Macros `pseudoci` and 
+
+To use the macro `pseudoci` we need the macro `cuminc`:
+
+```{sas}
+#| label: macro-pseudoci-sas
+#| eval: false 
+#| output: false
+%macro cuminc(datain,x,re,de,dataout,cir,cid);
+/*  THIS MACRO COMPUTES THE CUMULATIVE INCIDENCE FUNCTIONS FOR
+    BOTH COMPETING RISKS USING PROC PHREG OUTPUT
+    INPUTS TO MACRO
+    DATAIN--NAME OF INPUT DATA SET CONTAINING 
+    	X--TIME TO EVENT
+    	RE--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)
+    	DE--INDICATOR OF SECOND COMPETING RISK
+    DATAOUT--NAME OF OUTPUT DATA SET CONTAINING
+    	CIR--CUMULATIVE INCIDENCE FUNCTION FOR 1ST COMPETING RISK
+    	CID--CUMULATIVE INCIDENCE FUNCTION FOR 2ST COMPETING RISK
+
+*/
+
+data work;  set &datain;
+t=&x;
+r=&re;
+d=&de;
+zero=0;
+
+/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR FIRST COMPETING RISK */
+proc phreg data=work noprint; 
+model t*r(0)=zero;
+output out=rel  logsurv=chr  /method=emp;
+ 
+ /* COMPUTE CRUDE CUMUALTIVE HAZARD FOR SECOND COMPETING RISK */
+proc phreg data=work noprint; 
+model t*d(0)=zero;
+output out=dead  logsurv=chd  /method=emp;
+ 
+ 
+ /* COMPUTE cumualtive incidence */
+data both;  merge rel dead;  by t;
+retain s 1
+retain cr 0;
+retain cd 0;
+retain cumincr 0;
+retain cumincd 0;
+hr=-(cr+chr);
+hd=-(cd+chd);
+
+/* NOTE HR AND HD ARE THE JUMPS IN THE CUMUALTIVE CRUDE HAZARDS AT THIS TIME */
+
+cr=-chr;
+cd=-chd;
+cir=cumincr+hr*s;
+cumincr=cir;
+cid=cumincd+hd*s;
+cumincd=cid;
+s=s*(1-hr-hd);
+/* NOTE S IS KAPLAN-MEIER ESTIMATE IGNORING CAUSE OF FAILURE */
+data &dataout;  set both;
+&x=t;
+&cir=cir;  &cid=cid;
+keep &x &cir &cid;
+run;
+%mend;
+```
+
+#### Table
+
+```{sas}
+#| label: table-6.4-sas
+#| eval: false 
+#| output: false
+* NB: Inside the macros below a variable called `id` is created which will interfere 
+  with your identification variable is called `id` in your data set,
+  in which case you will need to rename your `id` variable; 
+
+* create indicator variables for each competing risk as required by the macro;
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+data pbc3; 
+	set pbc3;
+	log2bili=log2(bili);
+	years=days/365.25;
+	trans=status=1;
+	death=status=2;
+	rename id=ptno;
+run;
+
+data timepoint;
+	input time;
+	datalines;
+	2
+	;
+run;
+
+%pseudoci(pbc3,years,trans,death,349,timepoint,cumincpv1);
+
+* rpseudo: transplant; 
+* dpseudo: death;
+
+* logit link function;
+proc genmod data=cumincpv1;
+	class ptno;
+	model dpseudo = tment / dist=normal noscale link=logit; 
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=cumincpv1;
+	class ptno;
+	model dpseudo = tment alb log2bili / dist=normal noscale link=logit; 
+	repeated subject=ptno / corr=ind;
+run;
+
+* cloglog link function;
+proc genmod data=cumincpv1;
+	class ptno;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=cumincpv1;
+	class ptno;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+```
+:::
+
+### In-text, p. 233: cloglog link function - year 1,2,3
+
+::: {.panel-tabset}
+
+## R
 
 ```{r}
-#| label: table-6.6
+#| label: in-text-r
+#calculate the pseudo-observations
+pseudo <- pseudoci(time=pbc3$days/365.25,event=pbc3$status,tmax=c(1,2,3))
+#rearrange the data into a long data set, use only pseudo-observations for death,
+# i.e.,  status=2:  pseudo$pseudo[[2]],
+b <- NULL
+for(it in 1:length(pseudo$time)){
+b <- rbind(b,cbind(pbc3,death.pseudo = pseudo$pseudo[[2]][,it],
+tpseudo = pseudo$time[it],idno=1:nrow(pbc3)))
+}
+dataci3 <- b[order(b$idno),]
+
+# geese
+summgeese(geese(death.pseudo ~ tment + alb + log2bili + factor(tpseudo),
+                data = subset(dataci3,!is.na(alb)), id=idno,
+                family=gaussian, mean.link = "cloglog", corstr="independence"))
+
+# svyglm
+svydata3 <- svydesign(~idno, variables= ~., data=dataci3, weight= ~1)
+summsvy(svyglm(death.pseudo ~ tment + alb + log2bili+factor(tpseudo)-1,
+               design=svydata3, family= gaussian(link= bcloglog())))
+```
+
+## SAS
+
+```{sas}
+#| label: in-text-sas
+#| eval: false 
+#| output: false
+
+data timepoints;
+	input time;
+	datalines;
+	1
+	2
+	3
+	;
+run;
+%pseudoci(pbc3,years,trans,death,349,timepoints,cumincpv3);
+
+* cloglog link function - year 1,2,3;
+proc genmod data=cumincpv3;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+```
+
+:::
+
+### Table 6.5
+
+::: {.panel-tabset}
+
+## R
+
+#### 3 time points
+
+```{r}
+#| label: table-6.5-3times-r
+
+# Calculate pseudo-values based on Aalen-Johansen estimates using pseudoci()
+# and merge with pbc3 data
+pseudo <- pseudoci(time=pbc3$days/365.25,event=pbc3$status,tmax=1:3)
+# rearrange the data into a long data set, use only pseudo-observations for death,
+# i.e.,  status=2:  pseudo$pseudo[[2]],
+b <- NULL
+for(it in 1:length(pseudo$time)){
+b <- rbind(b,cbind(pbc3,death.pseudo = pseudo$pseudo[[2]][,it],
+                   tpseudo = pseudo$time[it],idno=1:nrow(pbc3)))
+}
+dataci3 <- b[order(b$idno),]
+
+# geese
+summgeese(geese(death.pseudo~tment+alb+log2bili+sex+age+factor(tpseudo),
+                data = subset(dataci3,!is.na(alb)),id=idno,
+                family=gaussian, mean.link = "cloglog", corstr="independence"))
+
+# svyglm
+svydata3 <- svydesign(~idno, variables= ~., data=dataci3, weight= ~1)
+summsvy(svyglm(death.pseudo ~ tment+alb+log2bili+sex+age+factor(tpseudo)-1,
+               design=svydata3, family= gaussian(link= bcloglog())))
+```
+
+#### 10 time points
+
+```{r}
+#| label: table-6.5-10times-r
+
+# Calculate pseudo-values based on Aalen-Johansen estimates using pseudoci()
+# and merge with pbc3 data
+pseudo <- pseudoci(time=pbc3$days/365.25,event=pbc3$status,tmax=seq(0.5,5,0.5))
+# rearrange the data into a long data set, use only pseudo-observations for death,
+# i.e.,  status=2:  pseudo$pseudo[[2]],
+b <- NULL
+for(it in 1:length(pseudo$time)){
+b <- rbind(b,cbind(pbc3,death.pseudo = pseudo$pseudo[[2]][,it],
+tpseudo = pseudo$time[it],idno=1:nrow(pbc3)))
+}
+dataci10 <- b[order(b$idno),]
+
+# geese
+summgeese(geese(death.pseudo~tment+alb+log2bili+sex+age+factor(tpseudo),
+                data = subset(dataci10,!is.na(alb)),id=idno,
+                family=gaussian, mean.link = "cloglog", corstr="independence"))
+
+# svyglm
+svydata10 <- svydesign(~idno, variables= ~., data=dataci10, weight= ~1)
+summsvy(svyglm(death.pseudo ~ tment+alb+log2bili+sex+age+factor(tpseudo)-1,
+               design=svydata10, family= gaussian(link=bcloglog())))
+```
+
+## SAS
+
+#### 3 time points
+
+```{sas}
+#| label: table-6.5-3times-sas
+#| eval: false 
+#| output: false
+
+* cloglog link function - 3 time points;
+proc genmod data=cumincpv3;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+
+               Analysis Of GEE Parameter Estimates
+                Empirical Standard Error Estimates
+
+                      Standard   95% Confidence
+ Parameter   Estimate    Error       Limits            Z Pr > |Z|
+
+ Intercept    -6.4063   2.2176 -10.7526  -2.0599   -2.89   0.0039
+ tment        -0.2717   0.3364  -0.9311   0.3877   -0.81   0.4194
+ alb          -0.0760   0.0331  -0.1408  -0.0112   -2.30   0.0216
+ log2bili      0.6657   0.1205   0.4295   0.9019    5.52   <.0001
+ sex           0.5017   0.3990  -0.2803   1.2838    1.26   0.2086
+ age           0.0734   0.0223   0.0298   0.1170    3.30   0.0010
+ time      1  -1.2504   0.2779  -1.7951  -0.7056   -4.50   <.0001
+ time      2  -0.5596   0.1729  -0.8985  -0.2207   -3.24   0.0012
+ time      3   0.0000   0.0000   0.0000   0.0000     .      .
+
+```
+
+
+#### 10 time points
+
+Stop with ERROR:
+
+-   Error in computing the link function, its derivatives, or the variance function.
+
+
+
+```{sas}
+#| label: table-6.5-10times-sas
+#| eval: false 
+#| output: false
+
+* cloglog link function - 10 time points;
+data time10points;
+	input time;
+	datalines;
+	.5
+	1
+	1.5
+	2
+	2.5
+	3
+	3.5
+	4
+	4.5
+	5
+	;
+run;
+%pseudoci(pbc3,years,trans,death,349,time10points,cumincpv10);
+
+proc genmod data=cumincpv10;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+```
+
+:::
+
+
+### Table 6.6
+
+::: {.panel-tabset}
+## R
+```{r}
+#| label: table-6.6-r
 
 # Lost years
 pseudolost <- pseudoyl(time = pbc3$days / 365.25,
                        event = as.integer(pbc3$status),
                        tmax = 3)
+trans <- cbind(pbc3,pseudo = pseudolost$pseudo[[1]],idno=1:nrow(pbc3))
+death <- cbind(pbc3,pseudo = pseudolost$pseudo[[2]],idno=1:nrow(pbc3))
+svytrans <- svydesign(~idno, variables= ~., data=trans, weight= ~1)
+svydeath <- svydesign(~idno, variables= ~., data=death, weight= ~1)
 
-a1 <- cbind(pbc3,pseudo = pseudolost$pseudo[[1]],id=1:nrow(pbc3))
+# Transplantation
+summgeese(geese(pseudo ~ tment,data = trans,id = idno,
+                family = gaussian, corstr = "independence"))
+summsvy(svyglm(pseudo ~ tment, design=svytrans, family=gaussian))
 
-a2 <- cbind(pbc3,pseudo = pseudolost$pseudo[[2]],id=1:nrow(pbc3))
+summgeese(geese(pseudo ~ tment + alb + log2(bili),
+                data = subset(trans,!is.na(alb)), id = idno,
+                family = gaussian, corstr = "independence"))
+summsvy(svyglm(pseudo ~ tment+alb+log2bili,design=svytrans,family= gaussian))
 
-summary(fityl1 <- geese(pseudo ~ tment,
-                        data = a1, id = id, jack = TRUE, family = gaussian,
-                        corstr = "independence", scale.fix = FALSE))
+# Death without transplantation
+summgeese(geese(pseudo ~ tment, data = death, id = idno,
+                family = gaussian, corstr = "independence"))
+summsvy(svyglm(pseudo ~ tment, design=svydeath, family=gaussian))
 
 
-summary(fityl2 <- geese(pseudo ~ tment,
-                        data = a2, id = id, jack = TRUE, family = gaussian,
-                        corstr = "independence", scale.fix = FALSE))
-
-summary(fityl1 <- geese(pseudo ~ tment + alb + log2(bili),
-                        data = subset(a1,!is.na(alb)), id = id, jack = TRUE,
-                        family = gaussian,
-                        corstr = "independence", scale.fix = FALSE))
-
-summary(fityl2 <- geese(pseudo ~ tment + alb + log2(bili),
-                        data = subset(a2,!is.na(alb)), id = id, jack = TRUE,
-                        family = gaussian,
-                        corstr = "independence", scale.fix = FALSE))
+summgeese(geese(pseudo ~ tment + alb + log2(bili),
+                data = subset(death,!is.na(alb)), id = idno, 
+                family = gaussian, corstr = "independence"))
+summsvy(svyglm(pseudo ~ tment+alb+log2bili,design=svydeath,family= gaussian))
 ```
 
-### Figure 6.11
+
+## SAS_NA
+
+:::
+
+### Figure 6.12
+
+::: {.panel-tabset}
+## R
 
 #### left
 
 ```{r}
-#| label: figure-6.11left
+#| label: figure-6.12left-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -815,10 +1847,9 @@ fig6.11left
 ```
 
 #### right
-#### left
 
 ```{r}
-#| label: figure-6.11right
+#| label: figure-6.12right-r
 #| fig-width: 8.27
 #| fig-height: 8.27
 #| out-width: 66%
@@ -835,3 +1866,14 @@ fig6.11right <- ggplot(aes(x = pseudo, y = IJpseudo - pseudo), data = pdata) +
 
 fig6.11right
 ```
+
+
+## SAS
+```{sas}
+#| label: figure-6.11-sas
+#| eval: false 
+#| output: false
+```
+
+:::
+

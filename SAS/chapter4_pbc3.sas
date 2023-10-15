@@ -480,7 +480,7 @@ quit;
 *---------------------------------------------------------------;
 *--------------------- Figure 4.12 -----------------------------;
 *---------------------------------------------------------------;
-filename cumincpr url 'http://publicifsv.sund.ku.dk/~pka/CumInc.sas';
+filename cumincpr url 'https://biostat.ku.dk/pka/CUMINC/cuminc.sas';
 %inc cumincpr;
 
 * Macro and double data set;

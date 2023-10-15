@@ -1,5 +1,5 @@
 # Intuition for marginal models
-{{< include R/chapter4_figure_4_3.qmd >}}
+<!-- {{< include R/chapter4_figure_4_3.qmd >}} -->
 
 ## PBC3 trial in liver cirrhosis
 {{< include R/chapter4_pbc3.qmd >}}
@@ -17,5 +17,4 @@
 {{< include R/chapter4_bmt.qmd >}}
 
 ## Exercises
-
 {{< include R/chapter4_solutions.qmd >}}

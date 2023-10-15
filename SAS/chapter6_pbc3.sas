@@ -4,30 +4,19 @@
 
 * Load pbc data; 
 proc import out=pbc3
-	datafile="/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/pbc3.csv"
+	datafile="data/pbc3.csv"
 	dbms=csv replace;
 run;
-
-* Summarise data set; 
-proc contents 
-	data=pbc3; 
-run;
-
+* NB: Inside the macros below a variable called `id` is created which will interfere 
+  with your identification variable is called `id` in your data set,
+  in which case you will need to rename your `id` variable; 
 data pbc3; 
 	set pbc3;
-	albnorm=(alb-35)*(alb>35);
-	alb10=alb/10; alb2=alb10*alb10;
-	bilihigh=(bili-17.1)*(bili>17.1);
-	bilitoohigh=(bili-34.2)*(bili>34.2);
-	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-	bili100=bili/100; bili2=bili100*bili100;
+	fail=(status>0); 
 	log2bili=log2(bili);
-	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
-	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
-	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
-	log2bili2=log2bili*log2bili;
+	years=days/365.25;
+	rename id=ptno;
 run;
-
 
 *---------------------------------------------------------------;
 *--------------------- Pseudo-macro ----------------------------;
@@ -35,6 +24,8 @@ run;
 
 * From: http://192.38.117.59/~linearpredictors/datafiles/pseudosurv.sas; 
 
+* 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being 
+  printed;
 
 %macro pseudosurv(indata,time,dead,howmany,datatau,outdata);
 
@@ -95,7 +86,7 @@ data out;  set newdat;
 
 /* COMPUTE KME FOR FULL SAMPLE */
 
-proc lifetest data=newdat noprint;
+proc lifetest data=newdat noprint plots = none;
 time &TIME*&dead(0);
 survival out=sall;
 data sall;  set sall;
@@ -105,7 +96,7 @@ sall=survival;
 %do ip=1 %to &howmany;
 
 /* COMPUTE KME FOR REDUCED SAMPLE */
-proc lifetest data=newdat noprint;
+proc lifetest data=newdat noprint plots = none;
 time &time*dead&ip(0);
 survival out=stmp;
 data stmp;  set stmp;
@@ -157,6 +148,7 @@ data taus;  set &datatau ;
  
   data &outdata;  merge io taus;  by jd;
   drop jd id &time &dead;
+	run;
 %mend;
 
 
@@ -168,16 +160,6 @@ data taus;  set &datatau ;
 proc sort data=pbc3; 
 	by days; 
 run;
-
-data pbc3; 
-	set pbc3; 
-	fail=(status>0); 
-run; 
-
-proc print data=pbc3; 
-	var days fail; 
-run;
-
 data timepoints;
 	input time;
 	datalines;
@@ -193,22 +175,6 @@ run;
 proc sort data=outdata; 
 	by tpseudo; 
 run;
-
-data outdata; 
-	set outdata; 
-	fail=(status>0); 
-run;
-
-libname h "/projstat/ex2211/ex2211-exploratory/otsot006/stats/program/Draft/jukf/MSB/data/";
-
-data h.pbcpseu123; 
-	set outdata; 
-run;
-
-data outdata;
-  set h.pbcpseu123;
-run;
-
 
 data minus1; 
 	set pbc3; /* drop failure with t~1 yr */
@@ -292,10 +258,6 @@ data final2;
 	pseudo2=349*survall-348*survny;
 run;
 
-proc gplot data=final2;
-	plot pseudo2*followup;
-run;
-
 data final; 
 	merge final1 final2; 
 	by days; 
@@ -312,6 +274,7 @@ proc gplot data=final;
 	symbol3 v=none i=join c=black;
 	symbol4 v=none i=join c=black;
 run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 6.2 ------------------------------;
@@ -319,13 +282,13 @@ run;
 
 proc gplot data=outdata;
 	where time=366;
-	plot pseudo*followup=fail/haxis=axis1 vaxis=axis2;
+	plot pseudo*days=fail/haxis=axis1 vaxis=axis2;
 	axis1 order=0 to 6 by 1 minor=none label=('Years');
 	axis2 order=-0.9 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
 	symbol1  v=x i=none c=black;
 	symbol2  v=o i=none c=black;
 run;
-
+quit;
 
 proc gplot data=outdata;
 	where time=743;
@@ -335,6 +298,7 @@ proc gplot data=outdata;
 	symbol1  v=x i=none c=black;
 	symbol2  v=o i=none c=black;
 run;
+quit;
 
 proc gplot data=outdata;
 	where time=1105;
@@ -344,16 +308,11 @@ proc gplot data=outdata;
 	symbol1  v=x i=none c=black;
 	symbol2  v=o i=none c=black;
 run;
-
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 6.3 ------------------------------;
 *---------------------------------------------------------------;
-
-data outdata; 
-	set outdata;  
-	log2bili=log2(bili); 
-run;
 
 proc sort data=outdata; 
 	by bili;
@@ -390,6 +349,7 @@ proc gplot data=smbili;
 	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=none i=join;
 run;
+quit;
 
 
 *---------------------------------------------------------------;
@@ -404,6 +364,7 @@ proc gplot data=outdata;
 	axis2 order=-0.4 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=x i=sm70;
 run;
+quit;
 
 proc loess data=outdata;
 	where time=743;
@@ -426,6 +387,7 @@ proc gplot data=smlogbili;
 	axis2 order=-5 to 2 by 1 minor=none label=(a=90 'Pseudo-values');
 	symbol1 v=none i=join;
 run;
+quit;
 
 
 *check; 
@@ -441,31 +403,22 @@ run;
 *--------------------- Table 6.1 -------------------------------;
 *---------------------------------------------------------------;
 
-/*
+* At days 743 ----------------------------------------------------------;
 proc genmod data=outdata;
 	where time=743;
 	class ptno;
 	fwdlink link=log(-log(_mean_));
 	invlink ilink=exp(-exp(_xbeta_));
-	model pseudo=log2bili/dist=normal noscale;
-	repeated subject=ptno/corr=ind;
-run;
-*/
-
-proc genmod data=outdata;
-	where time=743;
-	class ptno;
-	fwdlink link=log(-log(_mean_));
-	invlink ilink=exp(-exp(_xbeta_));
-	model pseudo=log2bili alb tment/dist=normal noscale;
+	model pseudo=tment alb log2bili / dist=normal noscale;
 	repeated subject=ptno/corr=ind;
 run;
 
+* At days 366 , 743, 1105 ---------------------------------------------;
 proc genmod data=outdata;
 	class ptno time;
 	fwdlink link=log(-log(_mean_));
 	invlink ilink=exp(-exp(_xbeta_));
-	model pseudo=time log2bili alb tment/dist=normal noscale noint;
+	model pseudo=tment alb log2bili time / dist=normal noscale noint;
 	repeated subject=ptno/corr=ind;
 run;
 
@@ -498,14 +451,13 @@ run;
 *--------------------- Table 6.2 -------------------------------;
 *---------------------------------------------------------------;
 
+*  At days 366 , 743, 1105 using link function "-log"; 
 proc genmod data=outdata;
 	class ptno time;
-	*fwdlink link=log(_mean_);
-	*invlink ilink=exp(_xbeta_);
 	fwdlink link=-log(_mean_);
 	invlink ilink=exp(-_xbeta_);
-	model pseudo=time bili alb tment/dist=normal noscale noint;
-	repeated subject=ptno/corr=ind;
+	model pseudo=tment alb bili time  /dist=normal noscale noint;
+	repeated subject=ptno / corr=ind;
 run;
 
 
@@ -609,7 +561,7 @@ run;
  
  /* COMPUTE RESTRICTED MEAN FOR COMPLETE SAMPLE USING PROC LIFETEST */
  
- PROC LIFETEST DATA = work OUTSURV = km;
+ PROC LIFETEST DATA = work OUTSURV = km ;
    TIME restime*resdead(0);
    ODS SELECT MEANS;
    ODS OUTPUT MEANS = mall;
@@ -634,7 +586,7 @@ run;
    /* COMPUTE RESTRICTED MEAN FOR SAMPLE WITH IPTH OBSERVATION DELETED
       USING PROC LIFETEST */
  
-   PROC LIFETEST DATA = work OUTSURV = km1;
+   PROC LIFETEST DATA = work OUTSURV = km1 ;
      TIME restime*dead&ip(0);
      ODS SELECT means;
      ODS OUTPUT MEANS = m1;
@@ -671,22 +623,17 @@ run;
  run; 
 %MEND;
 
-%pseudomean(pbc3,followup,fail,349,3,outmean3);
+%pseudomean(pbc3,years,fail,349,3,outmean3);
 
-
-data outmean3;
-set outmean3;
-	log2bili=log2(bili);
-run;
-
-
-*GEE model fit; 
 proc genmod data=outmean3;
 	class ptno;
-	model psumean=log2bili alb tment/dist=normal;
-	repeated subject=ptno/corr=ind;
+	model psumean = tment alb log2bili /dist=normal;
+	repeated subject=ptno / corr=ind;
 run;
 
+proc rmstreg data=pbc3 tau=3;
+   model years*status(0)=tment alb log2bili / link=linear;
+run;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 6.8 ------------------------------;
@@ -724,3 +671,301 @@ run;
 *---------------------------------------------------------------;
 *--------------------- Table 6.4 -------------------------------;
 *---------------------------------------------------------------;
+
+* The pseudo observations for the cumulative incidences of stroke and death without stroke at three years are computed using the 
+  pseudoci MACRO. To use this MACRO we must remember to include the cuminc MACRO.;
+
+%macro cuminc(datain,x,re,de,dataout,cir,cid);
+/*  THIS MACRO COMPUTES THE CUMULATIVE INCIDENCE FUNCTIONS FOR
+    BOTH COMPETING RISKS USING PROC PHREG OUTPUT
+    INPUTS TO MACRO
+    DATAIN--NAME OF INPUT DATA SET CONTAINING 
+    	X--TIME TO EVENT
+    	RE--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)
+    	DE--INDICATOR OF SECOND COMPETING RISK
+    DATAOUT--NAME OF OUTPUT DATA SET CONTAINING
+    	CIR--CUMULATIVE INCIDENCE FUNCTION FOR 1ST COMPETING RISK
+    	CID--CUMULATIVE INCIDENCE FUNCTION FOR 2ST COMPETING RISK
+
+*/
+
+data work;  set &datain;
+t=&x;
+r=&re;
+d=&de;
+zero=0;
+
+/* COMPUTE CRUDE CUMUALTIVE HAZARD FOR FIRST COMPETING RISK */
+proc phreg data=work noprint; 
+model t*r(0)=zero;
+output out=rel  logsurv=chr  /method=emp;
+ 
+ /* COMPUTE CRUDE CUMUALTIVE HAZARD FOR SECOND COMPETING RISK */
+proc phreg data=work noprint; 
+model t*d(0)=zero;
+output out=dead  logsurv=chd  /method=emp;
+ 
+ 
+ /* COMPUTE cumualtive incidence */
+data both;  merge rel dead;  by t;
+retain s 1
+retain cr 0;
+retain cd 0;
+retain cumincr 0;
+retain cumincd 0;
+hr=-(cr+chr);
+hd=-(cd+chd);
+
+/* NOTE HR AND HD ARE THE JUMPS IN THE CUMUALTIVE CRUDE HAZARDS AT THIS TIME */
+
+cr=-chr;
+cd=-chd;
+cir=cumincr+hr*s;
+cumincr=cir;
+cid=cumincd+hd*s;
+cumincd=cid;
+s=s*(1-hr-hd);
+/* NOTE S IS KAPLAN-MEIER ESTIMATE IGNORING CAUSE OF FAILURE */
+data &dataout;  set both;
+&x=t;
+&cir=cir;  &cid=cid;
+keep &x &cir &cid;
+run;
+%mend;
+
+
+%macro pseudoci(datain,x,r,d,howmany,datatau,dataout);
+
+/*    MACRO COMPUTES PSEUDOVALUES BASED ON THE CUMUALTIVE INCIDENCE FUNCTION
+      FOR BOTH OF TWO COMPETING RISKS  
+      TIME
+      INPUTS:
+      DATAIN---INPUT DATA SET
+      X--TIME VARIABLE
+      R--INDICATOR OF FIRST COMPETING RISK (1-YES, 0-NO)
+      D--INDICATOR OF SECOND COMPETING RISK
+      HOWMANY---SAMPLE SIZE
+     
+      DATATAU---SUBSET OF INPUT DATA SET AT WHICH PSEUDO VALUES ARE COMPUTED 
+                DATA SET HAS SINGLE VARIABLE "TIME"
+                
+      DATAOUT---OUTPUT DATA SET WHICH CONATINS PSUK,K=1,...,HOWMANY THE PSEUDO
+                VALUES AT EACH TIME POINT (Note output data set
+                 includes orginal data sorted by time)
+      
+*/
+
+proc sort data=&datain;  by &x;
+
+data keep;  set &datatau;
+find=1;
+
+proc sort data=keep;  by time;
+
+data point;  set &datain;
+time=&x;
+keep=1;
+data point;  merge point keep;  by time;
+keep time find keep;
+ 
+data useme;  set point;
+retain temp -1;
+if keep = 1 then temp=time;
+tuse=temp; 
+if find ne 1 then delete;
+&x=tuse;
+proc print;
+
+/* PREPARE DATA SET WITH MISSING VALUES FOR DEADK AND RELAPSEK TO BE USED IN COMPUTING
+   ESTIMATED CUMULATIVE INCIDENCE WITH KTH OBSERVATION DELETED*/
+proc sort data=&datain;
+by &x;
+data newdat;  set &datain ;
+id+1;
+array iobsd(&howmany) dead1-dead&howmany;
+array iobsr(&howmany) relapse1-relapse&howmany;
+do j=1 to &howmany;
+iobsd(j)=&d;
+iobsr(j)=&r;
+if j=id then do; iobsr(j)=.; iobsd(j)=.; end;
+end;
+
+data out;  set newdat;
+drop dead1-dead&howmany relapse1-relapse&howmany;
+/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR FULL SAMPLE, STORE IN SALL*/
+%cuminc(newdat,&x,&r,&d,sall,cirall,cidall);
+
+%do ip=1 %to &howmany;
+
+/* COMPUTE CI FOR 1ST (CIRALL) AND 2ND (CIDALL) FOR REDUCED SAMPLE, STORE IN SIP*/
+%cuminc(newdat,&x,relapse&ip,dead&ip,stemp,cir1,cid1);
+
+/* COMPUTE PSEUDOVALUES FOR BOTH RISK AT EVERY DATA POINT AND ADD TO FILE */ 
+data ps; merge sall stemp;  by &x;
+retain cirtemp 0;
+retain cidtemp 0;
+if cir1=. then cir1=cirtemp;
+cirtemp=cir1;
+rpsu&ip=&howmany*cirall- (&howmany-1)*cir1;
+ if cid1=. then cid1=cidtemp;
+cidtemp=cid1;
+dpsu&ip=&howmany*cidall- (&howmany-1)*cid1;
+
+data out; merge out ps useme; by &x;
+if find ne 1 then delete;
+keep time rpsu1-rpsu&ip dpsu1-dpsu&ip &x;
+run;
+%end;
+ 
+ data &dataout;  set newdat; 
+ drop dead1-dead&howmany relapse1-relapse&howmany;
+ 
+ data all;  set out;
+  
+ array yr(&howmany) rpsu1-rpsu&howmany;
+array yd(&howmany) dpsu1-dpsu&howmany;
+do j=1 to &howmany;
+rpseudo=yr(j);
+dpseudo=yd(j);
+id=j;
+output;
+end;
+keep id time rpseudo dpseudo;
+ proc sort data=all;  by id;
+ data &dataout; merge &dataout all;
+ by id;
+ retain otime -1;
+ retain oid -1;
+ if id eq oid and otime=time then delete;
+ else do; oid=id; otime=time; end;
+ run;
+ %mend;
+
+* NB: Inside the macros below a variable called `id` is created which will interfere 
+  with your identification variable is called `id` in your data set,
+  in which case you will need to rename your `id` variable; 
+
+* create indicator variables for each competing risk as required by the macro;
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+data pbc3; 
+	set pbc3;
+	log2bili=log2(bili);
+	years=days/365.25;
+	trans=status=1;
+	death=status=2;
+	rename id=ptno;
+run;
+
+data timepoint;
+	input time;
+	datalines;
+	2
+	;
+run;
+
+%pseudoci(pbc3,years,trans,death,349,timepoint,cumincpv1);
+
+* rpseudo: transplant; 
+* dpseudo: death;
+
+* logit link function;
+proc genmod data=cumincpv1;
+	class ptno;
+	model dpseudo = tment / dist=normal noscale link=logit; 
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=cumincpv1;
+	class ptno;
+	model dpseudo = tment alb log2bili / dist=normal noscale link=logit; 
+	repeated subject=ptno / corr=ind;
+run;
+
+* cloglog link function;
+proc genmod data=cumincpv1;
+	class ptno;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=cumincpv1;
+	class ptno;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+
+
+* In-text, p. 233: cloglog link function - year 1,2,3;
+data timepoints;
+	input time;
+	datalines;
+	1
+	2
+	3
+	;
+run;
+%pseudoci(pbc3,years,trans,death,349,timepoints,cumincpv3);
+
+* cloglog link function - year 1,2,3;
+proc genmod data=cumincpv3;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+
+*---------------------------------------------------------------;
+*--------------------- Table 6.5 -------------------------------;
+*---------------------------------------------------------------;
+
+* cloglog link function - 3 time points;
+proc genmod data=cumincpv3;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+
+* cloglog link function - 10 time points;
+data time10points;
+	input time;
+	datalines;
+	.5
+	1
+	1.5
+	2
+	2.5
+	3
+	3.5
+	4
+	4.5
+	5
+	;
+run;
+%pseudoci(pbc3,years,trans,death,349,time10points,cumincpv10);
+
+proc genmod data=cumincpv10;
+	class ptno time;
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale ; 
+	repeated subject=ptno / corr=ind;
+run;
+
+libname h ".";
+data h.cumincpv1;set cumincpv1;run;
+data h.cumincpv3;set cumincpv3;run;
+data h.cumincpv10;set cumincpv10;run;
+
+*---------------------------------------------------------------;
+*--------------------- Table 6.6 -------------------------------;
+*---------------------------------------------------------------;
+
+* No macro available;
