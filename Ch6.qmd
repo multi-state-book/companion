@@ -3,18 +3,18 @@
 ## PBC3 trial in liver cirrhosis
 {{< include R/chapter6_pbc3.qmd >}}
 
-<!-- ## PROVA trial in liver cirrhosis -->
-<!-- {{< include R/chapter6_prova.qmd >}} -->
+## PROVA trial in liver cirrhosis
+{{< include R/chapter6_prova.qmd >}}
 
-<!-- ## LEADER cardiovascular trial in type 2 diabetes -->
-<!-- {{< include R/chapter6_leader.qmd >}} -->
+## LEADER cardiovascular trial in type 2 diabetes
+{{< include R/chapter6_leader.qmd >}}
 
-<!-- ## Exercises -->
+## Exercises
 
-<!-- The SAS solutions are available as a single file for download: -->
+The SAS solutions are available as a single file for download:
 
-<!-- -   [Exercises 6.3 - 6.5 (The Copenhagen Holter study)](/SAS/chapter6_solutions_cphholter.sas) -->
+-   [Exercises 6.3 - 6.5 (The Copenhagen Holter study)](/SAS/chapter6_solutions_cphholter.sas)
 
-<!-- {{< include R/chapter6_solutions_star.qmd >}} -->
-<!-- {{< include R/chapter6_solutions_prac.qmd >}} -->
+{{< include R/chapter6_solutions_star.qmd >}}
+{{< include R/chapter6_solutions_prac.qmd >}}
 
