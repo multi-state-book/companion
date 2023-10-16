@@ -4,6 +4,8 @@
 
 -   P. 45: The in-text Poisson model estimates for baseline hazards should be $\widehat{\alpha}_1 = 0.090$ $(0.064, 0.127)$, $\widehat{\alpha}_2 = 0.132$ $(0.089, 0.194)$, $\widehat{\alpha}_3 = 0.092$ $(0.034, 0.251)$. See also [code and output](Ch2.html#sec-ch2-pbc3-poisson).
 
+-   P. 46, l. -6: The normal range for albumin is from 35g/L and up, so the first knot is $a_1=35$ (as in Table 2.6).
+
 ## Chapter 3
 
 -   Section 3.3, p. 76: A right bracket was missing before $dt$ in $$\sum_i\left(\int_0^{\infty}\log\bigl(Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)\bigr)dN_i(t)-\int_0^{\infty}Y_i(t)\alpha_0(t)\exp(\mathbf{\beta}^{\sf T}\mathbf{Z}_i)dt\right)$$
@@ -13,6 +15,8 @@
 
 -   Section 4.1.1, p. 119: The first sum in the first equation should also be $u\leq t$, i.e., 
 $$-\log(S(t))=\sum_{u\leq t}-\log(1-\alpha(u)\Delta) \approx \sum_{u\leq t}\alpha(u)\Delta$$
+
+-   P. 136, middle: In Table 4.4 it is assumed that censoring depends on treatment.
 
 
 
@@ -32,4 +36,4 @@ $$-\log(S(t))=\sum_{u\leq t}-\log(1-\alpha(u)\Delta) \approx \sum_{u\leq t}\alph
 
 -   Exercise 6.1.2, p. 243: a factor $n$ is missing on the r.h.s. of the equation for $\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}$
 
--   Exercise 6.5, p. 244: It makes no sense to compare with Exercise 5.8
+-   Exercise 6.5, p. 244: We should comapare with Exercise 4.5 instead of 4.4 and it makes no sense to compare with Exercise 5.8

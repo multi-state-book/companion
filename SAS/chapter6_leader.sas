@@ -9,7 +9,7 @@ proc import out=leader_mi
 run;
 
 *---------------------------------------------------------------;
-*-------- Figure 6.8  ------------------------------------------;
+*-------- Figure 6.11  ------------------------------------------;
 *---------------------------------------------------------------;
 /* Using "fine-gray model" in PHREG gives an alternative solution to 
   the estimator for CMF using the Breslow type estimator for 
@@ -18,39 +18,20 @@ run;
 	for ties of terminating events and censorings. If no ties 
 	(or no censorings) it equals Cook & Lawless */
 
-* NELSON-AALEN; 
-proc phreg data=leader_mi noprint;
-	model stop*status(0 2)=/entry=start;
-	id id;
-	strata treat;
-  baseline out=na_data cumhaz=naa;
-run;
-data na_est;
-	set na_data; 
-	type = "Nelson-Aalen";
-	cumevent = naa; 
-	treat_type = trim(treat) || ", "  || type; 
-run; 
-
-* COOK & LAWLESS (GHOSH & LIN);
+* Left plot;
 proc phreg data=leader_mi noprint;
   model (start, stop)*status(0)=/eventcode=1; 
   strata treat;
-  baseline out=gl_data cif=cuminc;
+  baseline out=cmf cif=cuminc;
 run;
-data gl_est;
-	set gl_data; 
-	type = "Ghosh & Lin";
+data cmf;
+	set cmf; 
 	cumevent = -log(1-cuminc); 
-	treat_type = trim(treat) || ", " || type; 
-run; 
-data comb; 
-	set na_est gl_est; 
 	time = stop/(365.25/12);
-	drop naa cuminc;
 run;
-proc sgplot data=comb;
-	step x=time y=cumevent/group=treat_type justify=left;
+ods graphics on;
+proc sgplot data=cmf;
+	step x=time y=cumevent/group=treat justify=left;
 	xaxis grid values=(0 to 60 by 12);
 	yaxis grid values=(0 to 0.12 by 0.02);
 	label time="Time since randomisation (months)";
@@ -105,10 +86,22 @@ data GLdata;
 	time = stop/(365.25/12);
 run;
 proc sgplot data=GLdata;
-  step x=time y=na / group=treat;
   step x=time y=GL / group=treat;
 	xaxis grid values=(0 to 60 by 12);
 	yaxis grid values=(0 to 0.12 by 0.02);
 	label time="Time since randomisation (months)";
 	label na="Expected number events per subject"; 
+run;
+
+* Right plot: Kaplan-Meier;
+data kmplot;
+  set kmdata;
+	time = stop/(365.25/12);
+run;
+proc sgplot data=kmplot;
+  step x=time y=km / group=treat;
+	xaxis grid values=(0 to 60 by 12);
+	yaxis grid values=(0 to 1 by 0.01);
+	label time="Time since randomisation (months)";
+	label na="Kaplan-Meier estimates"; 
 run;

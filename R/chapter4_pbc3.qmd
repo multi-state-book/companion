@@ -1638,7 +1638,7 @@ The SAS macro below can alternatively be loaded using this code:
 #| eval: false 
 #| output: false
 
-filename cumincpr url 'http://publicifsv.sund.ku.dk/~pka/CumInc.sas';
+filename cumincpr url 'https://biostat.ku.dk/pka/CUMINC/CumInc.sas';
 %inc cumincpr;
 ```
 
@@ -3005,12 +3005,10 @@ rmtl.ipcw <- function(times, event, eoi=1, tau, cov=NULL, strata=FALSE, group=NU
   
   res <- cbind(beta=lm.fit$coef, se=se, cil=lm.fit$coef-(1.96*se), ciu=lm.fit$coef+(1.96*se), 
                z=lm.fit$coef/se, p=2*(1-pnorm(abs(lm.fit$coef/se))))
-  #rownames(res) <- c("Intercept", colnames(x[,-1])) FJERNET! PKA 030621
   
   allres <- list(res=res, varbeta=varbeta)
-  #print(round(res, 3))
   invisible(allres)
-return(res[,1]) #tilføjet 040322
+return(res[,1])
 }  
 ```
 
@@ -3069,6 +3067,7 @@ resmeanIPCW(Event(days/365.25,status)~factor(tment)+alb+log2bili,cause=1,
             data=subset(pbc3,!is.na(alb)), time=3, model="lin")
 
 ```
+## SAS-NA
 
 :::
 
@@ -3133,6 +3132,8 @@ rbind(
 )
 
 ```
+## SAS-NA
+
 :::
 
 ### Figure 4.21 

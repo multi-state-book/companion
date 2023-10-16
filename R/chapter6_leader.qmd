@@ -1,9 +1,6 @@
-Only R code available.
-
 ### Figure 6.11
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
 
 ```{r}
@@ -15,7 +12,6 @@ Assume that the LEADER data set is loaded in data set `leader_mi`.
 
 ```{r}
 #| label: figure-6.11-r
-#| echo: false
 #| fig-width: 14
 #| fig-height: 7
 #| out-width: 90%
@@ -94,20 +90,117 @@ np_ests <- function(endpointdat){
 fig6.11 <- np_ests(endpointdat = leader_mi)
 fig6.11
 ```
+
+## SAS
+
+```{sas}
+#| label: figure-6.11-sas
+#| eval: false 
+#| output: false
+/* Using "fine-gray model" in PHREG gives an alternative solution to 
+  the estimator for CMF using the Breslow type estimator for 
+  the baseline mean function (see p. 199 in book). The estimator is not
+	exactly the same as Cook-Lawless because of a different procedures 
+	for ties of terminating events and censorings. If no ties 
+	(or no censorings) it equals Cook & Lawless */
+
+* Left plot;
+proc phreg data=leader_mi noprint;
+  model (start, stop)*status(0)=/eventcode=1; 
+  strata treat;
+  baseline out=cmf cif=cuminc;
+run;
+data cmf;
+	set cmf; 
+	cumevent = -log(1-cuminc); 
+	time = stop/(365.25/12);
+run;
+ods graphics on;
+proc sgplot data=cmf;
+	step x=time y=cumevent/group=treat justify=left;
+	xaxis grid values=(0 to 60 by 12);
+	yaxis grid values=(0 to 0.12 by 0.02);
+	label time="Time since randomisation (months)";
+	label cumevent="Expected number events per subject"; 
+run; 
+
+
+/*** Calc Cook & Lawless or (Ghosh & Lin (GL)) estimator for CMF 'by hand' ***/
+/* First create KM data for death */
+proc phreg data=leader_mi noprint;
+  model stop*status(0 1)= / entry=start; /* status=2=death */
+  strata treat;
+  baseline out=kmdata survival=km / method=pl ;
+run;
+/* Second create NAa data */
+proc phreg data=leader_mi noprint;
+  model stop*status(0 2)= / entry=start; /* status=1=event */
+  strata treat;
+  baseline out=nadata cumhaz=na;
+run;
+/* Use NA data to calculate dA(u), i.e., increments in NAa */
+data na;
+  set nadata;
+  dAu=na-lag(na);
+  if stop=0 then dAu=0;
+  keep treat stop dAu na;
+run;
+/* merge NAa and KM data */
+data merged;
+  merge na kmdata;
+  by treat stop;
+run;
+/* multiply S(u-) and dA(u) */
+data fill;
+   set merged;
+   retain _km;
+   if not missing(km) then _km=km;
+   else km=_km;
+   /* S(u-) */
+   S_uminus=lag(km);
+   if stop=0 then S_uminus=1;
+
+   if dAu=. then dAu=0;
+   GLfactor=S_uminus*dAu;
+   keep treat stop na dAu S_uminus GLfactor;
+run;
+data GLdata;
+  set fill;
+  by treat;
+  if first.treat then GL=0;
+  else GL+GLfactor;
+	time = stop/(365.25/12);
+run;
+proc sgplot data=GLdata;
+  step x=time y=GL / group=treat;
+	xaxis grid values=(0 to 60 by 12);
+	yaxis grid values=(0 to 0.12 by 0.02);
+	label time="Time since randomisation (months)";
+	label na="Expected number events per subject"; 
+run;
+
+* Right plot: Kaplan-Meier;
+data kmplot;
+  set kmdata;
+	time = stop/(365.25/12);
+run;
+proc sgplot data=kmplot;
+  step x=time y=km / group=treat;
+	xaxis grid values=(0 to 60 by 12);
+	yaxis grid values=(0 to 1 by 0.01);
+	label time="Time since randomisation (months)";
+	label na="Kaplan-Meier estimates"; 
+run;
+```
 :::
 
 ### Table 6.8
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## R
 
 ```{r}
 #| label: table-6.8-r
-#| echo: false
-#| fig-width: 14
-#| fig-height: 7
-#| out-width: 90%
 library(recurrentpseudo)
 
 leader_pseudo <- pseudo.twodim(tstart = leader_mi$start,
@@ -116,6 +209,14 @@ leader_pseudo <- pseudo.twodim(tstart = leader_mi$start,
                                id = leader_mi$id,
                                covar_names = "treat",
                                tk = c(20, 30, 40) * (365.25 / 12),
+                               data = leader_mi)
+
+leader_pseudo30 <- pseudo.twodim(tstart = leader_mi$start,
+                               tstop = leader_mi$stop,
+                               status = leader_mi$status,
+                               id = leader_mi$id,
+                               covar_names = "treat",
+                               tk = 30 * (365.25 / 12),
                                data = leader_mi)
 
 fit_leader <- pseudo.geefit(pseudodata=leader_pseudo, covar_names=c("treat"))
@@ -141,18 +242,50 @@ sigma_diff_2d <- matrix(c(fit_leader$sigma[4,4],
 rownames(sigma_diff_2d) <- colnames(sigma_diff_2d) <- mslabels
 sigma_diff_2d
 
+rownames(sigma_diff_2d) <- colnames(sigma_diff_2d) <- mslabels
+
+sqrt(sigma_diff_2d)
+
 # Correlation matrix
 cov2cor(sigma_diff_2d)
 ```
 
-## SAS
-
-```{sas}
-#| label: figure-6.11-sas
+```{r}
+#| label: table-6.8-time30-r
 #| eval: false 
-#| output: false
+#| output: fals
+library(recurrentpseudo)
+leader_pseudo30 <- pseudo.twodim(tstart = leader_mi$start,
+                               tstop = leader_mi$stop,
+                               status = leader_mi$status,
+                               id = leader_mi$id,
+                               covar_names = "treat",
+                               tk = 30 * (365.25 / 12),
+                               data = leader_mi)
+
+fit_leader30 <- pseudo.geefit(pseudodata=leader_pseudo30, covar_names=c("treat"))
+
+fit_leader
+xi_diff_2d <- as.matrix(c(fit_leader$xi[2], fit_leader$xi[4]), ncol=1)
+sigma_diff_2d <- matrix(c(fit_leader$sigma[2,2],
+                          fit_leader$sigma[2,4],
+                          fit_leader$sigma[2,4],
+                          fit_leader$sigma[4,4]),
+                        ncol = 2, nrow = 2,
+                        byrow = T)
 ```
 
 ## SAS-NA
+:::
 
+### In-text, p. 236: Test for $(\beta_R, \beta_S) = (0,0)$
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: in-text-r
+```
+
+## SAS-NA
 :::

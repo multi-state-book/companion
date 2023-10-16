@@ -114,8 +114,10 @@ quit;
   limit and 'link = linear' in the model statement to get a linear model. NB: requires SAS STAT 15.1;
 
 title "4.3";
+/* please note: method=ipcw(strata=esvea) to match rmst2() in R */
 proc rmstreg data=chs_data tau=3;
-   model timestrokeordeath*strokeordeath(0)=esvea sex age sbp / link=linear;
+   model timestrokeordeath*strokeordeath(0)=esvea sex age sbp /
+			link=linear method=ipcw(strata=esvea);
 run;
 
 * Thus, we obtain the following model for the 3-year restricted mean time to the composite end-point stroke or death

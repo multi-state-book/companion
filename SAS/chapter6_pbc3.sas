@@ -22,7 +22,7 @@ run;
 *--------------------- Pseudo-macro ----------------------------;
 *---------------------------------------------------------------;
 
-* From: http://192.38.117.59/~linearpredictors/datafiles/pseudosurv.sas; 
+* From: https://biostat.ku.dk/pka/epidata/pseudosurv.sas; 
 
 * 'noprint plots = none' are included twice in the proc lifetest statement of the MACRO to avoid none important outputs being 
   printed;
@@ -969,12 +969,59 @@ data time10points;
 	;
 run;
 %pseudoci(pbc3,years,trans,death,349,time10points,cumincpv10);
+libname h ".";
 
-proc genmod data=cumincpv10;
+proc genmod data=h.cumincpv10;
 	class ptno time;
 	fwdlink link = log(-log(1-_mean_));
 	invlink ilink = 1 - exp(-exp(_xbeta_));
-	model dpseudo = tment alb log2bili sex age time / dist=normal noscale ; 
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale;
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=h.cumincpv10;
+	class ptno time(ref="5");
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale 
+  intercept=-8.3
+  initial=-0.40782
+-0.037795
+ 0.668563
+ 0.851497
+ 0.096334
+-3.837984
+-2.060869
+-1.598225
+-1.371611
+-1.158939
+-0.706484
+-0.497828
+-0.201936 
+-0.205112;	
+	repeated subject=ptno / corr=ind;
+run;
+proc genmod data=cumincpv10;
+	class ptno time(ref="5");
+	fwdlink link = log(-log(1-_mean_));
+	invlink ilink = 1 - exp(-exp(_xbeta_));
+	model dpseudo = tment alb log2bili sex age time / dist=normal noscale 
+  intercept=-8.3
+  initial=
+-0.4
+-0.04
+ 0.6
+ 0.8
+ 0.09
+-3.8
+-2.0
+-1.5
+-1.3
+-1.1
+-0.7
+-0.4
+-0.2
+-0.2
+;
 	repeated subject=ptno / corr=ind;
 run;
 

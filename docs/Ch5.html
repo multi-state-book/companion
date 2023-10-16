@@ -4907,7 +4907,7 @@ prop(sbp)            6.671               0.789</code></pre>
 <span id="cb129-3"><a href="#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-hash="Ch5_cache/html/unnamed-chunk-75_220aa6d09a3e9bda5c27b41a64c4138d">
+<div class="cell" data-hash="Ch5_cache/html/unnamed-chunk-75_13ea6ffc70e0043641f6d7be36abe355">
 <details open="">
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>affective_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/affective.csv"</span>)</span>
@@ -4937,60 +4937,51 @@ exp(coeffients):
              Estimate    2.5%  97.5%
 factor(bip)0  0.57123 0.40656 0.8026</code></pre>
 </div>
-<details open="">
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PKA: but changed cens.code=3</span></span>
-<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="co">#angst&lt;-read.table('angstGLML.txt',header=TRUE)</span></span>
-<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="co">#fitGLa &lt;- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = 1, cens.code = 3, death.code = 2)</span></span>
-<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(fitGLa)</span></span>
-<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="co">#fitMLa &lt;- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = c(1,2), cens.code = 3, death.code = 2)</span></span>
-<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(fitMLa)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </div>
 <div id="tabset-33-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-33-2-tab">
 <div class="cell" data-hash="Ch5_cache/html/unnamed-chunk-76_ef6427ba5988333267ea6a590996f899">
 <details open="">
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import out=affective_<span class="kw">data</span></span>
-<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a>    datafile=<span class="st">'data/affective.csv'</span> </span>
-<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>    dbms=csv <span class="kw">replace</span>;</span>
-<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>    getnames=yes;</span>
-<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-7"><a href="#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="co">* We make a data set correpsonding to the setting with cycles depicted in figure 1.5, i.e. the interval in hospital is included in the time between events.;</span></span>
-<span id="cb133-8"><a href="#cb133-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-9"><a href="#cb133-9" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'5.10'</span>;</span>
-<span id="cb133-10"><a href="#cb133-10" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> data510; </span>
-<span id="cb133-11"><a href="#cb133-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> affective_<span class="kw">data</span>;</span>
-<span id="cb133-12"><a href="#cb133-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> id;</span>
-<span id="cb133-13"><a href="#cb133-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retain</span> prev;</span>
-<span id="cb133-14"><a href="#cb133-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> first.id <span class="kw">then</span> prev=<span class="dv">0</span>; </span>
-<span id="cb133-15"><a href="#cb133-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">output</span>; </span>
-<span id="cb133-16"><a href="#cb133-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> state=<span class="dv">1</span> <span class="kw">then</span> prev=start; <span class="kw">if</span> state=<span class="dv">0</span> <span class="kw">then</span> prev=<span class="kw">stop</span>;</span>
-<span id="cb133-17"><a href="#cb133-17" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb133-18"><a href="#cb133-18" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> data510;</span>
-<span id="cb133-19"><a href="#cb133-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> data510;</span>
-<span id="cb133-20"><a href="#cb133-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> state = <span class="dv">0</span> <span class="kw">or</span> status = <span class="dv">2</span> <span class="kw">or</span> status = <span class="dv">3</span>;</span>
-<span id="cb133-21"><a href="#cb133-21" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus the entry and exit time are now 'prev' and 'stop';</span></span>
-<span id="cb133-22"><a href="#cb133-22" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb133-23"><a href="#cb133-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-24"><a href="#cb133-24" aria-hidden="true" tabindex="-1"></a><span class="co">* Death are defined as part of composite and add an extra record with (prev,stop) length 0.5 for</span></span>
-<span id="cb133-25"><a href="#cb133-25" aria-hidden="true" tabindex="-1"></a><span class="co">  death events as to be able to trick phreq to estimate Mao-Lin model:</span></span>
-<span id="cb133-26"><a href="#cb133-26" aria-hidden="true" tabindex="-1"></a><span class="co">  episodes and deaths count as events and death also as competing risk;</span></span>
-<span id="cb133-27"><a href="#cb133-27" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> angstML;</span>
-<span id="cb133-28"><a href="#cb133-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> data510;</span>
-<span id="cb133-29"><a href="#cb133-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status ne <span class="dv">2</span> <span class="kw">then</span> <span class="kw">output</span>;</span>
-<span id="cb133-30"><a href="#cb133-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status = <span class="dv">2</span> <span class="kw">then do</span>;</span>
-<span id="cb133-31"><a href="#cb133-31" aria-hidden="true" tabindex="-1"></a>        status=<span class="dv">1</span>; <span class="kw">output</span>; </span>
-<span id="cb133-32"><a href="#cb133-32" aria-hidden="true" tabindex="-1"></a>        prev=<span class="kw">stop</span>; <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>; status=<span class="dv">2</span>; <span class="kw">output</span>;</span>
-<span id="cb133-33"><a href="#cb133-33" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>; </span>
-<span id="cb133-34"><a href="#cb133-34" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb133-35"><a href="#cb133-35" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model;</span></span>
-<span id="cb133-36"><a href="#cb133-36" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=angstML;</span>
-<span id="cb133-37"><a href="#cb133-37" aria-hidden="true" tabindex="-1"></a>    class bip(ref=<span class="st">'0'</span>);</span>
-<span id="cb133-38"><a href="#cb133-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span>)= bip / entry=prev eventcode=<span class="dv">1</span> rl;</span>
-<span id="cb133-39"><a href="#cb133-39" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import out=affective_<span class="kw">data</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>    datafile=<span class="st">'data/affective.csv'</span> </span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a>    dbms=csv <span class="kw">replace</span>;</span>
+<span id="cb132-4"><a href="#cb132-4" aria-hidden="true" tabindex="-1"></a>    getnames=yes;</span>
+<span id="cb132-5"><a href="#cb132-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb132-6"><a href="#cb132-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-7"><a href="#cb132-7" aria-hidden="true" tabindex="-1"></a><span class="co">* We make a data set correpsonding to the setting with cycles depicted in figure 1.5, i.e. the interval in hospital is included in the time between events.;</span></span>
+<span id="cb132-8"><a href="#cb132-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-9"><a href="#cb132-9" aria-hidden="true" tabindex="-1"></a><span class="kw">title</span> <span class="st">'5.10'</span>;</span>
+<span id="cb132-10"><a href="#cb132-10" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> data510; </span>
+<span id="cb132-11"><a href="#cb132-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> affective_<span class="kw">data</span>;</span>
+<span id="cb132-12"><a href="#cb132-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> id;</span>
+<span id="cb132-13"><a href="#cb132-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retain</span> prev;</span>
+<span id="cb132-14"><a href="#cb132-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> first.id <span class="kw">then</span> prev=<span class="dv">0</span>; </span>
+<span id="cb132-15"><a href="#cb132-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">output</span>; </span>
+<span id="cb132-16"><a href="#cb132-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> state=<span class="dv">1</span> <span class="kw">then</span> prev=start; <span class="kw">if</span> state=<span class="dv">0</span> <span class="kw">then</span> prev=<span class="kw">stop</span>;</span>
+<span id="cb132-17"><a href="#cb132-17" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb132-18"><a href="#cb132-18" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> data510;</span>
+<span id="cb132-19"><a href="#cb132-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> data510;</span>
+<span id="cb132-20"><a href="#cb132-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> state = <span class="dv">0</span> <span class="kw">or</span> status = <span class="dv">2</span> <span class="kw">or</span> status = <span class="dv">3</span>;</span>
+<span id="cb132-21"><a href="#cb132-21" aria-hidden="true" tabindex="-1"></a><span class="co">* Thus the entry and exit time are now 'prev' and 'stop';</span></span>
+<span id="cb132-22"><a href="#cb132-22" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb132-23"><a href="#cb132-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb132-24"><a href="#cb132-24" aria-hidden="true" tabindex="-1"></a><span class="co">* Death are defined as part of composite and add an extra record with (prev,stop) length 0.5 for</span></span>
+<span id="cb132-25"><a href="#cb132-25" aria-hidden="true" tabindex="-1"></a><span class="co">  death events as to be able to trick phreq to estimate Mao-Lin model:</span></span>
+<span id="cb132-26"><a href="#cb132-26" aria-hidden="true" tabindex="-1"></a><span class="co">  episodes and deaths count as events and death also as competing risk;</span></span>
+<span id="cb132-27"><a href="#cb132-27" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> angstML;</span>
+<span id="cb132-28"><a href="#cb132-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> data510;</span>
+<span id="cb132-29"><a href="#cb132-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status ne <span class="dv">2</span> <span class="kw">then</span> <span class="kw">output</span>;</span>
+<span id="cb132-30"><a href="#cb132-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status = <span class="dv">2</span> <span class="kw">then do</span>;</span>
+<span id="cb132-31"><a href="#cb132-31" aria-hidden="true" tabindex="-1"></a>        status=<span class="dv">1</span>; <span class="kw">output</span>; </span>
+<span id="cb132-32"><a href="#cb132-32" aria-hidden="true" tabindex="-1"></a>        prev=<span class="kw">stop</span>; <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>; status=<span class="dv">2</span>; <span class="kw">output</span>;</span>
+<span id="cb132-33"><a href="#cb132-33" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>; </span>
+<span id="cb132-34"><a href="#cb132-34" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb132-35"><a href="#cb132-35" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model;</span></span>
+<span id="cb132-36"><a href="#cb132-36" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=angstML;</span>
+<span id="cb132-37"><a href="#cb132-37" aria-hidden="true" tabindex="-1"></a>    class bip(ref=<span class="st">'0'</span>);</span>
+<span id="cb132-38"><a href="#cb132-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span>)= bip / entry=prev eventcode=<span class="dv">1</span> rl;</span>
+<span id="cb132-39"><a href="#cb132-39" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

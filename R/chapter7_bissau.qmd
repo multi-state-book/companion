@@ -27,7 +27,9 @@ run;
 ```
 :::
   
-### Table 8.1
+### Table 7.2
+
+Please note, that $\widehat{\beta}$ will vary with chosen seed, but SD values are stable.
 
 ::: {.panel-tabset}
 ## R
@@ -72,9 +74,21 @@ summary(clogit(Fail ~ factor(bcg) + factor(agem), data=nccdata))
 
 /* 1.: Fit Cox model */
 proc phreg data=bissau;
-  class bcg agem;
+  class bcg(ref="0") agem;
   model fuptime*dead(0)=bcg agem / rl;
 run;
+
+                  Parameter    Standard
+Parameter    DF    Estimate       Error
+
+bcg       1   1    -0.34720     0.14605
+agem      0   1     0.01053     0.35339
+agem      1   1     0.12553     0.34494
+agem      2   1    -0.24631     0.35903
+agem      3   1     0.20946     0.34502
+agem      4   1     0.34300     0.34265
+agem      5   1     0.34118     0.34699
+
 
 /* 2.: Create a 12.5 pct sub-cohort */
 
@@ -100,10 +114,22 @@ data casecoho; set bissau;
 run;
 
 proc phreg data=casecoho covsandwich(aggregate);
-	class bcg agem;
+	class bcg(ref="0") agem;
 	model stop*d(0)=bcg agem/rl entry=start;
 	weight w; id id;
 run;
+
+                 Parameter   Standard
+ Parameter   DF   Estimate      Error
+
+ bcg       1  1   -0.38946    0.16599
+ agem      0  1   -0.00371    0.41199
+ agem      1  1    0.18793    0.39633
+ agem      2  1   -0.33429    0.40462
+ agem      3  1    0.09770    0.39586
+ agem      4  1    0.14055    0.38892
+ agem      5  1    0.09873    0.39251
+
 
 /* NCC MACRO */
 
@@ -113,6 +139,8 @@ data source; set bissau;
 	age_dlo=fuptime;
 	censor=dead;
 run;
+
+ * seed is now set inside the macro to same seed as for case-cohort, but was random in Table 7.2;
 
 %macro caseset;
 	%let sampling = 1;
@@ -141,7 +169,8 @@ run;
 	if age_entry  <= &age_rs  <= age_dlo;
 	/* Exclude Index Case */
 	if study_id = &case_id then delete;
-	number = ranuni(0);
+	/* set seed */
+	number = ranuni(260452);
 	age_rs = &age_rs;
 	censor = 0;
 	run;
@@ -183,7 +212,7 @@ run;
 %caseset;
 
 proc phreg data=final;
-class bcg agem;
+class bcg(ref="0") agem;
   model fuptime*censor(0)=bcg agem / rl;
   strata rs;
 run;

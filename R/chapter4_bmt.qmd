@@ -325,7 +325,7 @@ run;
 :::
 
 
-### Table 4.8
+### Table 4.8 and in-text Wald tests
 
 ::: {.panel-tabset}
 ## R
@@ -395,8 +395,33 @@ run;
 
 :::
 
+### In-text, p. 148: Oneway anova
 
-### Table 4.11
+::: {.panel-tabset}
+
+## R
+
+```{r}
+#| label: in-text-anova-r
+
+```
+
+## SAS
+```{sas}
+#| label: in-text-anova-sas
+#| eval: false 
+#| output: false
+proc glm data=bmt;
+	class team;
+	model age=team;
+run;
+quit;
+```
+:::
+
+
+
+### Table 4.11 and in-text, p. 151
 
 ::: callout-important
 Still missing to make double data set for R - do we not have this somewhere else?

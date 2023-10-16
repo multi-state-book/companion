@@ -463,6 +463,8 @@ The model obtained in Exercise 4.3 is identical to the model fitted using pseudo
 
 *Fit, using pseudo-values, a cloglog-model for the cumulative incidences at 3 years including ESVEA, sex, age, and systolic blood pressure.*
 
+NB: The results from R and SAS do not quite agree for the outcome death without stroke.
+
 ::: panel-tabset
 
 ## R
@@ -696,20 +698,20 @@ data chs_data;
 	if stroke = 1 then death_wo_stroke = 0;
 run;
 
-* The pseudoci MACRO is called with 'chs_data', 'timestrokeordeath', 'stroke', 'death_wo_stroke', '678'. 'timepoint' and 'outdatadata661'
+* The pseudoci MACRO is called with 'chs_data', 'timestrokeordeath', 'stroke', 'death_wo_stroke', '678'. 'timepoint' and 'outdatadata651'
   as arguments;
 
-* The MACRO returns a data set 'outdata661' where the pseudo observations for the end-point stroke are stored in the column 'rpseudo'
+* The MACRO returns a data set 'outdata651' where the pseudo observations for the end-point stroke are stored in the column 'rpseudo'
   and the pseudo observations for death without stroke are stored in the column 'dpseudo'.;
 
-title '6.6.1';
- %pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata661);
+title '6.5.1';
+ %pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata651);
 
 * We fit a cloglog model for the cumulative incidence of stroke with the genmod procedure where we specify the 'fwdlink' and 'invlink' 
   statements;
 
 title '6.5.1 - stroke';
-proc genmod data=outdata661;
+proc genmod data=outdata651;
 	class ptno;
 	fwdlink link=log(-log(1-_mean_));
 	invlink ilink= 1 - exp(-exp(_xbeta_));
@@ -724,7 +726,7 @@ run;
 * Likewise, we will fit a model for the cumulative incidence of death without stroke at 3 years;
 
 title '6.5.1 - death without stroke';
-proc genmod data=outdata661;
+proc genmod data=outdata651;
 	class ptno;
 	fwdlink link=log(-log(1-_mean_));
 	invlink ilink= 1 - exp(-exp(_xbeta_));
@@ -742,7 +744,7 @@ run;
 
 *Compare with the results of Exercises 4.4 and 5.8.*
 
-In Exercise 4.5, we used Fine-Gray models to estimate the cumulative incidence functions for stroke and death without stroke. For the end-point stroke we obtained the following coefficients
+Errata: we compare with Exercise *4.5*, where we used Fine-Gray models to estimate the cumulative incidence functions for stroke and death without stroke. For the end-point stroke we obtained the following coefficients
 
 $$ \beta_{ESVEA} = 0.593921   \quad \beta_{sex} = 0.379189   \quad \beta_{age} = 0.063347   \quad \beta_{sbp} = 0.010629,     $$
 

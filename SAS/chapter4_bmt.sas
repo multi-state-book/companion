@@ -15,6 +15,8 @@ set bmt;
 	state0=rel+2*trm;
 	if gvhd=1 then tgvhd=timegvhd; if gvhd=0 then tgvhd=intxrel;
 run;
+/* 1-way ANOVA to assess between- and within center variation */
+
 
 *---------------------------------------------------------------;
 *--------------------- Figure 4.15 -----------------------------;
@@ -268,6 +270,14 @@ proc phreg data=bmt covs(aggregate);
 	id team;
 run;
 
+*---------------------------------------------------------------;
+*--------------------- In-text, p. 148 one-way anova ------------;
+*---------------------------------------------------------------;
+proc glm data=bmt;
+	class team;
+	model age=team;
+run;
+quit;
 
 *---------------------------------------------------------------;
 *--------------------- Table 4.11 -------------------------------;

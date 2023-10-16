@@ -138,6 +138,45 @@ run;
 ```
 :::
 
+
+### In-text, p. 85: Additional adjustment for age
+
+::: {.panel-tabset}
+
+## R
+```{r}
+#| label: in-text-age-r
+library(survival)
+options(contrasts=c("contr.treatment", "contr.poly"))
+
+# Variceal bleeding
+coxph(Surv(btime, bleed) ~ beh + sex + coag + log2bili + factor(varsize) + age, data = provany, ties = "breslow")
+
+# Death without bleeding
+coxph(Surv(d0time, dead0) ~ beh + sex + coag + log2bili + factor(varsize) + age, data = provany, ties = "breslow")
+```
+
+## SAS
+```{sas}
+#| label: in-text-age-sas
+#| eval: false 
+#| output: false
+
+* Variceal bleeding;
+proc phreg data=provany;
+	class beh (ref='0') varsize (ref='1');
+	model btime*bleed(0)=beh sex coag log2bili varsize age / type3(lr);
+run;
+
+* Death without bleeding; 
+proc phreg data=provany;
+	class beh (ref='0') varsize (ref='1');
+	model d0time*dead0(0)=beh sex coag log2bili varsize age / type3(lr);
+run;
+```
+:::
+
+
 ### Table 3.4 
 
 ::: {.panel-tabset}
@@ -764,13 +803,13 @@ run;
 # Extract cumulative hazard from r1 
 survr1 <- basehaz(Table3.13a, center = F)
 pcumhaz <- data.frame(
-  cumhaz = c(survr1$hazard[survr1$strata=="stratum=1"],0,survr1$hazard[survr1$strata=="stratum=2"]), 
-  time   = c(survr1$time[survr1$strata=="stratum=1"],0,survr1$time[survr1$strata=="stratum=2"]), 
-  strata = c(survr1$strata[survr1$strata=="stratum=1"],"2",survr1$strata[survr1$strata=="stratum=2"])
+  cumhaz = c(survr1$hazard[survr1$strata=="bleeding=1"],0,survr1$hazard[survr1$strata=="bleeding=2"]), 
+  time   = c(survr1$time[survr1$strata=="bleeding=1"],0,survr1$time[survr1$strata=="bleeding=2"]), 
+  strata = c(survr1$strata[survr1$strata=="bleeding=1"],"2",survr1$strata[survr1$strata=="bleeding=2"])
 ) 
 
 # Create Figure 3.9
-fig3.9 <- ggplot(aes(x = time / 365.25, y = cumhaz, linetype = strata), data = pcumhaz) + 
+fig3.9 <- ggplot(aes(x = time/365.2 , y = cumhaz, linetype = strata), data = pcumhaz) + 
   geom_step(linewidth = 1) + 
   xlab("Time since randomization (years)") + 
   ylab("Cumulative hazard") + 

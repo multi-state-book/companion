@@ -6,13 +6,11 @@
 source("_common.R")
 ```
 
-<!-- Here the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher") will become available in October when the book is published. -->
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Work in progress -->
 
-::: {.callout-note appearance="simple"}
-## Work in progress
-
-We are in the progress of finalizing the companion and not all code is yet available.
-:::
+<!-- We are in the progress of finalizing the companion and not all code is yet available. -->
+<!-- ::: -->
 
 This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher"){target="_blank"}.
 
@@ -26,6 +24,7 @@ Please note:
 -   When using bootstrap and other re-sampling techniques, small deviations from the book will occur as no fixed seeds have been used.
 -   The solutions files as Quarto files (`.qmd`) are available in the R folder on [github](https://github.com/multi-state-book/companion){target="_blank"}. SAS solutions are also available as `.sas` files, see the individual exercises.
 -   Versions R-4.3.1 and SAS/STAT 15.1 were used.
+-   We welcome suggested improvements of the code: Please use the 'Report an issue' facility below Table of contents.
 
 A chapter with errata is also provided.
 

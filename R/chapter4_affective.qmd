@@ -332,23 +332,17 @@ affective <- affective %>% mutate(starty = start / 12, stopy = stop / 12) %>% gr
                        prevy = ifelse(state == 1, prevy2, prevy1))
 
 # LWYY model - Mortality treated as censoring 
-subaff<-subset(affective, state == 0 | status %in% c(2,3))
+subaff<-data.frame(subset(affective, state == 0 | status %in% c(2,3)))
 fit1 <- coxph(Surv(prevy, stopy, status == 1) ~ bip + cluster(id), 
               data = subaff, ties = "breslow")
 summary(fit1)
 
 # Ghosh-Lin model - Mortality treated as competing risk
-#library(mets)
-#fit2 <- recreg(Event(prevy, stopy, status) ~ bip + cluster(id),
-#               data = subaff, cause = 1, cens.code = 3, death.code = 2)
-#summary(fit2)
+library(mets)
+fit2 <- recreg(Event(prevy, stopy, status) ~ bip + cluster(id),
+               data = subaff, cause = 1, cens.code = 3, death.code = 2)
+summary(fit2)
 ```
-::: {.callout-note}
-Cannot fit Ghosh-Lin model we get the following error: <span style="color:red;">Error in xtfrm.data.frame(x) : cannot xtfrm data frames</span>
-
-Estimates in the book are from SAS.
-:::
-
 
 ## SAS
 ```{sas}
@@ -373,6 +367,19 @@ run;
 ```
 :::
 
+### In-text, p. 145: Cox for mortality
+::: {.panel-tabset}
+## R
+```{r}
+#| label: in-text-cox-mort-r
+```
+## SAS
+```{sas}
+#| label: in-text-cox-mort-sas
+#| eval: false 
+#| output: false
+```
+:::
 
 ### Figure 4.18
 
@@ -788,7 +795,7 @@ censdist <- survfit(Surv(stop, status == 3) ~ 1,
 pdata <- data.frame(time = censdist$time,
                     surv = censdist$surv)
 fig4.23 <- ggplot(aes(x = time / 12, y = surv), data = pdata) +
-  geom_step(size = 1) +
+  geom_step(linewidth = 1) +
   xlab("Time since first admission (years)") +
   ylab('Probability of no censoring') +
   scale_x_continuous(expand = expansion(mult = c(0.005, 0.05)),
@@ -833,13 +840,14 @@ quit;
 :::
 
 
-### In-text: Cox for censoring
+### In-text, p. 155: Cox for censoring
 
 ::: {.panel-tabset}
 ## R
 ```{r}
 #| label: in-text-censoring-r
 coxph(Surv(stop,status==3)~bip,data=cens)
+coxph(Surv(stop,status==3)~factor(year),data=cens)
 ```
 
 ## SAS
@@ -850,6 +858,11 @@ coxph(Surv(stop,status==3)~bip,data=cens)
 proc phreg data=cens;
 	model stop*status(2)=bip/rl;
 run;
+proc phreg data=cens;
+  class year;
+	model stop*status(2)=year/rl;
+run;
 ```
 
 :::
+

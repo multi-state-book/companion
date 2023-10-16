@@ -80,6 +80,6 @@ jointfrail_pc_eq_mi
 sqrt(jointfrail_pc_eq_mi$theta) # Frailty SD
 summary(jointfrail_pc_eq_mi)
 ```
-## SA-NA
+## SAS-NA
 
 :::

@@ -21,7 +21,7 @@ run;
 
 /* 1.: Fit Cox model */
 proc phreg data=bissau;
-  class bcg agem;
+  class bcg(ref="0") agem;
   model fuptime*dead(0)=bcg agem / rl;
 run;
 
@@ -49,7 +49,7 @@ data casecoho; set bissau;
 run;
 
 proc phreg data=casecoho covsandwich(aggregate);
-	class bcg agem;
+	class bcg(ref="0") agem;
 	model stop*d(0)=bcg agem/rl entry=start;
 	weight w; id id;
 run;
@@ -63,6 +63,7 @@ data source; set bissau;
 	censor=dead;
 run;
 
+* seed is now set inside the macro to same seed as for case-cohort, but was random in Table 7.2;
 %macro caseset;
 	%let sampling = 1;
 	%let ratio = 3;
@@ -90,7 +91,8 @@ run;
 	if age_entry  <= &age_rs  <= age_dlo;
 	/* Exclude Index Case */
 	if study_id = &case_id then delete;
-	number = ranuni(0);
+	/* set seed */
+	number = ranuni(260452);
 	age_rs = &age_rs;
 	censor = 0;
 	run;
@@ -132,7 +134,7 @@ run;
 %caseset;
 
 proc phreg data=final;
-class bcg agem;
+class bcg(ref="0") agem;
   model fuptime*censor(0)=bcg agem / rl;
   strata rs;
 run;

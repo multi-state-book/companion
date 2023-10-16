@@ -519,8 +519,8 @@ keep id time rpseudo dpseudo;
  retain oid -1;
  if id eq oid and otime=time then delete;
  else do; oid=id; otime=time; end;
+ run;
  %mend;
-
 
 * We must create a variable for the end-point death without stroke;
 
@@ -536,14 +536,17 @@ run;
 * The MACRO returns a data set 'outdata661' where the pseudo observations for the end-point stroke are stored in the column 'rpseudo'
   and the pseudo observations for death without stroke are stored in the column 'dpseudo'.;
 
-title '6.6.1';
- %pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata661);
+title '6.5.1';
+%pseudoci(chs_data, timestrokeordeath, stroke, death_wo_stroke, 678, timepoint, outdata651);
 
 * We fit a cloglog model for the cumulative incidence of stroke with the genmod procedure where we specify the 'fwdlink' and 'invlink' 
   statements;
-
+libname h ".";
+data h.outdata651;
+  set outdata651;
+	run;
 title '6.5.1 - stroke';
-proc genmod data=outdata661;
+proc genmod data=outdata651;
 	class ptno;
 	fwdlink link=log(-log(1-_mean_));
 	invlink ilink= 1 - exp(-exp(_xbeta_));
@@ -558,11 +561,18 @@ run;
 * Likewise, we will fit a model for the cumulative incidence of death without stroke at 3 years;
 
 title '6.5.1 - death without stroke';
-proc genmod data=outdata661;
+proc genmod data=outdata651;
 	class ptno;
 	fwdlink link=log(-log(1-_mean_));
 	invlink ilink= 1 - exp(-exp(_xbeta_));
 	model dpseudo= esvea sex age sbp /dist=normal noscale ; 
+	repeated subject=ptno/corr=ind;
+run;
+proc genmod data=outdata651;
+	class ptno;
+	fwdlink link=log(-log(1-_mean_));
+	invlink ilink= 1 - exp(-exp(_xbeta_));
+	model dpseudo= esvea sex age sbp /dist=normal; 
 	repeated subject=ptno/corr=ind;
 run;
 

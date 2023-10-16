@@ -781,15 +781,6 @@ aff <- data.frame(affective_data %>% group_by(id) %>%
 fitML <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id),
                data = aff, cause = c(1,2), cens.code = 3, death.code = 2)
 summary(fitML)
-
-# PKA: but changed cens.code=3
-#angst<-read.table('angstGLML.txt',header=TRUE)
-#fitGLa <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = 1, cens.code = 3, death.code = 2)
-#summary(fitGLa)
-#fitMLa <- recreg(Event(prev, stop, status) ~ factor(bip) + cluster(id), data = angst, cause = c(1,2), cens.code = 3, death.code = 2)
-#summary(fitMLa)
-
-
 ```
 
 ## SAS
@@ -838,7 +829,6 @@ proc phreg data=angstML;
 	model stop*status(0)= bip / entry=prev eventcode=1 rl;
 run;
 ```
-
 
 :::
 
