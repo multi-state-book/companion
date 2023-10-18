@@ -309,10 +309,9 @@ Q1_hist2 <- function(N,B){
     Q1b[i] <- Y1/N}
   return(Q1b)}
 
-# N=B=1000 
-#hist_Q1 <- Q1_hist2(1000,1000) 
-#hist_Q1 <- as.data.frame(hist_Q1)
-hist_Q1 <- read.csv("temp/datafig55.csv")
+N=B=1000 
+hist_Q1 <- Q1_hist2(1000,1000) 
+hist_Q1 <- as.data.frame(hist_Q1)
 
 # Histogram of Q1(2) with ggplot
 fig5.5 <- ggplot() +
@@ -349,12 +348,10 @@ MS_ELOS <- function(tau,N, seed){
 
 # Creating data
 time_elos <- seq(0,4*365.25,1)
-#elos_aj <- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))
-#elos_ms <- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) 
+elos_aj <- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))
+elos_ms <- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) 
 
 #Plot comparing epsilon1(tau) based on AaJ and micro-simulation (based on N = 10.000)
-elos_aj <- read.csv("temp/datafig56a.csv")
-elos_ms <- read.csv("temp/datafig56b.csv")
 
 fig5.6 <- ggplot() +
   geom_step(data = elos_aj, aes(x =time_elos/365.25, y = V2/365.25, linetype = "Aalen-Johansen"), size =0.9) + 
@@ -531,11 +528,8 @@ Q1_hist2_scle <- function(N,B, scle){
 
 # Data for histogram. 
 # Takes approx. 10 min
-#hist_Q1_scle0 <- Q1_hist2_scle(1000,1000, 0)
-#hist_Q1_scle1 <- Q1_hist2_scle(1000,1000, 1)
-
-hist_Q1_scle0 <- read.csv("temp/datafig57a.csv")$x
-hist_Q1_scle1 <- read.csv("temp/datafig57b.csv")$x
+hist_Q1_scle0 <- Q1_hist2_scle(1000,1000, 0)
+hist_Q1_scle1 <- Q1_hist2_scle(1000,1000, 1)
 
 fills <- c("0" = "lightgrey", "1" = "darkgrey")
 
@@ -788,34 +782,32 @@ dw01 <- function(end){
   return(prob01)}
 
 # Estimation of transition probabilities under Markov assumption
-# (AaJ1 <- probtrans(msfit, predt = s1)[[1]]) #P(V(t) = 1 | V(1) = 0)
+AaJ1 <- probtrans(msfit, predt = s1)[[1]] #P(V(t) = 1 | V(1) = 0)
 # 
-# # Estimation of transition probabilities with the Landmark Aalen-Johansen estimator
-# # Warning is not related to the estimate of pstate2
-# (LMAaJ1 <- LMAJ(long_format, s = s1, from = 1)) #P(V(t) = 1 | V(1) = 0)
+# Estimation of transition probabilities with the Landmark Aalen-Johansen estimator
+# Warning is not related to the estimate of pstate2
+LMAaJ1 <- LMAJ(long_format, s = s1, from = 1) #P(V(t) = 1 | V(1) = 0)
 # 
 # # Data for estimation of transition probabilities, from s =1
-# time_in_days <- seq(from = s1, to = 1508, by = 0.8)
-# pstate2_pepe <- sapply(time_in_days, pepe01_s1)
-# pstate2_titman <- sapply(time_in_days, titman01_s1)
-# 
-# # Making a data frame
-# pepe_data <- as.data.frame(cbind(time_in_days, pstate2_pepe, "LM Pepe"))
-# colnames(pepe_data) <- c("time", "p01", "estimator")
-# titman_data <- as.data.frame(cbind(time_in_days, pstate2_titman, "LM Titman"))
-# colnames(titman_data) <- c("time", "p01", "estimator")
-# AaJ_data <- as.data.frame(cbind(AaJ1$time, AaJ1$pstate2, "AaJ"))
-# colnames(AaJ_data) <- c("time", "p01", "estimator")
-# LMAaJ_data <- as.data.frame(cbind(LMAaJ1$time, LMAaJ1$pstate2, "LM AaJ"))
-# colnames(LMAaJ_data) <- c("time", "p01", "estimator")
-# 
-# data_LMs1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, pepe_data, titman_data))
-# colnames(data_LMs1) <- c("time","p01","estimator")
-# data_LMs1$time <- as.numeric(data_LMs1$time)
-# data_LMs1$p01 <- as.numeric(data_LMs1$p01)
-# data_LMs1$estimator <- factor(data_LMs1$estimator, levels = c("AaJ", "LM AaJ", "LM Pepe", "LM Titman"))
+time_in_days <- seq(from = s1, to = 1508, by = 0.8)
+pstate2_pepe <- sapply(time_in_days, pepe01_s1)
+pstate2_titman <- sapply(time_in_days, titman01_s1)
+ 
+# Making a data frame
+pepe_data <- as.data.frame(cbind(time_in_days, pstate2_pepe, "LM Pepe"))
+colnames(pepe_data) <- c("time", "p01", "estimator")
+titman_data <- as.data.frame(cbind(time_in_days, pstate2_titman, "LM Titman"))
+colnames(titman_data) <- c("time", "p01", "estimator")
+AaJ_data <- as.data.frame(cbind(AaJ1$time, AaJ1$pstate2, "AaJ"))
+colnames(AaJ_data) <- c("time", "p01", "estimator")
+LMAaJ_data <- as.data.frame(cbind(LMAaJ1$time, LMAaJ1$pstate2, "LM AaJ"))
+colnames(LMAaJ_data) <- c("time", "p01", "estimator")
 
-data_LMs1 <- read.csv("temp/datafig58.csv")
+data_LMs1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, pepe_data, titman_data))
+colnames(data_LMs1) <- c("time","p01","estimator")
+data_LMs1$time <- as.numeric(data_LMs1$time)
+data_LMs1$p01 <- as.numeric(data_LMs1$p01)
+data_LMs1$estimator <- factor(data_LMs1$estimator, levels = c("AaJ", "LM AaJ", "LM Pepe", "LM Titman"))
 
 ### Figure 5.8 
 fig5.8 <- ggplot(data_LMs1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
@@ -849,27 +841,25 @@ fig5.8
 ```{r}
 #| label: figure-5.9-r
 # Creating data frame
-# pstate2_semi <- sapply(time_in_days, semi01)
-# pstate2_tbase_pcwe <- sapply(time_in_days, pcw01)
-# pstate2_tbase_lwe <- sapply(time_in_days, lw01)
-# pstate2_tbase_dwe <- sapply(time_in_days, dw01)
-# 
-# semi_data <- as.data.frame(cbind(time_in_days, pstate2_semi, "Semi"))
-# colnames(semi_data) <- c("time", "p01", "estimator")
-# tbase_pcwe_data <- as.data.frame(cbind(time_in_days,pstate2_tbase_pcwe, "PWCD"))
-# colnames(tbase_pcwe_data) <- c("time", "p01", "estimator")
-# tbase_lwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_lwe, "LD"))
-# colnames(tbase_lwe_data) <- c("time", "p01", "estimator")
-# tbase_dwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_dwe, "FPD"))
-# colnames(tbase_dwe_data) <- c("time", "p01", "estimator")
-# 
-# data_dur1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, semi_data, tbase_pcwe_data, tbase_lwe_data, tbase_dwe_data))
-# colnames(data_dur1) <- c("time","p01","estimator")
-# data_dur1$time <- as.numeric(data_dur1$time)
-# data_dur1$p01 <- as.numeric(data_dur1$p01)
-# data_dur1$estimator <- factor(data_dur1$estimator, levels = c("AaJ", "LM AaJ", "Semi", "PWCD", "LD", "FPD"))
+pstate2_semi <- sapply(time_in_days, semi01)
+pstate2_tbase_pcwe <- sapply(time_in_days, pcw01)
+pstate2_tbase_lwe <- sapply(time_in_days, lw01)
+pstate2_tbase_dwe <- sapply(time_in_days, dw01)
 
-data_dur1 <- read.csv("temp/datafig59.csv")
+semi_data <- as.data.frame(cbind(time_in_days, pstate2_semi, "Semi"))
+colnames(semi_data) <- c("time", "p01", "estimator")
+tbase_pcwe_data <- as.data.frame(cbind(time_in_days,pstate2_tbase_pcwe, "PWCD"))
+colnames(tbase_pcwe_data) <- c("time", "p01", "estimator")
+tbase_lwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_lwe, "LD"))
+colnames(tbase_lwe_data) <- c("time", "p01", "estimator")
+tbase_dwe_data <- as.data.frame(cbind(time_in_days, pstate2_tbase_dwe, "FPD"))
+colnames(tbase_dwe_data) <- c("time", "p01", "estimator")
+ 
+data_dur1 <- as.data.frame(rbind(AaJ_data, LMAaJ_data, semi_data, tbase_pcwe_data, tbase_lwe_data, tbase_dwe_data))
+colnames(data_dur1) <- c("time","p01","estimator")
+data_dur1$time <- as.numeric(data_dur1$time)
+data_dur1$p01 <- as.numeric(data_dur1$p01)
+data_dur1$estimator <- factor(data_dur1$estimator, levels = c("AaJ", "LM AaJ", "Semi", "PWCD", "LD", "FPD"))
 
 fig5.9 <- ggplot(data_dur1,aes(x = time/365.25, y = p01, linetype = estimator)) + 
   geom_step(size = 1) +

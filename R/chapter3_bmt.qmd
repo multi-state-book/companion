@@ -668,7 +668,7 @@ run;
 ```
 :::
 
-### Table 3.14
+### Table 3.14 and in-text LRT
 
 ::: {.panel-tabset}
 

@@ -138,7 +138,7 @@ run;
 :::
 
 
-### In-text: Kaplan-Meier estimates at 2 years
+### In-text, p. 119: Kaplan-Meier estimates at 2 years
 
 ::: {.panel-tabset}
 ## R
@@ -509,7 +509,7 @@ quit;
 :::
 
 
-### In-text: g-formula from Cox
+### In-text, p. 122: g-formula at 2 years from Cox
 
 ::: {.panel-tabset}
 ## R
@@ -551,9 +551,79 @@ summary(survivalG(cfitmets, subpbc, time = 2*365.25))
 #| eval: false 
 #| output: false
 
-proc print data=gsurv;
-  where days=714;
+/* at 2 years */
+proc phreg data=pbc3;
+	class tment;
+	model days*status(0)=tment alb log2bili/rl;
+	baseline out=gsurv survival=surv stderr=sd outdiff=gsurvdiff timepoint=730 /
+		method=breslow diradj group=tment;
 run;
+proc print data=gsurv;run;
+
+  Obs           tment            days      surv        sd
+
+   1                0             730    0.79891    0.024757
+   2                1             730    0.86706    0.019178
+
+proc print data=gsurvdiff;run;
+
+
+   Obs           tment          tment2            days     SurvDiff     StdErr
+
+    1                0               1             730    -0.068148    0.026252
+
+* Bootstrap;
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	  do i = 1 to 349;      /*nobs=349*/
+		  x=round(ranuni(0)*349); 
+			set pbc3
+			point=x;
+			output;
+		end;
+	end;
+	stop;
+run;
+/* g-formel */
+proc phreg data=bootpbc noprint;
+	by sampnum;
+	class tment;
+	model days*status(0)=tment alb log2bili;
+	baseline out=gsurvboot survival=surv outdiff=gsurvdiff timepoint=730 /
+	method=breslow diradj group=tment;
+run;
+			
+proc means data=gsurvboot mean stddev;
+	class tment;
+	var surv;
+run;
+                  The MEANS Procedure
+
+   Analysis Variable : surv Survivor Function Estimate
+
+                     N
+         tment     Obs            Mean         Std Dev
+    ----------------------------------------------------
+             0    1000       0.7988766       0.0267078
+
+             1    1000       0.8670747       0.0211279
+    ----------------------------------------------------
+
+			
+proc means data=gsurvdiff mean stddev;
+	class tment;
+	var survdiff;
+run;
+                 The MEANS Procedure
+
+             Analysis Variable : SurvDiff
+
+                    N
+        tment     Obs            Mean         Std Dev
+    ----------------------------------------------------
+            0    1000      -0.0681980       0.0265769
+    ----------------------------------------------------
+
 ```
 :::
 
@@ -2498,7 +2568,7 @@ run;
 :::
 
 
-### In-text: RMST g-formula and bootstrap 
+### In-text, p. 136: RMST g-formula and bootstrap 
 
 ::: {.panel-tabset}
 
@@ -2621,7 +2691,7 @@ run;
 
 
 
-### In-text: Fine-Gray and g-formula
+### In-text, p. 138-9: Fine-Gray and g-formula
 
 Using mets package and not bootstrap as in book. 
 
@@ -3071,7 +3141,7 @@ resmeanIPCW(Event(days/365.25,status)~factor(tment)+alb+log2bili,cause=1,
 
 :::
 
-### In-text: Time lost g-formula and bootstrap
+### In-text, p. 141: Time lost g-formula and bootstrap
 
 ::: {.panel-tabset}
 ## R
@@ -3215,7 +3285,7 @@ quit;
 ```
 :::
 
-### In-text: Cox for censoring 
+### In-text, p.154: Cox for censoring 
 
 ::: {.panel-tabset}
 ## R

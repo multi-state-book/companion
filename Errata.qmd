@@ -36,4 +36,4 @@ $$-\log(S(t))=\sum_{u\leq t}-\log(1-\alpha(u)\Delta) \approx \sum_{u\leq t}\alph
 
 -   Exercise 6.1.2, p. 243: a factor $n$ is missing on the r.h.s. of the equation for $\frac{\partial \widehat{S}^w(t)}{\partial w_i}\vert_{\mathbf{w}=1/n}$
 
--   Exercise 6.5, p. 244: We should comapare with Exercise 4.5 instead of 4.4 and it makes no sense to compare with Exercise 5.8
+-   Exercise 6.5, p. 244: We should compare with Exercise 4.5 instead of 4.4 and it makes no sense to compare with Exercise 5.8

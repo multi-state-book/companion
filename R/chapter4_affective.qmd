@@ -372,12 +372,16 @@ run;
 ## R
 ```{r}
 #| label: in-text-cox-mort-r
+summary(coxph(Surv(start,stop,status==2)~bip,data=affective,ties="breslow"))
 ```
 ## SAS
 ```{sas}
 #| label: in-text-cox-mort-sas
 #| eval: false 
 #| output: false
+proc phreg data=affective;
+  model (start,stop)*status(0,1,3) = bip / rl;
+run;
 ```
 :::
 

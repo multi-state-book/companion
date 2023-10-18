@@ -42,7 +42,7 @@ np_ests <- function(endpointdat){
   pdat <- rbind(dat_adj)
   
   mu <- ggplot(aes(x = time  * 1 / (365.25 / 12), y = mu), data = pdat) + 
-    geom_step(aes(linetype = treat), size = 1.05) + 
+    geom_step(aes(linetype = treat), linewidth = 1.05) + 
     xlab("Time since randomization (months)") + 
     ylab(expression(hat(mu)* "(t)")) + 
     scale_linetype_discrete("Treatment") + 
@@ -68,7 +68,7 @@ np_ests <- function(endpointdat){
                           treat = c(rep("Liraglutide", KM_fit$strata[[1]]), rep("Placebo", KM_fit$strata[[2]])))
   
   surv <- ggplot(aes(x = time  * 1 / (365.25 / 12), y = surv), data = dat_S) + 
-    geom_step(aes(linetype = treat), size = 1.05) + 
+    geom_step(aes(linetype = treat), linewidth = 1.05) + 
     xlab("Time since randomization (months)") + 
     ylab(expression(hat(S)* "(t)")) + 
     scale_linetype_discrete("Treatment") + 
@@ -211,17 +211,19 @@ leader_pseudo <- pseudo.twodim(tstart = leader_mi$start,
                                tk = c(20, 30, 40) * (365.25 / 12),
                                data = leader_mi)
 
-leader_pseudo30 <- pseudo.twodim(tstart = leader_mi$start,
-                               tstop = leader_mi$stop,
-                               status = leader_mi$status,
-                               id = leader_mi$id,
-                               covar_names = "treat",
-                               tk = 30 * (365.25 / 12),
-                               data = leader_mi)
+#leader_pseudo30 <- pseudo.twodim(tstart = leader_mi$start,
+#                               tstop = leader_mi$stop,
+#                               status = leader_mi$status,
+#                               id = leader_mi$id,
+#                               covar_names = "treat",
+#                               tk = 30 * (365.25 / 12),
+#                               data = leader_mi)
 
+#saveRDS(leader_pseudo,"leader2dimpseudo.rds")
+leader_pseudo<-readRDS("leader2dimpseudo.rds")
 fit_leader <- pseudo.geefit(pseudodata=leader_pseudo, covar_names=c("treat"))
 
-fit_leader
+#fit_leader
 
 # Treatment differences
 xi_diff_2d <- as.matrix(c(fit_leader$xi[4], fit_leader$xi[8]), ncol=1)

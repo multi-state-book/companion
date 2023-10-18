@@ -29,8 +29,7 @@ run;
 
 data bissau; 
 	set bissau;
-	seed=260452;
-	s=ranbin(seed,1,0.125);
+	s=ranbin(0,1,0.125);
 run;
 proc freq; 
 	tables s*dead; 
@@ -63,7 +62,6 @@ data source; set bissau;
 	censor=dead;
 run;
 
-* seed is now set inside the macro to same seed as for case-cohort, but was random in Table 7.2;
 %macro caseset;
 	%let sampling = 1;
 	%let ratio = 3;
@@ -91,8 +89,7 @@ run;
 	if age_entry  <= &age_rs  <= age_dlo;
 	/* Exclude Index Case */
 	if study_id = &case_id then delete;
-	/* set seed */
-	number = ranuni(260452);
+	number = ranuni(0);
 	age_rs = &age_rs;
 	censor = 0;
 	run;

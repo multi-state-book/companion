@@ -4,24 +4,24 @@
 
 * Load pbc data; 
 proc import out=pbc3
-datafile="data/pbc3.csv"
-dbms=csv replace;
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
 run;
 
 data pbc3; 
-set pbc3;
-albnorm=(alb-35)*(alb>35);
-alb10=alb/10; alb2=alb10*alb10;
-bilihigh=(bili-17.1)*(bili>17.1);
-bilitoohigh=(bili-34.2)*(bili>34.2);
-bilimuchtoohigh=(bili-51.3)*(bili>51.3);
-bili100=bili/100; bili2=bili100*bili100;
-log2bili=log2(bili);
-logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
-logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
-logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
-log2bili2=log2bili*log2bili;
-followup=days/365.25;
+	set pbc3;
+	albnorm=(alb-35)*(alb>35);
+	alb10=alb/10; alb2=alb10*alb10;
+	bilihigh=(bili-17.1)*(bili>17.1);
+	bilitoohigh=(bili-34.2)*(bili>34.2);
+	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
+	bili100=bili/100; bili2=bili100*bili100;
+	log2bili=log2(bili);
+	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
+	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
+	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
+	log2bili2=log2bili*log2bili;
+	followup=days/365.25;
 run;
 
 
@@ -161,27 +161,63 @@ quit;
 *---------------------------------------------------------------;
 
 proc phreg data=pbc3;
-class tment;
-model days*status(0)=tment alb log2bili/rl;
-baseline out=gsurv survival=surv stderr=sd / method=breslow diradj group=tment;
+	class tment;
+	model days*status(0)=tment alb log2bili/rl;
+	baseline out=gsurv survival=surv / method=breslow diradj group=tment;
 run;
 
 data gsurv;
-set gsurv; 
-daysyears = days/365.25; 
+	set gsurv; 
+	daysyears = days/365.25; 
 run; 
 
 proc gplot data=gsurv;
-plot surv*daysyears=tment/haxis=axis1 vaxis=axis2;
-axis1 order=0 to 6 by 1 minor=none label=('Years');
-axis2 order=0 to 1 by 0.1 minor=none label=(a=90 'Estimated survival function (g-formula)');
-symbol1  v=none i=stepjl c=blue;
-symbol2  v=none i=stepjl c=red;
+	plot surv*daysyears=tment/haxis=axis1 vaxis=axis2;
+	axis1 order=0 to 6 by 1 minor=none label=('Years');
+	axis2 order=0 to 1 by 0.1 minor=none
+		label=(a=90 'Estimated survival function (g-formula)');
+	symbol1  v=none i=stepjl c=blue;
+	symbol2  v=none i=stepjl c=red;
 run;
 quit;
 
-proc print data=gsurv;
-where days=714;
+/* at 2 years */
+proc phreg data=pbc3;
+	class tment;
+	model days*status(0)=tment alb log2bili/rl;
+	baseline out=gsurv survival=surv stderr=sd outdiff=gsurvdiff timepoint=730 /
+		method=breslow diradj group=tment;
+run;
+proc print data=gsurv;run;
+proc print data=gsurvdiff;run;
+
+* Bootstrap;
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	  do i = 1 to 349;      /*nobs=349*/
+		  x=round(ranuni(0)*349); 
+			set pbc3
+			point=x;
+			output;
+		end;
+	end;
+	stop;
+run;
+/* g-formel */
+proc phreg data=bootpbc noprint;
+	by sampnum;
+	class tment;
+	model days*status(0)=tment alb log2bili;
+	baseline out=gsurvboot survival=surv outdiff=gsurvdiff timepoint=730 /
+	method=breslow diradj group=tment;
+run;
+proc means data=gsurvboot mean stddev;
+	class tment;
+	var surv;
+run;
+proc means data=gsurvdiff mean stddev;
+	class tment;
+	var survdiff;
 run;
 
 *---------------------------------------------------------------;

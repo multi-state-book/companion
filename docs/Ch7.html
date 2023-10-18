@@ -220,7 +220,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#guinea-bissau-childhood-vaccination-study" id="toc-guinea-bissau-childhood-vaccination-study" class="nav-link active" data-scroll-target="#guinea-bissau-childhood-vaccination-study">Guinea-Bissau childhood vaccination study</a>
   <ul>
-  <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
   <li><a href="#table-7.2" id="toc-table-7.2" class="nav-link" data-scroll-target="#table-7.2">Table 7.2</a></li>
   </ul></li>
   </ul>
@@ -248,54 +247,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="guinea-bissau-childhood-vaccination-study" class="level2">
 <h2 class="anchored" data-anchor-id="guinea-bissau-childhood-vaccination-study">Guinea-Bissau childhood vaccination study</h2>
-<section id="read-data" class="level3">
-<h3 class="anchored" data-anchor-id="read-data">Read data</h3>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-r_5d95bf6edea4e146765fde27b0d7b382">
-<details>
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-hash="Ch7_cache/html/read-bissau-sas_861aa720b048ff745b0c9cded354e62b">
-<details>
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>datafile=<span class="st">"data/bissau.csv"</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    out=bissau</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dbms = csv</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span>;</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> bissau; </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> bissau; </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    agem = <span class="fu">int</span>(age/<span class="dv">30.4</span>);</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>; </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section id="table-7.2" class="level3">
 <h3 class="anchored" data-anchor-id="table-7.2">Table 7.2</h3>
 <p>Please note, that <span class="math inline">\(\widehat{\beta}\)</span> will vary with chosen seed, but SD values are stable.</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">SAS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-hash="Ch7_cache/html/table-8.1-r_a441a507e3cf39353a78a9d98f60e0a0">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell" data-hash="Ch7_cache/html/table-8.1-r_61797b25f417e4b4924cac0726c5ed44">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model - full cohort</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), <span class="at">data =</span> bissau)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model - full cohort</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bissau <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/bissau.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>agem <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(bissau<span class="sc">$</span>age<span class="sc">/</span><span class="fl">30.4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(fuptime, dead <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), <span class="at">data =</span> bissau)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -303,70 +271,70 @@ coxph(formula = Surv(fuptime, dead != 0) ~ factor(bcg) + factor(agem),
     data = bissau)
 
                   coef exp(coef) se(coef)      z      p
-factor(bcg)1  -0.34678   0.70696  0.14604 -2.374 0.0176
-factor(agem)1  0.11490   1.12176  0.23205  0.495 0.6205
-factor(agem)2 -0.25702   0.77335  0.25861 -0.994 0.3203
-factor(agem)3  0.19875   1.21987  0.24325  0.817 0.4139
-factor(agem)4  0.34748   1.41550  0.23912  1.453 0.1462
-factor(agem)5  0.31171   1.36576  0.25325  1.231 0.2184
-factor(agem)6 -0.01077   0.98929  0.35339 -0.030 0.9757
+factor(bcg)1  -0.34720   0.70667  0.14605 -2.377 0.0174
+factor(agem)1  0.11500   1.12187  0.23205  0.496 0.6202
+factor(agem)2 -0.25687   0.77347  0.25861 -0.993 0.3206
+factor(agem)3  0.19894   1.22011  0.24325  0.818 0.4135
+factor(agem)4  0.33252   1.39447  0.24183  1.375 0.1691
+factor(agem)5  0.33066   1.39189  0.24957  1.325 0.1852
+factor(agem)6 -0.01052   0.98953  0.35340 -0.030 0.9762
 
-Likelihood ratio test=12.39  on 7 df, p=0.08834
+Likelihood ratio test=12.37  on 7 df, p=0.08901
 n= 5274, number of events= 222 </code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 12.5 pct sub-cohort</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>s <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">nrow</span>(bissau), <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.125</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(bissau, <span class="fu">table</span>(dead, s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 12.5 pct sub-cohort</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bissau<span class="sc">$</span>s <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="fu">nrow</span>(bissau), <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.125</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(bissau, <span class="fu">table</span>(dead, s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>    s
 dead    0    1
-   0 4420  632
-   1  195   27</code></pre>
+   0 4444  608
+   1  189   33</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Case-cohort data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>bis2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bissau, s <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> dead <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">|</span> s <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ccfit <span class="ot">&lt;-</span> <span class="fu">cch</span>(<span class="fu">Surv</span>(fuptime, dead<span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> bis2, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">subcoh=</span>bis2<span class="sc">$</span>s, <span class="at">id=</span>bis2<span class="sc">$</span>id, <span class="at">cohort.size=</span><span class="fu">nrow</span>(bissau))</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ccfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Case-cohort data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>bis2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(bissau, s <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> dead <span class="sc">!=</span> <span class="dv">0</span> <span class="sc">|</span> s <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ccfit <span class="ot">&lt;-</span> <span class="fu">cch</span>(<span class="fu">Surv</span>(fuptime, dead<span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> bis2, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">subcoh=</span>bis2<span class="sc">$</span>s, <span class="at">id=</span>bis2<span class="sc">$</span>id, <span class="at">cohort.size=</span><span class="fu">nrow</span>(bissau))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ccfit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Case-cohort analysis,x$method, Prentice 
- with subcohort of 659 from cohort of 5274 
+ with subcohort of 641 from cohort of 5274 
 
 Call: cch(formula = Surv(fuptime, dead != 0) ~ factor(bcg) + factor(agem), 
     data = bis2, subcoh = bis2$s, id = bis2$id, cohort.size = nrow(bissau))
 
 Coefficients:
                 Coef    HR  (95%   CI)     p
-factor(bcg)1  -0.459 0.632 0.453 0.881 0.007
-factor(agem)1  0.042 1.043 0.622 1.752 0.872
-factor(agem)2 -0.141 0.868 0.492 1.534 0.627
-factor(agem)3  0.249 1.283 0.743 2.217 0.372
-factor(agem)4  0.549 1.731 0.999 2.999 0.050
-factor(agem)5  0.459 1.583 0.889 2.819 0.119
-factor(agem)6  0.159 1.172 0.536 2.563 0.690</code></pre>
+factor(bcg)1  -0.296 0.744 0.531 1.042 0.085
+factor(agem)1 -0.042 0.959 0.564 1.630 0.877
+factor(agem)2 -0.456 0.634 0.358 1.123 0.118
+factor(agem)3  0.284 1.329 0.757 2.331 0.322
+factor(agem)4  0.134 1.144 0.656 1.992 0.636
+factor(agem)5  0.521 1.684 0.938 3.024 0.081
+factor(agem)6  0.166 1.181 0.527 2.643 0.686</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nested-case control</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multipleNCC)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Epi)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add noise to remove ties</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>bis2<span class="sc">$</span>fuptime_noise <span class="ot">&lt;-</span> <span class="fu">jitter</span>(bis2<span class="sc">$</span>fuptime, <span class="at">factor=</span><span class="dv">1</span>, <span class="at">amount =</span> <span class="cn">NULL</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>nccdata <span class="ot">&lt;-</span> Epi<span class="sc">::</span><span class="fu">ccwc</span>(<span class="at">exit=</span>fuptime_noise, </span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fail=</span>dead<span class="sc">!=</span><span class="dv">0</span>, </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data=</span>bis2, </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include=</span><span class="fu">list</span>(bcg, agem), <span class="at">controls=</span><span class="dv">3</span>, <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">clogit</span>(Fail <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), <span class="at">data=</span>nccdata))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nested-case control</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multipleNCC)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Epi)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add noise to remove ties</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>bis2<span class="sc">$</span>fuptime_noise <span class="ot">&lt;-</span> <span class="fu">jitter</span>(bis2<span class="sc">$</span>fuptime, <span class="at">factor=</span><span class="dv">1</span>, <span class="at">amount =</span> <span class="cn">NULL</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>nccdata <span class="ot">&lt;-</span> Epi<span class="sc">::</span><span class="fu">ccwc</span>(<span class="at">exit=</span>fuptime_noise, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fail=</span>dead<span class="sc">!=</span><span class="dv">0</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data=</span>bis2, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">include=</span><span class="fu">list</span>(bcg, agem), <span class="at">controls=</span><span class="dv">3</span>, <span class="at">silent=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">clogit</span>(Fail <span class="sc">~</span> <span class="fu">factor</span>(bcg) <span class="sc">+</span> <span class="fu">factor</span>(agem), <span class="at">data=</span>nccdata))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -375,181 +343,189 @@ coxph(formula = Surv(rep(1, 888L), Fail) ~ factor(bcg) + factor(agem),
 
   n= 888, number of events= 222 
 
-                  coef exp(coef) se(coef)      z Pr(&gt;|z|)   
-factor(bcg)1  -0.46553   0.62780  0.17947 -2.594  0.00949 **
-factor(agem)1  0.10845   1.11455  0.26846  0.404  0.68623   
-factor(agem)2 -0.08984   0.91407  0.29587 -0.304  0.76138   
-factor(agem)3  0.41139   1.50891  0.28798  1.429  0.15313   
-factor(agem)4  0.53956   1.71526  0.29036  1.858  0.06314 . 
-factor(agem)5  0.55564   1.74305  0.30871  1.800  0.07188 . 
-factor(agem)6  0.11164   1.11811  0.40294  0.277  0.78174   
+                  coef exp(coef) se(coef)      z Pr(&gt;|z|)  
+factor(bcg)1  -0.31264   0.73151  0.17525 -1.784   0.0744 .
+factor(agem)1  0.08065   1.08399  0.26927  0.300   0.7645  
+factor(agem)2 -0.10850   0.89718  0.29427 -0.369   0.7123  
+factor(agem)3  0.49968   1.64819  0.29021  1.722   0.0851 .
+factor(agem)4  0.27275   1.31357  0.28741  0.949   0.3426  
+factor(agem)5  0.50070   1.64988  0.29790  1.681   0.0928 .
+factor(agem)6  0.29128   1.33814  0.41155  0.708   0.4791  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
               exp(coef) exp(-coef) lower .95 upper .95
-factor(bcg)1     0.6278     1.5929    0.4416    0.8925
-factor(agem)1    1.1146     0.8972    0.6585    1.8863
-factor(agem)2    0.9141     1.0940    0.5118    1.6324
-factor(agem)3    1.5089     0.6627    0.8581    2.6533
-factor(agem)4    1.7153     0.5830    0.9709    3.0303
-factor(agem)5    1.7431     0.5737    0.9518    3.1922
-factor(agem)6    1.1181     0.8944    0.5076    2.4630
+factor(bcg)1     0.7315     1.3670    0.5189     1.031
+factor(agem)1    1.0840     0.9225    0.6395     1.838
+factor(agem)2    0.8972     1.1146    0.5040     1.597
+factor(agem)3    1.6482     0.6067    0.9332     2.911
+factor(agem)4    1.3136     0.7613    0.7478     2.307
+factor(agem)5    1.6499     0.6061    0.9202     2.958
+factor(agem)6    1.3381     0.7473    0.5973     2.998
 
-Concordance= 0.578  (se = 0.021 )
-Likelihood ratio test= 12.2  on 7 df,   p=0.09
-Wald test            = 11.85  on 7 df,   p=0.1
-Score (logrank) test = 12.04  on 7 df,   p=0.1</code></pre>
+Concordance= 0.572  (se = 0.022 )
+Likelihood ratio test= 8.79  on 7 df,   p=0.3
+Wald test            = 8.68  on 7 df,   p=0.3
+Score (logrank) test = 8.79  on 7 df,   p=0.3</code></pre>
 </div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-hash="Ch7_cache/html/table-8.1-sas_fa4bb23cb307f54de0f748e055ba9b0e">
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell" data-hash="Ch7_cache/html/table-8.1-sas_4cda7f72c45be58b3a1c774ede6f133f">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1.: Fit Cox model */</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  class bcg(ref=<span class="st">"0"</span>) agem;</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg agem / rl;</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                  Parameter    Standard</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>Parameter    DF    Estimate       <span class="kw">Error</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>bcg       <span class="dv">1</span>   <span class="dv">1</span>    -<span class="dv">0.34720</span>     <span class="dv">0.14605</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">0</span>   <span class="dv">1</span>     <span class="dv">0.01053</span>     <span class="dv">0.35339</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">1</span>   <span class="dv">1</span>     <span class="dv">0.12553</span>     <span class="dv">0.34494</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">2</span>   <span class="dv">1</span>    -<span class="dv">0.24631</span>     <span class="dv">0.35903</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">3</span>   <span class="dv">1</span>     <span class="dv">0.20946</span>     <span class="dv">0.34502</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">4</span>   <span class="dv">1</span>     <span class="dv">0.34300</span>     <span class="dv">0.34265</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">5</span>   <span class="dv">1</span>     <span class="dv">0.34118</span>     <span class="dv">0.34699</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">/* 2.: Create a 12.5 pct sub-cohort */</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> bissau; </span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> bissau;</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    seed=<span class="dv">260452</span>;</span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    s=<span class="fu">ranbin</span>(seed,<span class="dv">1</span>,<span class="dv">0.125</span>);</span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> freq; </span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    tables s*dead; </span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co">/* 3.: Fit Cox model to case-cohort data */</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> casecoho; <span class="kw">set</span> bissau;</span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    epsilon=<span class="dv">0.001</span>;</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">1</span> <span class="kw">and</span> s=<span class="dv">0</span> <span class="kw">then do</span>;</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">1</span>; start=fuptime-epsilon; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>; <span class="kw">output; end</span>;</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">0</span> <span class="kw">and</span> s=<span class="dv">1</span> <span class="kw">then do</span>;</span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">0</span>; start=<span class="dv">0</span>; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>/<span class="dv">0.125</span>; <span class="kw">output; end</span>;</span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">1</span> <span class="kw">and</span> s=<span class="dv">1</span> <span class="kw">then do</span>;</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">0</span>; start=<span class="dv">0</span>; <span class="kw">stop</span>=fuptime-epsilon; w=<span class="dv">1</span>/<span class="dv">0.125</span>; <span class="kw">output</span>;</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">1</span>; start=fuptime-epsilon; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>; <span class="kw">output; end</span>;</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=casecoho covsandwich(aggregate);</span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    class bcg(ref=<span class="st">"0"</span>) agem;</span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> <span class="kw">stop</span>*d(<span class="dv">0</span>)=bcg agem/rl entry=start;</span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    weight w; id id;</span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>                 Parameter   Standard</span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a> Parameter   DF   Estimate      <span class="kw">Error</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a> bcg       <span class="dv">1</span>  <span class="dv">1</span>   -<span class="dv">0.38946</span>    <span class="dv">0.16599</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">0</span>  <span class="dv">1</span>   -<span class="dv">0.00371</span>    <span class="dv">0.41199</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">1</span>  <span class="dv">1</span>    <span class="dv">0.18793</span>    <span class="dv">0.39633</span></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">2</span>  <span class="dv">1</span>   -<span class="dv">0.33429</span>    <span class="dv">0.40462</span></span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">3</span>  <span class="dv">1</span>    <span class="dv">0.09770</span>    <span class="dv">0.39586</span></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">4</span>  <span class="dv">1</span>    <span class="dv">0.14055</span>    <span class="dv">0.38892</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">5</span>  <span class="dv">1</span>    <span class="dv">0.09873</span>    <span class="dv">0.39251</span></span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="co">/* NCC MACRO */</span></span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> source; <span class="kw">set</span> bissau;</span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    study_id=id;</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    age_entry=<span class="dv">0</span>;</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    age_dlo=fuptime;</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>    censor=dead;</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a><span class="co"> * seed is now set inside the macro to same seed as for case-cohort, but was random in Table 7.2;</span></span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> caseset;</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%let</span> sampling = <span class="dv">1</span>;</span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%let</span> ratio = <span class="dv">3</span>;</span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Enumerate Cases */</span></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> cases;</span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> source ;</span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> censor = <span class="dv">1</span>;</span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> cases;</span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> cases<span class="kw"> end</span> = eof;</span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> eof <span class="kw">then</span> <span class="kw">call</span> symput (<span class="st">'ncases'</span>, <span class="kw">put</span>(_n_,<span class="dv">6</span>.));</span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Create Risk Set */</span></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%do</span> iter = <span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;ncases;</span></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_case;</span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> cases;</span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> _n_ = <span class="kw">&amp;iter </span>;</span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>    <span class="kw">call</span> symput (<span class="st">'rs'</span>, <span class="kw">put</span>(_n_,<span class="dv">6</span>.));</span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>    <span class="kw">call</span> symput (<span class="st">'age_rs'</span>, <span class="kw">put</span>(age_dlo,<span class="dv">8</span>.)); <span class="kw">call</span> symput (<span class="st">'case_id'</span>,</span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>    <span class="kw">put</span>(study_id,<span class="dv">8</span>.));</span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_control;</span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> source;</span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> age_entry  &lt;= <span class="kw">&amp;age_rs </span> &lt;= age_dlo;</span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Exclude Index Case */</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> study_id = <span class="kw">&amp;case_id then</span> <span class="kw">delete</span>;</span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* set seed */</span></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>    number = <span class="fu">ranuni</span>(<span class="dv">260452</span>);</span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>    age_rs = <span class="kw">&amp;age_rs;</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>    censor = <span class="dv">0</span>;</span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Sample Controls */</span></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%if</span> <span class="kw">&amp;sampling </span>= <span class="dv">1</span> <span class="kw">%then</span> <span class="kw">%do</span>;</span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="kw">    proc</span> sort<span class="kw"> data</span> = temp_control;</span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> number;</span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_control;</span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> temp_control;</span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> age_rs;</span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retain</span> m;</span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> first.age_rs <span class="kw">then</span> m = <span class="dv">0</span>;</span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>    m=m+<span class="dv">1</span>;</span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> m &lt;= <span class="kw">&amp;ratio then</span> <span class="kw">output</span> temp_control;</span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>; </span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* End If Sampling = 1 */</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Combine Case with Controls */</span></span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> rs_<span class="kw">&amp;iter;</span></span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> temp_case</span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>    temp_control;</span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>    rs = <span class="kw">&amp;rs;</span></span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>    age_rs = <span class="kw">&amp;age_rs;</span></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* DM Output 'Clear'; Log 'Clear'; */</span></span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>; </span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* End Loop Creating Risk Set */</span></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Append Risk Sets */</span></span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%do</span> j = <span class="dv">2</span> <span class="kw">%to</span> <span class="kw">&amp;ncases;</span></span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a><span class="kw">    proc</span> append base = rs_1<span class="kw"> data</span> = rs_<span class="kw">&amp;j;</span></span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>;</span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> final; <span class="kw">set</span> rs_1<span class="kw">; run</span>;</span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span> ; </span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a><span class="co">/* End Macro */</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a><span class="co">/* Invoke Macro */</span></span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>%caseset;</span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=final;</span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>class bcg(ref=<span class="st">"0"</span>) agem;</span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> fuptime*censor(<span class="dv">0</span>)=bcg agem / rl;</span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>  strata rs;</span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> import </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>datafile=<span class="st">"data/bissau.csv"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    out=bissau</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    dbms = csv</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">replace</span>;</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> bissau; </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> bissau; </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    agem = <span class="fu">int</span>(age/<span class="dv">30.4</span>);</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>; </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1.: Fit Cox model */</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=bissau;</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  class bcg(ref=<span class="st">"0"</span>) agem;</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> fuptime*dead(<span class="dv">0</span>)=bcg agem / rl;</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                  Parameter    Standard</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>Parameter    DF    Estimate       <span class="kw">Error</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>bcg       <span class="dv">1</span>   <span class="dv">1</span>    -<span class="dv">0.34720</span>     <span class="dv">0.14605</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">0</span>   <span class="dv">1</span>     <span class="dv">0.01053</span>     <span class="dv">0.35339</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">1</span>   <span class="dv">1</span>     <span class="dv">0.12553</span>     <span class="dv">0.34494</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">2</span>   <span class="dv">1</span>    -<span class="dv">0.24631</span>     <span class="dv">0.35903</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">3</span>   <span class="dv">1</span>     <span class="dv">0.20946</span>     <span class="dv">0.34502</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">4</span>   <span class="dv">1</span>     <span class="dv">0.34300</span>     <span class="dv">0.34265</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>agem      <span class="dv">5</span>   <span class="dv">1</span>     <span class="dv">0.34118</span>     <span class="dv">0.34699</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co">/* 2.: Create a 12.5 pct sub-cohort */</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> bissau; </span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> bissau;</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>    seed=<span class="dv">260452</span>;</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    s=<span class="fu">ranbin</span>(seed,<span class="dv">1</span>,<span class="dv">0.125</span>);</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> freq; </span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    tables s*dead; </span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co">/* 3.: Fit Cox model to case-cohort data */</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> casecoho; <span class="kw">set</span> bissau;</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    epsilon=<span class="dv">0.001</span>;</span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">1</span> <span class="kw">and</span> s=<span class="dv">0</span> <span class="kw">then do</span>;</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">1</span>; start=fuptime-epsilon; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">0</span> <span class="kw">and</span> s=<span class="dv">1</span> <span class="kw">then do</span>;</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">0</span>; start=<span class="dv">0</span>; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>/<span class="dv">0.125</span>; <span class="kw">output; end</span>;</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> dead=<span class="dv">1</span> <span class="kw">and</span> s=<span class="dv">1</span> <span class="kw">then do</span>;</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">0</span>; start=<span class="dv">0</span>; <span class="kw">stop</span>=fuptime-epsilon; w=<span class="dv">1</span>/<span class="dv">0.125</span>; <span class="kw">output</span>;</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    d=<span class="dv">1</span>; start=fuptime-epsilon; <span class="kw">stop</span>=fuptime; w=<span class="dv">1</span>; <span class="kw">output; end</span>;</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=casecoho covsandwich(aggregate);</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    class bcg(ref=<span class="st">"0"</span>) agem;</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> <span class="kw">stop</span>*d(<span class="dv">0</span>)=bcg agem/rl entry=start;</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    weight w; id id;</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>                 Parameter   Standard</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a> Parameter   DF   Estimate      <span class="kw">Error</span></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a> bcg       <span class="dv">1</span>  <span class="dv">1</span>   -<span class="dv">0.38946</span>    <span class="dv">0.16599</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">0</span>  <span class="dv">1</span>   -<span class="dv">0.00371</span>    <span class="dv">0.41199</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">1</span>  <span class="dv">1</span>    <span class="dv">0.18793</span>    <span class="dv">0.39633</span></span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">2</span>  <span class="dv">1</span>   -<span class="dv">0.33429</span>    <span class="dv">0.40462</span></span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">3</span>  <span class="dv">1</span>    <span class="dv">0.09770</span>    <span class="dv">0.39586</span></span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">4</span>  <span class="dv">1</span>    <span class="dv">0.14055</span>    <span class="dv">0.38892</span></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a> agem      <span class="dv">5</span>  <span class="dv">1</span>    <span class="dv">0.09873</span>    <span class="dv">0.39251</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a><span class="co">/* NCC MACRO */</span></span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> source; <span class="kw">set</span> bissau;</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>    study_id=id;</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>    age_entry=<span class="dv">0</span>;</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>    age_dlo=fuptime;</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>    censor=dead;</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a><span class="kw">%macro</span> caseset;</span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%let</span> sampling = <span class="dv">1</span>;</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%let</span> ratio = <span class="dv">3</span>;</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Enumerate Cases */</span></span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> cases;</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> source ;</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> censor = <span class="dv">1</span>;</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> cases;</span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> cases<span class="kw"> end</span> = eof;</span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> eof <span class="kw">then</span> <span class="kw">call</span> symput (<span class="st">'ncases'</span>, <span class="kw">put</span>(_n_,<span class="dv">6</span>.));</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Create Risk Set */</span></span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%do</span> iter = <span class="dv">1</span> <span class="kw">%to</span> <span class="kw">&amp;ncases;</span></span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_case;</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> cases;</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> _n_ = <span class="kw">&amp;iter </span>;</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>    <span class="kw">call</span> symput (<span class="st">'rs'</span>, <span class="kw">put</span>(_n_,<span class="dv">6</span>.));</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>    <span class="kw">call</span> symput (<span class="st">'age_rs'</span>, <span class="kw">put</span>(age_dlo,<span class="dv">8</span>.)); <span class="kw">call</span> symput (<span class="st">'case_id'</span>,</span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>    <span class="kw">put</span>(study_id,<span class="dv">8</span>.));</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_control;</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> source;</span>
+<span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> age_entry  &lt;= <span class="kw">&amp;age_rs </span> &lt;= age_dlo;</span>
+<span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Exclude Index Case */</span></span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> study_id = <span class="kw">&amp;case_id then</span> <span class="kw">delete</span>;</span>
+<span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>    number = <span class="fu">ranuni</span>(<span class="dv">0</span>);</span>
+<span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>    age_rs = <span class="kw">&amp;age_rs;</span></span>
+<span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>    censor = <span class="dv">0</span>;</span>
+<span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Sample Controls */</span></span>
+<span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%if</span> <span class="kw">&amp;sampling </span>= <span class="dv">1</span> <span class="kw">%then</span> <span class="kw">%do</span>;</span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a><span class="kw">    proc</span> sort<span class="kw"> data</span> = temp_control;</span>
+<span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> number;</span>
+<span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> temp_control;</span>
+<span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> temp_control;</span>
+<span id="cb9-117"><a href="#cb9-117" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> age_rs;</span>
+<span id="cb9-118"><a href="#cb9-118" aria-hidden="true" tabindex="-1"></a>    <span class="kw">retain</span> m;</span>
+<span id="cb9-119"><a href="#cb9-119" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> first.age_rs <span class="kw">then</span> m = <span class="dv">0</span>;</span>
+<span id="cb9-120"><a href="#cb9-120" aria-hidden="true" tabindex="-1"></a>    m=m+<span class="dv">1</span>;</span>
+<span id="cb9-121"><a href="#cb9-121" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> m &lt;= <span class="kw">&amp;ratio then</span> <span class="kw">output</span> temp_control;</span>
+<span id="cb9-122"><a href="#cb9-122" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-123"><a href="#cb9-123" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>; </span>
+<span id="cb9-124"><a href="#cb9-124" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* End If Sampling = 1 */</span></span>
+<span id="cb9-125"><a href="#cb9-125" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Combine Case with Controls */</span></span>
+<span id="cb9-126"><a href="#cb9-126" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> rs_<span class="kw">&amp;iter;</span></span>
+<span id="cb9-127"><a href="#cb9-127" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> temp_case</span>
+<span id="cb9-128"><a href="#cb9-128" aria-hidden="true" tabindex="-1"></a>    temp_control;</span>
+<span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>    rs = <span class="kw">&amp;rs;</span></span>
+<span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a>    age_rs = <span class="kw">&amp;age_rs;</span></span>
+<span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* DM Output 'Clear'; Log 'Clear'; */</span></span>
+<span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>; </span>
+<span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* End Loop Creating Risk Set */</span></span>
+<span id="cb9-136"><a href="#cb9-136" aria-hidden="true" tabindex="-1"></a>    <span class="co">/* Append Risk Sets */</span></span>
+<span id="cb9-137"><a href="#cb9-137" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%do</span> j = <span class="dv">2</span> <span class="kw">%to</span> <span class="kw">&amp;ncases;</span></span>
+<span id="cb9-138"><a href="#cb9-138" aria-hidden="true" tabindex="-1"></a><span class="kw">    proc</span> append base = rs_1<span class="kw"> data</span> = rs_<span class="kw">&amp;j;</span></span>
+<span id="cb9-139"><a href="#cb9-139" aria-hidden="true" tabindex="-1"></a><span class="kw">    run</span>;</span>
+<span id="cb9-140"><a href="#cb9-140" aria-hidden="true" tabindex="-1"></a>    <span class="kw">%end</span>;</span>
+<span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a><span class="kw">    data</span> final; <span class="kw">set</span> rs_1<span class="kw">; run</span>;</span>
+<span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a><span class="kw">%mend</span> ; </span>
+<span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a><span class="co">/* End Macro */</span></span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a><span class="co">/* Invoke Macro */</span></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>%caseset;</span>
+<span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=final;</span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>class bcg(ref=<span class="st">"0"</span>) agem;</span>
+<span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> fuptime*censor(<span class="dv">0</span>)=bcg agem / rl;</span>
+<span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>  strata rs;</span>
+<span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

@@ -1,32 +1,3 @@
-### Read data
-
-::: {.panel-tabset}
-
-## R
-```{r}
-#| label: read-bissau-r
-bissau <- read.csv("data/bissau.csv")
-bissau$agem <- as.integer(bissau$age/30.4)
-```
-
-## SAS
-```{sas}
-#| label: read-bissau-sas
-#| eval: false 
-#| output: false
-proc import 
-datafile="data/bissau.csv"
-	out=bissau
-	dbms = csv
-	replace;
-run;
-data bissau; 
-	set bissau; 
-	agem = int(age/30.4);
-run; 
-```
-:::
-  
 ### Table 7.2
 
 Please note, that $\widehat{\beta}$ will vary with chosen seed, but SD values are stable.
@@ -36,6 +7,9 @@ Please note, that $\widehat{\beta}$ will vary with chosen seed, but SD values ar
 ```{r}
 #| label: table-8.1-r
 # Cox model - full cohort
+bissau <- read.csv("data/bissau.csv")
+bissau$agem <- as.integer(bissau$age/30.4)
+
 library(survival)
 options(contrasts=c("contr.treatment", "contr.poly"))
 coxph(Surv(fuptime, dead != 0) ~ factor(bcg) + factor(agem), data = bissau)
@@ -71,6 +45,17 @@ summary(clogit(Fail ~ factor(bcg) + factor(agem), data=nccdata))
 #| label: table-8.1-sas
 #| eval: false 
 #| output: false
+
+proc import 
+datafile="data/bissau.csv"
+	out=bissau
+	dbms = csv
+	replace;
+run;
+data bissau; 
+	set bissau; 
+	agem = int(age/30.4);
+run; 
 
 /* 1.: Fit Cox model */
 proc phreg data=bissau;
@@ -140,8 +125,6 @@ data source; set bissau;
 	censor=dead;
 run;
 
- * seed is now set inside the macro to same seed as for case-cohort, but was random in Table 7.2;
-
 %macro caseset;
 	%let sampling = 1;
 	%let ratio = 3;
@@ -169,8 +152,7 @@ run;
 	if age_entry  <= &age_rs  <= age_dlo;
 	/* Exclude Index Case */
 	if study_id = &case_id then delete;
-	/* set seed */
-	number = ranuni(260452);
+	number = ranuni(0);
 	age_rs = &age_rs;
 	censor = 0;
 	run;

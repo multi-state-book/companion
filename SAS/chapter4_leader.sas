@@ -3,17 +3,10 @@
 *------------------------------------------------------------------;
 
 * Load data; 
-proc import out=leader
-	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv"
+proc import out=leader_mi
+	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv"
 	dbms=csv replace;
 run;
-proc freq data = leader;
-table eventtype*type;
-run;
-data leader_mi; 
-	set leader; 
-	where type = "recurrent_mi"; 
-run; 
 
 *---------------------------------------------------------------;
 *--------------------- Figure 4.20 -----------------------------;
@@ -119,6 +112,15 @@ proc sgplot data=GLdata;
 	yaxis grid values=(0 to 0.12 by 0.02);
 	label time="Time since randomisation (months)";
 	label na="Expected number events per subject"; 
+run;
+
+*---------------------------------------------------------------;
+* In-text, p. 146: Cox for mortality;
+*---------------------------------------------------------------;
+
+proc phreg data=leader_mi;
+  class treat(ref="1");
+  model (start,stop)*status(0,1) = treat / rl;
 run;
 
 *---------------------------------------------------------------;

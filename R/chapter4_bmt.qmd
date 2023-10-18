@@ -403,7 +403,7 @@ run;
 
 ```{r}
 #| label: in-text-anova-r
-
+anova(lm(age~factor(team),data=bmt))
 ```
 
 ## SAS

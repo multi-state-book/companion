@@ -1226,7 +1226,7 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
-<div class="cell" data-hash="Ch5_cache/html/figure-5.5-r_7b1a50e64c698ec8f57dff10ba825498">
+<div class="cell" data-hash="Ch5_cache/html/figure-5.5-r_9cef9cd9d2a2dc48815b5d049e51c281">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>theme_general <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
@@ -1244,21 +1244,20 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>    Q1b[i] <span class="ot">&lt;-</span> Y1<span class="sc">/</span>N}</span>
 <span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(Q1b)}</span>
 <span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="co"># N=B=1000 </span></span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="co">#hist_Q1 &lt;- Q1_hist2(1000,1000) </span></span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co">#hist_Q1 &lt;- as.data.frame(hist_Q1)</span></span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>hist_Q1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig55.csv"</span>)</span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram of Q1(2) with ggplot</span></span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> hist_Q1<span class="sc">$</span>hist_Q1,<span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count)),</span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1<span class="sc">$</span>hist_Q1), <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="fu">expression</span>(Q[<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>N<span class="ot">=</span>B<span class="ot">=</span><span class="dv">1000</span> </span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>hist_Q1 <span class="ot">&lt;-</span> <span class="fu">Q1_hist2</span>(<span class="dv">1000</span>,<span class="dv">1000</span>) </span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>hist_Q1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(hist_Q1)</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram of Q1(2) with ggplot</span></span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> hist_Q1<span class="sc">$</span>hist_Q1,<span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count)),</span>
+<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"grey"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
+<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1<span class="sc">$</span>hist_Q1), <span class="at">color =</span> <span class="st">"black"</span>, </span>
+<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="fu">expression</span>(Q[<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch5_files/figure-html/figure-5.5-r-1.png" class="img-fluid" width="1122"></p>
@@ -1274,7 +1273,7 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
-<div class="cell" data-hash="Ch5_cache/html/figure-5.6-r_2fb0605e09e2d60cc11bdd81fd4d13ee">
+<div class="cell" data-hash="Ch5_cache/html/figure-5.6-r_1d29b89f68cacae06597d82e3ca40bda">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Expected length of stay in state 1, epsilon1(tau)</span></span>
@@ -1287,25 +1286,23 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating data</span></span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>time_elos <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">4</span><span class="sc">*</span><span class="fl">365.25</span>,<span class="dv">1</span>)</span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co">#elos_aj &lt;- as.data.frame(cbind(time_elos, sapply(time_elos, AaJ_ELOS_function)))</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co">#elos_ms &lt;- as.data.frame(cbind(time_elos, sapply(time_elos, MS_ELOS, seed = 1, N = 10000))) </span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>elos_aj <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_elos, <span class="fu">sapply</span>(time_elos, AaJ_ELOS_function)))</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>elos_ms <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_elos, <span class="fu">sapply</span>(time_elos, MS_ELOS, <span class="at">seed =</span> <span class="dv">1</span>, <span class="at">N =</span> <span class="dv">10000</span>))) </span>
 <span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot comparing epsilon1(tau) based on AaJ and micro-simulation (based on N = 10.000)</span></span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>elos_aj <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig56a.csv"</span>)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>elos_ms <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig56b.csv"</span>)</span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">data =</span> elos_aj, <span class="fu">aes</span>(<span class="at">x =</span>time_elos<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> V2<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">linetype =</span> <span class="st">"Aalen-Johansen"</span>), <span class="at">size =</span><span class="fl">0.9</span>) <span class="sc">+</span> </span>
-<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span>elos_ms, <span class="fu">aes</span>(<span class="at">x =</span> time_elos<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> V2<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">linetype =</span> <span class="st">"Micro-simulation"</span>), <span class="at">size =</span><span class="fl">0.9</span>)<span class="sc">+</span> </span>
-<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(epsilon[<span class="dv">1</span>] <span class="sc">*</span> (t))) <span class="sc">+</span></span>
-<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
-<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="st">"Estimator"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
-<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>))</span>
-<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">data =</span> elos_aj, <span class="fu">aes</span>(<span class="at">x =</span>time_elos<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> V2<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">linetype =</span> <span class="st">"Aalen-Johansen"</span>), <span class="at">size =</span><span class="fl">0.9</span>) <span class="sc">+</span> </span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span>elos_ms, <span class="fu">aes</span>(<span class="at">x =</span> time_elos<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> V2<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">linetype =</span> <span class="st">"Micro-simulation"</span>), <span class="at">size =</span><span class="fl">0.9</span>)<span class="sc">+</span> </span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()  <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(epsilon[<span class="dv">1</span>] <span class="sc">*</span> (t))) <span class="sc">+</span></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="st">"Estimator"</span>, <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.5</span>, <span class="st">'cm'</span>))</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch5_files/figure-html/figure-5.6-r-1.png" class="img-fluid" width="1122"></p>
@@ -1321,7 +1318,7 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-12-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-12-1" role="tab" aria-controls="tabset-12-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-12-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-12-1-tab">
-<div class="cell" data-hash="Ch5_cache/html/figure-5.7-r_c635bb582d7a517e19d9fb860418c71c">
+<div class="cell" data-hash="Ch5_cache/html/figure-5.7-r_2615c6c9b2b55504981120bbc34dba9b">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># MICROSIMULATION INCLUDING SCLEROTHERAPY AS COVARIATE #########################</span></span>
@@ -1472,22 +1469,19 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <span id="cb45-146"><a href="#cb45-146" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-147"><a href="#cb45-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for histogram. </span></span>
 <span id="cb45-148"><a href="#cb45-148" aria-hidden="true" tabindex="-1"></a><span class="co"># Takes approx. 10 min</span></span>
-<span id="cb45-149"><a href="#cb45-149" aria-hidden="true" tabindex="-1"></a><span class="co">#hist_Q1_scle0 &lt;- Q1_hist2_scle(1000,1000, 0)</span></span>
-<span id="cb45-150"><a href="#cb45-150" aria-hidden="true" tabindex="-1"></a><span class="co">#hist_Q1_scle1 &lt;- Q1_hist2_scle(1000,1000, 1)</span></span>
+<span id="cb45-149"><a href="#cb45-149" aria-hidden="true" tabindex="-1"></a>hist_Q1_scle0 <span class="ot">&lt;-</span> <span class="fu">Q1_hist2_scle</span>(<span class="dv">1000</span>,<span class="dv">1000</span>, <span class="dv">0</span>)</span>
+<span id="cb45-150"><a href="#cb45-150" aria-hidden="true" tabindex="-1"></a>hist_Q1_scle1 <span class="ot">&lt;-</span> <span class="fu">Q1_hist2_scle</span>(<span class="dv">1000</span>,<span class="dv">1000</span>, <span class="dv">1</span>)</span>
 <span id="cb45-151"><a href="#cb45-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-152"><a href="#cb45-152" aria-hidden="true" tabindex="-1"></a>hist_Q1_scle0 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig57a.csv"</span>)<span class="sc">$</span>x</span>
-<span id="cb45-153"><a href="#cb45-153" aria-hidden="true" tabindex="-1"></a>hist_Q1_scle1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig57b.csv"</span>)<span class="sc">$</span>x</span>
-<span id="cb45-154"><a href="#cb45-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-155"><a href="#cb45-155" aria-hidden="true" tabindex="-1"></a>fills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"lightgrey"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"darkgrey"</span>)</span>
-<span id="cb45-156"><a href="#cb45-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-157"><a href="#cb45-157" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb45-158"><a href="#cb45-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(hist_Q1_scle1), <span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count), <span class="at">fill =</span> <span class="st">"1"</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">40</span>) <span class="sc">+</span></span>
-<span id="cb45-159"><a href="#cb45-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1_scle1), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb45-160"><a href="#cb45-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(hist_Q1_scle0), <span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count), <span class="at">fill =</span> <span class="st">"0"</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">40</span>) <span class="sc">+</span></span>
-<span id="cb45-161"><a href="#cb45-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1_scle0), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb45-162"><a href="#cb45-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="fu">expression</span>(Q[<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="st">" | "</span> <span class="sc">*</span> Z))) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="st">"Z"</span>, <span class="at">values =</span> fills) <span class="sc">+</span> </span>
-<span id="cb45-163"><a href="#cb45-163" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb45-164"><a href="#cb45-164" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-152"><a href="#cb45-152" aria-hidden="true" tabindex="-1"></a>fills <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0"</span> <span class="ot">=</span> <span class="st">"lightgrey"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"darkgrey"</span>)</span>
+<span id="cb45-153"><a href="#cb45-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-154"><a href="#cb45-154" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.7</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb45-155"><a href="#cb45-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(hist_Q1_scle1), <span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count), <span class="at">fill =</span> <span class="st">"1"</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">40</span>) <span class="sc">+</span></span>
+<span id="cb45-156"><a href="#cb45-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1_scle1), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb45-157"><a href="#cb45-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(hist_Q1_scle0), <span class="at">y =</span> <span class="fu">stat</span>(count) <span class="sc">/</span> <span class="fu">sum</span>(count), <span class="at">fill =</span> <span class="st">"0"</span>), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">40</span>) <span class="sc">+</span></span>
+<span id="cb45-158"><a href="#cb45-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(hist_Q1_scle0), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb45-159"><a href="#cb45-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="fu">expression</span>(Q[<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="st">" | "</span> <span class="sc">*</span> Z))) <span class="sc">+</span> <span class="fu">scale_fill_manual</span>(<span class="st">"Z"</span>, <span class="at">values =</span> fills) <span class="sc">+</span> </span>
+<span id="cb45-160"><a href="#cb45-160" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb45-161"><a href="#cb45-161" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch5_files/figure-html/figure-5.7-r-1.png" class="img-fluid" width="1122"></p>
@@ -1503,7 +1497,7 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-13-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-13-1" role="tab" aria-controls="tabset-13-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-13-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-13-1-tab">
-<div class="cell" data-hash="Ch5_cache/html/figure-5.8-r_33d3c9dd27e48481cfe2a0dfe2fc7c75">
+<div class="cell" data-hash="Ch5_cache/html/figure-5.8-r_c45f604269a3969137625306cc42b07b">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># P01(1,t) LANDMARK PEPE #######################################################</span></span>
@@ -1732,51 +1726,49 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <span id="cb46-224"><a href="#cb46-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(prob01)}</span>
 <span id="cb46-225"><a href="#cb46-225" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-226"><a href="#cb46-226" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimation of transition probabilities under Markov assumption</span></span>
-<span id="cb46-227"><a href="#cb46-227" aria-hidden="true" tabindex="-1"></a><span class="co"># (AaJ1 &lt;- probtrans(msfit, predt = s1)[[1]]) #P(V(t) = 1 | V(1) = 0)</span></span>
+<span id="cb46-227"><a href="#cb46-227" aria-hidden="true" tabindex="-1"></a>AaJ1 <span class="ot">&lt;-</span> <span class="fu">probtrans</span>(msfit, <span class="at">predt =</span> s1)[[<span class="dv">1</span>]] <span class="co">#P(V(t) = 1 | V(1) = 0)</span></span>
 <span id="cb46-228"><a href="#cb46-228" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb46-229"><a href="#cb46-229" aria-hidden="true" tabindex="-1"></a><span class="co"># # Estimation of transition probabilities with the Landmark Aalen-Johansen estimator</span></span>
-<span id="cb46-230"><a href="#cb46-230" aria-hidden="true" tabindex="-1"></a><span class="co"># # Warning is not related to the estimate of pstate2</span></span>
-<span id="cb46-231"><a href="#cb46-231" aria-hidden="true" tabindex="-1"></a><span class="co"># (LMAaJ1 &lt;- LMAJ(long_format, s = s1, from = 1)) #P(V(t) = 1 | V(1) = 0)</span></span>
+<span id="cb46-229"><a href="#cb46-229" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimation of transition probabilities with the Landmark Aalen-Johansen estimator</span></span>
+<span id="cb46-230"><a href="#cb46-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Warning is not related to the estimate of pstate2</span></span>
+<span id="cb46-231"><a href="#cb46-231" aria-hidden="true" tabindex="-1"></a>LMAaJ1 <span class="ot">&lt;-</span> <span class="fu">LMAJ</span>(long_format, <span class="at">s =</span> s1, <span class="at">from =</span> <span class="dv">1</span>) <span class="co">#P(V(t) = 1 | V(1) = 0)</span></span>
 <span id="cb46-232"><a href="#cb46-232" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
 <span id="cb46-233"><a href="#cb46-233" aria-hidden="true" tabindex="-1"></a><span class="co"># # Data for estimation of transition probabilities, from s =1</span></span>
-<span id="cb46-234"><a href="#cb46-234" aria-hidden="true" tabindex="-1"></a><span class="co"># time_in_days &lt;- seq(from = s1, to = 1508, by = 0.8)</span></span>
-<span id="cb46-235"><a href="#cb46-235" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_pepe &lt;- sapply(time_in_days, pepe01_s1)</span></span>
-<span id="cb46-236"><a href="#cb46-236" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_titman &lt;- sapply(time_in_days, titman01_s1)</span></span>
-<span id="cb46-237"><a href="#cb46-237" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb46-238"><a href="#cb46-238" aria-hidden="true" tabindex="-1"></a><span class="co"># # Making a data frame</span></span>
-<span id="cb46-239"><a href="#cb46-239" aria-hidden="true" tabindex="-1"></a><span class="co"># pepe_data &lt;- as.data.frame(cbind(time_in_days, pstate2_pepe, "LM Pepe"))</span></span>
-<span id="cb46-240"><a href="#cb46-240" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(pepe_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb46-241"><a href="#cb46-241" aria-hidden="true" tabindex="-1"></a><span class="co"># titman_data &lt;- as.data.frame(cbind(time_in_days, pstate2_titman, "LM Titman"))</span></span>
-<span id="cb46-242"><a href="#cb46-242" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(titman_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb46-243"><a href="#cb46-243" aria-hidden="true" tabindex="-1"></a><span class="co"># AaJ_data &lt;- as.data.frame(cbind(AaJ1$time, AaJ1$pstate2, "AaJ"))</span></span>
-<span id="cb46-244"><a href="#cb46-244" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(AaJ_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb46-245"><a href="#cb46-245" aria-hidden="true" tabindex="-1"></a><span class="co"># LMAaJ_data &lt;- as.data.frame(cbind(LMAaJ1$time, LMAaJ1$pstate2, "LM AaJ"))</span></span>
-<span id="cb46-246"><a href="#cb46-246" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(LMAaJ_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb46-247"><a href="#cb46-247" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb46-248"><a href="#cb46-248" aria-hidden="true" tabindex="-1"></a><span class="co"># data_LMs1 &lt;- as.data.frame(rbind(AaJ_data, LMAaJ_data, pepe_data, titman_data))</span></span>
-<span id="cb46-249"><a href="#cb46-249" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(data_LMs1) &lt;- c("time","p01","estimator")</span></span>
-<span id="cb46-250"><a href="#cb46-250" aria-hidden="true" tabindex="-1"></a><span class="co"># data_LMs1$time &lt;- as.numeric(data_LMs1$time)</span></span>
-<span id="cb46-251"><a href="#cb46-251" aria-hidden="true" tabindex="-1"></a><span class="co"># data_LMs1$p01 &lt;- as.numeric(data_LMs1$p01)</span></span>
-<span id="cb46-252"><a href="#cb46-252" aria-hidden="true" tabindex="-1"></a><span class="co"># data_LMs1$estimator &lt;- factor(data_LMs1$estimator, levels = c("AaJ", "LM AaJ", "LM Pepe", "LM Titman"))</span></span>
+<span id="cb46-234"><a href="#cb46-234" aria-hidden="true" tabindex="-1"></a>time_in_days <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> s1, <span class="at">to =</span> <span class="dv">1508</span>, <span class="at">by =</span> <span class="fl">0.8</span>)</span>
+<span id="cb46-235"><a href="#cb46-235" aria-hidden="true" tabindex="-1"></a>pstate2_pepe <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, pepe01_s1)</span>
+<span id="cb46-236"><a href="#cb46-236" aria-hidden="true" tabindex="-1"></a>pstate2_titman <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, titman01_s1)</span>
+<span id="cb46-237"><a href="#cb46-237" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb46-238"><a href="#cb46-238" aria-hidden="true" tabindex="-1"></a><span class="co"># Making a data frame</span></span>
+<span id="cb46-239"><a href="#cb46-239" aria-hidden="true" tabindex="-1"></a>pepe_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days, pstate2_pepe, <span class="st">"LM Pepe"</span>))</span>
+<span id="cb46-240"><a href="#cb46-240" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pepe_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb46-241"><a href="#cb46-241" aria-hidden="true" tabindex="-1"></a>titman_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days, pstate2_titman, <span class="st">"LM Titman"</span>))</span>
+<span id="cb46-242"><a href="#cb46-242" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(titman_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb46-243"><a href="#cb46-243" aria-hidden="true" tabindex="-1"></a>AaJ_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(AaJ1<span class="sc">$</span>time, AaJ1<span class="sc">$</span>pstate2, <span class="st">"AaJ"</span>))</span>
+<span id="cb46-244"><a href="#cb46-244" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(AaJ_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb46-245"><a href="#cb46-245" aria-hidden="true" tabindex="-1"></a>LMAaJ_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(LMAaJ1<span class="sc">$</span>time, LMAaJ1<span class="sc">$</span>pstate2, <span class="st">"LM AaJ"</span>))</span>
+<span id="cb46-246"><a href="#cb46-246" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(LMAaJ_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb46-247"><a href="#cb46-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-248"><a href="#cb46-248" aria-hidden="true" tabindex="-1"></a>data_LMs1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(AaJ_data, LMAaJ_data, pepe_data, titman_data))</span>
+<span id="cb46-249"><a href="#cb46-249" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_LMs1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>,<span class="st">"p01"</span>,<span class="st">"estimator"</span>)</span>
+<span id="cb46-250"><a href="#cb46-250" aria-hidden="true" tabindex="-1"></a>data_LMs1<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_LMs1<span class="sc">$</span>time)</span>
+<span id="cb46-251"><a href="#cb46-251" aria-hidden="true" tabindex="-1"></a>data_LMs1<span class="sc">$</span>p01 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_LMs1<span class="sc">$</span>p01)</span>
+<span id="cb46-252"><a href="#cb46-252" aria-hidden="true" tabindex="-1"></a>data_LMs1<span class="sc">$</span>estimator <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_LMs1<span class="sc">$</span>estimator, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"AaJ"</span>, <span class="st">"LM AaJ"</span>, <span class="st">"LM Pepe"</span>, <span class="st">"LM Titman"</span>))</span>
 <span id="cb46-253"><a href="#cb46-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-254"><a href="#cb46-254" aria-hidden="true" tabindex="-1"></a>data_LMs1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig58.csv"</span>)</span>
-<span id="cb46-255"><a href="#cb46-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-256"><a href="#cb46-256" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 5.8 </span></span>
-<span id="cb46-257"><a href="#cb46-257" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_LMs1,<span class="fu">aes</span>(<span class="at">x =</span> time<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> p01, <span class="at">linetype =</span> estimator)) <span class="sc">+</span> </span>
-<span id="cb46-258"><a href="#cb46-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb46-259"><a href="#cb46-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb46-260"><a href="#cb46-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span> </span>
-<span id="cb46-261"><a href="#cb46-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">border</span>(<span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb46-262"><a href="#cb46-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(),<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.94</span>,<span class="fl">4.2</span>)) <span class="sc">+</span>  </span>
-<span id="cb46-263"><a href="#cb46-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">linetype=</span>estimator) <span class="sc">+</span> </span>
-<span id="cb46-264"><a href="#cb46-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"dotted"</span>, <span class="st">"dotdash"</span>)) <span class="sc">+</span></span>
-<span id="cb46-265"><a href="#cb46-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">linetype=</span><span class="st">"Estimator"</span>) <span class="sc">+</span></span>
-<span id="cb46-266"><a href="#cb46-266" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> </span>
-<span id="cb46-267"><a href="#cb46-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">2</span>,<span class="st">"cm"</span>),</span>
-<span id="cb46-268"><a href="#cb46-268" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb46-269"><a href="#cb46-269" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span> </span>
-<span id="cb46-270"><a href="#cb46-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb46-271"><a href="#cb46-271" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-254"><a href="#cb46-254" aria-hidden="true" tabindex="-1"></a><span class="do">### Figure 5.8 </span></span>
+<span id="cb46-255"><a href="#cb46-255" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.8</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_LMs1,<span class="fu">aes</span>(<span class="at">x =</span> time<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> p01, <span class="at">linetype =</span> estimator)) <span class="sc">+</span> </span>
+<span id="cb46-256"><a href="#cb46-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb46-257"><a href="#cb46-257" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb46-258"><a href="#cb46-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span> </span>
+<span id="cb46-259"><a href="#cb46-259" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> <span class="fu">border</span>(<span class="at">size =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb46-260"><a href="#cb46-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(),<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.94</span>,<span class="fl">4.2</span>)) <span class="sc">+</span>  </span>
+<span id="cb46-261"><a href="#cb46-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">linetype=</span>estimator) <span class="sc">+</span> </span>
+<span id="cb46-262"><a href="#cb46-262" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>, <span class="st">"dotted"</span>, <span class="st">"dotdash"</span>)) <span class="sc">+</span></span>
+<span id="cb46-263"><a href="#cb46-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">linetype=</span><span class="st">"Estimator"</span>) <span class="sc">+</span></span>
+<span id="cb46-264"><a href="#cb46-264" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> </span>
+<span id="cb46-265"><a href="#cb46-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">2</span>,<span class="st">"cm"</span>),</span>
+<span id="cb46-266"><a href="#cb46-266" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb46-267"><a href="#cb46-267" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span> </span>
+<span id="cb46-268"><a href="#cb46-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb46-269"><a href="#cb46-269" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch5_files/figure-html/figure-5.8-r-1.png" class="img-fluid" width="1122"></p>
@@ -1792,46 +1784,44 @@ NOTE: entry is assumed to be 0 on the tsr timescale.</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-14-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-14-1" role="tab" aria-controls="tabset-14-1" aria-selected="true">R</a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-14-1-tab">
-<div class="cell" data-hash="Ch5_cache/html/figure-5.9-r_490e8cfaa6af085632f0d509f267e5b7">
+<div class="cell" data-hash="Ch5_cache/html/figure-5.9-r_311aa24859cb35f2b376f3535fc3f712">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating data frame</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_semi &lt;- sapply(time_in_days, semi01)</span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_tbase_pcwe &lt;- sapply(time_in_days, pcw01)</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_tbase_lwe &lt;- sapply(time_in_days, lw01)</span></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co"># pstate2_tbase_dwe &lt;- sapply(time_in_days, dw01)</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># semi_data &lt;- as.data.frame(cbind(time_in_days, pstate2_semi, "Semi"))</span></span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(semi_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># tbase_pcwe_data &lt;- as.data.frame(cbind(time_in_days,pstate2_tbase_pcwe, "PWCD"))</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(tbase_pcwe_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># tbase_lwe_data &lt;- as.data.frame(cbind(time_in_days, pstate2_tbase_lwe, "LD"))</span></span>
-<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(tbase_lwe_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a><span class="co"># tbase_dwe_data &lt;- as.data.frame(cbind(time_in_days, pstate2_tbase_dwe, "FPD"))</span></span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(tbase_dwe_data) &lt;- c("time", "p01", "estimator")</span></span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a><span class="co"># data_dur1 &lt;- as.data.frame(rbind(AaJ_data, LMAaJ_data, semi_data, tbase_pcwe_data, tbase_lwe_data, tbase_dwe_data))</span></span>
-<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a><span class="co"># colnames(data_dur1) &lt;- c("time","p01","estimator")</span></span>
-<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="co"># data_dur1$time &lt;- as.numeric(data_dur1$time)</span></span>
-<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a><span class="co"># data_dur1$p01 &lt;- as.numeric(data_dur1$p01)</span></span>
-<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a><span class="co"># data_dur1$estimator &lt;- factor(data_dur1$estimator, levels = c("AaJ", "LM AaJ", "Semi", "PWCD", "LD", "FPD"))</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>pstate2_semi <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, semi01)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>pstate2_tbase_pcwe <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, pcw01)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>pstate2_tbase_lwe <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, lw01)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>pstate2_tbase_dwe <span class="ot">&lt;-</span> <span class="fu">sapply</span>(time_in_days, dw01)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>semi_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days, pstate2_semi, <span class="st">"Semi"</span>))</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(semi_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>tbase_pcwe_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days,pstate2_tbase_pcwe, <span class="st">"PWCD"</span>))</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tbase_pcwe_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>tbase_lwe_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days, pstate2_tbase_lwe, <span class="st">"LD"</span>))</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tbase_lwe_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>tbase_dwe_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(time_in_days, pstate2_tbase_dwe, <span class="st">"FPD"</span>))</span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tbase_dwe_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>, <span class="st">"p01"</span>, <span class="st">"estimator"</span>)</span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>data_dur1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(AaJ_data, LMAaJ_data, semi_data, tbase_pcwe_data, tbase_lwe_data, tbase_dwe_data))</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data_dur1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"time"</span>,<span class="st">"p01"</span>,<span class="st">"estimator"</span>)</span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a>data_dur1<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_dur1<span class="sc">$</span>time)</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>data_dur1<span class="sc">$</span>p01 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(data_dur1<span class="sc">$</span>p01)</span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>data_dur1<span class="sc">$</span>estimator <span class="ot">&lt;-</span> <span class="fu">factor</span>(data_dur1<span class="sc">$</span>estimator, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"AaJ"</span>, <span class="st">"LM AaJ"</span>, <span class="st">"Semi"</span>, <span class="st">"PWCD"</span>, <span class="st">"LD"</span>, <span class="st">"FPD"</span>))</span>
 <span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>data_dur1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"temp/datafig59.csv"</span>)</span>
-<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.9</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_dur1,<span class="fu">aes</span>(<span class="at">x =</span> time<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> p01, <span class="at">linetype =</span> estimator)) <span class="sc">+</span> </span>
-<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(),<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.94</span>,<span class="fl">4.2</span>)) <span class="sc">+</span></span>
-<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">linetype=</span>estimator) <span class="sc">+</span> </span>
-<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"twodash"</span>, <span class="st">"dotted"</span>, <span class="st">"longdash"</span>, <span class="st">"dotdash"</span>, <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
-<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">linetype=</span><span class="st">"Estimator"</span>) <span class="sc">+</span></span>
-<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> </span>
-<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">3</span>,<span class="st">"cm"</span>),</span>
-<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
-<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span> </span>
-<span id="cb47-36"><a href="#cb47-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb47-37"><a href="#cb47-37" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.9</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_dur1,<span class="fu">aes</span>(<span class="at">x =</span> time<span class="sc">/</span><span class="fl">365.25</span>, <span class="at">y =</span> p01, <span class="at">linetype =</span> estimator)) <span class="sc">+</span> </span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(),<span class="at">limits =</span> <span class="fu">c</span>(<span class="fl">0.94</span>,<span class="fl">4.2</span>)) <span class="sc">+</span></span>
+<span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">linetype=</span>estimator) <span class="sc">+</span> </span>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"twodash"</span>, <span class="st">"dotted"</span>, <span class="st">"longdash"</span>, <span class="st">"dotdash"</span>, <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
+<span id="cb47-29"><a href="#cb47-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">linetype=</span><span class="st">"Estimator"</span>) <span class="sc">+</span></span>
+<span id="cb47-30"><a href="#cb47-30" aria-hidden="true" tabindex="-1"></a>  theme_general <span class="sc">+</span> </span>
+<span id="cb47-31"><a href="#cb47-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.key.width =</span> <span class="fu">unit</span>(<span class="dv">3</span>,<span class="st">"cm"</span>),</span>
+<span id="cb47-32"><a href="#cb47-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb47-33"><a href="#cb47-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span> </span>
+<span id="cb47-34"><a href="#cb47-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb47-35"><a href="#cb47-35" aria-hidden="true" tabindex="-1"></a>fig5<span class="fl">.9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch5_files/figure-html/figure-5.9-r-1.png" class="img-fluid" width="1122"></p>
@@ -1923,7 +1913,7 @@ treat  0.83244 0.74157 0.9345</code></pre>
 </div>
 </div>
 <div id="tabset-15-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-15-2-tab">
-<div class="cell" data-hash="Ch5_cache/html/leader-sas_67e3e306af2d7ea25e5d9f12e9c56cbe">
+<div class="cell" data-hash="Ch5_cache/html/leader-sas_e8133b0982c7717827d14d54c322abd1">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">* recurrent MI+death;</span></span>
@@ -1944,43 +1934,67 @@ treat  0.83244 0.74157 0.9345</code></pre>
 <span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  id id;</span>
 <span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
 <span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a><span class="co">* recurrent 3p-MACE non-CV deaths incorrectly treated as censoring;</span></span>
-<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> macecens; </span>
-<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> leader_3p;</span>
-<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>    event=status <span class="kw">in</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>);</span>
-<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> status=<span class="dv">4</span> <span class="kw">then</span> event=<span class="dv">0</span>;</span>
-<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">output</span>;</span>
-<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status=<span class="dv">3</span> <span class="kw">then do</span>;</span>
-<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>        event=<span class="dv">2</span>;</span>
-<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>    start=<span class="kw">stop</span>;</span>
-<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>;</span>
-<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>        <span class="kw">output</span>;</span>
-<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>;</span>
-<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model and non-CV deaths incorrectly treated as censoring;</span> </span>
-<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=macecens covs(aggregate);</span>
-<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> (start, <span class="kw">stop</span>)*event(<span class="dv">0</span>) = treat / eventcode=<span class="dv">1</span> rl  convergelike=<span class="dv">1E-9</span>; </span>
-<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>  id id;</span>
-<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a><span class="co">* recurrent 3p-MACE;</span></span>
-<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> mace; </span>
-<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> leader_3p;</span>
-<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>    event=status <span class="kw">in</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>);</span>
-<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> status=<span class="dv">4</span> <span class="kw">then</span> event=<span class="dv">2</span>;</span>
-<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">output</span>;</span>
-<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status=<span class="dv">3</span> <span class="kw">then do</span>;</span>
-<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>        event=<span class="dv">2</span>;</span>
-<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>    start=<span class="kw">stop</span>;</span>
-<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>;</span>
-<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>        <span class="kw">output</span>;</span>
-<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>;</span>
-<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model for 3p-MACE and non-CV deaths treated as competing risks;</span> </span>
-<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=mace covs(aggregate);</span>
-<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> (start, <span class="kw">stop</span>)*event(<span class="dv">0</span>) = treat / eventcode=<span class="dv">1</span> rl convergelike=<span class="dv">1E-9</span>;</span>
-<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a>  id id;</span>
-<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>                             Analysis of Maximum Likelihood Estimates</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>                   Parameter     Standard                               Hazard     <span class="dv">95</span>% Hazard Ratio</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a> Parameter   DF     Estimate        <span class="kw">Error</span>   Chi-Square   Pr &gt; ChiSq      Ratio    Confidence Limits</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a> treat        <span class="dv">1</span>     -<span class="dv">0.15903</span>      <span class="dv">0.05711</span>       <span class="dv">7.7559</span>       <span class="dv">0.0054</span>      <span class="dv">0.853</span>      <span class="dv">0.763</span>      <span class="dv">0.954</span></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a><span class="co">* recurrent 3p-MACE non-CV deaths incorrectly treated as censoring;</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> macecens; </span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> leader_3p;</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>    event=status <span class="kw">in</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>);</span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> status=<span class="dv">4</span> <span class="kw">then</span> event=<span class="dv">0</span>;</span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>  <span class="kw">output</span>;</span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status=<span class="dv">3</span> <span class="kw">then do</span>;</span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>        event=<span class="dv">2</span>;</span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>    start=<span class="kw">stop</span>;</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>;</span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>        <span class="kw">output</span>;</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>;</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model and non-CV deaths incorrectly treated as censoring;</span> </span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=macecens covs(aggregate);</span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> (start, <span class="kw">stop</span>)*event(<span class="dv">0</span>) = treat / eventcode=<span class="dv">1</span> rl  convergelike=<span class="dv">1E-9</span>; </span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>  id id;</span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>                              Analysis of Maximum Likelihood Estimates</span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>                   Parameter     Standard                               Hazard     <span class="dv">95</span>% Hazard Ratio</span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a> Parameter   DF     Estimate        <span class="kw">Error</span>   Chi-Square   Pr &gt; ChiSq      Ratio    Confidence Limits</span>
+<span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a> treat        <span class="dv">1</span>     -<span class="dv">0.18265</span>      <span class="dv">0.05902</span>       <span class="dv">9.5754</span>       <span class="dv">0.0020</span>      <span class="dv">0.833</span>      <span class="dv">0.742</span>      <span class="dv">0.935</span></span>
+<span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-54"><a href="#cb54-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-55"><a href="#cb54-55" aria-hidden="true" tabindex="-1"></a><span class="co">* recurrent 3p-MACE;</span></span>
+<span id="cb54-56"><a href="#cb54-56" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> mace; </span>
+<span id="cb54-57"><a href="#cb54-57" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> leader_3p;</span>
+<span id="cb54-58"><a href="#cb54-58" aria-hidden="true" tabindex="-1"></a>    event=status <span class="kw">in</span> (<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span>);</span>
+<span id="cb54-59"><a href="#cb54-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> status=<span class="dv">4</span> <span class="kw">then</span> event=<span class="dv">2</span>;</span>
+<span id="cb54-60"><a href="#cb54-60" aria-hidden="true" tabindex="-1"></a>  <span class="kw">output</span>;</span>
+<span id="cb54-61"><a href="#cb54-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> status=<span class="dv">3</span> <span class="kw">then do</span>;</span>
+<span id="cb54-62"><a href="#cb54-62" aria-hidden="true" tabindex="-1"></a>        event=<span class="dv">2</span>;</span>
+<span id="cb54-63"><a href="#cb54-63" aria-hidden="true" tabindex="-1"></a>    start=<span class="kw">stop</span>;</span>
+<span id="cb54-64"><a href="#cb54-64" aria-hidden="true" tabindex="-1"></a>    <span class="kw">stop</span>=<span class="kw">stop</span><span class="dv">+0.5</span>;</span>
+<span id="cb54-65"><a href="#cb54-65" aria-hidden="true" tabindex="-1"></a>        <span class="kw">output</span>;</span>
+<span id="cb54-66"><a href="#cb54-66" aria-hidden="true" tabindex="-1"></a><span class="kw">    end</span>;</span>
+<span id="cb54-67"><a href="#cb54-67" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-68"><a href="#cb54-68" aria-hidden="true" tabindex="-1"></a><span class="co">* Mao-Lin model for 3p-MACE and non-CV deaths treated as competing risks;</span> </span>
+<span id="cb54-69"><a href="#cb54-69" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=mace covs(aggregate);</span>
+<span id="cb54-70"><a href="#cb54-70" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> (start, <span class="kw">stop</span>)*event(<span class="dv">0</span>) = treat / eventcode=<span class="dv">1</span> rl convergelike=<span class="dv">1E-9</span>;</span>
+<span id="cb54-71"><a href="#cb54-71" aria-hidden="true" tabindex="-1"></a>  id id;</span>
+<span id="cb54-72"><a href="#cb54-72" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb54-73"><a href="#cb54-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-74"><a href="#cb54-74" aria-hidden="true" tabindex="-1"></a>                             Analysis of Maximum Likelihood Estimates</span>
+<span id="cb54-75"><a href="#cb54-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-76"><a href="#cb54-76" aria-hidden="true" tabindex="-1"></a>                   Parameter     Standard                               Hazard     <span class="dv">95</span>% Hazard Ratio</span>
+<span id="cb54-77"><a href="#cb54-77" aria-hidden="true" tabindex="-1"></a> Parameter   DF     Estimate        <span class="kw">Error</span>   Chi-Square   Pr &gt; ChiSq      Ratio    Confidence Limits</span>
+<span id="cb54-78"><a href="#cb54-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-79"><a href="#cb54-79" aria-hidden="true" tabindex="-1"></a> treat        <span class="dv">1</span>     -<span class="dv">0.18340</span>      <span class="dv">0.05898</span>       <span class="dv">9.6698</span>       <span class="dv">0.0019</span>      <span class="dv">0.832</span>      <span class="dv">0.742</span>      <span class="dv">0.934</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

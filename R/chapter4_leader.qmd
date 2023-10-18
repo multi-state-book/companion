@@ -1,6 +1,6 @@
 ```{r}
 #| echo: false
-leader <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
+leader_mi <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
 ```
 
 Assume that the LEADER data set is loaded in data set `leader_mi`.
@@ -12,7 +12,7 @@ Assume that the LEADER data set is loaded in data set `leader_mi`.
 ```{r}
 #| label: figure-4.20-r
 #| out-width: 90%
-
+library(survival)
 library(ggplot2)
 theme_general <- theme_bw() +
   theme(
@@ -216,7 +216,8 @@ run;
 :::
 
 
-### In-text: LWYY and Ghosh-Lin models  
+
+### In-text, p. 146: LWYY and Ghosh-Lin models  
 
 ::: {.panel-tabset}
 
@@ -250,12 +251,47 @@ proc phreg data=leader_mi covs(aggregate);
   id id;
 run;
 
+                              Analysis of Maximum Likelihood Estimates
+
+                 Parameter   Standard StdErr                         Hazard  95% Hazard Ratio
+ Parameter   DF   Estimate      Error  Ratio Chi-Square Pr > ChiSq    Ratio Confidence Limits Label
+
+ treat     1  1   -0.16384    0.08810  1.226     3.4587     0.0629    0.849    0.714    1.009 treat 1
+
+
 title 'Ghosh-Lin model';
 proc phreg data=leader_mi covs(aggregate);
   class treat(ref="0");
   model (start, stop)*status(0) = treat / rl
 		eventcode=1 convergelike=1E-9; 
   id id;
+run;
+		
+                               Analysis of Maximum Likelihood Estimates
+
+                  Parameter    Standard                            Hazard   95% Hazard Ratio
+Parameter    DF    Estimate       Error  Chi-Square  Pr > ChiSq     Ratio   Confidence Limits  Label
+
+treat     1   1    -0.15877     0.08786      3.2658      0.0707     0.853     0.718     1.014  treat 1
+
+```
+:::
+
+### In-text, p. 146: Cox for mortality
+::: {.panel-tabset}
+## R
+```{r}
+#| label: in-text-coxmort-r
+coxph(Surv(start,stop,status==2)~factor(treat),data=leader_mi,ties="breslow")
+```
+## SAS
+```{sas}
+#| label: in-text-coxmort-sas
+#| eval: false 
+#| output: false
+proc phreg data=leader_mi;
+  class treat(ref="1");
+  model (start,stop)*status(0,1) = treat / rl;
 run;
 ```
 :::

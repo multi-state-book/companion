@@ -3,15 +3,10 @@
 *------------------------------------------------------------------;
 
 * Load data; 
-proc import out=leader
-	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi_3p.csv"
+proc import out=leader_mi
+	datafile="c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv"
 	dbms=csv replace;
 run;
-data leader_mi; 
-	set leader; 
-	where type = "recurrent_mi"; 
-run; 
-
 *---------------------------------------------------------------;
 *--------------------- Figure 2.15 -----------------------------;
 *---------------------------------------------------------------;

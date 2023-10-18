@@ -55,6 +55,14 @@ proc phreg data=mi covs(aggregate);
   id id;
 run;
 
+                             Analysis of Maximum Likelihood Estimates
+
+                   Parameter     Standard                               Hazard     95% Hazard Ratio
+ Parameter   DF     Estimate        Error   Chi-Square   Pr > ChiSq      Ratio    Confidence Limits
+
+ treat        1     -0.15903      0.05711       7.7559       0.0054      0.853      0.763      0.954
+
+
 * recurrent 3p-MACE non-CV deaths incorrectly treated as censoring;
 data macecens; 
 	set leader_3p;
@@ -73,6 +81,15 @@ proc phreg data=macecens covs(aggregate);
   model (start, stop)*event(0) = treat / eventcode=1 rl  convergelike=1E-9; 
   id id;
 run;
+ 
+                              Analysis of Maximum Likelihood Estimates
+
+                   Parameter     Standard                               Hazard     95% Hazard Ratio
+ Parameter   DF     Estimate        Error   Chi-Square   Pr > ChiSq      Ratio    Confidence Limits
+
+ treat        1     -0.18265      0.05902       9.5754       0.0020      0.833      0.742      0.935
+
+
 
 * recurrent 3p-MACE;
 data mace; 
@@ -92,5 +109,13 @@ proc phreg data=mace covs(aggregate);
   model (start, stop)*event(0) = treat / eventcode=1 rl convergelike=1E-9;
   id id;
 run;
+
+                             Analysis of Maximum Likelihood Estimates
+
+                   Parameter     Standard                               Hazard     95% Hazard Ratio
+ Parameter   DF     Estimate        Error   Chi-Square   Pr > ChiSq      Ratio    Confidence Limits
+
+ treat        1     -0.18340      0.05898       9.6698       0.0019      0.832      0.742      0.934
+
 ```
 :::

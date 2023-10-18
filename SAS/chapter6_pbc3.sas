@@ -157,121 +157,86 @@ data taus;  set &datatau ;
 *--------------------- Figure 6.1 ------------------------------;
 *---------------------------------------------------------------;
 
-proc sort data=pbc3; 
-	by days; 
-run;
-data timepoints;
-	input time;
-	datalines;
-	366
-	743
-	1105
-	;
-run;
-%pseudosurv(pbc3, days, fail, 349, timepoints, outdata);
-
-* Pseudo-values for S(t) at ~1 2 3 years are computed and stored in permanent data set;
-proc sort data=outdata; 
-	by tpseudo; 
+data minus1; set pbc3; /* drop failure with t~1 yr */
+if ptno=305 then delete;
 run;
 
-data minus1; 
-	set pbc3; /* drop failure with t~1 yr */
-	if ptno=415 then delete;
+proc lifetest data=pbc3;
+time days*fail(0);
+survival out=sall;
 run;
 
-proc lifetest 
-	data=pbc3;
-	time days*fail(0);
-	survival out=sall;
-run;
-
-data sall; 
-	set sall; 
-	survall=survival; 
-run;
+data sall; set sall; survall=survival; run;
 
 proc lifetest data=minus1;
-	time days*fail(0);
-	survival out=sminus1;
+time days*fail(0);
+survival out=sminus1;
 run;
 
 data ekstra;
-	input days survival;
-	datalines;
-	366 0.9225440684
-	;
+input days survival;
+datalines;
+366 0.9225440684
+;
 run;
 
-data sminus1ny; 
-	set sminus1 ekstra; 
-	survny=survival;
-run; 
-
-proc sort; 
-	by days;
+data sminus1ny; set sminus1 ekstra; 
+survny=survival;
+proc sort; by days;
 run;
 
-data final1; 
-	merge sall sminus1ny; 
-	by days; 
-	followup=days/365;
-	pseudo1=349*survall-348*survny;
+data final1; merge sall sminus1ny; by days; 
+followup=days/365;
+pseudo1=349*survall-348*survny;
 run;
 
 proc gplot data=final1;
-	plot pseudo1*followup;
+plot pseudo1*followup;
 run;
 
-data minus2; 
-	set pbc3; /* drop cens with t~1 yr */
-	if ptno=458 then delete;
+data minus2; set pbc3; /* drop cens with t~1 yr */
+if ptno=325 then delete;
 run;
 
 data ekstra;
-	input days survival;
-	datalines;
-	365 0.9225440684
-	;
+input days survival;
+datalines;
+365 0.9225440684
+;
 run;
 
 proc lifetest data=minus2;
-	time days*fail(0);
-	survival out=sminus2;
+time days*fail(0);
+survival out=sminus2;
 run;
 
 
-data sminus2ny; 
-	set sminus2 ekstra; 
-	survny=survival;
-run; 
-
-proc sort; 
-	by days;
+data sminus2ny; set sminus2 ekstra; 
+survny=survival;
+proc sort; by days;
 run;
 
-data final2; 
-	merge sall sminus2ny; 
-	by days; 
-	followup=days/365;
-	pseudo2=349*survall-348*survny;
+data final2; merge sall sminus2ny; by days; 
+followup=days/365;
+pseudo2=349*survall-348*survny;
 run;
 
-data final; 
-	merge final1 final2; 
-	by days; 
-	en=1; nul=0;
+proc gplot data=final2;
+plot pseudo2*followup;
 run;
+
+data final; merge final1 final2; by days; 
+en=1; nul=0;run;
 
 proc gplot data=final;
-	plot pseudo1*followup pseudo2*followup en*followup nul*followup
-	      /overlay haxis=axis1 vaxis=axis2;
-	axis1 order=0 to 6 by 1 minor=none label=('Years');
-	axis2 order=-0.1 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
-	symbol1  v=none i=join c=blue;
-	symbol2  v=none i=join c=red;
-	symbol3 v=none i=join c=black;
-	symbol4 v=none i=join c=black;
+plot pseudo1*followup pseudo2*followup en*followup nul*followup
+      /overlay haxis=axis1 vaxis=axis2;
+axis1 order=0 to 6 by 1 minor=none label=('Years');
+axis2 order=-0.1 to 1.1 by 0.1 minor=none label=(a=90 'Pseudo-values');
+symbol1  v=none i=join c=blue;
+symbol2  v=none i=join c=red;
+symbol3 v=none i=join c=black;
+symbol4 v=none i=join c=black;
 run;
 quit;
 
