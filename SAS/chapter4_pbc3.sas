@@ -1099,6 +1099,49 @@ proc rmstreg data=pbc3 tau=3;
         link=linear method=ipcw(strata=tment);
 run;
 
+
+*---------------------------------------------------------------;
+*---------- In-text, p. 136: RMST g-formula and bootstrap ------;
+*---------------------------------------------------------------;
+
+/* bootstrap sample */
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	do i = 1 to 349; /*nobs=349*/
+	x=round(ranuni(0)*349); /*nobs=349*/
+	set pbc3
+	point=x;
+	output;
+	end;
+	end;
+	stop;
+run;
+proc rmstreg data=bootpbc tau=3;
+  model followup*status(0)=tment alb log2bili / 
+        link=linear method=ipcw(strata=tment);
+	ods output parameterestimates=pe;
+	by sampnum;
+run;
+proc transpose data=pe(keep=sampnum estimate) out=beta prefix=beta;
+  by sampnum;
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, beta
+	where pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=beta1+beta2*0+beta3*alb+beta4*log2bili;
+	pred1=beta1+beta2*1+beta3*alb+beta4*log2bili;
+	diff=pred1-pred0;
+run;
+proc means data=pred mean stddev;
+	var pred0 pred1 diff;
+run;
+
+
 *---------------------------------------------------------------;
 *--------------------- Table 4.5 -------------------------------;
 *---------------------------------------------------------------;
@@ -1115,6 +1158,122 @@ proc phreg data=pbc3;
 	class sex (ref='1') tment (ref='0');
 	model days*status(0)=sex tment age log2bili alb / rl eventcode=1;
 run;
+
+
+*---------------------------------------------------------------;
+*--------- In-text, p. 138-9: Fine-Gray and g-formula ----------;
+*---------------------------------------------------------------;
+
+
+proc import out=pbc3
+	datafile="data/pbc3.csv"
+	dbms=csv replace;
+run;
+data pbc3; 
+	set pbc3;
+	albnorm=(alb-35)*(alb>35);
+	alb10=alb/10; alb2=alb10*alb10;
+	bilihigh=(bili-17.1)*(bili>17.1);
+	bilitoohigh=(bili-34.2)*(bili>34.2);
+	bilimuchtoohigh=(bili-51.3)*(bili>51.3);
+	bili100=bili/100; bili2=bili100*bili100;
+	log2bili=log2(bili);
+	logbilihigh=(log2bili-log2(17.1))*(bili>17.1);
+	logbilitoohigh=(log2bili-log2(34.2))*(bili>34.2);
+	logbilimuchtoohigh=(log2bili-log2(51.3))*(bili>51.3);
+	log2bili2=log2bili*log2bili;
+	followup=days/365.25;
+run;
+
+/* bootstrap sample */
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	do i = 1 to 349; /*nobs=349*/
+	x=round(ranuni(0)*349); /*nobs=349*/
+	set pbc3
+	point=x;
+	output;
+	end;
+	end;
+	stop;
+run;
+
+/* to get baseline 'CIF' */
+data cov;
+	input sex tment age alb log2bili;
+	datalines;
+0 0 0 0 0
+;
+run;
+
+/* Transplantation */
+proc phreg data=bootpbc noprint
+  outest=beta(keep=sampnum sex tment age log2bili alb _status_
+		rename=(sex=betasex tment=betatment age=betaage log2bili=betabili alb=betaalb));
+	model followup*status(0)=sex tment age log2bili alb / eventcode=1;
+	baseline out=cif(keep=sampnum cif) covariates=cov cif=cif timepoint=2;
+	by sampnum;
+run;
+/* Remove degenerated estimates with cif=1 */
+data cif;
+  set cif;
+  where cif<1; 
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, cif, beta 
+	where pbc.sampnum=cif.sampnum & pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=1-(1-cif)**exp(betatment*0+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	pred1=1-(1-cif)**exp(betatment*1+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	diff=pred1-pred0;
+run;
+proc means data=pred noprint;
+	var pred0 pred1 diff;
+	output out=boot(where=(_stat_="MEAN"));
+	by sampnum;
+run;
+proc means data=boot mean stddev;
+	var pred0 pred1 diff;
+run;
+
+/* Death without transplantation */
+proc phreg data=bootpbc noprint
+  outest=beta(keep=sampnum sex tment age log2bili alb _status_
+		rename=(sex=betasex tment=betatment age=betaage log2bili=betabili alb=betaalb));
+	model followup*status(0)=sex tment age log2bili alb / eventcode=2;
+	baseline out=cif(keep=sampnum cif) covariates=cov cif=cif timepoint=2;
+	by sampnum;
+run;
+/* Remove degenerated estimates with cif=1 */
+data cif;
+  set cif;
+  where cif<1; 
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, cif, beta 
+	where pbc.sampnum=cif.sampnum & pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=1-(1-cif)**exp(betatment*0+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	pred1=1-(1-cif)**exp(betatment*1+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	diff=pred1-pred0;
+run;
+proc means data=pred noprint;
+	var pred0 pred1 diff;
+	output out=boot(where=(_stat_="MEAN"));
+	by sampnum;
+run;
+proc means data=boot mean stddev;
+	var pred0 pred1 diff;
+run;
+
 
 
 *---------------------------------------------------------------;

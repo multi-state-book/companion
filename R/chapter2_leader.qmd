@@ -94,17 +94,19 @@ coxph(Surv(start, stop, status == 1) ~ treat, data = leader_mi,
                    method = "breslow")
 
 # AG model, piece-wise constant hazards
-# Calculating cuts -> 5
+# Calculating cuts -> 5 equally-sized intervals
 alltimes <- seq(0,max(leader_mi$stop),length=99)
 FunctionIntervalM <- function(a,b) {
   seq(from=min(a), to = max(a), by = (max(a)-min(a))/b)
-}
+  }
 cuts <- FunctionIntervalM(a = alltimes, b = 5)
 cut_data <- survSplit(Surv(start, stop, status == 1) ~ .,
                       leader_mi,
                       cut = cuts[-1],
                       episode = "timegroup")
-coxph(Surv(start, stop, event) ~ treat + strata(timegroup), data = cut_data)
+options(contrasts=c("contr.treatment", "contr.poly"))
+summary(glm(event ~ treat + factor(timegroup) + offset(log(stop-start)),
+            data=cut_data,family=poisson))
 
 # PWP 2nd event
 coxph(Surv(start, stop, status == 1) ~ treat,
@@ -136,6 +138,7 @@ coxph(Surv(start, stop, status == 1) ~ treat + strata(eventno),
 
 ## SAS
 
+
 ```{sas}
 #| label: table-2.15-sas
 #| eval: false 
@@ -147,6 +150,54 @@ run;
 * AG Cox type;
 proc phreg data=leader_mi;
   model stop*status(0 2)= treat / entry=start; 
+run;
+
+
+* AG model, piece-wise constant hazards with 5 equally-sized intervals;
+proc icphreg data=leader_mi;
+	model stop*status(0 2) = treat / entry=start basehaz=pch(nintervals=5);
+run;
+
+                     Analysis of Maximum Likelihood Parameter Estimates
+
+                                 Standard       95% Confidence          Chi-
+  Effect       DF    Estimate       Error           Limits            Square    Pr > ChiSq
+
+  Haz1          1      0.0001      0.0000      0.0000      0.0001
+  Haz2          1      0.0001      0.0000      0.0001      0.0001
+  Haz3          1      0.0001      0.0000      0.0001      0.0001
+  Haz4          1      0.0001      0.0000      0.0001      0.0001
+  Haz5          1      0.0001      0.0000      0.0000      0.0001
+  treat         1     -0.1643      0.0718     -0.3051     -0.0235       5.23        0.0222
+
+
+
+
+* Alternatively, one can split data at time points and use proc genmod:
+* For the piece-wise constant model we use the macro `lexis` by Bendix Carstensen,
+  The macrp split observation time into time interval. 
+  For more information visit https://bendixcarstensen.com and look for Software; 
+
+filename lexis url 'https://bendixcarstensen.com/Lexis/Lexis.sas';
+%inc lexis;
+
+/* we name the failure 'mi' and the time intervals 'timegroup' */
+data leader_mi; 
+	set leader_mi;
+	mi=status=1;
+run;
+
+/* We name the failure 'mi' and the time intervals 'timegroup' */
+%Lexis(data   = leader_mi,
+			 out    = pois,
+			 entry  = start,
+			 exit   = stop,
+			 fail   = mi,
+			 left   = timegroup,
+       breaks = %str(0,379.2,758.4,1137.6,1516.8,1896.0));
+proc genmod data=pois;
+  class treat(ref="0") timegroup;
+	model mi = treat timegroup / dist=poisson  offset=lrisk;
 run;
 
 * Cox model first event and PWP models 2nd, ..., 5th event;

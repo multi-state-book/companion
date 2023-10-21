@@ -6,12 +6,6 @@
 source("_common.R")
 ```
 
-<!-- ::: {.callout-note appearance="simple"} -->
-<!-- ## Work in progress -->
-
-<!-- We are in the progress of finalizing the companion and not all code is yet available. -->
-<!-- ::: -->
-
 This is the code companion website to our book published by [Chapman & Hall](https://doi.org/10.1201/9780429029684 "see the book at the publisher"){target="_blank"}.
 
 R code with output for analyses and plots presented in the book is provided. Corresponding code in SAS with no output is given. Solutions to the exercises are available at the end of each chapter.

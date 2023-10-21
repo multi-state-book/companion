@@ -423,28 +423,120 @@ quit;
 
 ### Table 4.11 and in-text, p. 151
 
-::: callout-important
-Still missing to make double data set for R - do we not have this somewhere else?
-:::
-
-
 ::: {.panel-tabset}
 ## R
 ```{r}
 #| label: table-4.11
-# Relapse-free survival 
-coxph(Surv(intxrel, state0 > 0) ~ bmonly + all + age10, data=bmt, ties="breslow")
+# joint analysis of relapse-free and overall survival
 
-# Overall survival
-coxph(Surv(intxsurv, dead != 0) ~ bmonly + all + age10, data=bmt, ties="breslow")
+bmt <- read.csv("data/bmt.csv")
+bmt$intxsurv<- bmt$timedeath
+bmt$dead <- bmt$death
+bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
+bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
+bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
+bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
+bmt$state0  <- bmt$rel + 2*bmt$trm
 
-bmt1 <- bmt
-bmt1$gvhdny <- bmt$gvhd
-bmt1$nytgvhd <- ifelse(bmt1$gvhdny == 1, bmt1$tgvhd, bmt1$intxsurv)
-bmt1$gvhdny <- ifelse(bmt1$dead == 1, 1, bmt1$gvhdny)
+library(dplyr)
+rfs<-mutate(bmt,
+            version=1,
+            dc=state0>0,
+            time=intxrel,
+            gsource0=bmonly,
+            gsource2=0,
+            disease0=all,
+            disease2=0,
+            age0=age/10,
+            age2=0)
 
-# gvhd free survival
-coxph(Surv(nytgvhd, gvhdny != 0) ~ bmonly + all + age10, data=bmt1, ties="breslow")
+srv<-mutate(bmt,
+            version=2,
+            dc=dead,
+            time=intxsurv,
+            gsource0=0,
+            gsource2=bmonly,
+            disease0=0,
+            disease2=all,
+            age0=0,
+            age2=age/10)
+double02<-rbind(rfs,srv)
+
+# joint analysis of relapse-free, GvHD-free survival and overall survival
+(fitd<-coxph(Surv(time, dc) ~
+        gsource0 + disease0 + age0+
+        gsource2 + disease2 + age2+
+        strata(version)+cluster(id), data=double02, ties="breslow"))
+
+# Correlation matrix
+cov2cor(vcov(fitd))
+
+# Wald tests
+library(car) # Companion to Applied Regression package
+linearHypothesis(fitd, "gsource0=gsource2")
+linearHypothesis(fitd, "disease0=disease2")
+linearHypothesis(fitd, "age0=age2")
+
+# Under hypothesis of equal coefficients for gsource and age
+(fitdreduced<-coxph(Surv(time, dc) ~
+        bmonly + disease0 + disease2 + I(age/10) +
+        strata(version)+cluster(id), data=double02, ties="breslow"))
+
+# NB: both GvHD and death without GvHD count as event here
+bmt$gvhdnew<-bmt$gvhd
+bmt$newtgvhd <- ifelse(bmt$gvhdnew == 1, bmt$tgvhd, bmt$intxsurv)
+bmt$gvhdnew  <- ifelse(bmt$gvhdnew == 0 & bmt$dead==1, 1, bmt$gvhdnew)
+
+rfs<-mutate(bmt,
+            version=1,
+            dc=state0>0,
+            time=intxrel,
+            gsource0=bmonly,
+            gsource2=0,
+            gsourceG=0,
+            disease0=all,
+            disease2=0,
+            diseaseG=0,
+            age0=age/10,
+            age2=0,
+            ageG=0)
+
+srv<-mutate(bmt,
+            version=2,
+            dc=dead,
+            time=intxsurv,
+            gsource0=0,
+            gsource2=bmonly,
+            gsourceG=0,
+            disease0=0,
+            disease2=all,
+            diseaseG=0,
+            age0=0,
+            age2=age/10,
+            ageG=0)
+
+Gfs<-mutate(bmt,
+            version=3,
+            dc=gvhdnew,
+            time=newtgvhd,
+            gsource0=0,
+            gsource2=0,
+            gsourceG=bmonly,
+            disease0=0,
+            disease2=0,
+            diseaseG=all,
+            age0=0,
+            age2=0,
+            ageG=age/10)
+
+trible02G<-rbind(rfs,srv,Gfs)
+
+(fitt<-coxph(Surv(time, dc) ~
+        gsource0 + disease0 + age0+
+        gsource2 + disease2 + age2+
+        gsourceG + diseaseG + ageG+
+        strata(version)+cluster(id), data=trible02G, ties="breslow"))
+
 ```
 
 ## SAS
@@ -468,17 +560,78 @@ proc phreg data=double02 covs(aggregate);
 	dis: test disease0=disease2;
 	a:   test age0=age2;
 run;
+
+                                     The PHREG Procedure
+
+                          Analysis of Maximum Likelihood Estimates
+
+                    Parameter      Standard    StdErr                                  Hazard
+Parameter    DF      Estimate         Error     Ratio    Chi-Square    Pr > ChiSq       Ratio
+
+gsource0      1      -0.16108       0.07654     0.988        4.4293        0.0353       0.851
+gsource2      1      -0.16011       0.07871     0.996        4.1375        0.0419       0.852
+disease0      1       0.45467       0.07720     0.993       34.6864        <.0001       1.576
+disease2      1       0.40549       0.07915     0.995       26.2453        <.0001       1.500
+age0          1       0.01692       0.00259     1.002       42.5543        <.0001       1.017
+age2          1       0.01729       0.00265     1.004       42.6865        <.0001       1.017
+
+
+                                Estimated Correlation Matrix
+
+ Parameter      gsource0      gsource2      disease0      disease2         age0         age2
+
+ gsource0         1.0000        0.9797       -0.0317       -0.0218       0.3066       0.3177
+ gsource2         0.9797        1.0000       -0.0232       -0.0221       0.3172       0.3293
+ disease0        -0.0317       -0.0232        1.0000        0.9620       0.2135       0.2039
+ disease2        -0.0218       -0.0221        0.9620        1.0000       0.2006       0.2125
+ age0             0.3066        0.3172        0.2135        0.2006       1.0000       0.9695
+ age2             0.3177        0.3293        0.2039        0.2125       0.9695       1.0000
+
+
+                              Linear Hypotheses Testing Results
+
+                                          Wald
+                           Label    Chi-Square      DF    Pr > ChiSq
+
+                           gs           0.0038       1        0.9507
+                           dis          5.1662       1        0.0230
+                           a            0.3233       1        0.5696
+
+
+* Under hypothesis of equal coefficients for gsource and age;
 proc phreg data=double02 covs(aggregate);
 	model time*dc(0)=bmonly disease0 disease2 age;
 	strata version;
 	id id;
 	dis: test disease0=disease2;
 run;
+                           
+                                     The PHREG Procedure
+
+                          Analysis of Maximum Likelihood Estimates
+
+                    Parameter      Standard    StdErr                                  Hazard
+Parameter    DF      Estimate         Error     Ratio    Chi-Square    Pr > ChiSq       Ratio
+
+bmonly        1      -0.16063       0.07721     1.396        4.3283        0.0375       0.852
+disease0      1       0.45585       0.07717     1.004       34.8938        <.0001       1.578
+disease2      1       0.40428       0.07903     1.005       26.1713        <.0001       1.498
+age10         1       0.17099       0.02599     1.407       43.2845        <.0001       1.186
+
+
+                              Linear Hypotheses Testing Results
+
+                                          Wald
+                           Label    Chi-Square      DF    Pr > ChiSq
+
+                           dis          6.3329       1        0.0119
+
+
 data bmt; set bmt;
 	gvhdny=gvhd; 
 	if gvhdny=1 then nytgvhd=tgvhd;
 	if gvhdny=0 then do; nytgvhd=intxsurv; if dead=1 then gvhdny=1; end; 
-	/* NB her tæller både GvHD og død uden GvHD med */
+	/* NB both GvHD and death without GvHD */
 run;
 data triple02G; set bmt; 
 	/* joint analysis of relapse-free, GvHD-free and overall survival */
@@ -498,5 +651,23 @@ proc phreg data=triple02G covs(aggregate) covout outest=params3;
 	strata version;
 	id id;
 run;
+	
+                                     The PHREG Procedure
+
+                          Analysis of Maximum Likelihood Estimates
+
+                    Parameter      Standard    StdErr                                  Hazard
+Parameter    DF      Estimate         Error     Ratio    Chi-Square    Pr > ChiSq       Ratio
+
+gsource0      1      -0.16108       0.07654     0.988        4.4293        0.0353       0.851
+gsource2      1      -0.16011       0.07871     0.996        4.1375        0.0419       0.852
+gsourceG      1      -0.26025       0.05907     0.996       19.4108        <.0001       0.771
+disease0      1       0.45467       0.07720     0.993       34.6864        <.0001       1.576
+disease2      1       0.40549       0.07915     0.995       26.2453        <.0001       1.500
+diseaseG      1       0.29236       0.05986     0.997       23.8552        <.0001       1.340
+age0          1       0.01692       0.00259     1.002       42.5543        <.0001       1.017
+age2          1       0.01729       0.00265     1.004       42.6865        <.0001       1.017
+ageG          1       0.01170       0.00192     0.991       37.1562        <.0001       1.012
+
 ```
 :::

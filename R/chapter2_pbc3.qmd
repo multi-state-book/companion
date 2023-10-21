@@ -153,66 +153,6 @@ run;
 ```
 :::
 
-### In-text, p. 38: LRT test piece-wise exponential model
-
-::: panel-tabset
-## R
-
-```{r}
-#| label: in-text-lrt-pcw-r
-library(stats)
-poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
-                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-poisred <- glm(fail ~  timegroup +
-                 offset(log(risktime/36525)), data = pbc3mult, family=poisson)
-anova(poisred,poisfull,test="LRT")
-# or
-library(lmtest)
-lrtest(poisred,poisfull)
-```
-
-## SAS
-
-```{sas}
-#| label: in-text-lrt-pcw-sas
-#| eval: false 
-#| output: false
-ods output modelfit=full;
-proc genmod data=pbc3mult;
-	class interv tment;
-	model fail=interv|tment /dist=poi offset=logrisk;
-run;
-data full;
-  set full;
-	 where Criterion="Deviance";
-	 full_like=value;
-	 full_df=df;
-	 keep full_like full_df;
-run;
-proc print;run;
-ods output modelfit=reduced;
-proc genmod data=pbc3mult;
-	class interv tment;
-	model fail=interv /dist=poi offset=logrisk;
-run;
-data reduced;
-  set reduced;
-	 where Criterion="Deviance";
-	 reduced_like=value;
-	 reduced_df=df;
-	 keep reduced_like reduced_df;
-run;
-data lrt_pval;
- merge full reduced;
-  lrt = reduced_like - full_like;
-	df  = reduced_df - full_df;
-  p_value = 1 - probchi(lrt,df);
-run;
-proc print data=lrt_pval;
-  title "LR test statistic and p-value";
-run;
-```
-:::
 
 
 
@@ -325,8 +265,71 @@ proc genmod data=pbc3mult;
 	estimate '2-4 years' intercept 1  interv 0 1 0/exp;
 	estimate '4-6 years' intercept 1  interv 0 0 1/exp;
 run;
+
 ```
 :::
+
+### In-text, p. 38: LRT test piece-wise exponential model
+
+::: panel-tabset
+## R
+
+```{r}
+#| label: in-text-lrt-pcw-r
+library(stats)
+poisfull <- glm(fail ~ tment + timegroup + tment*timegroup +
+                  offset(log(risktime/36525)), data = pbc3mult, family=poisson)
+poisred <- glm(fail ~  timegroup +
+                 offset(log(risktime/36525)), data = pbc3mult, family=poisson)
+anova(poisred,poisfull,test="LRT")
+# or
+library(lmtest)
+lrtest(poisred,poisfull)
+```
+
+## SAS
+
+```{sas}
+#| label: in-text-lrt-pcw-sas
+#| eval: false 
+#| output: false
+ods output modelfit=full;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv|tment /dist=poi offset=logrisk;
+run;
+data full;
+  set full;
+	 where Criterion="Deviance";
+	 full_like=value;
+	 full_df=df;
+	 keep full_like full_df;
+run;
+proc print;run;
+ods output modelfit=reduced;
+proc genmod data=pbc3mult;
+	class interv tment;
+	model fail=interv /dist=poi offset=logrisk;
+run;
+data reduced;
+  set reduced;
+	 where Criterion="Deviance";
+	 reduced_like=value;
+	 reduced_df=df;
+	 keep reduced_like reduced_df;
+run;
+data lrt_pval;
+ merge full reduced;
+  lrt = reduced_like - full_like;
+	df  = reduced_df - full_df;
+  p_value = 1 - probchi(lrt,df);
+run;
+proc print data=lrt_pval;
+  title "LR test statistic and p-value";
+run;
+```
+:::
+
 
 
 ### In-text, p. 40: Logrank test and p-value
@@ -649,7 +652,21 @@ summary(poismod_t25)
 #| output: false
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
-	model fail= tment interv alb  bili / dist=poi offset=logrisk ;
+	model fail= tment alb  bili interv / dist=poi offset=logrisk;
+	estimate "alpha1" intercept 1 tment 0 1 alb 0 bili 0 interv 1 0 0 ;
+	estimate "alpha2" intercept 1 tment 0 1 alb 0 bili 0 interv 0 1 0 ;
+	estimate "alpha3" intercept 1 tment 0 1 alb 0 bili 0 interv 0 0 1 ;
+run;
+
+* proc icphreg can fit the same model with less code and data manipulations;
+data pbc3; 
+  set pbc3;
+	years=days/365.25;
+run;
+proc icphreg data=pbc3;
+  class tment(ref="0");
+	model years*status(0) = tment alb bili / 
+		basehaz=pch(intervals=(2 4));
 run;
 ```
 :::

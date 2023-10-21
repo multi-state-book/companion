@@ -358,12 +358,29 @@ proc phreg covs(aggregate) data=angstprev;
 	id id;
 run;
 
+                              Analysis of Maximum Likelihood Estimates
+
+                 Parameter   Standard StdErr                         Hazard  95% Hazard Ratio
+ Parameter   DF   Estimate      Error  Ratio Chi-Square Pr > ChiSq    Ratio Confidence Limits
+
+ bip       1  1    0.42063    0.18165  1.923     5.3621     0.0206    1.523    1.067    2.174
+
+
 * Ghosh-Lin model - Mortality treated as competing risk; 
 proc phreg data=angstprev;
 	where state=0 or status=2 or status=3;
 	class bip (ref='0');
 	model stop*status(3)=bip/entry=prev eventcode=1 rl;
 run;
+
+                              Analysis of Maximum Likelihood Estimates
+
+                  Parameter    Standard                            Hazard   95% Hazard Ratio
+Parameter    DF    Estimate       Error  Chi-Square  Pr > ChiSq     Ratio   Confidence Limits
+
+bip       1   1     0.66630     0.13971     22.7440      <.0001     1.947     1.481     2.560
+
+
 ```
 :::
 
@@ -649,7 +666,7 @@ run;
 ```{r}
 #| label: table-4.10-r
 
-# Make WLW data ready using SAS data - see SAS code
+# We're cheating here: Make WLW data ready using SAS data - see SAS code!
 affectivewlw <- read.csv("data/affectivewlw.csv")
 affectivewlw <- affectivewlw %>% mutate(bip1 = bip * (stratum == 1), 
                                         bip2 = bip * (stratum == 2), 

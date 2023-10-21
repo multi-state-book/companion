@@ -223,9 +223,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#read-data" id="toc-read-data" class="nav-link" data-scroll-target="#read-data">Read data</a></li>
   <li><a href="#figure-2.1" id="toc-figure-2.1" class="nav-link" data-scroll-target="#figure-2.1">Figure 2.1</a></li>
   <li><a href="#in-text-p.-37-nelson-aalen-estimates-at-2-years" id="toc-in-text-p.-37-nelson-aalen-estimates-at-2-years" class="nav-link" data-scroll-target="#in-text-p.-37-nelson-aalen-estimates-at-2-years">In-text, p.&nbsp;37: Nelson-Aalen estimates at 2 years</a></li>
-  <li><a href="#in-text-p.-38-lrt-test-piece-wise-exponential-model" id="toc-in-text-p.-38-lrt-test-piece-wise-exponential-model" class="nav-link" data-scroll-target="#in-text-p.-38-lrt-test-piece-wise-exponential-model">In-text, p.&nbsp;38: LRT test piece-wise exponential model</a></li>
   <li><a href="#figure-2.2" id="toc-figure-2.2" class="nav-link" data-scroll-target="#figure-2.2">Figure 2.2</a></li>
   <li><a href="#table-2.1" id="toc-table-2.1" class="nav-link" data-scroll-target="#table-2.1">Table 2.1</a></li>
+  <li><a href="#in-text-p.-38-lrt-test-piece-wise-exponential-model" id="toc-in-text-p.-38-lrt-test-piece-wise-exponential-model" class="nav-link" data-scroll-target="#in-text-p.-38-lrt-test-piece-wise-exponential-model">In-text, p.&nbsp;38: LRT test piece-wise exponential model</a></li>
   <li><a href="#in-text-p.-40-logrank-test-and-p-value" id="toc-in-text-p.-40-logrank-test-and-p-value" class="nav-link" data-scroll-target="#in-text-p.-40-logrank-test-and-p-value">In-text, p.&nbsp;40: Logrank test and p-value</a></li>
   <li><a href="#figure-2.3" id="toc-figure-2.3" class="nav-link" data-scroll-target="#figure-2.3">Figure 2.3</a></li>
   <li><a href="#in-text-p.-43-cox-model-with-treatment-only" id="toc-in-text-p.-43-cox-model-with-treatment-only" class="nav-link" data-scroll-target="#in-text-p.-43-cox-model-with-treatment-only">In-text, p.&nbsp;43: Cox model with treatment only</a></li>
@@ -525,133 +525,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="in-text-p.-38-lrt-test-piece-wise-exponential-model" class="level3">
-<h3 class="anchored" data-anchor-id="in-text-p.-38-lrt-test-piece-wise-exponential-model">In-text, p.&nbsp;38: LRT test piece-wise exponential model</h3>
-<div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">SAS</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-r_8f03aaf506c499222228b617baae9fc5">
-<details>
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>poisfull <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> timegroup <span class="sc">+</span> tment<span class="sc">*</span>timegroup <span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>poisred <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span>  timegroup <span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(poisred,poisfull,<span class="at">test=</span><span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Analysis of Deviance Table
-
-Model 1: fail ~ timegroup + offset(log(risktime/36525))
-Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/36525))
-  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
-1       620     459.66                     
-2       617     459.35  3  0.30813   0.9585</code></pre>
-</div>
-<details>
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(poisred,poisfull)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Likelihood ratio test
-
-Model 1: fail ~ timegroup + offset(log(risktime/36525))
-Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/36525))
-  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
-1   3 -319.83                     
-2   6 -319.68  3 0.3081     0.9585</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-sas_5ba284ce1b1e6876f0df5c78c795b738">
-<details>
-<summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ods <span class="kw">output</span> modelfit=full;</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    class interv tment;</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv|tment /dist=poi offset=logrisk;</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> full;</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">set</span> full;</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span> Criterion=<span class="st">"Deviance"</span>;</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>     full_like=value;</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>     full_df=df;</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>     <span class="kw">keep</span> full_like full_df;</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw">;run</span>;</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ods <span class="kw">output</span> modelfit=reduced;</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    class interv tment;</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv /dist=poi offset=logrisk;</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> reduced;</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">set</span> reduced;</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span> Criterion=<span class="st">"Deviance"</span>;</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>     reduced_like=value;</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>     reduced_df=df;</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>     <span class="kw">keep</span> reduced_like reduced_df;</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> lrt_pval;</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a> <span class="kw">merge</span> full reduced;</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  lrt = reduced_like - full_like;</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    df  = reduced_df - full_df;</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  p_value = <span class="dv">1</span> - <span class="fu">probchi</span>(lrt,df);</span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw"> data</span>=lrt_pval;</span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  <span class="kw">title</span> <span class="st">"LR test statistic and p-value"</span>;</span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section id="figure-2.2" class="level3">
 <h3 class="anchored" data-anchor-id="figure-2.2">Figure 2.2</h3>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">SAS-NA</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">SAS-NA</a></li></ul>
 <div class="tab-content">
-<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell" data-hash="Ch2_cache/html/figure-2.2_cdfa8e9228fb317f206323bf02d03908">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rates + cuts from Table 2.1</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>rateCyA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.1</span>,<span class="fl">13.1</span>,<span class="fl">9.6</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ratePbo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.4</span>,<span class="fl">12.5</span>,<span class="fl">8.5</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>pcwtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>plotdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rates =</span> <span class="fu">c</span>(rateCyA, ratePbo),</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tment =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"CyA"</span>, <span class="fu">length</span>(rateCyA)), </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Placebo"</span>, <span class="fu">length</span>(ratePbo))),</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">times_s =</span> <span class="fu">rep</span>(pcwtime[<span class="sc">-</span><span class="dv">4</span>], <span class="dv">2</span>),</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">times =</span> <span class="fu">rep</span>(pcwtime[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 2.2</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> rates, <span class="at">linetype =</span> tment), <span class="at">data =</span> plotdata) <span class="sc">+</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> times_s, <span class="at">y =</span> rates, <span class="at">xend =</span> times, <span class="at">yend =</span> rates),<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"CyA"</span>))  <span class="sc">+</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Estimated hazard function (per 100 years)"</span>) <span class="sc">+</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">1</span>))  <span class="sc">+</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">14</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">14</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rates + cuts from Table 2.1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rateCyA <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.1</span>,<span class="fl">13.1</span>,<span class="fl">9.6</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ratePbo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.4</span>,<span class="fl">12.5</span>,<span class="fl">8.5</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pcwtime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collect data</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plotdata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">rates =</span> <span class="fu">c</span>(rateCyA, ratePbo),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">tment =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"CyA"</span>, <span class="fu">length</span>(rateCyA)), </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">rep</span>(<span class="st">"Placebo"</span>, <span class="fu">length</span>(ratePbo))),</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">times_s =</span> <span class="fu">rep</span>(pcwtime[<span class="sc">-</span><span class="dv">4</span>], <span class="dv">2</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">times =</span> <span class="fu">rep</span>(pcwtime[<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Figure 2.2</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> rates, <span class="at">linetype =</span> tment), <span class="at">data =</span> plotdata) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> times_s, <span class="at">y =</span> rates, <span class="at">xend =</span> times, <span class="at">yend =</span> rates),<span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_discrete</span>(<span class="st">"Treatment"</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Placebo"</span>, <span class="st">"CyA"</span>))  <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Time since randomization (years)"</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Estimated hazard function (per 100 years)"</span>) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.001</span>, <span class="fl">0.05</span>)),</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>),</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">1</span>))  <span class="sc">+</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="fl">0.005</span>, <span class="fl">0.05</span>)), </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">14</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">14</span>, <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  theme_general</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>fig2<span class="fl">.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Ch2_files/figure-html/figure-2.2-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
 </div>
 </div>
-<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 
 </div>
 </div>
@@ -660,30 +574,30 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 <section id="table-2.1" class="level3">
 <h3 class="anchored" data-anchor-id="table-2.1">Table 2.1</h3>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">SAS</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
-<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
 <div class="cell" data-hash="Ch2_cache/html/table-2.1-r_e93318fa26c35aaac27a16a5204129f5">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for Table 2.1</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cuts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>) <span class="sc">*</span> <span class="fl">365.25</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the data ready using survSplit from survival package</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>pbc3mult <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">survSplit</span>(<span class="fu">Surv</span>(days, fail) <span class="sc">~</span> ., pbc3,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cut =</span> cuts[<span class="sc">-</span><span class="dv">1</span>], </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">episode =</span> <span class="st">"timegroup"</span>))</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>risktime <span class="ot">&lt;-</span> pbc3mult<span class="sc">$</span>days <span class="sc">-</span> cuts[pbc3mult<span class="sc">$</span>timegroup] </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>timegroup <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pbc3mult<span class="sc">$</span>timegroup)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>pcwdata <span class="ot">&lt;-</span> pbc3mult <span class="sc">%&gt;%</span> </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tment, timegroup) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">fail =</span> <span class="fu">sum</span>(fail), <span class="at">risktime =</span> <span class="fu">sum</span>(days <span class="sc">-</span> cuts[timegroup]))</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>risktimeyrs <span class="ot">&lt;-</span> pcwdata<span class="sc">$</span>risktime<span class="sc">/</span><span class="fl">365.25</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>hazard <span class="ot">&lt;-</span> <span class="dv">36525</span><span class="sc">*</span>pcwdata<span class="sc">$</span>fail<span class="sc">/</span>pcwdata<span class="sc">$</span>risktime</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>SD <span class="ot">&lt;-</span> <span class="dv">36525</span><span class="sc">*</span><span class="fu">sqrt</span>(pcwdata<span class="sc">$</span>fail)<span class="sc">/</span>pcwdata<span class="sc">$</span>risktime</span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(pcwdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data for Table 2.1</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>cuts <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>) <span class="sc">*</span> <span class="fl">365.25</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Make the data ready using survSplit from survival package</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>pbc3mult <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">survSplit</span>(<span class="fu">Surv</span>(days, fail) <span class="sc">~</span> ., pbc3,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cut =</span> cuts[<span class="sc">-</span><span class="dv">1</span>], </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">episode =</span> <span class="st">"timegroup"</span>))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>risktime <span class="ot">&lt;-</span> pbc3mult<span class="sc">$</span>days <span class="sc">-</span> cuts[pbc3mult<span class="sc">$</span>timegroup] </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>pbc3mult<span class="sc">$</span>timegroup <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(pbc3mult<span class="sc">$</span>timegroup)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>pcwdata <span class="ot">&lt;-</span> pbc3mult <span class="sc">%&gt;%</span> </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tment, timegroup) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">fail =</span> <span class="fu">sum</span>(fail), <span class="at">risktime =</span> <span class="fu">sum</span>(days <span class="sc">-</span> cuts[timegroup]))</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>risktimeyrs <span class="ot">&lt;-</span> pcwdata<span class="sc">$</span>risktime<span class="sc">/</span><span class="fl">365.25</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>hazard <span class="ot">&lt;-</span> <span class="dv">36525</span><span class="sc">*</span>pcwdata<span class="sc">$</span>fail<span class="sc">/</span>pcwdata<span class="sc">$</span>risktime</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>pcwdata<span class="sc">$</span>SD <span class="ot">&lt;-</span> <span class="dv">36525</span><span class="sc">*</span><span class="fu">sqrt</span>(pcwdata<span class="sc">$</span>fail)<span class="sc">/</span>pcwdata<span class="sc">$</span>risktime</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(pcwdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  tment timegroup fail risktime risktimeyrs    hazard       SD
@@ -696,46 +610,132 @@ Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/3652
 </div>
 </div>
 </div>
-<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.1-sas_07ae35c960b5c517dc8fa8b9af7dfc50">
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/table-2.1-sas_d1d8509d689a4ddecd43c77bda06846f">
 <details>
 <summary>Code show/hide</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* prepare for poisson model */</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> pbc3mult; </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> pbc3;</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    fail=(days&lt;=<span class="dv">2</span> * <span class="dv">365.25</span>)*(status ne <span class="dv">0</span>);</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    risktime=<span class="fu">min</span>(<span class="dv">2</span> * <span class="dv">365.25</span>, days);</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">1</span>; <span class="kw">output</span>;  </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> days&gt;<span class="dv">2</span> * <span class="dv">365.25</span> <span class="kw">then do</span>;</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    fail=(days&lt;=<span class="dv">4</span> * <span class="dv">365.25</span>)*(status ne <span class="dv">0</span>);</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    risktime=<span class="fu">min</span>(<span class="dv">2</span> * <span class="dv">365.25</span> ,days<span class="dv">-2</span> * <span class="dv">365.25</span>);</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">2</span>; <span class="kw">output; end</span>;</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> days&gt;<span class="dv">4</span> * <span class="dv">365.25</span>  <span class="kw">then do</span>;</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    fail=status ne <span class="dv">0</span>; </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    risktime=days<span class="dv">-4</span> * <span class="dv">365.25</span>;</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">3</span>; <span class="kw">output; end</span>;</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> means <span class="fu">sum</span><span class="kw">  data</span>=pbc3mult;</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    class tment interv;</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">var</span> fail risktime;</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> tment=<span class="dv">1</span>;</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    class interv;</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv/dist=poi offset=logrisk;</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'0-2 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'2-4 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'4-6 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> tment=<span class="dv">0</span>;</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    class interv;</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv/dist=poi offset=logrisk;</span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'0-2 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'2-4 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'4-6 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span>/<span class="fu">exp</span>;</span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* prepare for poisson model */</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> pbc3mult; </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> pbc3;</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    fail=(days&lt;=<span class="dv">2</span> * <span class="dv">365.25</span>)*(status ne <span class="dv">0</span>);</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    risktime=<span class="fu">min</span>(<span class="dv">2</span> * <span class="dv">365.25</span>, days);</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">1</span>; <span class="kw">output</span>;  </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> days&gt;<span class="dv">2</span> * <span class="dv">365.25</span> <span class="kw">then do</span>;</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    fail=(days&lt;=<span class="dv">4</span> * <span class="dv">365.25</span>)*(status ne <span class="dv">0</span>);</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    risktime=<span class="fu">min</span>(<span class="dv">2</span> * <span class="dv">365.25</span> ,days<span class="dv">-2</span> * <span class="dv">365.25</span>);</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">2</span>; <span class="kw">output; end</span>;</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> days&gt;<span class="dv">4</span> * <span class="dv">365.25</span>  <span class="kw">then do</span>;</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    fail=status ne <span class="dv">0</span>; </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    risktime=days<span class="dv">-4</span> * <span class="dv">365.25</span>;</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    logrisk=<span class="fu">log</span>(risktime); interv=<span class="dv">3</span>; <span class="kw">output; end</span>;</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> means <span class="fu">sum</span><span class="kw">  data</span>=pbc3mult;</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    class tment interv;</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">var</span> fail risktime;</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> tment=<span class="dv">1</span>;</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    class interv;</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv/dist=poi offset=logrisk;</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'0-2 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'2-4 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'4-6 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">where</span> tment=<span class="dv">0</span>;</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    class interv;</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv/dist=poi offset=logrisk;</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'0-2 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'2-4 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">'4-6 years'</span> intercept <span class="dv">1</span>  interv <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span>/<span class="fu">exp</span>;</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="in-text-p.-38-lrt-test-piece-wise-exponential-model" class="level3">
+<h3 class="anchored" data-anchor-id="in-text-p.-38-lrt-test-piece-wise-exponential-model">In-text, p.&nbsp;38: LRT test piece-wise exponential model</h3>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false">SAS</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-r_8f03aaf506c499222228b617baae9fc5">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>poisfull <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> tment <span class="sc">+</span> timegroup <span class="sc">+</span> tment<span class="sc">*</span>timegroup <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>poisred <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span>  timegroup <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">offset</span>(<span class="fu">log</span>(risktime<span class="sc">/</span><span class="dv">36525</span>)), <span class="at">data =</span> pbc3mult, <span class="at">family=</span>poisson)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(poisred,poisfull,<span class="at">test=</span><span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: fail ~ timegroup + offset(log(risktime/36525))
+Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/36525))
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+1       620     459.66                     
+2       617     459.35  3  0.30813   0.9585</code></pre>
+</div>
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lrtest</span>(poisred,poisfull)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Likelihood ratio test
+
+Model 1: fail ~ timegroup + offset(log(risktime/36525))
+Model 2: fail ~ tment + timegroup + tment * timegroup + offset(log(risktime/36525))
+  #Df  LogLik Df  Chisq Pr(&gt;Chisq)
+1   3 -319.83                     
+2   6 -319.68  3 0.3081     0.9585</code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell" data-hash="Ch2_cache/html/in-text-lrt-pcw-sas_5ba284ce1b1e6876f0df5c78c795b738">
+<details>
+<summary>Code show/hide</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ods <span class="kw">output</span> modelfit=full;</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    class interv tment;</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv|tment /dist=poi offset=logrisk;</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> full;</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">set</span> full;</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span> Criterion=<span class="st">"Deviance"</span>;</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>     full_like=value;</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>     full_df=df;</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>     <span class="kw">keep</span> full_like full_df;</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw">;run</span>;</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>ods <span class="kw">output</span> modelfit=reduced;</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    class interv tment;</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail=interv /dist=poi offset=logrisk;</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> reduced;</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">set</span> reduced;</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>     <span class="kw">where</span> Criterion=<span class="st">"Deviance"</span>;</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>     reduced_like=value;</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>     reduced_df=df;</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>     <span class="kw">keep</span> reduced_like reduced_df;</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> lrt_pval;</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a> <span class="kw">merge</span> full reduced;</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  lrt = reduced_like - full_like;</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    df  = reduced_df - full_df;</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>  p_value = <span class="dv">1</span> - <span class="fu">probchi</span>(lrt,df);</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> print<span class="kw"> data</span>=lrt_pval;</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  <span class="kw">title</span> <span class="st">"LR test statistic and p-value"</span>;</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -1270,13 +1270,27 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 </div>
 <div id="tabset-14-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-14-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.5-sas_3ff93f4f641296022cf4fedf19f7180c">
+<div class="cell" data-hash="Ch2_cache/html/table-2.5-sas_33175d3452fbddac042f48f2edf94df8">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pbc3mult;</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    class tment (ref=<span class="st">'0'</span>) interv;</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail= tment interv alb  bili / dist=poi offset=logrisk ;</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> fail= tment alb  bili interv / dist=poi offset=logrisk;</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">"alpha1"</span> intercept <span class="dv">1</span> tment <span class="dv">0</span> <span class="dv">1</span> alb <span class="dv">0</span> bili <span class="dv">0</span> interv <span class="dv">1</span> <span class="dv">0</span> <span class="dv">0</span> ;</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">"alpha2"</span> intercept <span class="dv">1</span> tment <span class="dv">0</span> <span class="dv">1</span> alb <span class="dv">0</span> bili <span class="dv">0</span> interv <span class="dv">0</span> <span class="dv">1</span> <span class="dv">0</span> ;</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    estimate <span class="st">"alpha3"</span> intercept <span class="dv">1</span> tment <span class="dv">0</span> <span class="dv">1</span> alb <span class="dv">0</span> bili <span class="dv">0</span> interv <span class="dv">0</span> <span class="dv">0</span> <span class="dv">1</span> ;</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co">* proc icphreg can fit the same model with less code and data manipulations;</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> pbc3; </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">set</span> pbc3;</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    years=days/<span class="dv">365.25</span>;</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> icphreg<span class="kw"> data</span>=pbc3;</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  class tment(ref=<span class="st">"0"</span>);</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> years*status(<span class="dv">0</span>) = tment alb bili / </span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        basehaz=pch(intervals=(<span class="dv">2</span> <span class="dv">4</span>));</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
@@ -4365,7 +4379,7 @@ n= 626, number of events= 542 </code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-40-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-1" role="tab" aria-controls="tabset-40-1" aria-selected="true">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-40-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-40-2" role="tab" aria-controls="tabset-40-2" aria-selected="false">SAS</a></li></ul>
 <div class="tab-content">
 <div id="tabset-40-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-40-1-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.15-r_179fee243ea187e901ff09113b342f40">
+<div class="cell" data-hash="Ch2_cache/html/table-2.15-r_847528365410b8d2acca931447c646f1">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb216"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb216-1"><a href="#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox model first event</span></span>
@@ -4404,28 +4418,44 @@ n= 10120, number of events= 780 </code></pre>
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb220"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb220-1"><a href="#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># AG model, piece-wise constant hazards</span></span>
-<span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating cuts -&gt; 5</span></span>
+<span id="cb220-2"><a href="#cb220-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating cuts -&gt; 5 equally-sized intervals</span></span>
 <span id="cb220-3"><a href="#cb220-3" aria-hidden="true" tabindex="-1"></a>alltimes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(leader_mi<span class="sc">$</span>stop),<span class="at">length=</span><span class="dv">99</span>)</span>
 <span id="cb220-4"><a href="#cb220-4" aria-hidden="true" tabindex="-1"></a>FunctionIntervalM <span class="ot">&lt;-</span> <span class="cf">function</span>(a,b) {</span>
 <span id="cb220-5"><a href="#cb220-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">seq</span>(<span class="at">from=</span><span class="fu">min</span>(a), <span class="at">to =</span> <span class="fu">max</span>(a), <span class="at">by =</span> (<span class="fu">max</span>(a)<span class="sc">-</span><span class="fu">min</span>(a))<span class="sc">/</span>b)</span>
-<span id="cb220-6"><a href="#cb220-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb220-6"><a href="#cb220-6" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb220-7"><a href="#cb220-7" aria-hidden="true" tabindex="-1"></a>cuts <span class="ot">&lt;-</span> <span class="fu">FunctionIntervalM</span>(<span class="at">a =</span> alltimes, <span class="at">b =</span> <span class="dv">5</span>)</span>
 <span id="cb220-8"><a href="#cb220-8" aria-hidden="true" tabindex="-1"></a>cut_data <span class="ot">&lt;-</span> <span class="fu">survSplit</span>(<span class="fu">Surv</span>(start, stop, status <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">~</span> .,</span>
 <span id="cb220-9"><a href="#cb220-9" aria-hidden="true" tabindex="-1"></a>                      leader_mi,</span>
 <span id="cb220-10"><a href="#cb220-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cut =</span> cuts[<span class="sc">-</span><span class="dv">1</span>],</span>
 <span id="cb220-11"><a href="#cb220-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">episode =</span> <span class="st">"timegroup"</span>)</span>
-<span id="cb220-12"><a href="#cb220-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coxph</span>(<span class="fu">Surv</span>(start, stop, event) <span class="sc">~</span> treat <span class="sc">+</span> <span class="fu">strata</span>(timegroup), <span class="at">data =</span> cut_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb220-12"><a href="#cb220-12" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.treatment"</span>, <span class="st">"contr.poly"</span>))</span>
+<span id="cb220-13"><a href="#cb220-13" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">glm</span>(event <span class="sc">~</span> treat <span class="sc">+</span> <span class="fu">factor</span>(timegroup) <span class="sc">+</span> <span class="fu">offset</span>(<span class="fu">log</span>(stop<span class="sc">-</span>start)),</span>
+<span id="cb220-14"><a href="#cb220-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">data=</span>cut_data,<span class="at">family=</span>poisson))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Call:
-coxph(formula = Surv(start, stop, event) ~ treat + strata(timegroup), 
-    data = cut_data)
+<pre><code>
+Call:
+glm(formula = event ~ treat + factor(timegroup) + offset(log(stop - 
+    start)), family = poisson, data = cut_data)
 
-          coef exp(coef) se(coef)      z      p
-treat -0.16418   0.84859  0.07184 -2.285 0.0223
+Coefficients:
+                   Estimate Std. Error  z value Pr(&gt;|z|)    
+(Intercept)        -9.58726    0.07463 -128.462   &lt;2e-16 ***
+treat              -0.16413    0.07184   -2.285   0.0223 *  
+factor(timegroup)2  0.08099    0.09329    0.868   0.3853    
+factor(timegroup)3 -0.10998    0.09873   -1.114   0.2653    
+factor(timegroup)4 -0.26954    0.11448   -2.355   0.0185 *  
+factor(timegroup)5 -0.15954    0.27552   -0.579   0.5626    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Likelihood ratio test=5.24  on 1 df, p=0.02207
-n= 39070, number of events= 780 </code></pre>
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 7673.5  on 39069  degrees of freedom
+Residual deviance: 7656.9  on 39064  degrees of freedom
+AIC: 9228.9
+
+Number of Fisher Scoring iterations: 7</code></pre>
 </div>
 <details>
 <summary>Code show/hide</summary>
@@ -4520,7 +4550,7 @@ n= 10120, number of events= 780 </code></pre>
 </div>
 </div>
 <div id="tabset-40-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-40-2-tab">
-<div class="cell" data-hash="Ch2_cache/html/table-2.15-sas_d22308210098b9a16184744dcdc5d4d7">
+<div class="cell" data-hash="Ch2_cache/html/table-2.15-sas_a007b1b8b49c1921654389f4846bf6fb">
 <details>
 <summary>Code show/hide</summary>
 <div class="sourceCode cell-code" id="cb232"><pre class="sourceCode sas code-with-copy"><code class="sourceCode highlightsas"><span id="cb232-1"><a href="#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> sort<span class="kw"> data</span>=leader_mi;</span>
@@ -4532,18 +4562,66 @@ n= 10120, number of events= 780 </code></pre>
 <span id="cb232-7"><a href="#cb232-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>)= treat / entry=start; </span>
 <span id="cb232-8"><a href="#cb232-8" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
 <span id="cb232-9"><a href="#cb232-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb232-10"><a href="#cb232-10" aria-hidden="true" tabindex="-1"></a><span class="co">* Cox model first event and PWP models 2nd, ..., 5th event;</span></span>
-<span id="cb232-11"><a href="#cb232-11" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=leader_mi;</span>
-<span id="cb232-12"><a href="#cb232-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> eventno&lt;=<span class="dv">5</span>;</span>
-<span id="cb232-13"><a href="#cb232-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>)= treat / entry=start; </span>
-<span id="cb232-14"><a href="#cb232-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> eventno;</span>
-<span id="cb232-15"><a href="#cb232-15" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
-<span id="cb232-16"><a href="#cb232-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb232-17"><a href="#cb232-17" aria-hidden="true" tabindex="-1"></a><span class="co">* PWP model all events;</span></span>
-<span id="cb232-18"><a href="#cb232-18" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=leader_mi;</span>
-<span id="cb232-19"><a href="#cb232-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>)= treat / entry=start; </span>
-<span id="cb232-20"><a href="#cb232-20" aria-hidden="true" tabindex="-1"></a>    strata eventno;</span>
-<span id="cb232-21"><a href="#cb232-21" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb232-10"><a href="#cb232-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-11"><a href="#cb232-11" aria-hidden="true" tabindex="-1"></a><span class="co">* AG model, piece-wise constant hazards with 5 equally-sized intervals;</span></span>
+<span id="cb232-12"><a href="#cb232-12" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> icphreg<span class="kw"> data</span>=leader_mi;</span>
+<span id="cb232-13"><a href="#cb232-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>) = treat / entry=start basehaz=pch(nintervals=<span class="dv">5</span>);</span>
+<span id="cb232-14"><a href="#cb232-14" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb232-15"><a href="#cb232-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-16"><a href="#cb232-16" aria-hidden="true" tabindex="-1"></a>                     Analysis of Maximum Likelihood Parameter Estimates</span>
+<span id="cb232-17"><a href="#cb232-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-18"><a href="#cb232-18" aria-hidden="true" tabindex="-1"></a>                                 Standard       <span class="dv">95</span>% Confidence          Chi-</span>
+<span id="cb232-19"><a href="#cb232-19" aria-hidden="true" tabindex="-1"></a>  Effect       DF    Estimate       <span class="kw">Error</span>           Limits            Square    Pr &gt; ChiSq</span>
+<span id="cb232-20"><a href="#cb232-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-21"><a href="#cb232-21" aria-hidden="true" tabindex="-1"></a>  Haz1          <span class="dv">1</span>      <span class="dv">0.0001</span>      <span class="dv">0.0000</span>      <span class="dv">0.0000</span>      <span class="dv">0.0001</span></span>
+<span id="cb232-22"><a href="#cb232-22" aria-hidden="true" tabindex="-1"></a>  Haz2          <span class="dv">1</span>      <span class="dv">0.0001</span>      <span class="dv">0.0000</span>      <span class="dv">0.0001</span>      <span class="dv">0.0001</span></span>
+<span id="cb232-23"><a href="#cb232-23" aria-hidden="true" tabindex="-1"></a>  Haz3          <span class="dv">1</span>      <span class="dv">0.0001</span>      <span class="dv">0.0000</span>      <span class="dv">0.0001</span>      <span class="dv">0.0001</span></span>
+<span id="cb232-24"><a href="#cb232-24" aria-hidden="true" tabindex="-1"></a>  Haz4          <span class="dv">1</span>      <span class="dv">0.0001</span>      <span class="dv">0.0000</span>      <span class="dv">0.0001</span>      <span class="dv">0.0001</span></span>
+<span id="cb232-25"><a href="#cb232-25" aria-hidden="true" tabindex="-1"></a>  Haz5          <span class="dv">1</span>      <span class="dv">0.0001</span>      <span class="dv">0.0000</span>      <span class="dv">0.0000</span>      <span class="dv">0.0001</span></span>
+<span id="cb232-26"><a href="#cb232-26" aria-hidden="true" tabindex="-1"></a>  treat         <span class="dv">1</span>     -<span class="dv">0.1643</span>      <span class="dv">0.0718</span>     -<span class="dv">0.3051</span>     -<span class="dv">0.0235</span>       <span class="dv">5.23</span>        <span class="dv">0.0222</span></span>
+<span id="cb232-27"><a href="#cb232-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-28"><a href="#cb232-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-29"><a href="#cb232-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-30"><a href="#cb232-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-31"><a href="#cb232-31" aria-hidden="true" tabindex="-1"></a><span class="co">* Alternatively, one can split data at time points and use proc genmod:</span></span>
+<span id="cb232-32"><a href="#cb232-32" aria-hidden="true" tabindex="-1"></a><span class="co">* For the piece-wise constant model we use the macro `lexis` by Bendix Carstensen,</span></span>
+<span id="cb232-33"><a href="#cb232-33" aria-hidden="true" tabindex="-1"></a><span class="co">  The macrp split observation time into time interval. </span></span>
+<span id="cb232-34"><a href="#cb232-34" aria-hidden="true" tabindex="-1"></a><span class="co">  For more information visit https://bendixcarstensen.com and look for Software;</span> </span>
+<span id="cb232-35"><a href="#cb232-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-36"><a href="#cb232-36" aria-hidden="true" tabindex="-1"></a><span class="kw">filename</span> lexis url <span class="st">'https://bendixcarstensen.com/Lexis/Lexis.sas'</span>;</span>
+<span id="cb232-37"><a href="#cb232-37" aria-hidden="true" tabindex="-1"></a>%inc lexis;</span>
+<span id="cb232-38"><a href="#cb232-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-39"><a href="#cb232-39" aria-hidden="true" tabindex="-1"></a><span class="co">/* we name the failure 'mi' and the time intervals 'timegroup' */</span></span>
+<span id="cb232-40"><a href="#cb232-40" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> leader_mi; </span>
+<span id="cb232-41"><a href="#cb232-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">set</span> leader_mi;</span>
+<span id="cb232-42"><a href="#cb232-42" aria-hidden="true" tabindex="-1"></a>    mi=status=<span class="dv">1</span>;</span>
+<span id="cb232-43"><a href="#cb232-43" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb232-44"><a href="#cb232-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-45"><a href="#cb232-45" aria-hidden="true" tabindex="-1"></a><span class="co">/* We name the failure 'mi' and the time intervals 'timegroup' */</span></span>
+<span id="cb232-46"><a href="#cb232-46" aria-hidden="true" tabindex="-1"></a>%Lexis(data   = leader_mi,</span>
+<span id="cb232-47"><a href="#cb232-47" aria-hidden="true" tabindex="-1"></a>             out    = pois,</span>
+<span id="cb232-48"><a href="#cb232-48" aria-hidden="true" tabindex="-1"></a>             entry  = start,</span>
+<span id="cb232-49"><a href="#cb232-49" aria-hidden="true" tabindex="-1"></a>             exit   = <span class="kw">stop</span>,</span>
+<span id="cb232-50"><a href="#cb232-50" aria-hidden="true" tabindex="-1"></a>             fail   = mi,</span>
+<span id="cb232-51"><a href="#cb232-51" aria-hidden="true" tabindex="-1"></a>             <span class="fu">left</span>   = timegroup,</span>
+<span id="cb232-52"><a href="#cb232-52" aria-hidden="true" tabindex="-1"></a>       breaks = <span class="kw">%str</span>(<span class="dv">0</span>,<span class="dv">379.2</span>,<span class="dv">758.4</span>,<span class="dv">1137.6</span>,<span class="dv">1516.8</span>,<span class="dv">1896.0</span>));</span>
+<span id="cb232-53"><a href="#cb232-53" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> genmod<span class="kw"> data</span>=pois;</span>
+<span id="cb232-54"><a href="#cb232-54" aria-hidden="true" tabindex="-1"></a>  class treat(ref=<span class="st">"0"</span>) timegroup;</span>
+<span id="cb232-55"><a href="#cb232-55" aria-hidden="true" tabindex="-1"></a>    <span class="kw">model</span> mi = treat timegroup / dist=<span class="fu">poisson</span>  offset=lrisk;</span>
+<span id="cb232-56"><a href="#cb232-56" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb232-57"><a href="#cb232-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-58"><a href="#cb232-58" aria-hidden="true" tabindex="-1"></a><span class="co">* Cox model first event and PWP models 2nd, ..., 5th event;</span></span>
+<span id="cb232-59"><a href="#cb232-59" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=leader_mi;</span>
+<span id="cb232-60"><a href="#cb232-60" aria-hidden="true" tabindex="-1"></a>  <span class="kw">where</span> eventno&lt;=<span class="dv">5</span>;</span>
+<span id="cb232-61"><a href="#cb232-61" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>)= treat / entry=start; </span>
+<span id="cb232-62"><a href="#cb232-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">by</span> eventno;</span>
+<span id="cb232-63"><a href="#cb232-63" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span>
+<span id="cb232-64"><a href="#cb232-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb232-65"><a href="#cb232-65" aria-hidden="true" tabindex="-1"></a><span class="co">* PWP model all events;</span></span>
+<span id="cb232-66"><a href="#cb232-66" aria-hidden="true" tabindex="-1"></a><span class="kw">proc</span> phreg<span class="kw"> data</span>=leader_mi;</span>
+<span id="cb232-67"><a href="#cb232-67" aria-hidden="true" tabindex="-1"></a>  <span class="kw">model</span> <span class="kw">stop</span>*status(<span class="dv">0</span> <span class="dv">2</span>)= treat / entry=start; </span>
+<span id="cb232-68"><a href="#cb232-68" aria-hidden="true" tabindex="-1"></a>    strata eventno;</span>
+<span id="cb232-69"><a href="#cb232-69" aria-hidden="true" tabindex="-1"></a><span class="kw">run</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>

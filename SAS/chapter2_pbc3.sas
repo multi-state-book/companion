@@ -90,12 +90,10 @@ data pbc3mult;
 	logrisk=log(risktime/365.25); interv=3; output; end;
 run;
 
-
 proc means sum  data=pbc3mult;
 	class tment interv;
 	var fail risktime;
 run;
-
 
 proc genmod data=pbc3mult;
 	where tment=1;
@@ -248,7 +246,21 @@ run;
 options ps=200;
 proc genmod data=pbc3mult;
 	class tment (ref='0') interv;
-	model fail= tment interv alb  bili / dist=poi offset=logrisk ;
+	model fail= tment alb  bili interv / dist=poi offset=logrisk;
+	estimate "alpha1" intercept 1 tment 0 1 alb 0 bili 0 interv 1 0 0 ;
+	estimate "alpha2" intercept 1 tment 0 1 alb 0 bili 0 interv 0 1 0 ;
+	estimate "alpha3" intercept 1 tment 0 1 alb 0 bili 0 interv 0 0 1 ;
+run;
+
+* proc icphreg can fit the same model with less code and data manipulations;
+data pbc3; 
+  set pbc3;
+	years=days/365.25;
+run;
+proc icphreg data=pbc3;
+  class tment(ref="0");
+	model years*status(0) = tment alb bili / 
+		basehaz=pch(intervals=(2 4));
 run;
 
 

@@ -299,8 +299,10 @@ proc phreg data=double02 covs(aggregate);
 	dis: test disease0=disease2;
 	a:   test age0=age2;
 run;
+* Under hypothesis of equal coefficients for gsource and age;
 proc phreg data=double02 covs(aggregate);
-	model time*dc(0)=bmonly disease0 disease2 age;
+  age10=age/10;
+	model time*dc(0)=bmonly disease0 disease2 age10;
 	strata version;
 	id id;
 	dis: test disease0=disease2;
@@ -309,8 +311,9 @@ data bmt; set bmt;
 	gvhdny=gvhd; 
 	if gvhdny=1 then nytgvhd=tgvhd;
 	if gvhdny=0 then do; nytgvhd=intxsurv; if dead=1 then gvhdny=1; end; 
-	/* NB her tæller både GvHD og død uden GvHD med */
+	/* NB both GvHD and death without GvHD */
 run;
+proc freq data=bmt; table gvhdny;run;
 data triple02G; set bmt; 
 	/* joint analysis of relapse-free, GvHD-free and overall survival */
 	version=1; dc=state0>0; time=intxrel; gsource0=bmonly; 

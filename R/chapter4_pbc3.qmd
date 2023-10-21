@@ -2575,7 +2575,7 @@ run;
 ## R
 
 ```{r}
-#| label: in-text-r-rmst-gform
+#| label: in-text-r-rmst-gform-r
 pbcsub <- subset(pbc3,!is.na(alb))
 time   <- pbcsub$days/365.25
 status <- pbcsub$status!=0
@@ -2616,7 +2616,60 @@ rbind(
         Diff=sqrt(var(bootres$t[,3])))
 )
 ```
+
 ## SAS
+```{sas}
+#| label: in-text-r-rmst-gform-sas
+#| eval: false 
+#| output: false
+
+/* bootstrap sample */
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	do i = 1 to 349; /*nobs=349*/
+	x=round(ranuni(0)*349); /*nobs=349*/
+	set pbc3
+	point=x;
+	output;
+	end;
+	end;
+	stop;
+run;
+proc rmstreg data=bootpbc tau=3;
+  model followup*status(0)=tment alb log2bili / 
+        link=linear method=ipcw(strata=tment);
+	ods output parameterestimates=pe;
+	by sampnum;
+run;
+proc transpose data=pe(keep=sampnum estimate) out=beta prefix=beta;
+  by sampnum;
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, beta
+	where pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=beta1+beta2*0+beta3*alb+beta4*log2bili;
+	pred1=beta1+beta2*1+beta3*alb+beta4*log2bili;
+	diff=pred1-pred0;
+run;
+proc means data=pred mean stddev;
+	var pred0 pred1 diff;
+run;
+
+	
+           The MEANS Procedure
+
+ Variable            Mean         Std Dev
+ ----------------------------------------
+ pred0          2.5596691       0.4265808
+ pred1          2.7281557       0.4253781
+ diff           0.1684865       0.0772077
+ ----------------------------------------
+```
 
 :::
 
@@ -2693,11 +2746,12 @@ run;
 
 ### In-text, p. 138-9: Fine-Gray and g-formula
 
-Using mets package and not bootstrap as in book. 
-
 ::: {.panel-tabset}
 
+In R we demonstrate use of the `mets` package which also calculates SD and in SAS we use bootstrap as reported in the book.
+
 ## R
+
 ```{r}
 #| label: in-text-fg-gform-r
 # Fine-Gray models using package mets
@@ -2717,10 +2771,122 @@ summary(survivalG(fgdeath, subpbc, 2*365.25))
 ```
 
 ## SAS
+
 ```{sas}
 #| label: in-text-fg-gform-sas
 #| eval: false 
 #| output: false
+
+/* bootstrap sample */
+data bootpbc;
+	do sampnum = 1 to 1000; /* nboot=1000*/
+	do i = 1 to 349; /*nobs=349*/
+	x=round(ranuni(0)*349); /*nobs=349*/
+	set pbc3
+	point=x;
+	output;
+	end;
+	end;
+	stop;
+run;
+
+/* to get baseline 'CIF' */
+data cov;
+	input sex tment age alb log2bili;
+	datalines;
+0 0 0 0 0
+;
+run;
+
+/* Transplantation */
+proc phreg data=bootpbc noprint
+  outest=beta(keep=sampnum sex tment age log2bili alb _status_
+		rename=(sex=betasex tment=betatment age=betaage log2bili=betabili alb=betaalb));
+	model followup*status(0)=sex tment age log2bili alb / eventcode=1;
+	baseline out=cif(keep=sampnum cif) covariates=cov cif=cif timepoint=2;
+	by sampnum;
+run;
+/* Remove degenerated estimates with cif=1 */
+data cif;
+  set cif;
+  where cif<1; 
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, cif, beta 
+	where pbc.sampnum=cif.sampnum & pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=1-(1-cif)**exp(betatment*0+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	pred1=1-(1-cif)**exp(betatment*1+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	diff=pred1-pred0;
+run;
+proc means data=pred noprint;
+	var pred0 pred1 diff;
+	output out=boot(where=(_stat_="MEAN"));
+	by sampnum;
+run;
+proc means data=boot mean stddev;
+	var pred0 pred1 diff;
+run;
+
+           The MEANS Procedure
+
+ Variable            Mean         Std Dev
+ ----------------------------------------
+ pred0          0.0671112       0.0204778
+ pred1          0.0494114       0.0134582
+ diff          -0.0176998       0.0198973
+ ----------------------------------------
+
+   
+/* Death without transplantation */
+proc phreg data=bootpbc noprint
+  outest=beta(keep=sampnum sex tment age log2bili alb _status_
+		rename=(sex=betasex tment=betatment age=betaage log2bili=betabili alb=betaalb));
+	model followup*status(0)=sex tment age log2bili alb / eventcode=2;
+	baseline out=cif(keep=sampnum cif) covariates=cov cif=cif timepoint=2;
+	by sampnum;
+run;
+/* Remove degenerated estimates with cif=1 */
+data cif;
+  set cif;
+  where cif<1; 
+run;
+proc sql;
+  create table fit as
+	select *
+	from bootpbc as pbc, cif, beta 
+	where pbc.sampnum=cif.sampnum & pbc.sampnum=beta.sampnum;
+quit;
+data pred;
+  set fit;
+	pred0=1-(1-cif)**exp(betatment*0+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	pred1=1-(1-cif)**exp(betatment*1+betasex*sex+betaage*age+betaalb*alb+betabili*log2bili);
+	diff=pred1-pred0;
+run;
+proc means data=pred noprint;
+	var pred0 pred1 diff;
+	output out=boot(where=(_stat_="MEAN"));
+	by sampnum;
+run;
+proc means data=boot mean stddev;
+	var pred0 pred1 diff;
+run;
+	
+
+           The MEANS Procedure
+
+ Variable            Mean         Std Dev
+ ----------------------------------------
+ pred0          0.0671112       0.0204778
+ pred1          0.0494114       0.0134582
+ diff          -0.0176998       0.0198973
+ ----------------------------------------
+
+
 ```
 :::
 

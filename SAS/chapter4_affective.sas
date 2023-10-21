@@ -176,15 +176,21 @@ run;
 *--------------------- Table 4.10 ------------------------------;
 *---------------------------------------------------------------;
 
+proc print data=affective;
+  var id state start stop status episode;
+run;
 data angstwlw; 
 	set affective;
 	where episode<5 and (state=0 or status=2 or status=3);
 run;
+proc freq;
+  table id*episode/nocol norow nopercent;
+	run;
 proc sort data=angstwlw; 
 	by id; 
 run;
 proc print;
-  var id start stop status episode;
+  var id state start stop status episode;
 run;
 data angstwlw4; 
 	set angstwlw;
@@ -231,7 +237,8 @@ data angstwlw4;
 		end;
 	end;
 run;
-
+proc print;
+run;
 /*
 proc export data=angstwlw4
 	outfile="data/affectivewlw.csv"
