@@ -6,6 +6,7 @@
 ```{r}
 #| label: read-bmt-r
 bmt <- read.csv("data/bmt.csv")
+#bmt$timedeath <- ifelse(bmt$rel==1 & bmt$timedeath==bmt$timerel,bmt$timedeath+0.01,bmt$timedeath)
 bmt$intxsurv<- bmt$timedeath
 bmt$dead <- bmt$death
 bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
@@ -185,16 +186,6 @@ quit;
 
 ```{r}
 #| label: in-text-mu-r
-
-bmt <- read.csv("data/bmt.csv")
-#bmt$timedeath <- ifelse(bmt$rel==1 & bmt$timedeath==bmt$timerel,bmt$timedeath+0.01,bmt$timedeath)
-bmt$intxsurv<- bmt$timedeath
-bmt$dead <- bmt$death
-bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
-bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
-bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
-bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
-bmt$state0  <- bmt$rel + 2*bmt$trm
 
 # Transition matrix
 library(mstate)
