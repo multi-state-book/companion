@@ -1,2 +1,3 @@
 # Example of a `.gitattributes` file which reclassifies `.rb` files as Java:
-*.qmd linguist-language=Quarto
+*.qmd linguist-language=R
+R/*.qmd linguist-language=R
