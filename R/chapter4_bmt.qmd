@@ -30,11 +30,11 @@ data bmt;
 	dead=death;
 	if rel=1 then intxrel=timerel;
 	if rel=0 then intxrel=timedeath;
+	if gvhd=1 then tgvhd=timegvhd;
+	if gvhd=0 then tgvhd=intxrel;
 	trm=0;
 	if rel=0 and death=1 then trm=1;
 	state0=rel+2*trm;
-	if gvhd=1 then tgvhd=timegvhd;
-	if gvhd=0 then tgvhd=intxrel;
 run;
 ```
 
@@ -179,12 +179,54 @@ quit;
 
 ### In-text p. 133: Expected time lost
 
-::: callout-important
-Missing for R - but should be possible with mstate or survival?
-:::
-
 ::: {.panel-tabset}
-## R-NA
+## R
+
+
+```{r}
+#| label: in-text-mu-r
+
+bmt <- read.csv("data/bmt.csv")
+#bmt$timedeath <- ifelse(bmt$rel==1 & bmt$timedeath==bmt$timerel,bmt$timedeath+0.01,bmt$timedeath)
+bmt$intxsurv<- bmt$timedeath
+bmt$dead <- bmt$death
+bmt$intxrel <- ifelse(bmt$rel == 1, bmt$timerel, bmt$timedeath)
+bmt$tgvhd   <- ifelse(bmt$gvhd == 1, bmt$timegvhd, bmt$intxrel)
+bmt$tanc500 <- ifelse(bmt$anc500 == 1, bmt$timeanc500, bmt$intxrel)
+bmt$trm     <- ifelse(bmt$rel == 0 & bmt$death == 1, 1, 0)
+bmt$state0  <- bmt$rel + 2*bmt$trm
+
+# Transition matrix
+library(mstate)
+tmat <- trans.illdeath(names = c("BMT", "Relapse", "Dead"))
+# Creating data in long format, i.e. row for every transition
+
+bmtms <- msprep(time = c(NA, "intxrel", "intxsurv"),
+                status = c(NA, "rel", "dead"),
+                data = bmt,
+                trans = tmat)
+
+# function to collect elos to be bootstrapped
+epsi <- function(data, tmat, tau) {
+  np <- coxph(Surv(Tstart,Tstop,status) ~ strata(trans),data=data)
+  msfitnp<-msfit(np,trans=tmat)
+  pt<-probtrans(msfitnp,predt=0,variance = F)
+  mat<-ELOS(pt,tau=120)
+  colnames(mat)<-c("eps0","eps1","timelost")
+  return(mat[1,])
+}
+est<-epsi(bmtms,tmat,120)
+
+suppressWarnings(res <- msboot(theta=epsi, data=bmtms, B=1000, id="id", tmat=tmat, tau=120))
+
+boots<-matrix(c(
+        mean(res[1,]),sqrt(var(res[1,])),
+        mean(res[2,]),sqrt(var(res[2,])),
+        mean(res[3,]),sqrt(var(res[3,]))),
+        nrow = 3, byrow=T, 
+        dimnames = list(c("eps0","eps1","timelost"), c("Years","SD")))
+list("estimate"=est,"bootstrap"=boots)
+```
 
 ## SAS
 ```{sas}
@@ -274,11 +316,22 @@ data allrev; set allrev;
 q0=rfs; q2=c2; q3=c23-c2; q1=c1-q3; sum=q0+q1+q2+q3; prev=q1/(q0+q1); tment=0;
 run;
 
+* Alive replase free;
 %areastepby(allrev,sampnum,tment,0,time,q0,120);
-proc means data=last mean stddev;
+proc means data=last n mean stddev;
 var mu;
 run;
 
+	        The MEANS Procedure
+
+        Analysis Variable : mu
+
+    N            Mean         Std Dev
+ ------------------------------------
+ 1000      75.7672178       1.2434139
+ ------------------------------------
+
+	
 /* macro need to be changed for cuminc (start in 0) */
 
 %macro areastepby0(data,byvar,beh,grp,tid,y,tau);
@@ -305,22 +358,70 @@ run;
 	run;
 %mend areastepby;
 
+* Relapse;
 %areastepby0(allrev,sampnum,tment,0,time,q1,120);
-proc means data=last mean stddev;
+proc means data=last n mean stddev;
 var mu;
 run;
+    
+          The MEANS Procedure
+
+         Analysis Variable : mu
+
+     N            Mean         Std Dev
+  ------------------------------------
+  1000       1.6264372       0.2929657
+  ------------------------------------
+
+* Death;
 %areastepby0(allrev,sampnum,tment,0,time,c23,120);
-proc means data=last mean stddev;
+proc means data=last n mean stddev;
 var mu;
 run;
+     
+         The MEANS Procedure
+
+        Analysis Variable : mu
+
+    N            Mean         Std Dev
+ ------------------------------------
+ 1000      42.6118743       1.2241774
+ ------------------------------------
+
+
+* Death without replase;
 %areastepby0(allrev,sampnum,tment,0,time,q2,120);
-proc means data=last mean stddev;
+proc means data=last n mean stddev;
 var mu;
 run;
+
+         The MEANS Procedure
+
+        Analysis Variable : mu
+
+    N            Mean         Std Dev
+ ------------------------------------
+ 1000      29.1476344       1.1006234
+ ------------------------------------
+
+
+
+* Death with replase;
 %areastepby0(allrev,sampnum,tment,0,time,q3,120);
-proc means data=last mean stddev;
+proc means data=last n mean stddev;
 var mu;
 run;
+    
+         The MEANS Procedure
+
+        Analysis Variable : mu
+
+    N            Mean         Std Dev
+ ------------------------------------
+ 1000      13.4642399       0.8270791
+ ------------------------------------
+
+
 ```
 :::
 

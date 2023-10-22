@@ -9,13 +9,18 @@ proc import out=bmt
 run;
 data bmt; 
 set bmt;
+	if rel=1 & timedeath=timerel then timedeath=timedeath+0.01;
 	intxsurv=timedeath; dead=death;
-	if rel=1 then intxrel=timerel; if rel=0 then intxrel=timedeath;
-	trm=0; if rel=0 and death=1 then trm=1;
+	if rel=1 then intxrel=timerel;
+  if rel=0 then intxrel=timedeath;
+	if gvhd=1 then tgvhd=timegvhd;
+  if gvhd=0 then tgvhd=intxrel;
+	trm=0;
+  if rel=0 and death=1 then trm=1;
 	state0=rel+2*trm;
-	if gvhd=1 then tgvhd=timegvhd; if gvhd=0 then tgvhd=intxrel;
+	if rel=1 & timedeath=timerel then timedeath=timedeath+0.01;
 run;
-
+proc freq;table state0;run;
 
 *---------------------------------------------------------------;
 *--------------------- Figure 4.15 -----------------------------;
@@ -186,8 +191,9 @@ data allrev; set allrev;
 q0=rfs; q2=c2; q3=c23-c2; q1=c1-q3; sum=q0+q1+q2+q3; prev=q1/(q0+q1); tment=0;
 run;
 
+* Alive replase free;
 %areastepby(allrev,sampnum,tment,0,time,q0,120);
-proc means data=last mean stddev;
+proc means data=last N mean stddev;
 var mu;
 run;
 
@@ -217,20 +223,31 @@ run;
 	run;
 %mend areastepby;
 
+* Relapse;
 %areastepby0(allrev,sampnum,tment,0,time,q1,120);
-proc means data=last mean stddev;
+data last1;set last;run;
+proc means data=last1 n mean stddev;
 var mu;
 run;
+
+* Death;
 %areastepby0(allrev,sampnum,tment,0,time,c23,120);
-proc means data=last mean stddev;
+data last23;set last;run;
+proc means data=last23 n mean stddev;
 var mu;
 run;
+
+* Death without replase;
 %areastepby0(allrev,sampnum,tment,0,time,q2,120);
-proc means data=last mean stddev;
+data last2;set last;run;
+proc means data=last2 n mean stddev;
 var mu;
 run;
+
+* Death with replase;
 %areastepby0(allrev,sampnum,tment,0,time,q3,120);
-proc means data=last mean stddev;
+data last3;set last;run;
+proc means data=last3 n mean stddev;
 var mu;
 run;
 
