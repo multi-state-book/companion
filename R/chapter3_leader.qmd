@@ -20,27 +20,15 @@ coxfrail <- coxph(Surv(start, stop, status == 1) ~ treat + frailty(id),
 summary(coxfrail)
 sqrt(coxfrail$fvar[1]) # frailty SD
 
-# PieceWise constant, frailty
-# Make cuts 
-alltimes <- seq(0,max(leader_mi$stop),length=99)
-
-FunctionIntervalM <- function(a,b) {
-  seq(from=min(a), to = max(a), by = (max(a)-min(a))/b)
-}
-
-cuts <- FunctionIntervalM(a = alltimes, b = 5)
-
-# AG model, piece-wise constant hazards 
-cut_data <- survSplit(Surv(start, stop, status == 1) ~ ., 
-                      leader_mi,
-                      cut = cuts[-1], 
-                      episode = "timegroup")
-
-pwch_frail <- coxph(Surv(start, stop, event) ~ 
-                    treat + strata(timegroup) + frailty(id), 
-                               data = cut_data)
-summary(pwch_frail)
-sqrt(pwch_frail$fvar[1]) # frailty SD
+# Piecewise constant, frailty
+library(frailtypack)
+pcwfrail<-frailtyPenal(Surv(start, stop, status == 1) ~ cluster(id)+treat,
+                       data = leader_mi, 
+                       hazard = "Piecewise-equi",
+                       nb.int = 5,
+                       recurrentAG = TRUE)
+pcwfrail
+sqrt(pcwfrail$theta) # frailty SD
 ```
 
 ## SAS
@@ -52,7 +40,7 @@ Only Cox-type model.
 #| eval: false 
 #| output: false
 
-# very slow!
+# Very (very) slow!
 proc phreg data=leader_mi covs(aggregate);
   class id;
   model stop*status(0 2) = treat / entry=start; 
@@ -74,8 +62,12 @@ library(frailtypack)
 leader_mi$death <- ifelse(leader_mi$status == 2, 1, 0)
 jointfrail_pc_eq_mi <- frailtyPenal(
   Surv(start, stop, status == 1) ~ cluster(id)+ treat + terminal(death),
-  formula.terminalEvent = ~ treat,data = leader_mi, 
-  hazard = "Piecewise-equi", nb.int = c(5, 5), recurrentAG = TRUE)
+  formula.terminalEvent = ~ treat,
+  data = leader_mi, 
+  hazard = "Piecewise-equi",
+  nb.int = c(5, 5),
+  recurrentAG = TRUE)
+
 jointfrail_pc_eq_mi
 sqrt(jointfrail_pc_eq_mi$theta) # Frailty SD
 summary(jointfrail_pc_eq_mi)
