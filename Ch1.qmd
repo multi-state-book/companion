@@ -387,8 +387,8 @@ Recurrent events of a 3-point MACE (major adverse cardiovascular events) consist
 
 ```{r}
 #| echo: false
-leader_mi <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_mi.csv")
-leader_3p <- read.csv("c:/Users/hnrv/OneDrive - Novo Nordisk/Book/leader/data/leader_3p.csv")
+leader_mi <- read.csv("../leader/data/leader_mi.csv")
+leader_3p <- read.csv("../leader/data/leader_3p.csv")
 ```
 Assume that the LEADER data sets are loaded.
 
